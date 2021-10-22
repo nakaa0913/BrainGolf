@@ -27,7 +27,11 @@
 // グローバル変数
 //*****************************************************************************
 
-static BULLET g_Bullet[BULLET_MAX];							// バレット構造体
+static BULLET g_Bullet[BULLET_MAX];					// バレット構造体
+
+double angle = 00.0;								//向かせたい角度
+
+#define BULLET_ANGLE		(angle*D3DX_PI/180)		//バレットの角度(向かせたい角度*π/180)
 
 
 //=============================================================================
@@ -143,10 +147,9 @@ void SetBullet(D3DXVECTOR2 pos)
 		{
 			g_Bullet[i].use = true;			// 使用状態へ変更する
 			g_Bullet[i].pos = pos;			// 座標をセット
-			g_Bullet[i].rot = 45.0f;	  // 座標をセット
+			g_Bullet[i].rot = BULLET_ANGLE;	// 角度をセット
 
 			return;							// 1発セットしたので終了する
 		}
 	}
 }
-

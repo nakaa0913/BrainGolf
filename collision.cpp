@@ -93,6 +93,30 @@ void UpdateCollision(void)
 
 	// éÄñSÇµÇΩÇÁèÛë‘ëJà⁄
 
+	//íµÇÀï‘ÇË
+	for (int i = 0; i < BULLET_MAX; i++)
+	{
+		//âE
+		if (bullet[i].pos.x > 560.0f)
+		{
+			bullet[i].move.x *= -1;
+		}
+		//ç∂
+		if (bullet[i].pos.x < 0.0f)
+		{
+			bullet[i].move.x *= -1;
+		}
+		//è„
+		if (bullet[i].pos.y < 0.0f)
+		{
+			bullet[i].move.y *= -1;
+		}
+		//â∫
+		if (bullet[i].pos.y > 800.0f)
+		{
+			bullet[i].move.y *= -1;
+		}
+	}
 }
 
 //=============================================================================

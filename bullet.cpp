@@ -7,6 +7,7 @@
 #include "bullet.h"
 #include "texture.h"
 #include "sprite.h"
+#include "input.h"
 
 
 //*****************************************************************************
@@ -43,7 +44,7 @@ HRESULT InitBullet(void)
 		g_Bullet[i].rot   = 0.0f;
 		g_Bullet[i].texNo = texNo;
 
-		g_Bullet[i].move = D3DXVECTOR2(0.0f, -BULLET_SPEED);	// 移動量を初期化
+		g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);	// 移動量を初期化
 	}
 
 	return S_OK;
@@ -73,6 +74,14 @@ void UpdateBullet(void)
 			if (g_Bullet[i].pos.y < (0.0f - g_Bullet[i].h/2))	// 自分の大きさを考慮して画面外か判定している
 			{
 				g_Bullet[i].use = false;
+				g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);
+			}
+
+			//
+			if (GetKeyboardTrigger(DIK_R))
+			{
+				g_Bullet[i].use = false;
+				g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);
 			}
 		}
 	}
@@ -123,6 +132,8 @@ void SetBullet(D3DXVECTOR2 pos)
 		{
 			g_Bullet[i].use = true;			// 使用状態へ変更する
 			g_Bullet[i].pos = pos;			// 座標をセット
+			g_Bullet[i].rot = 45.0f;	  // 座標をセット
+
 			return;							// 1発セットしたので終了する
 		}
 	}

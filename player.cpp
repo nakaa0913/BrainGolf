@@ -73,7 +73,7 @@ void UpdatePlayer(void)
 	if (GetKeyboardPress(DIK_UP))
 	{
 		if (GetMapEnter(D3DXVECTOR2(g_Player.pos.x, g_Player.pos.y - 1.0f)) != 1)
-			g_Player.pos.y -= 1.0f;
+			g_Player.pos.y -= 3.0f;
 
 		g_CharaUV = 0.75f;
 	}
@@ -81,7 +81,7 @@ void UpdatePlayer(void)
 	if (GetKeyboardPress(DIK_DOWN))
 	{
 		if (GetMapEnter(D3DXVECTOR2(g_Player.pos.x, g_Player.pos.y + 1.0f)) != 1)
-			g_Player.pos.y += 1.0f;
+			g_Player.pos.y += 3.0f;
 
 		g_CharaUV = 0.0f;
 	}
@@ -89,7 +89,7 @@ void UpdatePlayer(void)
 	if (GetKeyboardPress(DIK_LEFT))
 	{
 		if (GetMapEnter(D3DXVECTOR2(g_Player.pos.x - 1.0f, g_Player.pos.y)) != 1)
-			g_Player.pos.x -= 1.0f;
+			g_Player.pos.x -= 3.0f;
 
 		g_CharaUV = 0.25f;
 	}
@@ -97,7 +97,7 @@ void UpdatePlayer(void)
 	if (GetKeyboardPress(DIK_RIGHT))
 	{
 		if (GetMapEnter(D3DXVECTOR2(g_Player.pos.x + 1.0f, g_Player.pos.y)) != 1)
-			g_Player.pos.x += 1.0f;
+			g_Player.pos.x += 3.0f;
 
 		g_CharaUV = 0.5f;
 	}

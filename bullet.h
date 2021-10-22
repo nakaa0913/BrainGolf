@@ -16,7 +16,7 @@
 #define BULLET_SPEED	(4.0f)		// バレットの移動スピード
 
 
-// バレット構造体
+// バレット構造体a
 struct BULLET
 {
 	bool					use;					// true:使っている  false:未使用

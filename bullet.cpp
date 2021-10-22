@@ -8,6 +8,9 @@
 #include "texture.h"
 #include "sprite.h"
 #include "input.h"
+#include "bg.h"
+#include "scene.h"
+#include "fade.h"
 
 
 //*****************************************************************************
@@ -75,6 +78,14 @@ void UpdateBullet(void)
 			{
 				g_Bullet[i].use = false;
 				g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);
+			}
+
+			//
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 2)
+			{
+				g_Bullet[i].use = false;
+				g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);
+				SceneTransition(SCENE_RESULT);
 			}
 
 			//

@@ -15,6 +15,8 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
+#define PLAYER_MAX (3)
+
 // プレイヤー構造体
 struct PLAYER
 {
@@ -34,5 +36,5 @@ HRESULT InitPlayer(void);
 void UninitPlayer(void);
 void UpdatePlayer(void);
 void DrawPlayer(void);
-
+void SetPlayer(D3DXVECTOR2 pos);
 PLAYER *GetPlayer(void);

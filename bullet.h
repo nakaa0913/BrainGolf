@@ -25,7 +25,7 @@ struct BULLET
 	float					rot;					// バレットの回転量
 	D3DXVECTOR2				move;					// バレットの移動量
 	int						texNo;					// 何番目のテクスチャーを使用するのか
-
+	float					friction;				// 減速処理
 };
 
 

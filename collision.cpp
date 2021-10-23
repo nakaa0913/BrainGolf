@@ -104,9 +104,9 @@ void UpdateCollision(void)
 
 				if (player[j].catchwait <= 0)
 				{
-
 					bullet[i].use = false;		// 弾の消滅処理を行い
 					player[j].have = true;		// プレイヤーは弾を持つ
+					bullet[i].friction = 1.0f;
 				}
 
 				// スコア計算

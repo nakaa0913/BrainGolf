@@ -51,6 +51,7 @@ HRESULT InitBullet(void)
 		g_Bullet[i].rot   = 0.0f;
 		g_Bullet[i].texNo = texNo;
 
+		g_Bullet[i].friction = 1.0f;
 		g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);	// 移動量を初期化
 	}
 
@@ -74,8 +75,15 @@ void UpdateBullet(void)
 	{
 		if (g_Bullet[i].use == true)	// このバレットが使われている？
 		{								// Yes
+			
+			g_Bullet[i].friction *= 0.992;
+
+			if (g_Bullet[i].friction < 0.2)
+			{
+				g_Bullet[i].friction = 0;
+			}
 			// バレットの移動処理
-			g_Bullet[i].pos += g_Bullet[i].move;
+			g_Bullet[i].pos += g_Bullet[i].move * g_Bullet[i].friction;
 
 			// 画面外まで進んだ？
 			if (g_Bullet[i].pos.y < (0.0f - g_Bullet[i].h/2))	// 自分の大きさを考慮して画面外か判定している

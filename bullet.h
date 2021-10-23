@@ -26,6 +26,8 @@ struct BULLET
 	D3DXVECTOR2				move;					// バレットの移動量
 	int						texNo;					// 何番目のテクスチャーを使用するのか
 	float					friction;				// 減速処理
+	float					angle;					// 角度
+	D3DXVECTOR2				vector;					// ベクトル
 };
 
 
@@ -38,6 +40,6 @@ void UpdateBullet(void);
 void DrawBullet(void);
 
 BULLET *GetBullet(void);
-void SetBullet(D3DXVECTOR2 pos);
+void SetBullet(D3DXVECTOR2 pos, float angle);
 
-
+D3DXVECTOR2 AngleToVector2(float angle);

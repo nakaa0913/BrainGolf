@@ -105,8 +105,15 @@ void UpdateCollision(void)
 				if (player[j].catchwait <= 0)
 				{
 					bullet[i].use = false;		// 弾の消滅処理を行い
-					player[j].have = true;		// プレイヤーは弾を持つ
 					bullet[i].friction = 1.0f;
+					player[j].have = true;		// プレイヤーは弾を持つ
+
+					// 全てのプレイヤーの向いている角度を0に戻す
+					for (int n = 0; n < PLAYER_MAX; n++)
+					{
+						player[n].angle = 0.0f;
+					}
+					
 				}
 
 				// スコア計算

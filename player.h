@@ -29,6 +29,7 @@ struct PLAYER
 	int						act;					// テクスチャの状態管理
 	bool					have;					// ボールを持っているかどうか
 	int						catchwait;				// ボールを打ってから次にキャッチできるまでのクールタイム管理
+	float					angle;					// どの角度を向いているか
 
 };
 

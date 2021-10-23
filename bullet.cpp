@@ -11,6 +11,7 @@
 #include "bg.h"
 #include "scene.h"
 #include "fade.h"
+#include <math.h>
 
 
 //*****************************************************************************
@@ -29,9 +30,9 @@
 
 static BULLET g_Bullet[BULLET_MAX];					// バレット構造体
 
-double angle = 00.0;								//向かせたい角度
-
-#define BULLET_ANGLE		(angle*D3DX_PI/180)		//バレットの角度(向かせたい角度*π/180)
+//double angle = 00.0;								//向かせたい角度
+//
+//#define BULLET_ANGLE		(angle*D3DX_PI/180)		//バレットの角度(向かせたい角度*π/180)
 
 
 //=============================================================================
@@ -52,7 +53,9 @@ HRESULT InitBullet(void)
 		g_Bullet[i].texNo = texNo;
 
 		g_Bullet[i].friction = 1.0f;
+		g_Bullet[i].angle = 0.0f;
 		g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);	// 移動量を初期化
+		g_Bullet[i].vector = D3DXVECTOR2(1.0f, 1.0f);
 	}
 
 	return S_OK;
@@ -146,7 +149,7 @@ BULLET *GetBullet(void)
 //=============================================================================
 // バレットの発射設定
 //=============================================================================
-void SetBullet(D3DXVECTOR2 pos)
+void SetBullet(D3DXVECTOR2 pos , float angle)
 {
 	// もし未使用の弾が無かったら発射しない( =これ以上撃てないって事 )
 	for (int i = 0; i < BULLET_MAX; i++)
@@ -155,9 +158,18 @@ void SetBullet(D3DXVECTOR2 pos)
 		{
 			g_Bullet[i].use = true;			// 使用状態へ変更する
 			g_Bullet[i].pos = pos;			// 座標をセット
-			g_Bullet[i].rot = BULLET_ANGLE;	// 角度をセット
+			// g_Bullet[i].rot = BULLET_ANGLE;	// 角度をセット
+
+			g_Bullet[i].vector = AngleToVector2(angle);	// 角度からベクトルを設定
+			g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * g_Bullet[i].vector.x, -BULLET_SPEED * g_Bullet[i].vector.y);	// ベクトルからmoveを設定
 
 			return;							// 1発セットしたので終了する
 		}
 	}
+}
+
+D3DXVECTOR2 AngleToVector2(float angle)
+{
+	float radian = angle * (D3DX_PI / 180);
+	return  D3DXVECTOR2(cos(radian), sin(radian));
 }

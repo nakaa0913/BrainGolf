@@ -60,6 +60,7 @@ HRESULT InitPlayer(void)
 		g_Player[i].act = 0;
 		g_Player[i].have = false;
 		g_Player[i].catchwait = 0;
+		g_Player[i].angle = 0.0f;
 	}
 
 	g_Player[0].have = true;
@@ -182,6 +183,11 @@ void UpdatePlayer(void)
 		// ’e”­ŽË
 		if (g_Player[i].have == true)
 		{
+			// ƒvƒŒƒCƒ„[‚ÌŠp“x‚ð•Ï‚¦‚éˆ—,‰ñ“]‚³‚¹‚éˆ—
+			g_Player[i].angle += 6.0f;
+			if (g_Player[i].angle > 360.0f)
+				g_Player[i].angle = 0.0f;
+
 			if (GetKeyboardTrigger(DIK_SPACE))
 			{
 				g_Player[i].catchwait = 60;
@@ -192,7 +198,7 @@ void UpdatePlayer(void)
 				SetVolume(g_ShotSENo, 0.1f);
 
 				D3DXVECTOR2 pos = g_Player[i].pos;
-				SetBullet(pos);		// ‚P”­–Ú
+				SetBullet(pos , g_Player[i].angle);		// ‚±‚±‚Å”ò‚Î‚·Šp“x‹A‚ê‚é‚æ
 				AddScore(123);
 			}
 		}
@@ -213,7 +219,8 @@ void DrawPlayer(void)
 	{
 		if (g_Player[i].use == true)
 		{
-			DrawSprite(g_Player[i].texNo, g_Player[i].pos.x, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h, g_AnimePtn * 0.33333f, g_CharaUV, 0.3333f, 0.25f);
+			DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
+				g_AnimePtn * 0.33333f, g_CharaUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 		}
 	}
 }

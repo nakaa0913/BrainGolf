@@ -58,6 +58,7 @@ HRESULT InitPlayer(void)
 		g_Player[i].use = false;
 
 		g_Player[i].act = 0;
+		g_Player[i].direction = 0;
 		g_Player[i].have = false;
 		g_Player[i].catchwait = 0;
 		g_Player[i].angle = 0.0f;
@@ -97,7 +98,8 @@ void UpdatePlayer(void)
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x, g_Player[i].pos.y - 3.0f)) != 1)
 				g_Player[i].pos.y -= 3.0f;
 
-			g_CharaUV = 0.75f;
+			g_Player[i].direction = 3;
+			//g_CharaUV = 0.75f;
 
 			//歩きアニメーション
 			if (g_AnimeWaitFrame > 10)
@@ -116,7 +118,8 @@ void UpdatePlayer(void)
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x, g_Player[i].pos.y + 3.0f)) != 1)
 				g_Player[i].pos.y += 3.0f;
 
-			g_CharaUV = 0.0f;
+			g_Player[i].direction = 0;
+			//g_CharaUV = 0.0f;
 
 			//歩きアニメーション
 			if (g_AnimeWaitFrame > 10)
@@ -135,7 +138,8 @@ void UpdatePlayer(void)
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x - 3.0f, g_Player[i].pos.y)) != 1)
 				g_Player[i].pos.x -= 3.0f;
 
-			g_CharaUV = 0.25f;
+			g_Player[i].direction = 1;
+			//g_CharaUV = 0.25f;
 
 			//歩きアニメーション
 			if (g_AnimeWaitFrame > 10)
@@ -154,7 +158,8 @@ void UpdatePlayer(void)
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x + 3.0f, g_Player[i].pos.y)) != 1)
 				g_Player[i].pos.x += 3.0f;
 
-			g_CharaUV = 0.5f;
+			g_Player[i].direction = 2;
+			//g_CharaUV = 0.5f;
 
 			//歩きアニメーション
 			if (g_AnimeWaitFrame > 10)
@@ -187,6 +192,7 @@ void UpdatePlayer(void)
 			g_Player[i].angle += 6.0f;
 			if (g_Player[i].angle > 360.0f)
 				g_Player[i].angle = 0.0f;
+			g_Player[i].direction = 2;
 
 			if (GetKeyboardTrigger(DIK_SPACE))
 			{
@@ -219,8 +225,11 @@ void DrawPlayer(void)
 	{
 		if (g_Player[i].use == true)
 		{
+			float directionUV = 0.0f + 0.25f * g_Player[i].direction;
+
+			float rot = AngleToRot(g_Player[i].angle);
 			DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
-				g_AnimePtn * 0.33333f, g_CharaUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+				g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), -rot);
 		}
 	}
 }

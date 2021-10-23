@@ -25,4 +25,5 @@ void DrawSpriteLeftTop(int texNo, float X, float Y, float Width, float Height, f
 void DrawSpriteColor(int texNo, float X, float Y, float Width, float Height, float U, float V, float UW, float VH, D3DXCOLOR color);
 void DrawSpriteColorRotate(int texNo, float X, float Y, float Width, float Height, float U, float V, float UW, float VH, D3DXCOLOR Color, float Rot);
 
+float AngleToRot(float angle);
 

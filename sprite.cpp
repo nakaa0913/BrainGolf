@@ -271,3 +271,13 @@ void DrawSpriteColorRotate(int texNo, float X, float Y, float Width, float Heigh
 	// ƒ|ƒŠƒSƒ“•`‰æ
 	GetDeviceContext()->Draw(NUM_VERTEX, 0);
 }
+
+float AngleToRot(float angle)
+{
+	// rot 6.28 ‚Å 360“x
+
+	float ichido = 6.28 / 360;
+	float rot = ichido * angle;
+
+		return rot;
+}

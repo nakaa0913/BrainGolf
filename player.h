@@ -26,6 +26,10 @@ struct PLAYER
 	float					rot;					// ポリゴンの回転量
 	int						texNo;					// テクスチャ番号
 
+	int						act;					// テクスチャの状態管理
+	bool					have;					// ボールを持っているかどうか
+	int						catchwait;				// ボールを打ってから次にキャッチできるまでのクールタイム管理
+
 };
 
 

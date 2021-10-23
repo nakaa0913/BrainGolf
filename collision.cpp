@@ -42,43 +42,72 @@ void UpdateCollision(void)
 	ENEMY  *enemy = GetEnemy();		// エネミーのポインターを初期化
 	BULLET *bullet = GetBullet();		// バレットのポインターを初期化
 
-	// 敵と操作キャラ(BB)
-	if (player[0].use == true)
-	{
-		for (int i = 0; i < ENEMY_MAX; i++)
-		{
-			if (enemy[i].use == false)
-				continue;
+//	// 敵と操作キャラ(BB)
+//	if (player[0].use == true)
+//	{
+//		for (int i = 0; i < ENEMY_MAX; i++)
+//		{
+//			if (enemy[i].use == false)
+//				continue;
+//
+////			if (CollisionBB(player->pos, enemy[i].pos, D3DXVECTOR2(player->w, player->h), D3DXVECTOR2(enemy[i].w, enemy[i].h)))
+//			if (CollisionBC(player->pos, enemy[i].pos, player->h/2, enemy[i].h/2))
+//			{
+//				// 操作キャラクターは死に
+//
+//				// 敵キャラクターは倒される
+//				enemy[i].use = false;
+//
+//				// HP減少処理
+//
+//			}
+//		}
+//	}
 
-//			if (CollisionBB(player->pos, enemy[i].pos, D3DXVECTOR2(player->w, player->h), D3DXVECTOR2(enemy[i].w, enemy[i].h)))
-			if (CollisionBC(player->pos, enemy[i].pos, player->h/2, enemy[i].h/2))
-			{
-				// 操作キャラクターは死に
+	//// 弾と敵(BB)
+	//for (int i = 0; i < BULLET_MAX; i++)
+	//{
+	//	if (bullet[i].use == false)
+	//		continue;
 
-				// 敵キャラクターは倒される
-				enemy[i].use = false;
+	//	for (int j = 0; j < ENEMY_MAX; j++)
+	//	{
+	//		if (enemy[j].use == false)
+	//			continue;
+	//			
+	//		if (CollisionBB(bullet[i].pos, enemy[j].pos, D3DXVECTOR2(bullet[i].w, bullet[i].h), D3DXVECTOR2(enemy[j].w, enemy[j].h)))
+	//		{
+	//			bullet[i].use = false;		// 弾の消滅処理を行い
+	//			enemy[j].use = false;		// 敵は倒される
 
-				// HP減少処理
+	//			// スコア計算
 
-			}
-		}
-	}
+	//			//break;					// １回当たって終わりの時はここでbreakする。１フレーム内の間有効ならbreakをコメントにする。
+	//		}
+	//	}
+	//}
 
-	// 弾と敵(BB)
+
+	// プレイヤーと弾の判定
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
 		if (bullet[i].use == false)
 			continue;
 
-		for (int j = 0; j < ENEMY_MAX; j++)
+		for (int j = 0; j < PLAYER_MAX; j++)
 		{
-			if (enemy[j].use == false)
+			if (player[j].use == false)
 				continue;
-				
-			if (CollisionBB(bullet[i].pos, enemy[j].pos, D3DXVECTOR2(bullet[i].w, bullet[i].h), D3DXVECTOR2(enemy[j].w, enemy[j].h)))
+
+			if (CollisionBB(bullet[i].pos, player[j].pos, D3DXVECTOR2(bullet[i].w, bullet[i].h), D3DXVECTOR2(player[j].w, player[j].h)))
 			{
-				bullet[i].use = false;		// 弾の消滅処理を行い
-				enemy[j].use = false;		// 敵は倒される
+
+				if (player[j].catchwait <= 0)
+				{
+
+					bullet[i].use = false;		// 弾の消滅処理を行い
+					player[j].have = true;		// プレイヤーは弾を持つ
+				}
 
 				// スコア計算
 

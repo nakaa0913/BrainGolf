@@ -56,10 +56,18 @@ HRESULT InitPlayer(void)
 		g_Player[i].w = PLAYER_W;
 		g_Player[i].h = PLAYER_H;
 		g_Player[i].use = false;
+
+		g_Player[i].act = 0;
+		g_Player[i].have = false;
+		g_Player[i].catchwait = 0;
 	}
+
+	g_Player[0].have = true;
+
+
 	//初期化
 
-	SetPlayer(D3DXVECTOR2(SCREEN_WIDTH / 2, 400));
+	SetPlayer(D3DXVECTOR2(SCREEN_WIDTH / 2, 100));
 	SetPlayer(D3DXVECTOR2(SCREEN_WIDTH / 2, 300));
 	SetPlayer(D3DXVECTOR2(SCREEN_WIDTH / 2, 500));
 
@@ -89,6 +97,17 @@ void UpdatePlayer(void)
 				g_Player[i].pos.y -= 3.0f;
 
 			g_CharaUV = 0.75f;
+
+			//歩きアニメーション
+			if (g_AnimeWaitFrame > 10)
+			{
+				g_AnimePtn++;
+				if (g_AnimePtn > 2)
+					g_AnimePtn = 0;
+
+				g_AnimeWaitFrame = 0;
+			}
+			g_AnimeWaitFrame++;
 		}
 
 		if (GetKeyboardPress(DIK_DOWN))
@@ -97,6 +116,17 @@ void UpdatePlayer(void)
 				g_Player[i].pos.y += 3.0f;
 
 			g_CharaUV = 0.0f;
+
+			//歩きアニメーション
+			if (g_AnimeWaitFrame > 10)
+			{
+				g_AnimePtn++;
+				if (g_AnimePtn > 2)
+					g_AnimePtn = 0;
+
+				g_AnimeWaitFrame = 0;
+			}
+			g_AnimeWaitFrame++;
 		}
 
 		if (GetKeyboardPress(DIK_LEFT))
@@ -105,6 +135,17 @@ void UpdatePlayer(void)
 				g_Player[i].pos.x -= 3.0f;
 
 			g_CharaUV = 0.25f;
+
+			//歩きアニメーション
+			if (g_AnimeWaitFrame > 10)
+			{
+				g_AnimePtn++;
+				if (g_AnimePtn > 2)
+					g_AnimePtn = 0;
+
+				g_AnimeWaitFrame = 0;
+			}
+			g_AnimeWaitFrame++;
 		}
 
 		if (GetKeyboardPress(DIK_RIGHT))
@@ -113,6 +154,17 @@ void UpdatePlayer(void)
 				g_Player[i].pos.x += 3.0f;
 
 			g_CharaUV = 0.5f;
+
+			//歩きアニメーション
+			if (g_AnimeWaitFrame > 10)
+			{
+				g_AnimePtn++;
+				if (g_AnimePtn > 2)
+					g_AnimePtn = 0;
+
+				g_AnimeWaitFrame = 0;
+			}
+			g_AnimeWaitFrame++;
 		}
 
 		//マップ1へ切り替える
@@ -128,28 +180,28 @@ void UpdatePlayer(void)
 
 
 		// 弾発射
-		if (GetKeyboardTrigger(DIK_SPACE))
+		if (g_Player[i].have == true)
 		{
-			PlaySound(g_ShotSENo, 0);
+			if (GetKeyboardTrigger(DIK_SPACE))
+			{
+				g_Player[i].catchwait = 60;
+				g_Player[i].have = false;
 
-			SetVolume(g_ShotSENo, 0.1f);
+				PlaySound(g_ShotSENo, 0);
 
-			D3DXVECTOR2 pos = g_Player[i].pos;
-			SetBullet(pos);		// １発目
-			AddScore(123);
+				SetVolume(g_ShotSENo, 0.1f);
+
+				D3DXVECTOR2 pos = g_Player[i].pos;
+				SetBullet(pos);		// １発目
+				AddScore(123);
+			}
 		}
 
-		//歩きアニメーション
-		if (g_AnimeWaitFrame > 10)
-		{
-			g_AnimePtn++;
-			if (g_AnimePtn > 2)
-				g_AnimePtn = 0;
+		if(g_Player[i].catchwait > 0)
+			g_Player[i].catchwait--;
 
-			g_AnimeWaitFrame = 0;
-		}
-		g_AnimeWaitFrame++;
 	}
+
 }
 
 //=============================================================================

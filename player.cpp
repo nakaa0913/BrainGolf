@@ -33,6 +33,8 @@
 static PLAYER g_Player[PLAYER_MAX];
 static int g_ShotSENo = 0;
 
+static int tex_yazirushi = 0;
+
 static float g_CharaUV = 0.0f;
 static int g_AnimePtn = 0;
 static int g_AnimeWaitFrame = 0;
@@ -47,6 +49,8 @@ HRESULT InitPlayer(void)
 
 	//
 	g_ShotSENo = LoadSound("data/SE/shot000.wav");
+	tex_yazirushi = LoadTexture("data/TEXTURE/yazirusi.png");
+
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
 		g_Player[i].texNo = LoadTexture("data/TEXTURE/majo.png");
@@ -228,6 +232,14 @@ void DrawPlayer(void)
 			float directionUV = 0.0f + 0.25f * g_Player[i].direction;
 
 			float rot = AngleToRot(g_Player[i].angle);
+
+			// –îˆó‚Ì•`ŽÊ
+			if (g_Player[i].have == true)
+			{
+				DrawSpriteColorRotate(tex_yazirushi, g_Player[i].pos.x, g_Player[i].pos.y, 700.0f, 700.0f,
+					0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), -rot);
+			}
+
 			DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
 				g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), -rot);
 		}

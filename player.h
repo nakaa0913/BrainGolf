@@ -32,7 +32,8 @@ struct PLAYER
 	int						catchwait;				// ボールを打ってから次にキャッチできるまでのクールタイム管理
 	float					angle;					// どの角度を向いているか
 	int						ShotPower;				// 弾を打ち出す強さ
-
+	bool					ConfirmAngle;			// 角度を確定したかどうか
+	int						ConfirmCooltime;		// 確定してからのクールタイム
 };
 
 

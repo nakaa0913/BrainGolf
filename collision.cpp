@@ -9,6 +9,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "bullet.h"
+#include "score.h"
 
 
 //*****************************************************************************
@@ -108,10 +109,15 @@ void UpdateCollision(void)
 					bullet[i].friction = 1.0f;
 					player[j].have = true;		// プレイヤーは弾を持つ
 
-					// 全てのプレイヤーの向いている角度を0に戻す
+					SetShotPower(0);			// ショットパワーの表示を0にしておく
+
+					// 全てのプレイヤーの必要な要素を初期化
 					for (int n = 0; n < PLAYER_MAX; n++)
 					{
 						player[n].angle = 0.0f;
+						player[n].ShotPower = 0;
+						player[n].ConfirmAngle = false;
+						player[n].ConfirmCooltime = 10;
 					}
 					
 				}
@@ -133,22 +139,22 @@ void UpdateCollision(void)
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
 		//右
-		if (bullet[i].pos.x > 560.0f)
+		if (bullet[i].pos.x > 480.0f)
 		{
 			bullet[i].move.x *= -1;
 		}
 		//左
-		if (bullet[i].pos.x < 0.0f)
+		if (bullet[i].pos.x < 80.0f)
 		{
 			bullet[i].move.x *= -1;
 		}
 		//上
-		if (bullet[i].pos.y < 0.0f)
+		if (bullet[i].pos.y < 80.0f)
 		{
 			bullet[i].move.y *= -1;
 		}
 		//下
-		if (bullet[i].pos.y > 800.0f)
+		if (bullet[i].pos.y > 720.0f)
 		{
 			bullet[i].move.y *= -1;
 		}

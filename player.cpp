@@ -67,6 +67,8 @@ HRESULT InitPlayer(void)
 		g_Player[i].catchwait = 0;
 		g_Player[i].angle = 0.0f;
 		g_Player[i].ShotPower = 0;
+		g_Player[i].ConfirmAngle = false;
+		g_Player[i].ConfirmCooltime = 10;
 	}
 
 	g_Player[0].have = true;
@@ -195,30 +197,47 @@ void UpdatePlayer(void)
 		// 弾発射
 		if (g_Player[i].have == true)
 		{
-			// プレイヤーの角度を変える処理,回転させる処理
-			g_Player[i].angle += 6.0f;
-			if (g_Player[i].angle > 360.0f)
-				g_Player[i].angle = 0.0f;
-			g_Player[i].direction = 2;
-
-			g_Player[i].ShotPower++;
-			if (g_Player[i].ShotPower > 100)
-				g_Player[i].ShotPower = 0;
-
-			SetShotPower(g_Player[i].ShotPower);
-
-			if (GetKeyboardTrigger(DIK_SPACE))
+			if (g_Player[i].ConfirmAngle == false)
 			{
-				g_Player[i].catchwait = 60;
-				g_Player[i].have = false;
+				// プレイヤーの角度を変える処理,回転させる処理
+				g_Player[i].angle += 6.0f;
+				if (g_Player[i].angle > 360.0f)
+					g_Player[i].angle = 0.0f;
+				g_Player[i].direction = 0;
+				if (GetKeyboardTrigger(DIK_SPACE))
+				{
+					g_Player[i].ConfirmAngle = true;
+				}
+			}
 
-				PlaySound(g_ShotSENo, 0);
+			if (g_Player[i].ConfirmAngle == true)
+			{
+				// クールタイムの減少
+				if(g_Player[i].ConfirmCooltime >= 0)
+					g_Player[i].ConfirmCooltime--;
 
-				SetVolume(g_ShotSENo, 0.1f);
+				g_Player[i].direction = 0;
+				// ShotPowerの変動の設定
+				g_Player[i].ShotPower++;
+				if (g_Player[i].ShotPower > 100)
+					g_Player[i].ShotPower = 0;
 
-				D3DXVECTOR2 pos = g_Player[i].pos;
-				SetBullet(pos , g_Player[i].angle, g_Player[i].ShotPower);		// ここで飛ばす角度帰れるよ
-				AddScore(123);
+				// 表示だけ↓scoreと同じもの
+				SetShotPower(g_Player[i].ShotPower);
+
+				if (GetKeyboardTrigger(DIK_SPACE) && g_Player[i].ConfirmCooltime < 0)
+				{
+					g_Player[i].catchwait = 60;
+					g_Player[i].have = false;
+
+					PlaySound(g_ShotSENo, 0);
+
+					SetVolume(g_ShotSENo, 0.1f);
+
+					D3DXVECTOR2 pos = g_Player[i].pos;
+					SetBullet(pos, g_Player[i].angle, g_Player[i].ShotPower);
+				}
+
 			}
 		}
 
@@ -242,15 +261,19 @@ void DrawPlayer(void)
 
 			float rot = AngleToRot(g_Player[i].angle);
 
+
 			// 矢印の描写
 			if (g_Player[i].have == true)
 			{
-				DrawSpriteColorRotate(tex_yazirushi, g_Player[i].pos.x, g_Player[i].pos.y, 700.0f, 700.0f,
+				// ShotPowerによる倍率
+				float ShotBairitu = 0.5f + (g_Player[i].ShotPower / 100.0f);
+
+				DrawSpriteColorRotate(tex_yazirushi, g_Player[i].pos.x, g_Player[i].pos.y, 500.0f * ShotBairitu, 500.0f * ShotBairitu,
 					0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), -rot);
 			}
 
 			DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
-				g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), -rot);
+				g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 		}
 	}
 }

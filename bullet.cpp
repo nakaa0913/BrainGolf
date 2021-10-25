@@ -149,8 +149,12 @@ BULLET *GetBullet(void)
 //=============================================================================
 // バレットの発射設定
 //=============================================================================
-void SetBullet(D3DXVECTOR2 pos , float angle)
+void SetBullet(D3DXVECTOR2 pos , float angle , int ShotPower)
 {
+	// ShotPowerによる倍率
+	float ShotBairitu = 0.5f + (ShotPower / 100.0f);
+
+
 	// もし未使用の弾が無かったら発射しない( =これ以上撃てないって事 )
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
@@ -161,7 +165,7 @@ void SetBullet(D3DXVECTOR2 pos , float angle)
 			// g_Bullet[i].rot = BULLET_ANGLE;	// 角度をセット
 
 			g_Bullet[i].vector = AngleToVector2(angle);	// 角度からベクトルを設定
-			g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * g_Bullet[i].vector.x, -BULLET_SPEED * g_Bullet[i].vector.y);	// ベクトルからmoveを設定
+			g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * ShotBairitu * g_Bullet[i].vector.x, -BULLET_SPEED * ShotBairitu * g_Bullet[i].vector.y);	// ベクトルからmoveを設定
 
 			return;							// 1発セットしたので終了する
 		}

@@ -27,5 +27,7 @@ void UpdateScore(void);
 void DrawScore(void);
 
 void AddScore(int add);
+void SetScore(int score);
 
+void SetShotPower(int ShotPower);
 

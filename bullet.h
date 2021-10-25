@@ -43,3 +43,4 @@ BULLET *GetBullet(void);
 void SetBullet(D3DXVECTOR2 pos, float angle);
 
 D3DXVECTOR2 AngleToVector2(float angle);
+void SetBullet(D3DXVECTOR2 pos, float angle, int ShotPower);

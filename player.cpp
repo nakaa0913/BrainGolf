@@ -66,6 +66,7 @@ HRESULT InitPlayer(void)
 		g_Player[i].have = false;
 		g_Player[i].catchwait = 0;
 		g_Player[i].angle = 0.0f;
+		g_Player[i].ShotPower = 0;
 	}
 
 	g_Player[0].have = true;
@@ -93,6 +94,8 @@ void UninitPlayer(void)
 //=============================================================================
 void UpdatePlayer(void)
 {
+	BULLET bullet = *GetBullet();
+
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
 
@@ -198,6 +201,12 @@ void UpdatePlayer(void)
 				g_Player[i].angle = 0.0f;
 			g_Player[i].direction = 2;
 
+			g_Player[i].ShotPower++;
+			if (g_Player[i].ShotPower > 100)
+				g_Player[i].ShotPower = 0;
+
+			SetShotPower(g_Player[i].ShotPower);
+
 			if (GetKeyboardTrigger(DIK_SPACE))
 			{
 				g_Player[i].catchwait = 60;
@@ -208,7 +217,7 @@ void UpdatePlayer(void)
 				SetVolume(g_ShotSENo, 0.1f);
 
 				D3DXVECTOR2 pos = g_Player[i].pos;
-				SetBullet(pos , g_Player[i].angle);		// ‚±‚±‚Å”ò‚Î‚·Šp“x‹A‚ê‚é‚æ
+				SetBullet(pos , g_Player[i].angle, g_Player[i].ShotPower);		// ‚±‚±‚Å”ò‚Î‚·Šp“x‹A‚ê‚é‚æ
 				AddScore(123);
 			}
 		}

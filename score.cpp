@@ -30,6 +30,7 @@ static D3DXVECTOR3				g_Pos;						// ポリゴンの座標
 static int						g_TexNo;					// テクスチャ番号
 
 static int						g_Score;					// スコア
+static int						g_ShotPower;				// 弾を打ち出すときの力0~100
 
 //=============================================================================
 // 初期化処理
@@ -101,6 +102,34 @@ void DrawScore(void)
 			// 次の桁へ
 			number /= 10;
 		}
+
+
+
+		// 打ち出すパワーの表示
+		// 桁数分処理する
+		int ShotPowerNumber = g_ShotPower;
+		for (int i = 0; i < SCORE_DIGIT; i++)
+		{
+			// 今回表示する桁の数字
+			float x = (float)(ShotPowerNumber % 10);
+
+			// スコアの位置やテクスチャー座標を反映
+			float px = g_Pos.x - g_w * i + 40.0f;	// プレイヤーの表示位置X
+			float py = g_Pos.y + 40.0f;			// プレイヤーの表示位置Y
+			float pw = g_w;				// プレイヤーの表示幅
+			float ph = g_h;				// プレイヤーの表示高さ
+
+			float tw = 1.0f / 10;		// テクスチャの幅
+			float th = 1.0f / 1;		// テクスチャの高さ
+			float tx = x * tw;			// テクスチャの左上X座標
+			float ty = 0.0f;			// テクスチャの左上Y座標
+
+			// １枚のポリゴンの頂点とテクスチャ座標を設定
+			DrawSprite(g_TexNo, px, py, pw, ph, tx, ty, tw, th);
+
+			// 次の桁へ
+			ShotPowerNumber /= 10;
+		}
 	}
 }
 
@@ -118,3 +147,22 @@ void AddScore(int add)
 	}
 }
 
+void SetScore(int score)
+{
+	g_Score = score;
+
+	if (g_Score > SCORE_MAX)
+	{
+		g_Score = SCORE_MAX;
+	}
+}
+
+void SetShotPower(int ShotPower)
+{
+	g_ShotPower = ShotPower;
+
+	if (g_ShotPower > SCORE_MAX)
+	{
+		g_ShotPower = SCORE_MAX;
+	}
+}

@@ -31,6 +31,7 @@ struct PLAYER
 	bool					have;					// ボールを持っているかどうか
 	int						catchwait;				// ボールを打ってから次にキャッチできるまでのクールタイム管理
 	float					angle;					// どの角度を向いているか
+	int						ShotPower;				// 弾を打ち出す強さ
 
 };
 

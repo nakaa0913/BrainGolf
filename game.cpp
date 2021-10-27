@@ -19,7 +19,7 @@
 #include "sound.h"
 #include "score.h"
 #include "bg.h"
-
+#include "Goal.h"
 /*------------------------------------------------------------------------------
    定数定義
 ------------------------------------------------------------------------------*/
@@ -37,20 +37,21 @@
    グローバル変数の定義
 ------------------------------------------------------------------------------*/
 static int g_BGMNo = 0;
-
+bool goal = false;
 
 /*------------------------------------------------------------------------------
    初期化関数
 ------------------------------------------------------------------------------*/
 void InitGame(void)
 {
+	goal = false;
 	InitPlayer();
 	InitEnemy();
 	InitEnemyEmitter();
 	InitBullet();
 	InitScore();
 	InitBG();
-
+	InitGoal();
 	g_BGMNo = LoadSound("data/BGM/sample001.wav");
 
 	SetVolume(g_BGMNo, 1.0f);
@@ -68,6 +69,8 @@ void UninitGame()
 	UninitBullet();
 	UninitEnemy();
 	UninitPlayer();
+	UninitGoal();
+	goal = false;
 }
 
 /*------------------------------------------------------------------------------
@@ -75,15 +78,21 @@ void UninitGame()
 ------------------------------------------------------------------------------*/
 void UpdateGame(void)
 {
-	UpdateBG();
-	UpdatePlayer();
-	UpdateEnemy();
-	UpdateBullet();
-	UpdateScore();
+	if (goal == false)
+	{
+		UpdateBG();
+		UpdatePlayer();
+		UpdateEnemy();
+		UpdateBullet();
+		UpdateScore();
 
-	UpdateEnemyEmitter();
+		UpdateEnemyEmitter();
 
-	UpdateCollision();
+		UpdateCollision();
+	}
+	else {
+		UpdateGoal();
+	}
 
 	//スペースキーが押されていて、フェード処理中ではないとき
 	if (GetKeyboardTrigger(DIK_RETURN) && GetFadeState() == FADE_NONE) 
@@ -100,11 +109,23 @@ void UpdateGame(void)
 ------------------------------------------------------------------------------*/
 void DrawGame(void)
 {
+
 	DrawBG();
 	DrawBullet();
 	DrawEnemy();
 	DrawPlayer();
 
 	DrawScore();
+	if (goal == true)
+	{
+		DrawGoal();
+	}
+	
 }
 
+void GoalTrue()
+{
+	goal = true;
+
+	return ;
+}

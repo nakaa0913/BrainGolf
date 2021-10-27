@@ -12,7 +12,7 @@
 #include "scene.h"
 #include "fade.h"
 #include <math.h>
-
+#include "game.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -30,6 +30,8 @@
 
 static BULLET g_Bullet[BULLET_MAX];					// バレット構造体
 
+
+
 //double angle = 00.0;								//向かせたい角度
 //
 //#define BULLET_ANGLE		(angle*D3DX_PI/180)		//バレットの角度(向かせたい角度*π/180)
@@ -41,7 +43,6 @@ static BULLET g_Bullet[BULLET_MAX];					// バレット構造体
 HRESULT InitBullet(void)
 {
 	int texNo = LoadTexture("data/TEXTURE/bullet00.png");
-
 	// バレット構造体の初期化
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
@@ -74,6 +75,8 @@ void UninitBullet(void)
 //=============================================================================
 void UpdateBullet(void)
 {
+
+
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
 		if (g_Bullet[i].use == true)	// このバレットが使われている？
@@ -98,9 +101,12 @@ void UpdateBullet(void)
 			//
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 2)
 			{
+				GoalTrue();
 				g_Bullet[i].use = false;
 				g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);
-				SceneTransition(SCENE_RESULT);
+
+
+				/*SceneTransition(SCENE_RESULT);*/
 			}
 
 			//
@@ -128,6 +134,8 @@ void DrawBullet(void)
 			float pw = g_Bullet[i].w;		// バレットの表示幅
 			float ph = g_Bullet[i].h;		// バレットの表示高さ
 			D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+			
 
 			// １枚のポリゴンの頂点とテクスチャ座標を設定
 			DrawSpriteColorRotate(g_Bullet[i].texNo, px, py, pw, ph, 0.0f, 0.0f, 1.0f, 1.0f, col, g_Bullet[i].rot);

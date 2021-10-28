@@ -50,6 +50,8 @@ HRESULT InitBullet(void)
 		g_Bullet[i].w     = 50.0f;
 		g_Bullet[i].h     = 50.0f;
 		g_Bullet[i].pos   = D3DXVECTOR2(300, 300.0f);
+		g_Bullet[i].nextpos = g_Bullet[i].pos;
+		g_Bullet[i].oldpos = g_Bullet[i].pos;
 		g_Bullet[i].rot   = 0.0f;
 		g_Bullet[i].texNo = texNo;
 
@@ -80,41 +82,46 @@ void UpdateBullet(void)
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
 		if (g_Bullet[i].use == true)	// このバレットが使われている？
-		{								// Yes
-			
-			g_Bullet[i].friction *= 0.992;
+		{								
+			// 前回の座標の保存
+			g_Bullet[i].oldpos = g_Bullet[i].pos;
+
+
+			// 摩擦とか抵抗力の計算
+			//g_Bullet[i].friction *= 0.992;
+			g_Bullet[i].friction *= 0.9995;
 
 			if (g_Bullet[i].friction < 0.2)
 			{
 				g_Bullet[i].friction = 0;
 			}
-			// バレットの移動処理
-			g_Bullet[i].pos += g_Bullet[i].move * g_Bullet[i].friction;
+			// 移動量moveの変動の計算
+			g_Bullet[i].move = g_Bullet[i].move * g_Bullet[i].friction;
 
-			// 画面外まで進んだ？
-			if (g_Bullet[i].pos.y < (0.0f - g_Bullet[i].h/2))	// 自分の大きさを考慮して画面外か判定している
-			{
-				g_Bullet[i].use = false;
-				g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);
-			}
+			// oldposにmove等の移動を反映させてnextposとする
+			g_Bullet[i].nextpos = g_Bullet[i].oldpos + g_Bullet[i].move;
 
-			//
+			// マップとの当たり判定処理
+			//if (g_Bullet[i].pos.y < (0.0f - g_Bullet[i].h/2))	// 自分の大きさを考慮して画面外か判定している
+			//{
+			//	g_Bullet[i].use = false;
+			//	g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);
+			//}
+
+			// ゴールに入った時の処理
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 2)
 			{
+				// ゴールに入った時の処理
 				GoalTrue();
 				g_Bullet[i].use = false;
-				g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);
 
 
 				/*SceneTransition(SCENE_RESULT);*/
 			}
 
-			//
-			if (GetKeyboardTrigger(DIK_R))
-			{
-				g_Bullet[i].use = false;
-				g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);
-			}
+			// 最期にposにnextposを反映させる
+			g_Bullet[i].pos = g_Bullet[i].nextpos;
+
 		}
 	}
 }
@@ -170,10 +177,10 @@ void SetBullet(D3DXVECTOR2 pos , float angle , int ShotPower)
 		{
 			g_Bullet[i].use = true;			// 使用状態へ変更する
 			g_Bullet[i].pos = pos;			// 座標をセット
-			// g_Bullet[i].rot = BULLET_ANGLE;	// 角度をセット
 
 			g_Bullet[i].vector = AngleToVector2(angle);	// 角度からベクトルを設定
-			g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * ShotBairitu * g_Bullet[i].vector.x, -BULLET_SPEED * ShotBairitu * g_Bullet[i].vector.y);	// ベクトルからmoveを設定
+			g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * ShotBairitu * g_Bullet[i].vector.x,
+										  -BULLET_SPEED * ShotBairitu * g_Bullet[i].vector.y);	// ベクトルからmoveを設定
 
 			return;							// 1発セットしたので終了する
 		}

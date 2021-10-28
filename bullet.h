@@ -22,6 +22,8 @@ struct BULLET
 	bool					use;					// true:使っている  false:未使用
 	float					w, h;					// 幅と高さ
 	D3DXVECTOR2				pos;					// バレットの座標
+	D3DXVECTOR2				nextpos;				// バレットの座標
+	D3DXVECTOR2				oldpos;					// バレットの座標
 	float					rot;					// バレットの回転量
 	D3DXVECTOR2				move;					// バレットの移動量
 	int						texNo;					// 何番目のテクスチャーを使用するのか
@@ -40,7 +42,6 @@ void UpdateBullet(void);
 void DrawBullet(void);
 
 BULLET *GetBullet(void);
-void SetBullet(D3DXVECTOR2 pos, float angle);
 
 D3DXVECTOR2 AngleToVector2(float angle);
 void SetBullet(D3DXVECTOR2 pos, float angle, int ShotPower);

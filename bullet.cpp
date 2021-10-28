@@ -163,19 +163,71 @@ void UpdateBullet(void)
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 3)
 			{
 				// 加速板に乗った時の処理
-				if (g_Bullet[i].accboard <= 0)
+				if (g_Bullet[i].accboardcool <= 0)
 				{
 					g_Bullet[i].friction = 0.999;
 					/*g_Bullet[i].vector = AngleToVector2();*/
 					g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * 2 * g_Bullet[i].vector.x,
 						-BULLET_SPEED * 2 * g_Bullet[i].vector.y);
 
-					g_Bullet[i].accboard = 60;
+					g_Bullet[i].accboardcool = 60;
 
 				}
 			}
-			if (g_Bullet[i].accboard > 0)
-				g_Bullet[i].accboard--;
+			if (g_Bullet[i].accboardcool > 0)
+				g_Bullet[i].accboardcool--;
+
+			//ワープ
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 4)
+			{
+				if (g_Bullet[i].warpcool <= 0)
+				{
+					for (int y = 0; y < MAP_Y; y++)
+					{
+						for (int x = 0; x < MAP_X; x++)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 5)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 60;
+
+							}
+
+						}
+					}
+				}
+			}
+
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 5)
+			{
+				if (g_Bullet[i].warpcool <= 0)
+				{
+					for (int y = 0; y < MAP_Y; y++)
+					{
+						for (int x = 0; x < MAP_X; x++)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 4)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 60;
+							}
+
+						}
+					}
+				}
+			}
+			if (g_Bullet[i].warpcool > 0)
+				g_Bullet[i].warpcool--;
 
 			// 最期にposにnextposを反映させる
 			g_Bullet[i].pos = g_Bullet[i].nextpos;

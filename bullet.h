@@ -30,7 +30,8 @@ struct BULLET
 	float					friction;				// 減速処理
 	float					angle;					// 角度
 	D3DXVECTOR2				vector;					// ベクトル
-	int						accboard;				//加速のクールタイム
+	int						accboardcool;			//加速のクールタイム
+	int						warpcool;				//ワープのクールタイム
 };
 
 

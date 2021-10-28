@@ -12,6 +12,9 @@
 
 #define _OX_EPSILON_	0.000001f	// 誤差
 
+#define		HitBlockData2DMax		(4)			// 1度に当たるブロックの最大数を書いておく。プレイヤーとブロックの大きさによって変ると思う
+#define		HitBlockData3DMax		(8)			// 1度に当たるブロックの最大数を書いておく。プレイヤーとブロックの大きさによって変ると思う
+
 // ======================================  2D系 =======================================
 // 2成分float
 struct Float2 {
@@ -117,6 +120,17 @@ typedef struct Circle2D
 	//~Circle2D() {}
 };
 
+// 当たっているブロックのデータ	基本的に配列で呼んで使う、例:HitBlockData2D g_HitBlockData[4] この4のところはプレイヤーとマップチップのサイズとかから、何個くらい当たるかを予想して決める
+typedef struct
+{
+	float BlockPosX;		// ブロックの座標(マップチップでの座標)
+	float BlockPosY;		// ブロックの座標(マップチップでの座標)
+	int CornerNum;		// -1:NoHit,0,左上,1:右上,2:左下,3:右下,四隅のどれに当たっているか。またはどれにも当たっていないか。
+
+	bool isUse;			// 現在このデータが使用中かどうか。
+
+} HitBlockData2D;
+
 // ======================================  3D系 =======================================
 
 // 3成分float
@@ -219,6 +233,19 @@ typedef struct Sphere {
 	//Sphere(const Float3& pos, float r) {}
 	//~Sphere() {}
 } ;
+
+// 当たっているブロックのデータ	基本的に配列で呼んで使う、例:HitBlockData2D g_HitBlockData[4] この4のところはプレイヤーとマップチップのサイズとかから、何個くらい当たるかを予想して決める
+typedef struct
+{
+	float BlockPosX;		// ブロックの座標(マップチップでの座標)
+	float BlockPosY;		// ブロックの座標(マップチップでの座標)
+	float BlockPosZ;		// ブロックの座標(マップチップでの座標)
+
+	int CornerNum;		// -1:NoHit,0,左上,1:右上,2:左下,3:右下,四隅のどれに当たっているか。またはどれにも当たっていないか。ここ3D版に修正する
+
+	bool isUse;			// 現在このデータが使用中かどうか。
+
+} HitBlockData3D;
 
 // ======================================================関数定義=============================================
 float CalculationRatio(float peace, float all, int magnification);

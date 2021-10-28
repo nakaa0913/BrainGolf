@@ -199,3 +199,11 @@ void SetCurrentMap(int next)
 {
 	g_CurrentPos = next;
 }
+
+int CheckBlockdata(int BlockX, int BlockY)
+{
+	int BlockData = 0;
+	BlockData = g_map_hitchk[0][BlockY][BlockX];
+
+	return BlockData;
+}

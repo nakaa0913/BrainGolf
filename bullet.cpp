@@ -110,16 +110,39 @@ void UpdateBullet(void)
 			Float2 block_last = { -1, -1 };
 
 			// HitBlockData構造体のHitBlockDatasを初期化,今回は4個くらいしか当たらない想定。
-			/*HitBlockData2D HitBlockDatas2D[HitBlockData2DMax]{};
-			for (int k = 0; k < HitBlockMax; k++)
+			HitBlockData2D HitBlockDatas2D[HitBlockData2DMax]{};		// 箱だけ宣言
+			for (int k = 0; k < HitBlockData2DMax; k++)					// 中身入れる
 			{
-				HitBlockDatas[k].BlockPosX = -1;
-				HitBlockDatas[k].BlockPosY = -1;
-				HitBlockDatas[k].CornerNum = -1;
-				HitBlockDatas[k].isUse = false;
-			}*/
+				HitBlockDatas2D[k].BlockPosX = -1;
+				HitBlockDatas2D[k].BlockPosY = -1;
+				HitBlockDatas2D[k].CornerNum = -1;
+				HitBlockDatas2D[k].isUse = false;
+			}
+
 
 			// マップとの当たり判定処理
+			for (int y = 0; y < MAP_Y; y++)
+			{
+				for (int x = 0; x < MAP_X; x++)
+				{
+					// そのブロックが当たり判定があるブロックかどうか調べる
+					int BlockData = CheckBlockdata(x, y);
+					// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+					if (BlockData == 1)
+					{
+
+					}
+					
+				}
+			}
+
+			
+
+
+
+
+
+						// マップとの当たり判定処理
 			//if (g_Bullet[i].pos.y < (0.0f - g_Bullet[i].h/2))	// 自分の大きさを考慮して画面外か判定している
 			//{
 			//	g_Bullet[i].use = false;

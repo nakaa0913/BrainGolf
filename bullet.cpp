@@ -125,7 +125,7 @@ void UpdateBullet(void)
 			{
 				for (int x = 0; x < MAP_X; x++)
 				{
-					// そのブロックが当たり判定があるブロックかどうか調べる
+					// そのブロックが当たり判定があるブロックかどうか調べるa
 					int BlockData = CheckBlockdata(x, y);
 					// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 					if (BlockData == 1)

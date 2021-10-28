@@ -13,7 +13,6 @@
 #include "fade.h"
 #include <math.h>
 #include "game.h"
-#include "primitive.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -44,22 +43,23 @@ static BULLET g_Bullet[BULLET_MAX];					// バレット構造体
 HRESULT InitBullet(void)
 {
 	int texNo = LoadTexture("data/TEXTURE/bullet00.png");
-	// バレット構造体の初期化 でも実際はSetBulletで呼ぶときにそっちで値が代入される
+	// バレット構造体の初期化
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
-		g_Bullet[i].use   = false;
-		g_Bullet[i].w     = 50.0f;
-		g_Bullet[i].h     = 50.0f;
-		g_Bullet[i].pos   = D3DXVECTOR2(300, 300.0f);
+		g_Bullet[i].use = false;
+		g_Bullet[i].w = 50.0f;
+		g_Bullet[i].h = 50.0f;
+		g_Bullet[i].pos = D3DXVECTOR2(300, 300.0f);
 		g_Bullet[i].nextpos = g_Bullet[i].pos;
 		g_Bullet[i].oldpos = g_Bullet[i].pos;
-		g_Bullet[i].rot   = 0.0f;
+		g_Bullet[i].rot = 0.0f;
 		g_Bullet[i].texNo = texNo;
 
 		g_Bullet[i].friction = 1.0f;
 		g_Bullet[i].angle = 0.0f;
 		g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);	// 移動量を初期化
 		g_Bullet[i].vector = D3DXVECTOR2(1.0f, 1.0f);
+		g_Bullet[i].accboard = 0; //加速のクールタイム
 	}
 
 	return S_OK;
@@ -83,7 +83,7 @@ void UpdateBullet(void)
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
 		if (g_Bullet[i].use == true)	// このバレットが使われている？
-		{								
+		{
 			// 前回の座標の保存
 			g_Bullet[i].oldpos = g_Bullet[i].pos;
 
@@ -102,23 +102,6 @@ void UpdateBullet(void)
 			// oldposにmove等の移動を反映させてnextposとする
 			g_Bullet[i].nextpos = g_Bullet[i].oldpos + g_Bullet[i].move;
 
-			// マップとの当たり判定の計算の下準備
-			int hitcount = 0;			// 四角形で当たり判定を計算したときに当たっているブロックの数
-			int hitcountCorner = 0;		// 当たっているブロックの角の数
-			Float2 block_min  = { 999, 999 } ;
-			Float2 block_max  = { -1, -1 };
-			Float2 block_last = { -1, -1 };
-
-			// HitBlockData構造体のHitBlockDatasを初期化,今回は4個くらいしか当たらない想定。
-			HitBlockData2D HitBlockDatas2D[HitBlockData2DMax]{};
-			for (int k = 0; k < HitBlockMax; k++)
-			{
-				HitBlockDatas[k].BlockPosX = -1;
-				HitBlockDatas[k].BlockPosY = -1;
-				HitBlockDatas[k].CornerNum = -1;
-				HitBlockDatas[k].isUse = false;
-			}
-
 			// マップとの当たり判定処理
 			//if (g_Bullet[i].pos.y < (0.0f - g_Bullet[i].h/2))	// 自分の大きさを考慮して画面外か判定している
 			//{
@@ -136,6 +119,23 @@ void UpdateBullet(void)
 
 				/*SceneTransition(SCENE_RESULT);*/
 			}
+
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 3)
+			{
+				// 加速板に乗った時の処理
+				if (g_Bullet[i].accboard <= 0)
+				{
+					g_Bullet[i].friction = 0.999;
+					/*g_Bullet[i].vector = AngleToVector2();*/
+					g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * 2 * g_Bullet[i].vector.x,
+						-BULLET_SPEED * 2 * g_Bullet[i].vector.y);
+
+					g_Bullet[i].accboard = 60;
+
+				}
+			}
+			if (g_Bullet[i].accboard > 0)
+				g_Bullet[i].accboard--;
 
 			// 最期にposにnextposを反映させる
 			g_Bullet[i].pos = g_Bullet[i].nextpos;
@@ -160,7 +160,7 @@ void DrawBullet(void)
 			float ph = g_Bullet[i].h;		// バレットの表示高さ
 			D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
-			
+
 
 			// １枚のポリゴンの頂点とテクスチャ座標を設定
 			DrawSpriteColorRotate(g_Bullet[i].texNo, px, py, pw, ph, 0.0f, 0.0f, 1.0f, 1.0f, col, g_Bullet[i].rot);
@@ -173,7 +173,7 @@ void DrawBullet(void)
 //=============================================================================
 // バレット構造体の先頭アドレスを取得
 //=============================================================================
-BULLET *GetBullet(void)
+BULLET* GetBullet(void)
 {
 	return &g_Bullet[0];
 }
@@ -182,7 +182,7 @@ BULLET *GetBullet(void)
 //=============================================================================
 // バレットの発射設定
 //=============================================================================
-void SetBullet(D3DXVECTOR2 pos , float angle , int ShotPower)
+void SetBullet(D3DXVECTOR2 pos, float angle, int ShotPower)
 {
 	// ShotPowerによる倍率
 	float ShotBairitu = 0.5f + (ShotPower / 100.0f);
@@ -198,7 +198,7 @@ void SetBullet(D3DXVECTOR2 pos , float angle , int ShotPower)
 
 			g_Bullet[i].vector = AngleToVector2(angle);	// 角度からベクトルを設定
 			g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * ShotBairitu * g_Bullet[i].vector.x,
-										  -BULLET_SPEED * ShotBairitu * g_Bullet[i].vector.y);	// ベクトルからmoveを設定
+				-BULLET_SPEED * ShotBairitu * g_Bullet[i].vector.y);	// ベクトルからmoveを設定
 
 			return;							// 1発セットしたので終了する
 		}

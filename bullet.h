@@ -30,6 +30,7 @@ struct BULLET
 	float					friction;				// 減速処理
 	float					angle;					// 角度
 	D3DXVECTOR2				vector;					// ベクトル
+	int						accboard;				//加速のクールタイム
 };
 
 
@@ -41,7 +42,7 @@ void UninitBullet(void);
 void UpdateBullet(void);
 void DrawBullet(void);
 
-BULLET *GetBullet(void);
+BULLET* GetBullet(void);
 
 D3DXVECTOR2 AngleToVector2(float angle);
 void SetBullet(D3DXVECTOR2 pos, float angle, int ShotPower);

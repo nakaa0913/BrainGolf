@@ -17,18 +17,19 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-struct MAP_DATA_T 
+struct MAP_DATA_T
 {
 	D3DXVECTOR2 uv;		//UV値
 	int			stop;	//侵入可能フラグ(1は進入禁止)
 
 };
 
-MAP_DATA_T g_MapInfo[3] =
+MAP_DATA_T g_MapInfo[4] =
 {
 	{ { 0.25f,   0.0f}, 0},//なにもなし
 	{ {  0.0f, 0.625f}, 1},//木
 	{ {0.625f, 0.625f}, 1},//切り株
+	{ {0.375f, 0.625f}, 1},//枯れ木
 };
 
 
@@ -61,7 +62,7 @@ int g_map_obj[MAP_Y][MAP_X] = {
 	//マップ０
 	{1,1,1,2,1,1,1},
 	{1,0,0,0,0,0,1},
-	{1,0,0,0,0,0,1},
+	{1,0,0,0,0,3,1},
 	{1,0,0,0,0,0,1},
 	{1,0,0,1,0,0,1},
 	{1,0,0,0,0,0,1},
@@ -86,10 +87,10 @@ int g_map_hitchk[2][MAP_Y][MAP_X] =
 	{//マップ０
 		{1,1,1,2,1,1,1},
 		{1,0,0,0,0,0,1},
-		{1,0,0,0,0,0,1},
+		{1,0,0,0,0,3,1},
 		{1,0,0,0,0,0,1},
 		{1,0,0,1,0,0,1},
-		{1,0,0,0,0,0,1}, 
+		{1,0,0,0,0,0,1},
 		{1,0,0,0,0,0,1},
 		{1,0,0,0,0,0,1},
 		{1,0,0,0,0,0,1},
@@ -157,12 +158,15 @@ void DrawBG(void)
 			switch (g_map_base[y][x])
 			{
 			case 0://草原
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * 80.0f, offset_y + y * 80.0f, 80.0f, 80.0f,   0.0f, 0.0f, 0.125f, 0.125f);
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * 80.0f, offset_y + y * 80.0f, 80.0f, 80.0f, 0.0f, 0.0f, 0.125f, 0.125f);
 				break;
 			case 1://道
 				DrawSpriteLeftTop(g_Ground, 0.0f + x * 80.0f, offset_y + y * 80.0f, 80.0f, 80.0f, 0.625f, 0.0f, 0.125f, 0.125f);
 				break;
 			case 2://ゴール
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * 80.0f, offset_y + y * 80.0f, 80.0f, 80.0f, 0.625f, 0.0f, 0.125f, 0.125f);
+				break;
+			case 3://加速
 				DrawSpriteLeftTop(g_Ground, 0.0f + x * 80.0f, offset_y + y * 80.0f, 80.0f, 80.0f, 0.625f, 0.0f, 0.125f, 0.125f);
 				break;
 			}
@@ -175,7 +179,7 @@ void DrawBG(void)
 		for (int x = 0; x < MAP_X; x++)
 		{
 			MAP_DATA_T mapchip;
-			mapchip = g_MapInfo[ g_map_obj[y][x] ];
+			mapchip = g_MapInfo[g_map_obj[y][x]];
 
 			DrawSpriteLeftTop(g_Ground, 0.0f + x * 80.0f, offset_y + y * 80.0f, 80.0f, 80.0f, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
 		}

@@ -127,6 +127,7 @@
     <ClCompile Include="bg.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="collision.cpp" />
+    <ClCompile Include="effect.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemy_emitter.cpp" />
     <ClCompile Include="fade.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="bg.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="collision.h" />
+    <ClInclude Include="effect.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemy_emitter.h" />
     <ClInclude Include="fade.h" />

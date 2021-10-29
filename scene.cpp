@@ -13,6 +13,7 @@
 #include "result.h"
 #include "fade.h"
 #include "select.h"
+#include "effect.h"
 
 
 /*------------------------------------------------------------------------------
@@ -47,18 +48,22 @@ void InitScene(SCENE index)
 		break;
 
 	case SCENE_TITLE:
+		InitEffect();
 		InitTitle();
 		break;
 
 	case SCENE_SELECT:
+		InitEffect();
 		InitSelect();
 		break;
 
 	case SCENE_GAME:
+		InitEffect();
 		InitGame();
 		break;
 
 	case SCENE_RESULT:
+		InitEffect();
 		InitResult();
 		break;
 	}
@@ -75,18 +80,22 @@ void UninitScene(void)
 		break;
 
 	case SCENE_TITLE:
+		UninitEffect();
 		UninitTitle();
 		break;
 
 	case SCENE_SELECT:
+		UninitEffect();
 		UninitSelect();
 		break;
 
 	case SCENE_GAME:
+		UninitEffect();
 		UninitGame();
 		break;
 
 	case SCENE_RESULT:
+		UninitEffect();
 		UninitResult();
 		break;
 	}
@@ -103,18 +112,22 @@ void UpdateScene(void)
 		break;
 
 	case SCENE_TITLE:
+		UpdateEffect();
 		UpdateTitle();
 		break;
 
 	case SCENE_SELECT:
+		UpdateEffect();
 		UpdateSelect();
 		break;
 
 	case SCENE_GAME:
+		UpdateEffect();
 		UpdateGame();
 		break;
 
 	case SCENE_RESULT:
+		UpdateEffect();
 		UpdateResult();
 		break;
 	}
@@ -134,18 +147,22 @@ void DrawScene(void)
 
 	case SCENE_TITLE:
 		DrawTitle();
+		DrawEffect();
 		break;
 
 	case SCENE_SELECT:
 		DrawSelect();
+		DrawEffect();
 		break;
 
 	case SCENE_GAME:
 		DrawGame();
+		DrawEffect();
 		break;
 
 	case SCENE_RESULT:
 		DrawResult();
+		DrawEffect();
 		break;
 	}
 

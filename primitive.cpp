@@ -31,8 +31,8 @@ float CalculationDistance(float point1pos1, float point1pos2, float point2pos1, 
 // 1つの点と1つの円の当たり判定。点と円の原点の距離<=円の半径なら当たっている。
 bool OnCollisionPointAndCircle(Float2 point, Circle2D circle)
 {
-	float a = point.x - circle.pos.x;
-	float b = point.y - circle.pos.y;
+	float a = point.x - circle.x;
+	float b = point.y - circle.y;
 	float c = sqrt(a * a + b * b);
 
 	if (c <= circle.r)
@@ -114,3 +114,27 @@ Float2 MoreAccurateCircleCollision(float OriginX, float OriginY, float radius, f
 
 	return BudPos;
 }
+
+// 真ん中ではなく、左端、上端の座標を引数で呼ぶ。
+bool CheckHit2DBoxBox(Float2 pos1, Float2 size1, Float2 pos2, Float2 size2)
+{
+	float L1 = pos1.x;      // 左
+	float R1 = pos1.x + size1.x; // 右(左+横幅)
+	float L2 = pos2.x;      // 左
+	float R2 = pos2.x + size2.x; // 右(左+横幅)
+
+	if (R1 < L2) return false; //< 線上も当たってることにする
+	if (R2 < L1) return false; //< 線上も当たってることにする
+
+	float U1 = pos1.y;			 // 上
+	float D1 = pos1.y + size1.y; // 下(上+縦幅)
+	float U2 = pos2.y;			// 上
+	float D2 = pos2.y + size2.y; // 下(上+縦幅)
+
+	if (D1 < U2) return false; //< 線上も当たってることにする
+	if (D2 < U1) return false; //< 線上も当たってることにする
+
+	// それ以外の場合は当たっている
+	return true;
+}
+

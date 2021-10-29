@@ -30,6 +30,8 @@ struct BULLET
 	float					friction;				// 減速処理
 	float					angle;					// 角度
 	D3DXVECTOR2				vector;					// ベクトル
+	float					shotpower;				// 球の力の倍率
+	int						CornerCollicionCool;	// 球がブロックの4隅に当たった時のクールタイム
 	int						accboardcool;			//加速のクールタイム
 	int						warpcool;				//ワープのクールタイム
 };

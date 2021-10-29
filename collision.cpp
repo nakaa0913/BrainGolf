@@ -135,30 +135,30 @@ void UpdateCollision(void)
 
 	// éÄñSÇµÇΩÇÁèÛë‘ëJà⁄
 
-	//íµÇÀï‘ÇË
-	for (int i = 0; i < BULLET_MAX; i++)
-	{
-		//âE
-		if (bullet[i].pos.x > 480.0f)
-		{
-			bullet[i].move.x *= -1;
-		}
-		//ç∂
-		if (bullet[i].pos.x < 80.0f)
-		{
-			bullet[i].move.x *= -1;
-		}
-		//è„
-		if (bullet[i].pos.y < 80.0f)
-		{
-			bullet[i].move.y *= -1;
-		}
-		//â∫
-		if (bullet[i].pos.y > 720.0f)
-		{
-			bullet[i].move.y *= -1;
-		}
-	}
+	////íµÇÀï‘ÇË
+	//for (int i = 0; i < BULLET_MAX; i++)
+	//{
+	//	//âE
+	//	if (bullet[i].pos.x > 480.0f)
+	//	{
+	//		bullet[i].move.x *= -1;
+	//	}
+	//	//ç∂
+	//	if (bullet[i].pos.x < 80.0f)
+	//	{
+	//		bullet[i].move.x *= -1;
+	//	}
+	//	//è„
+	//	if (bullet[i].pos.y < 80.0f)
+	//	{
+	//		bullet[i].move.y *= -1;
+	//	}
+	//	//â∫
+	//	if (bullet[i].pos.y > 720.0f)
+	//	{
+	//		bullet[i].move.y *= -1;
+	//	}
+	//}
 }
 
 //=============================================================================
@@ -222,4 +222,26 @@ bool CollisionBC(D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, float size1, float size2)
 	}
 
 	return false;
+}
+
+bool CheckHit(D3DXVECTOR2 pos1, D3DXVECTOR2 size1, D3DXVECTOR2 pos2, D3DXVECTOR2 size2)
+{
+	float L1 = pos1.x;      // ç∂
+	float R1 = pos1.x + size1.x; // âE(ç∂+â°ïù)
+	float L2 = pos2.x;      // ç∂
+	float R2 = pos2.x + size2.x; // âE(ç∂+â°ïù)
+
+	if (R1 < L2) return false; //< ê¸è„Ç‡ìñÇΩÇ¡ÇƒÇÈÇ±Ç∆Ç…Ç∑ÇÈ
+	if (R2 < L1) return false; //< ê¸è„Ç‡ìñÇΩÇ¡ÇƒÇÈÇ±Ç∆Ç…Ç∑ÇÈ
+
+	float U1 = pos1.y;			 // è„
+	float D1 = pos1.y + size1.y; // â∫(è„+ècïù)
+	float U2 = pos2.y;			// è„
+	float D2 = pos2.y + size2.y; // â∫(è„+ècïù)
+
+	if (D1 < U2) return false; //< ê¸è„Ç‡ìñÇΩÇ¡ÇƒÇÈÇ±Ç∆Ç…Ç∑ÇÈ
+	if (D2 < U1) return false; //< ê¸è„Ç‡ìñÇΩÇ¡ÇƒÇÈÇ±Ç∆Ç…Ç∑ÇÈ
+
+	// ÇªÇÍà»äOÇÃèÍçáÇÕìñÇΩÇ¡ÇƒÇ¢ÇÈ
+	return true;
 }

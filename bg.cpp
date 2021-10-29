@@ -110,7 +110,6 @@ int g_map_hitchk[2][MAP_Y][MAP_X] =
 };
 
 
-
 static int g_Ground = 0;		// 背景用テクスチャ情報
 static int g_CurrentPos = 0;	// 現在のマップ座標
 
@@ -119,7 +118,8 @@ static int g_CurrentPos = 0;	// 現在のマップ座標
 //=============================================================================
 HRESULT InitBG(void)
 {
-	g_Ground = LoadTexture("data/TEXTURE/basechip.png");
+	//g_Ground = LoadTexture("data/TEXTURE/basechip.png");
+	g_Ground = LoadTexture("data/TEXTURE/basechip_line.png");
 
 	return S_OK;
 }

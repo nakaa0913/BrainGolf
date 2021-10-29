@@ -584,6 +584,17 @@ void UpdateBullet(void)
 			if (g_Bullet[i].CornerCollicionCool > 0)
 				g_Bullet[i].CornerCollicionCool--;
 
+			//»
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 6)
+			{
+				// ‰Á‘¬”Â‚Éæ‚Á‚½‚Ìˆ—
+
+				g_Bullet[i].friction = 0.1;
+				g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * 2 * g_Bullet[i].vector.x,
+					-BULLET_SPEED * 2 * g_Bullet[i].vector.y);
+
+			}
+
 			// ÅŠú‚Épos‚Énextpos‚ğ”½‰f‚³‚¹‚é
 			g_Bullet[i].pos = g_Bullet[i].nextpos;
 

@@ -35,11 +35,12 @@
 //*****************************************************************************
 static GOAL g_Goal[GOAL_MAX];
 
-static int aa;
-static int bb;//星
-static int cc;//ネクスト
-static int dd;
-static int ee;
+static int aa;//画面（鳥）
+static int bb;//星（たこ）
+static int cc;//リザルト
+static int dd;//選択画面（タイトル）
+static int ee;//タイトル
+static int ff;//クリア～（タイトル）
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -50,12 +51,12 @@ HRESULT InitGoal(void)
 
 	//
 	/*g_ShotSENo = LoadSound("data/SE/shot000.wav");*/
-	aa = LoadTexture("data/TEXTURE/aa.png");
+	aa = LoadTexture("data/TEXTURE/aka.png");
 	bb = LoadTexture("data/TEXTURE/tako.png");
 	cc = LoadTexture("data/TEXTURE/title.png");
 	dd = LoadTexture("data/TEXTURE/title.png");
 	ee = LoadTexture("data/TEXTURE/title.png");
-
+	ff = LoadTexture("data/TEXTURE/title.png");
 
 	for (int i = 0; i < GOAL_MAX; i++)
 	{
@@ -153,45 +154,46 @@ void DrawGoal(void)
 
 		if (g_Goal[i].goaltime >= 10)
 		{
-			DrawSpriteColorRotate(aa, 320.0f, 400.0f, 400.0f, 400.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+			DrawSpriteColorRotate(aa, 275.0f, 500.0f, 500.0f, 600.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+			DrawSpriteColorRotate(ff, 275.0f, 60.0f, 400.0f, 200.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 
 		}
 
 		if (g_Goal[i].goaltime >= 40)
 		{
-			DrawSpriteColorRotate(bb, 210.0f, 180.0f, 100.0f, 100.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+			DrawSpriteColorRotate(bb, 160.0f, 180.0f, 100.0f, 100.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 		}
 
 		if (g_Goal[i].goaltime >= 80)
 		{
-			DrawSpriteColorRotate(bb, 290.0f, 180.0f, 100.0f, 100.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+			DrawSpriteColorRotate(bb, 280.0f, 180.0f, 100.0f, 100.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 		}
 
 		if (g_Goal[i].goaltime >= 120)
 		{
-			DrawSpriteColorRotate(bb, 370.0f, 180.0f, 100.0f, 100.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+			DrawSpriteColorRotate(bb, 400.0f, 180.0f, 100.0f, 100.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 		}
 
 		if (g_Goal[i].goaltime >= 160)
 		{
 
-			DrawSpriteColorRotate(cc, 290.0f, 200.0f, 300.0f, 100.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-			DrawSpriteColorRotate(dd, 290.0f, 400.0f, 300.0f, 100.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-			DrawSpriteColorRotate(ee, 290.0f, 600.0f, 300.0f, 100.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+			DrawSpriteColorRotate(cc, 290.0f, 400.0f, 300.0f, 80.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+			DrawSpriteColorRotate(dd, 290.0f, 550.0f, 300.0f, 80.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+			DrawSpriteColorRotate(ee, 290.0f, 700.0f, 300.0f, 80.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 
 			if (g_Goal[i].selectpush == 0)
 			{
-				DrawSpriteColorRotate(cc, 290.0f, 200.0f, 350.0f, 150.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+				DrawSpriteColorRotate(cc, 290.0f, 400.0f, 350.0f, 120.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 			}
 
 			if (g_Goal[i].selectpush == 1)
 			{
-				DrawSpriteColorRotate(dd, 290.0f, 400.0f, 350.0f, 150.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+				DrawSpriteColorRotate(dd, 290.0f, 550.0f, 350.0f, 120.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 			}
 
 			if (g_Goal[i].selectpush == 2)
 			{
-				DrawSpriteColorRotate(ee, 290.0f, 600.0f, 350.0f, 150.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+				DrawSpriteColorRotate(ee, 290.0f, 700.0f, 350.0f, 120.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 			}
 		}
 

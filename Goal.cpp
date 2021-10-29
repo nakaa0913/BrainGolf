@@ -93,7 +93,7 @@ void UpdateGoal(void)
 		if (g_Goal[i].selecttime <= 0)
 		{
 
-			if (GetKeyboardPress(DIK_P))
+			if (GetKeyboardPress(DIK_DOWN))
 			{
 				g_Goal[i].selectpush++;
 				g_Goal[i].selecttime = 30;
@@ -104,10 +104,20 @@ void UpdateGoal(void)
 				g_Goal[i].selectpush = 0;
 			}
 
+			if (GetKeyboardPress(DIK_UP))
+			{
+				g_Goal[i].selectpush--;
+				g_Goal[i].selecttime = 30;
+
+			}
+			if (g_Goal[i].selectpush < 0)
+			{
+				g_Goal[i].selectpush = 2;
+			}
 
 			if (g_Goal[i].selectpush == 0)
 			{
-				if (GetKeyboardPress(DIK_I))
+				if (GetKeyboardPress(DIK_RETURN))
 				{
 					SceneTransition(SCENE_RESULT);
 
@@ -117,7 +127,7 @@ void UpdateGoal(void)
 
 			if (g_Goal[i].selectpush == 1)
 			{
-				if (GetKeyboardPress(DIK_I))
+				if (GetKeyboardPress(DIK_RETURN))
 				{
 					SceneTransition(SCENE_SELECT);
 
@@ -126,7 +136,7 @@ void UpdateGoal(void)
 
 			if (g_Goal[i].selectpush == 2)
 			{
-				if (GetKeyboardPress(DIK_I))
+				if (GetKeyboardPress(DIK_RETURN))
 				{
 					SceneTransition(SCENE_TITLE);
 

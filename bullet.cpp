@@ -48,13 +48,13 @@ HRESULT InitBullet(void)
 	// バレット構造体の初期化 でも実際はSetBulletで呼ぶときにそっちで値が代入される
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
-		g_Bullet[i].use   = false;
-		g_Bullet[i].w     = 50.0f;
-		g_Bullet[i].h     = 50.0f;
-		g_Bullet[i].pos   = D3DXVECTOR2(300, 300.0f);
+		g_Bullet[i].use = false;
+		g_Bullet[i].w = 50.0f;
+		g_Bullet[i].h = 50.0f;
+		g_Bullet[i].pos = D3DXVECTOR2(300, 300.0f);
 		g_Bullet[i].nextpos = g_Bullet[i].pos;
 		g_Bullet[i].oldpos = g_Bullet[i].pos;
-		g_Bullet[i].rot   = 0.0f;
+		g_Bullet[i].rot = 0.0f;
 		g_Bullet[i].texNo = texNo;
 
 		g_Bullet[i].friction = 1.0f;
@@ -84,7 +84,7 @@ void UpdateBullet(void)
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
 		if (g_Bullet[i].use == true)	// このバレットが使われている？
-		{								
+		{
 			// 前回の座標の保存
 			g_Bullet[i].oldpos = g_Bullet[i].pos;
 
@@ -104,11 +104,11 @@ void UpdateBullet(void)
 			//g_Bullet[i].move = g_Bullet[i].move * g_Bullet[i].friction;
 
 			g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * g_Bullet[i].shotpower * g_Bullet[i].vector.x,
-										  -BULLET_SPEED * g_Bullet[i].shotpower * g_Bullet[i].vector.y);	// ベクトルからmoveを設定
+				-BULLET_SPEED * g_Bullet[i].shotpower * g_Bullet[i].vector.y);	// ベクトルからmoveを設定
 
 
 
-			// oldposにmove等の移動を反映させてnextposとする
+// oldposにmove等の移動を反映させてnextposとする
 			g_Bullet[i].nextpos = g_Bullet[i].oldpos + g_Bullet[i].move;
 
 			// マップとの当たり判定の計算の下準備
@@ -238,7 +238,7 @@ void UpdateBullet(void)
 						}
 
 					}
-					
+
 				}
 			}
 
@@ -432,7 +432,7 @@ void UpdateBullet(void)
 
 
 			}
-			else if(hitcount <= 4)
+			else if (hitcount <= 4)
 			{
 				// ブロックに当たっており、かつ2個以上かつ4個以下の場合の場合
 				// x座標のブロックに完全に左右どちらかからあたっている場合
@@ -444,18 +444,18 @@ void UpdateBullet(void)
 					if (BulletCircle.x < block_min.x * MAP_CHIP_SIZE_X + 0.0f)
 					{
 						// バレットはブロックの左側から右側に向かって進んでいて衝突したのでブロックの左側にnextposを固定し、左に向かって反射させる
-							LeftorRight = 0;
-							g_Bullet[i].nextpos.x = block_min.x * MAP_CHIP_SIZE_X + 0.0f - (g_Bullet[i].w / 2);
-							//g_Bullet[i].move.x *= -1;
-							g_Bullet[i].vector.x *= -1;
+						LeftorRight = 0;
+						g_Bullet[i].nextpos.x = block_min.x * MAP_CHIP_SIZE_X + 0.0f - (g_Bullet[i].w / 2);
+						//g_Bullet[i].move.x *= -1;
+						g_Bullet[i].vector.x *= -1;
 					}
 					if (BulletCircle.x > block_min.x * MAP_CHIP_SIZE_X + MAP_CHIP_SIZE_X)
 					{
 						// バレットはブロックの右側から左側に向かって進んでいて衝突したのでブロックの右側にnextposを固定し、右に向かって反射させる
-							LeftorRight = 1;
-							g_Bullet[i].nextpos.x = block_min.x * MAP_CHIP_SIZE_X + MAP_CHIP_SIZE_X + (g_Bullet[i].w / 2);
-							//g_Bullet[i].move.x *= -1;
-							g_Bullet[i].vector.x *= -1;
+						LeftorRight = 1;
+						g_Bullet[i].nextpos.x = block_min.x * MAP_CHIP_SIZE_X + MAP_CHIP_SIZE_X + (g_Bullet[i].w / 2);
+						//g_Bullet[i].move.x *= -1;
+						g_Bullet[i].vector.x *= -1;
 					}
 
 					if (BulletCircle.x > HitBlockDatas2D[0].BlockPosX * MAP_CHIP_SIZE_X + 0.0f && BulletCircle.x < HitBlockDatas2D[0].BlockPosX * MAP_CHIP_SIZE_X + MAP_CHIP_SIZE_X)
@@ -495,19 +495,19 @@ void UpdateBullet(void)
 
 
 
-						// マップとの当たり判定処理
-			//if (g_Bullet[i].pos.y < (0.0f - g_Bullet[i].h/2))	// 自分の大きさを考慮して画面外か判定している
-			//{
-			//	g_Bullet[i].use = false;
-			//	g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);
-			//}
+			// マップとの当たり判定処理
+//if (g_Bullet[i].pos.y < (0.0f - g_Bullet[i].h/2))	// 自分の大きさを考慮して画面外か判定している
+//{
+//	g_Bullet[i].use = false;
+//	g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);
+//}
 
-			// ゴールに入った時の処理
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 2)
+// ゴールに入った時の処理
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y)) == 2)
 			{
 				// ゴールに入った時の処理
 				GoalTrue();
-				g_Bullet[i].use = false;
+				// g_Bullet[i].use = false;
 
 
 				/*SceneTransition(SCENE_RESULT);*/
@@ -518,10 +518,7 @@ void UpdateBullet(void)
 				// 加速板に乗った時の処理
 				if (g_Bullet[i].accboardcool <= 0)
 				{
-					g_Bullet[i].friction = 0.999;
-					/*g_Bullet[i].vector = AngleToVector2();*/
-					g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * 2 * g_Bullet[i].vector.x,
-						-BULLET_SPEED * 2 * g_Bullet[i].vector.y);
+					g_Bullet[i].shotpower = 2.0f;
 
 					g_Bullet[i].accboardcool = 60;
 
@@ -589,9 +586,8 @@ void UpdateBullet(void)
 			{
 				// 加速板に乗った時の処理
 
-				g_Bullet[i].friction = 0.1;
-				g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * 2 * g_Bullet[i].vector.x,
-					-BULLET_SPEED * 2 * g_Bullet[i].vector.y);
+				if (g_Bullet[i].shotpower > 0.1f)
+					g_Bullet[i].shotpower = 0.1f;
 
 			}
 
@@ -620,7 +616,7 @@ void DrawBullet(void)
 			float ph = g_Bullet[i].h;		// バレットの表示高さ
 			D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
-			
+
 
 			// １枚のポリゴンの頂点とテクスチャ座標を設定
 			DrawSpriteColorRotate(g_Bullet[i].texNo, px, py, pw, ph, 0.0f, 0.0f, 1.0f, 1.0f, col, g_Bullet[i].rot);
@@ -633,7 +629,7 @@ void DrawBullet(void)
 //=============================================================================
 // バレット構造体の先頭アドレスを取得
 //=============================================================================
-BULLET *GetBullet(void)
+BULLET* GetBullet(void)
 {
 	return &g_Bullet[0];
 }
@@ -642,7 +638,7 @@ BULLET *GetBullet(void)
 //=============================================================================
 // バレットの発射設定
 //=============================================================================
-void SetBullet(D3DXVECTOR2 pos , float angle , int ShotPower)
+void SetBullet(D3DXVECTOR2 pos, float angle, int ShotPower)
 {
 	// ShotPowerによる倍率
 	float ShotBairitu = 0.5f + (ShotPower / 100.0f);
@@ -660,7 +656,7 @@ void SetBullet(D3DXVECTOR2 pos , float angle , int ShotPower)
 
 			g_Bullet[i].vector = AngleToVector2(angle);	// 角度からベクトルを設定
 			g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * g_Bullet[i].shotpower * g_Bullet[i].vector.x,
-										  -BULLET_SPEED * g_Bullet[i].shotpower * g_Bullet[i].vector.y);	// ベクトルからmoveを設定
+				-BULLET_SPEED * g_Bullet[i].shotpower * g_Bullet[i].vector.y);	// ベクトルからmoveを設定
 
 			return;							// 1発セットしたので終了する
 		}

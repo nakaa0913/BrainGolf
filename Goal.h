@@ -15,7 +15,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define GOAL_MAX (3)
+#define GOAL_MAX (5)
 
 // プレイヤー構造体
 struct GOAL
@@ -34,6 +34,9 @@ struct GOAL
 	int						ShotPower;				// 弾を打ち出す強さ
 	bool					ConfirmAngle;			// 角度を確定したかどうか
 	int						ConfirmCooltime;		// 確定してからのクールタイム
+	int						goaltime;				//ゴールしてからの時間
+	int						selectpush;				//選択してるやつ
+	int						selecttime;				//選択クールタイム
 };
 
 

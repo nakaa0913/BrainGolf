@@ -12,6 +12,7 @@
 #include "game.h"
 #include "result.h"
 #include "fade.h"
+#include "select.h"
 
 
 /*------------------------------------------------------------------------------
@@ -49,6 +50,10 @@ void InitScene(SCENE index)
 		InitTitle();
 		break;
 
+	case SCENE_SELECT:
+		InitSelect();
+		break;
+
 	case SCENE_GAME:
 		InitGame();
 		break;
@@ -71,6 +76,10 @@ void UninitScene(void)
 
 	case SCENE_TITLE:
 		UninitTitle();
+		break;
+
+	case SCENE_SELECT:
+		UninitSelect();
 		break;
 
 	case SCENE_GAME:
@@ -97,6 +106,10 @@ void UpdateScene(void)
 		UpdateTitle();
 		break;
 
+	case SCENE_SELECT:
+		UpdateSelect();
+		break;
+
 	case SCENE_GAME:
 		UpdateGame();
 		break;
@@ -121,6 +134,10 @@ void DrawScene(void)
 
 	case SCENE_TITLE:
 		DrawTitle();
+		break;
+
+	case SCENE_SELECT:
+		DrawSelect();
 		break;
 
 	case SCENE_GAME:

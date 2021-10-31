@@ -14,7 +14,7 @@
 #include "fade.h"
 #include "select.h"
 #include "effect.h"
-
+#include "logo.h"
 
 /*------------------------------------------------------------------------------
    íËêîíËã`
@@ -47,6 +47,11 @@ void InitScene(SCENE index)
 	case SCENE_NONE:
 		break;
 
+	case SCENE_LOGO:
+			InitEffect();
+			InitLogo();
+			break;
+
 	case SCENE_TITLE:
 		InitEffect();
 		InitTitle();
@@ -77,6 +82,11 @@ void UninitScene(void)
 	switch (g_SceneIndex)
 	{
 	case SCENE_NONE:
+		break;
+
+	case SCENE_LOGO:
+		UninitEffect();
+		UninitLogo();
 		break;
 
 	case SCENE_TITLE:
@@ -111,6 +121,11 @@ void UpdateScene(void)
 	case SCENE_NONE:
 		break;
 
+	case SCENE_LOGO:
+		UpdateEffect();
+		UpdateLogo();
+		break;
+
 	case SCENE_TITLE:
 		UpdateEffect();
 		UpdateTitle();
@@ -143,6 +158,11 @@ void DrawScene(void)
 	switch( g_SceneIndex )
 	{
 	case SCENE_NONE:
+		break;
+
+	case SCENE_LOGO:
+		DrawLogo();
+		DrawEffect();
 		break;
 
 	case SCENE_TITLE:

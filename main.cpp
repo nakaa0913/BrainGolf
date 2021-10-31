@@ -216,9 +216,9 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	// スプライトの初期化
 	InitSprite();
 
-	//シーンの初期化（タイトルからスタート）
+	//シーンの初期化（チームロゴからスタート）
 	SetFadeColor(0.0f, 0.0f, 0.0f);
-	SceneFadeIn(SCENE_TITLE);
+	SceneFadeIn(SCENE_LOGO);
 
 	return S_OK;
 }

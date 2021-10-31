@@ -22,6 +22,7 @@
 #include "Goal.h"
 #include"select.h"
 #include "Texture.h"
+#include "sprite.h"
 /*------------------------------------------------------------------------------
    定数定義
 ------------------------------------------------------------------------------*/
@@ -46,7 +47,7 @@ static int	g_BGMNo = 0;		// BGM識別子
 void InitSelect(void)
 {
 	//テクスチャ生成
-	g_TextureNo = LoadTexture("data/TEXTURE/basechip.png");
+	g_TextureNo = LoadTexture("data/TEXTURE/select.png");
 
 	g_BGMNo = LoadSound("data/BGM/sample000.wav");
 
@@ -84,6 +85,8 @@ void UpdateSelect(void)
 ------------------------------------------------------------------------------*/
 void DrawSelect(void)
 {
+	// １枚のポリゴンの頂点とテクスチャ座標を設定
+	DrawSpriteLeftTop(g_TextureNo, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
 
 }
 

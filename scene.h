@@ -4,11 +4,11 @@
 enum SCENE
 {
 	SCENE_NONE,		//シーン処理なし
+	SCENE_LOGO,     //チームロゴ
 	SCENE_TITLE,	//タイトル
 	SCENE_GAME,		//ゲーム
 	SCENE_SELECT,	//選択画面
 	SCENE_RESULT,	//リザルト
-
 	SCENE_MAX		//最後だとわかる奴をいれる
 };
 

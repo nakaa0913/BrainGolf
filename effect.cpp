@@ -10,7 +10,7 @@ static int ao_0;		// 0
 static int aka_1;		// 1
 static int tako_2;		// 2
 static int title_3;		// 3
-
+static int black_4;		// 4
 void InitEffect(void)
 {
 	//テクスチャの名前
@@ -18,6 +18,7 @@ void InitEffect(void)
 	aka_1 = LoadTexture("data/TEXTURE/aka.png");
 	tako_2 = LoadTexture("data/TEXTURE/tako.png");
 	title_3 = LoadTexture("data/TEXTURE/title.png");
+	black_4 = LoadTexture("data/TEXTURE/black.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -50,8 +51,7 @@ void UpdateEffect(void)
 	{
 		if (g_effect[i].isUse)
 		{
-			// 毎フレームごとにカウントを進める
-			g_effect[i].now_count++;
+			
 
 			//0～fadeIn
 			if (g_effect[i].now_count < 0 + g_effect[i].fadeIn_count)
@@ -88,6 +88,9 @@ void UpdateEffect(void)
 					g_effect[i].isUse = false;
 			}
 
+			// 毎フレームごとにカウントを進める
+			g_effect[i].now_count++;
+			
 			// Draw用に調整
 			g_effect[i].drawpos.x = g_effect[i].pos.x;
 			g_effect[i].drawpos.y = g_effect[i].pos.y;
@@ -143,7 +146,8 @@ void SetEffect(int id, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXVECTOR2 vel, int f
 			g_effect[i].id = tako_2;
 		if (id == 3)
 			g_effect[i].id = title_3;
-		
+		if (id == 4)
+			g_effect[i].id = black_4;
 
 
 		return;
@@ -153,3 +157,4 @@ void SetEffect(int id, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXVECTOR2 vel, int f
 
 	exit(1);
 }
+

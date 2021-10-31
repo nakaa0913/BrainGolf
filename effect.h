@@ -2,7 +2,7 @@
 #include "main.h"
 #include "renderer.h"
 
-#define MAX_EFFECT (10)
+#define MAX_EFFECT (100)
 
 typedef struct 
 {
@@ -27,4 +27,4 @@ void DrawEffect(void);
 
 EFFECT* GetEffect(void);
 
-void SetEffect(int id, D3DXVECTOR2 pos, D3DXVECTOR2 vel, D3DXVECTOR2 size, int fadeIn_count, int all_count, int fadeOut_count, int direction);
+void SetEffect(int id, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXVECTOR2 vel, int fadeIn_count, int all_count, int fadeOut_count, int direction);

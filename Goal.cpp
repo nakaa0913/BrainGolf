@@ -17,6 +17,7 @@
 #include "Goal.h"
 #include "scene.h"
 #include "fade.h"
+#include "effect.h"
 
 #define GOAL_H (50)
 #define GOAL_W (50)
@@ -162,11 +163,12 @@ void DrawGoal(void)
 	{
 
 
-		if (g_Goal[i].goaltime >= 10)
+		if (g_Goal[i].goaltime == 10)
 		{
-			DrawSpriteColorRotate(aa, 275.0f, 500.0f, 500.0f, 600.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-			DrawSpriteColorRotate(ff, 275.0f, 60.0f, 400.0f, 200.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+			//DrawSpriteColorRotate(aa, 275.0f, 500.0f, 500.0f, 600.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+			//DrawSpriteColorRotate(ff, 275.0f, 60.0f, 400.0f, 200.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 
+			SetEffect(1, D3DXVECTOR2(275.0f, 500.0f), D3DXVECTOR2(500.0f, 600.0f), D3DXVECTOR2(0.0f, 0.0f), 180, 999, 0, -1);
 		}
 
 		if (g_Goal[i].goaltime >= 40)

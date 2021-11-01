@@ -2,6 +2,7 @@
 #include "effect.h"
 #include "Texture.h"
 #include "sprite.h"
+#include "score.h"
 
 EFFECT g_Effect[MAX_EFFECT];
 
@@ -63,6 +64,7 @@ void InitEffect(void)
 		g_Effect[i].isUse = false;
 
 	}
+	InitScore();
 }
 
 void UninitEffect(void)
@@ -71,10 +73,12 @@ void UninitEffect(void)
 	{
 		g_Effect[i].isUse = false;
 	}
+	UninitScore();
 }
 
 void UpdateEffect(void)
 {
+	int effectnum = 0;
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
 		if (g_Effect[i].isUse)
@@ -96,7 +100,9 @@ void UpdateEffect(void)
 
 
 
-
+			// 毎フレームごとにカウントを進める
+			g_Effect[i].now_count++;
+			effectnum++;
 
 			// 時間経過による破壊処理
 			if (g_Effect[i].now_count > g_Effect[i].fadeIn_count
@@ -111,14 +117,15 @@ void UpdateEffect(void)
 					g_Effect[i].isUse = false;
 			}
 
-			// 毎フレームごとにカウントを進める
-			g_Effect[i].now_count++;
+			
 			
 			// Draw用に調整
 			/*g_Effect[i].drawpos.x = g_Effect[i].pos1.x;
 			g_Effect[i].drawpos.y = g_Effect[i].pos1.y;*/
 		}
 	}
+	SetScore(effectnum);
+	UpdateScore();
 }
 
 void DrawEffect(void)
@@ -131,6 +138,7 @@ void DrawEffect(void)
 			DrawSpriteColorRotate(g_Effect[i].id, g_Effect[i].pos.x, g_Effect[i].pos.y, g_Effect[i].size.x, g_Effect[i].size.y, 0.0f, 0.0f, 1.0f, 1.0f, col, g_Effect[i].rot);
 		}
 	}
+	DrawScore();
 }
 
 EFFECT* GetEffect(void)
@@ -204,7 +212,7 @@ void SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_patter
 	}
 
 	// MAX_EFFECT を超えた数エフェクトを作成しようとするとゲームが落ちる
-	exit(1);
+	 exit(1);
 }
 
 void Fadeprocess(int i)

@@ -2,7 +2,7 @@
 #include "main.h"
 #include "renderer.h"
 
-#define MAX_EFFECT (400)
+#define MAX_EFFECT (250)
 
 typedef struct 
 {

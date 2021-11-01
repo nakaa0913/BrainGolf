@@ -23,6 +23,7 @@
 #include"select.h"
 #include "Texture.h"
 #include "sprite.h"
+#include "effect.h"
 /*------------------------------------------------------------------------------
    定数定義
 ------------------------------------------------------------------------------*/
@@ -39,8 +40,11 @@
 /*------------------------------------------------------------------------------
    グローバル変数の定義
 ------------------------------------------------------------------------------*/
+static SELECT g_Select[SELECT_MAX];
+
 static int	g_TextureNo = 0;	// テクスチャ情報
 static int	g_BGMNo = 0;		// BGM識別子
+
 /*------------------------------------------------------------------------------
    初期化関数
 ------------------------------------------------------------------------------*/
@@ -48,6 +52,14 @@ void InitSelect(void)
 {
 	//テクスチャ生成
 	g_TextureNo = LoadTexture("data/TEXTURE/select.png");
+
+
+	for (int i = 0; i < SELECT_MAX; i++)
+	{
+		g_Select[i].selectpush = 0;
+		g_Select[i].selectvertical = 0;
+	}
+
 
 	g_BGMNo = LoadSound("data/BGM/sample000.wav");
 
@@ -78,6 +90,356 @@ void UpdateSelect(void)
 		//RESULTへ移行する
 		SceneTransition(SCENE_GAME);
 	}
+
+
+	/////////////
+
+	for (int i = 0; i < SELECT_MAX; i++)
+	{
+		//ミッション
+		SetEffect(8, D3DXVECTOR2(280.0f, 700.0f), D3DXVECTOR2(280.0f, 700.0f), 0,
+			D3DXVECTOR2(500.0f, 200.0f), D3DXVECTOR2(500.0f, 200.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 0,
+			0.0f, 0.0f, 0);
+
+		//ロック
+		SetEffect(9, D3DXVECTOR2(280.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+			D3DXVECTOR2(500.0f, 150.0f), D3DXVECTOR2(500.0f, 150.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 0,
+			0.0f, 0.0f, 0);
+
+		
+
+		SetEffect(6, D3DXVECTOR2(60.0f, 200.0f), D3DXVECTOR2(60.0f, 200.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(7, D3DXVECTOR2(170.0f, 200.0f), D3DXVECTOR2(170.0f, 200.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(6, D3DXVECTOR2(280.0f, 200.0f), D3DXVECTOR2(280.0f, 200.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(6, D3DXVECTOR2(390.0f, 200.0f), D3DXVECTOR2(390.0f, 200.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(6, D3DXVECTOR2(500.0f, 200.0f), D3DXVECTOR2(500.0f, 200.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		//二段目
+		SetEffect(6, D3DXVECTOR2(60.0f, 300.0f), D3DXVECTOR2(60.0f, 300.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(7, D3DXVECTOR2(170.0f, 300.0f), D3DXVECTOR2(170.0f, 300.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(6, D3DXVECTOR2(280.0f, 300.0f), D3DXVECTOR2(280.0f, 300.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(6, D3DXVECTOR2(390.0f, 300.0f), D3DXVECTOR2(390.0f, 300.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(6, D3DXVECTOR2(500.0f, 300.0f), D3DXVECTOR2(500.0f, 300.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		//三段目
+		SetEffect(6, D3DXVECTOR2(60.0f, 400.0f), D3DXVECTOR2(60.0f, 400.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(7, D3DXVECTOR2(170.0f, 400.0f), D3DXVECTOR2(170.0f, 400.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(6, D3DXVECTOR2(280.0f, 400.0f), D3DXVECTOR2(280.0f, 400.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(6, D3DXVECTOR2(390.0f, 400.0f), D3DXVECTOR2(390.0f, 400.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(6, D3DXVECTOR2(500.0f, 400.0f), D3DXVECTOR2(500.0f, 400.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		//四段目
+		SetEffect(6, D3DXVECTOR2(60.0f, 500.0f), D3DXVECTOR2(60.0f, 500.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(7, D3DXVECTOR2(170.0f, 500.0f), D3DXVECTOR2(170.0f, 500.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(6, D3DXVECTOR2(280.0f, 500.0f), D3DXVECTOR2(280.0f, 500.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(6, D3DXVECTOR2(390.0f, 500.0f), D3DXVECTOR2(390.0f, 500.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(6, D3DXVECTOR2(500.0f, 500.0f), D3DXVECTOR2(500.0f, 500.0f), 0,
+			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		//条件
+		SetEffect(10, D3DXVECTOR2(280.0f, 450.0f), D3DXVECTOR2(280.0f, 450.0f), 0,
+			D3DXVECTOR2(450.0f, 100.0f), D3DXVECTOR2(450.0f, 100.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 0,
+			0.0f, 0.0f, 0);
+
+		//セレクト一番上
+
+		if (g_Select[i].selectvertical == 0)
+		{
+			if (g_Select[i].selectpush == 0)
+			{
+				SetEffect(6, D3DXVECTOR2(60.0f, 200.0f), D3DXVECTOR2(60.0f, 200.0f), 0,
+					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+					0.0f, 1.0f, 0, 1, 0, 1,
+					0.0f, 0.0f, 0);
+			}
+
+			if (g_Select[i].selectpush == 1)
+			{
+				SetEffect(7, D3DXVECTOR2(170.0f, 200.0f), D3DXVECTOR2(170.0f, 200.0f), 0,
+					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+					0.0f, 1.0f, 0, 1, 0, 1,
+					0.0f, 0.0f, 0);
+			}
+
+			if (g_Select[i].selectpush == 2)
+			{
+				SetEffect(6, D3DXVECTOR2(280.0f, 200.0f), D3DXVECTOR2(280.0f, 200.0f), 0,
+					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+					0.0f, 1.0f, 0, 1, 0, 1,
+					0.0f, 0.0f, 0);
+			}
+
+			if (g_Select[i].selectpush == 3)
+			{
+				SetEffect(6, D3DXVECTOR2(390.0f, 200.0f), D3DXVECTOR2(390.0f, 200.0f), 0,
+					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+					0.0f, 1.0f, 0, 1, 0, 1,
+					0.0f, 0.0f, 0);
+			}
+
+			if (g_Select[i].selectpush == 4)
+			{
+				SetEffect(6, D3DXVECTOR2(500.0f, 200.0f), D3DXVECTOR2(500.0f, 200.0f), 0,
+					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+					0.0f, 1.0f, 0, 1, 0, 1,
+					0.0f, 0.0f, 0);
+			}
+		}
+
+			//セレクト二段目
+			if (g_Select[i].selectvertical == 1)
+			{
+				if (g_Select[i].selectpush == 0)
+				{
+					SetEffect(6, D3DXVECTOR2(60.0f, 300.0f), D3DXVECTOR2(60.0f, 300.0f), 0,
+						D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+						0.0f, 1.0f, 0, 1, 0, 1,
+						0.0f, 0.0f, 0);
+				}
+
+				if (g_Select[i].selectpush == 1)
+				{
+					SetEffect(7, D3DXVECTOR2(170.0f, 300.0f), D3DXVECTOR2(170.0f, 300.0f), 0,
+						D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+						0.0f, 1.0f, 0, 1, 0, 1,
+						0.0f, 0.0f, 0);
+				}
+
+				if (g_Select[i].selectpush == 2)
+				{
+					SetEffect(6, D3DXVECTOR2(280.0f, 300.0f), D3DXVECTOR2(280.0f, 300.0f), 0,
+						D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+						0.0f, 1.0f, 0, 1, 0, 1,
+						0.0f, 0.0f, 0);
+				}
+
+				if (g_Select[i].selectpush == 3)
+				{
+					SetEffect(6, D3DXVECTOR2(390.0f, 300.0f), D3DXVECTOR2(390.0f, 300.0f), 0,
+						D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+						0.0f, 1.0f, 0, 1, 0, 1,
+						0.0f, 0.0f, 0);
+				}
+
+				if (g_Select[i].selectpush == 4)
+				{
+					SetEffect(6, D3DXVECTOR2(500.0f, 300.0f), D3DXVECTOR2(500.0f, 300.0f), 0,
+						D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+						0.0f, 1.0f, 0, 1, 0, 1,
+						0.0f, 0.0f, 0);
+				}
+			}
+
+			
+
+
+
+			if (g_Select[i].selecttime <= 0)
+			{
+
+				
+				if (g_Select[i].selectvertical >= 2)
+				{
+					g_Select[i].selectvertical = 0;
+				}
+
+				if (GetKeyboardPress(DIK_UP))
+				{
+					g_Select[i].selectvertical--;
+					g_Select[i].selecttime = 30;
+
+				}
+				if (g_Select[i].selectvertical < 0)
+				{
+					g_Select[i].selectvertical = 1;
+				}
+
+				if (GetKeyboardPress(DIK_RIGHT))
+				{
+					g_Select[i].selectpush++;
+					g_Select[i].selecttime = 30;
+				}
+				if (g_Select[i].selectpush >= 5)
+				{
+					g_Select[i].selectpush = 0;
+				}
+
+				if (GetKeyboardPress(DIK_LEFT))
+				{
+					g_Select[i].selectpush--;
+					g_Select[i].selecttime = 30;
+
+				}
+				if (g_Select[i].selectpush < 0)
+				{
+					g_Select[i].selectpush = 4;
+				}
+
+
+				if (g_Select[i].selectpush == 0)
+				{
+					if (GetKeyboardPress(DIK_DOWN))
+					{
+						g_Select[i].selectvertical++;
+						g_Select[i].selecttime = 30;
+					}
+
+					if (GetKeyboardPress(DIK_RETURN))
+					{
+						SceneTransition(SCENE_GAME);
+					}
+				}
+
+
+				if (g_Select[i].selectpush == 1)
+				{
+
+					if (GetKeyboardPress(DIK_DOWN))
+					{
+						g_Select[i].selectvertical++;
+						g_Select[i].selecttime = 30;
+					}
+					if (GetKeyboardPress(DIK_RETURN))
+					{
+						SceneTransition(SCENE_GAME);
+					}
+				}
+
+				if (g_Select[i].selectpush == 2)
+				{
+					if (GetKeyboardPress(DIK_DOWN))
+					{
+						g_Select[i].selectvertical++;
+						g_Select[i].selecttime = 30;
+					}
+					if (GetKeyboardPress(DIK_RETURN))
+					{
+						SceneTransition(SCENE_GAME);
+					}
+				}
+
+				if (g_Select[i].selectpush == 3)
+				{
+					if (GetKeyboardPress(DIK_DOWN))
+					{
+						g_Select[i].selectvertical++;
+						g_Select[i].selecttime = 30;
+					}
+					if (GetKeyboardPress(DIK_RETURN))
+					{
+						SceneTransition(SCENE_GAME);
+					}
+				}
+
+				if (g_Select[i].selectpush == 4)
+				{
+					if (GetKeyboardPress(DIK_DOWN))
+					{
+						g_Select[i].selectvertical++;
+						g_Select[i].selecttime = 30;
+					}
+					if (GetKeyboardPress(DIK_RETURN))
+					{
+						SceneTransition(SCENE_GAME);
+					}
+				}
+
+				
+
+			}
+
+
+
+			if (g_Select[i].selecttime >= 0)
+				g_Select[i].selecttime--;
+
+	}
+
+
+		
+
+
+
+
+	
 }
 
 /*------------------------------------------------------------------------------

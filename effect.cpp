@@ -6,12 +6,17 @@
 EFFECT g_Effect[MAX_EFFECT];
 
 //テクスチャの名前定義
-static int ao_0;		// 0
-static int aka_1;		// 1
-static int tako_2;		// 2
-static int title_3;		// 3
-static int black_4;		// 4
-static int clear_5;		// 5
+static int ao_0;		 // 0
+static int aka_1;		 // 1
+static int tako_2;		 // 2
+static int title_3;		 // 3
+static int black_4;		 // 4
+static int clear_5;		 // 5
+static int select_6;	 // 6
+static int select2_7;    // 7
+static int mission_8;    // 8
+static int selectstar_9; // 9
+static int selectlock_10;// 10
 
 void InitEffect(void)
 {
@@ -22,6 +27,11 @@ void InitEffect(void)
 	title_3 = LoadTexture("data/TEXTURE/title.png");
 	black_4 = LoadTexture("data/TEXTURE/black.png");
 	clear_5 = LoadTexture("data/TEXTURE/clear.png");
+	select_6 = LoadTexture("data/TEXTURE/1.png");
+	select2_7 = LoadTexture("data/TEXTURE/2.png");
+	mission_8 = LoadTexture("data/TEXTURE/mission.png");
+	selectstar_9 = LoadTexture("data/TEXTURE/selectstar.png");
+	selectlock_10 = LoadTexture("data/TEXTURE/selectlock.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -177,6 +187,16 @@ void SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_patter
 			g_Effect[i].id = black_4;
 		if (id == 5)
 			g_Effect[i].id = clear_5;
+		if (id == 6)
+			g_Effect[i].id = select_6;
+		if (id == 7)
+			g_Effect[i].id = select2_7;
+		if (id == 8)
+			g_Effect[i].id = mission_8;
+		if (id == 9)
+			g_Effect[i].id = selectstar_9;
+		if (id == 10)
+			g_Effect[i].id = selectlock_10;
 
 		return;
 		}

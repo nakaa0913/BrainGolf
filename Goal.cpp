@@ -171,9 +171,6 @@ void UpdateGoal(void)
 		}
 
 
-
-		g_Goal.goaltime++;
-
 		if (g_Goal.selecttime <= 0)
 		{
 
@@ -235,6 +232,9 @@ void UpdateGoal(void)
 			g_Goal.selecttime--;
 
 	}
+
+	// 毎フレームカウントを増やす
+	g_Goal.goaltime++;
 }
 
 //=============================================================================

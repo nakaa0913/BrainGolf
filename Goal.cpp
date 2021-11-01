@@ -99,7 +99,7 @@ void UpdateGoal(void)
 			SetEffect(1, D3DXVECTOR2(275.0f, 500.0f), D3DXVECTOR2(300.0f, 500.0f), 1,
 				D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(500.0f, 600.0f), 1,
 				0.0f, 1.0f, 180, 999, 0, 180,
-				0.0f, 0.0f, 0);
+				45.0f, 90.0f, 2);
 
 
 

@@ -29,10 +29,12 @@ typedef struct
 	float			Clarity_min;			// 透明度の最低値
 	float			Clarity_max;			// 透明度の最大値
 
-	float			rot_angle;					// 現在の回転の角度
+	float			rot;					// 現在の回転のラジアン
+	float			rot_angle;				// 現在の回転の角度
 	float			rot_angle1;				// 回転の角度の初期値
 	float			rot_angle2;				// 回転の角度の終了値
 	int				rot_moving_pattern;		// 回転のパターン。
+	int				rot_count;				// 回転し始めてからのカウント。無限回転用。
 
 	D3DXVECTOR2		drawpos;				// 描写位置。現在未使用だから最終的に使わなければ消します。
 	bool			isUse;					// 使用フラグ
@@ -51,5 +53,7 @@ void SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_patter
 
 float AngleToRadian(float angle);	// 角度をラジアンへ
 
+void Fadeprocess(int i);
 void PosMovingPattern(int i);
 void SizeMovingPattern(int i);
+void RotMovingPattern(int i);

@@ -33,16 +33,18 @@ void InitEffect(void)
 		g_Effect[i].size_moving_pattern = 0;
 		g_Effect[i].Clarity_min = 0.0f;
 		g_Effect[i].Clarity_max = 1.0f;
-		g_Effect[i].Clarity = g_Effect[i].Clarity_max;
+		g_Effect[i].Clarity = g_Effect[i].Clarity_min;
 		g_Effect[i].fadeIn_count = 100;
 		g_Effect[i].all_count = 100;
 		g_Effect[i].fadeOut_count = 100;
 		g_Effect[i].now_count = 300;
 		g_Effect[i].moving_count = 0;
+		g_Effect[i].rot = 0.0f;
 		g_Effect[i].rot_angle = 0;
 		g_Effect[i].rot_angle1 = 0;
 		g_Effect[i].rot_angle2 = 90;
 		g_Effect[i].rot_moving_pattern = 0;
+		g_Effect[i].rot_count = 0;
 
 		g_Effect[i].drawpos = g_Effect[i].pos1;
 		g_Effect[i].isUse = false;
@@ -64,33 +66,17 @@ void UpdateEffect(void)
 	{
 		if (g_Effect[i].isUse)
 		{
-			
-
-			//0～fadeIn
-			if (g_Effect[i].now_count < 0 + g_Effect[i].fadeIn_count)
-			{
-				float oneframe = 1.0f / g_Effect[i].fadeIn_count;
-				g_Effect[i].Clarity = oneframe * g_Effect[i].now_count;
-			}
-			//fadeIn～all
-			if(g_Effect[i].now_count >= 0 + g_Effect[i].fadeIn_count && 
-				g_Effect[i].now_count < g_Effect[i].fadeIn_count + g_Effect[i].all_count)
-			{
-				g_Effect[i].Clarity = 1.0f;
-			}
-			//all～fadeOut
-			if (g_Effect[i].now_count >= g_Effect[i].fadeIn_count + g_Effect[i].all_count && 
-				g_Effect[i].now_count < g_Effect[i].fadeIn_count + g_Effect[i].all_count + g_Effect[i].fadeOut_count)
-			{
-				float oneframe = 1.0f / g_Effect[i].fadeOut_count;
-				g_Effect[i].Clarity = oneframe * ((g_Effect[i].fadeIn_count + g_Effect[i].all_count + g_Effect[i].fadeOut_count) - g_Effect[i].now_count);
-			}
+			// FadeInからアウトまでの処理
+			Fadeprocess(i);
 
 			// pos_moveingの処理
 			PosMovingPattern(i);
 
 			// size_moveingの処理
 			SizeMovingPattern(i);
+
+			// rot_moveingの処理
+			RotMovingPattern(i);
 
 
 
@@ -129,9 +115,7 @@ void DrawEffect(void)
 		if (g_Effect[i].isUse == true)
 		{
 			D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, g_Effect[i].Clarity);
-			// D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-			DrawSpriteColorRotate(g_Effect[i].id, g_Effect[i].pos.x, g_Effect[i].pos.y, g_Effect[i].size.x, g_Effect[i].size.y, 0.0f, 0.0f, 1.0f, 1.0f, col, 0.0f);
-			int aaaa = 0;
+			DrawSpriteColorRotate(g_Effect[i].id, g_Effect[i].pos.x, g_Effect[i].pos.y, g_Effect[i].size.x, g_Effect[i].size.y, 0.0f, 0.0f, 1.0f, 1.0f, col, g_Effect[i].rot);
 		}
 	}
 }
@@ -160,18 +144,20 @@ void SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_patter
 		g_Effect[i].size1 = size1;
 		g_Effect[i].size2 = size2;
 		g_Effect[i].size_moving_pattern = size_moving_pattern;
-		g_Effect[i].Clarity_min = 0.0f;
-		g_Effect[i].Clarity_max = 0.0f;
+		g_Effect[i].Clarity_min = Clarity_min;
+		g_Effect[i].Clarity_max = Clarity_max;
 		g_Effect[i].Clarity = g_Effect[i].Clarity_min;
 		g_Effect[i].fadeIn_count = fadeIn_count;
 		g_Effect[i].all_count = all_count;
 		g_Effect[i].fadeOut_count = fadeOut_count;
 		g_Effect[i].now_count = 0;
 		g_Effect[i].moving_count = moving_count;
+		g_Effect[i].rot = AngleToRadian(rot_angle1);
 		g_Effect[i].rot_angle = rot_angle1;
 		g_Effect[i].rot_angle1 = rot_angle1;
 		g_Effect[i].rot_angle2 = rot_angle2;
 		g_Effect[i].rot_moving_pattern = rot_moving_pattern;
+		g_Effect[i].rot_count = 0;
 
 		g_Effect[i].drawpos = g_Effect[i].pos1;
 		g_Effect[i].isUse = true;
@@ -196,6 +182,30 @@ void SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_patter
 	// MAX_EFFECT を超えた数エフェクトを作成しようとするとゲームが落ちる
 	exit(1);
 }
+
+void Fadeprocess(int i)
+{
+	//0～fadeIn
+	if (g_Effect[i].now_count < 0 + g_Effect[i].fadeIn_count)
+	{
+		float oneframe = (g_Effect[i].Clarity_max - g_Effect[i].Clarity_min) / g_Effect[i].fadeIn_count;
+		g_Effect[i].Clarity = g_Effect[i].Clarity_min + oneframe * g_Effect[i].now_count;
+	}
+	//fadeIn～all
+	if (g_Effect[i].now_count >= 0 + g_Effect[i].fadeIn_count &&
+		g_Effect[i].now_count < g_Effect[i].fadeIn_count + g_Effect[i].all_count)
+	{
+		g_Effect[i].Clarity = g_Effect[i].Clarity_max;
+	}
+	//all～fadeOut
+	if (g_Effect[i].now_count >= g_Effect[i].fadeIn_count + g_Effect[i].all_count &&
+		g_Effect[i].now_count < g_Effect[i].fadeIn_count + g_Effect[i].all_count + g_Effect[i].fadeOut_count)
+	{
+		float oneframe = (g_Effect[i].Clarity_max - g_Effect[i].Clarity_min) / g_Effect[i].fadeOut_count;
+		g_Effect[i].Clarity = g_Effect[i].Clarity_min + oneframe * ((g_Effect[i].fadeIn_count + g_Effect[i].all_count + g_Effect[i].fadeOut_count) - g_Effect[i].now_count);
+	}
+}
+
 
 void PosMovingPattern(int i)
 {
@@ -261,6 +271,58 @@ void SizeMovingPattern(int i)
 
 
 	}
+
+	return;
+}
+
+void RotMovingPattern(int i)
+{
+	// この関数はisUseがtrueの場合しか呼ばれない場所で呼ぶ
+
+	// 現在のカウントが moving_count より小さい間だけ実行される
+	// もしくはrot_moving_pattern が 2 の時は時間が切れても無限に回転するので実行される
+	if (g_Effect[i].now_count < g_Effect[i].moving_count || g_Effect[i].rot_moving_pattern == 2)
+	{
+		// まず角度angleからラジアンrotに変換する
+		float rot = AngleToRadian(g_Effect[i].rot_angle);
+		float rot1 = AngleToRadian(g_Effect[i].rot_angle1);
+		float rot2 = AngleToRadian(g_Effect[i].rot_angle2);
+
+
+		// 0	rot_angle1から移動しない。
+		if (g_Effect[i].rot_moving_pattern == 0)
+		{
+			g_Effect[i].rot = AngleToRadian(g_Effect[i].rot_angle);
+		}
+		// 1	rot_angle1からrot_angle2まで直線的な移動をする
+		if (g_Effect[i].rot_moving_pattern == 1)
+		{
+			float onemove = (g_Effect[i].rot_angle2 - g_Effect[i].rot_angle1) / g_Effect[i].moving_count;
+			g_Effect[i].rot_angle = g_Effect[i].rot_angle1 + onemove * g_Effect[i].now_count;
+			g_Effect[i].rot		  = AngleToRadian(g_Effect[i].rot_angle);
+
+			// 誤差が出るので動く最後のフレームでrot_angle2に丁度になるように調整
+			if (g_Effect[i].now_count == g_Effect[i].moving_count - 1)
+			{
+				g_Effect[i].rot_angle = g_Effect[i].rot_angle2;
+				g_Effect[i].rot		  = AngleToRadian(g_Effect[i].rot_angle);
+			}
+		}
+		// 2	rot_angle1からrot_angle2 まで直線的な回転をする。 1とは違い、moving_countが終わっても回転し続ける。
+		if (g_Effect[i].rot_moving_pattern == 2)
+		{
+			float onemove = (g_Effect[i].rot_angle2 - g_Effect[i].rot_angle1) / g_Effect[i].moving_count;
+			g_Effect[i].rot_angle = g_Effect[i].rot_angle1 + onemove * g_Effect[i].rot_count;
+			g_Effect[i].rot		  = AngleToRadian(g_Effect[i].rot_angle);
+		}
+		// ここにパターンを書き足していく
+
+
+
+
+	}
+
+	g_Effect[i].rot_count++;
 
 	return;
 }

@@ -8,8 +8,8 @@
 ==============================================================================*/
 #pragma once
 
-#define MAP_X (7)
-#define MAP_Y (10)
+#define MAP_X (14)
+#define MAP_Y (20)
 
 #pragma warning(push)
 #pragma warning(disable:4005)

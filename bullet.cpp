@@ -49,8 +49,8 @@ HRESULT InitBullet(void)
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
 		g_Bullet[i].use = false;
-		g_Bullet[i].w = 50.0f;
-		g_Bullet[i].h = 50.0f;
+		g_Bullet[i].w = 20.0f;
+		g_Bullet[i].h = 20.0f;
 		g_Bullet[i].pos = D3DXVECTOR2(300, 300.0f);
 		g_Bullet[i].nextpos = g_Bullet[i].pos;
 		g_Bullet[i].oldpos = g_Bullet[i].pos;
@@ -90,25 +90,22 @@ void UpdateBullet(void)
 
 
 			// 摩擦とか抵抗力の計算
-			//g_Bullet[i].friction *= 0.992;
-			g_Bullet[i].friction *= 0.9995;
+			g_Bullet[i].friction = 0.9815;
 
-			if (g_Bullet[i].friction < 0.2)
+			if (g_Bullet[i].shotpower < 0.14f)
 			{
-				g_Bullet[i].friction = 0;
+				g_Bullet[i].shotpower = 0;
 			}
 			// ショットパワーに抵抗力をかけて力を弱くする
 			g_Bullet[i].shotpower = g_Bullet[i].shotpower * g_Bullet[i].friction;
 
 			// 移動量moveの更新
-			//g_Bullet[i].move = g_Bullet[i].move * g_Bullet[i].friction;
-
 			g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * g_Bullet[i].shotpower * g_Bullet[i].vector.x,
 				-BULLET_SPEED * g_Bullet[i].shotpower * g_Bullet[i].vector.y);	// ベクトルからmoveを設定
 
 
 
-// oldposにmove等の移動を反映させてnextposとする
+			// oldposにmove等の移動を反映させてnextposとする
 			g_Bullet[i].nextpos = g_Bullet[i].oldpos + g_Bullet[i].move;
 
 			// マップとの当たり判定の計算の下準備
@@ -496,13 +493,8 @@ void UpdateBullet(void)
 
 
 			// マップとの当たり判定処理
-//if (g_Bullet[i].pos.y < (0.0f - g_Bullet[i].h/2))	// 自分の大きさを考慮して画面外か判定している
-//{
-//	g_Bullet[i].use = false;
-//	g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);
-//}
 
-// ゴールに入った時の処理
+			// ゴールに入った時の処理
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y)) == 2)
 			{
 				// ゴールに入った時の処理
@@ -586,8 +578,8 @@ void UpdateBullet(void)
 			{
 				// 加速板に乗った時の処理
 
-				if (g_Bullet[i].shotpower > 0.1f)
-					g_Bullet[i].shotpower = 0.1f;
+				if (g_Bullet[i].shotpower > 0.3f)
+					g_Bullet[i].shotpower = 0.3f;
 
 			}
 

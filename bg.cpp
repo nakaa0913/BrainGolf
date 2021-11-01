@@ -63,16 +63,26 @@ int g_map_base[MAP_Y][MAP_X] = {
 
 int g_map_obj[MAP_Y][MAP_X] = {
 	//マップ０
-	{1,1,1,2,1,1,1},
-	{1,0,0,0,0,0,1},
-	{1,0,0,0,0,3,1},
-	{1,0,0,0,0,0,1},
-	{1,0,0,1,0,0,1},
-	{1,0,0,0,0,0,1},
-	{1,4,0,0,0,0,1},
-	{1,0,0,0,0,0,1},
-	{1,0,0,6,0,5,1},
-	{1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,2, 1,1,1,1,1,1,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,3,0,0,0, 0,3,3,3,0,0,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,1,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0, 0,0,1,1,1,1,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,4,0,0,0,0,0, 0,0,0,0,3,0,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,1,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,1,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,1,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,6,6,6,0,0,0, 0,0,0,0,0,5,1},
+		{1,1,1,1,1,1,1, 1,1,1,1,1,1,1}
 
 	////マップ１
 	//{0,0,0,0,0,0,0,0,0,0},
@@ -88,16 +98,26 @@ int g_map_obj[MAP_Y][MAP_X] = {
 int g_map_hitchk[2][MAP_Y][MAP_X] =
 {
 	{//マップ０
-		{1,1,1,2,1,1,1},
-		{1,0,0,0,0,0,1},
-		{1,0,0,0,0,3,1},
-		{1,0,0,0,0,0,1},
-		{1,0,0,1,0,0,1},
-		{1,0,0,0,0,0,1},
-		{1,4,0,0,0,0,1},
-		{1,0,0,0,0,0,1},
-		{1,0,0,6,0,5,1},
-		{1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,2, 1,1,1,1,1,1,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,3,0,0,0, 0,3,3,3,0,0,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,1,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0, 0,0,1,1,1,1,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,4,0,0,0,0,0, 0,0,0,0,3,0,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,1,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,1,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,1,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0, 0,0,0,0,0,0,1},
+		{1,6,6,6,0,0,0, 0,0,0,0,0,5,1},
+		{1,1,1,1,1,1,1, 1,1,1,1,1,1,1}
 	},
 	//{//マップ１
 	//	{0,0,0,0,0,0,0,0,0,0,0,0},
@@ -161,25 +181,25 @@ void DrawBG(void)
 			switch (g_map_base[y][x])
 			{
 			case 0://草原
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * 80.0f, offset_y + y * 80.0f, 80.0f, 80.0f, 0.0f, 0.0f, 0.125f, 0.125f);
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
 				break;
 			case 1://道
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * 80.0f, offset_y + y * 80.0f, 80.0f, 80.0f, 0.625f, 0.0f, 0.125f, 0.125f);
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.625f, 0.0f, 0.125f, 0.125f);
 				break;
 			case 2://ゴール
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * 80.0f, offset_y + y * 80.0f, 80.0f, 80.0f, 0.625f, 0.0f, 0.125f, 0.125f);
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.625f, 0.0f, 0.125f, 0.125f);
 				break;
 			case 3://加速
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * 80.0f, offset_y + y * 80.0f, 80.0f, 80.0f, 0.625f, 0.0f, 0.125f, 0.125f);
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.625f, 0.0f, 0.125f, 0.125f);
 				break;
 			case 4://ワープ
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * 80.0f, offset_y + y * 80.0f, 80.0f, 80.0f, 0.625f, 0.0f, 0.125f, 0.125f);
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.625f, 0.0f, 0.125f, 0.125f);
 				break;
 			case 5://ワープ
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * 80.0f, offset_y + y * 80.0f, 80.0f, 80.0f, 0.625f, 0.0f, 0.125f, 0.125f);
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.625f, 0.0f, 0.125f, 0.125f);
 				break;
 			case 6://砂
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * 80.0f, offset_y + y * 80.0f, 80.0f, 80.0f, 0.625f, 0.0f, 0.125f, 0.125f);
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.625f, 0.0f, 0.125f, 0.125f);
 				break;
 			}
 		}
@@ -193,7 +213,7 @@ void DrawBG(void)
 			MAP_DATA_T mapchip;
 			mapchip = g_MapInfo[g_map_obj[y][x]];
 
-			DrawSpriteLeftTop(g_Ground, 0.0f + x * 80.0f, offset_y + y * 80.0f, 80.0f, 80.0f, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
+			DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
 		}
 	}
 }
@@ -201,8 +221,8 @@ void DrawBG(void)
 int GetMapEnter(D3DXVECTOR2 pos)
 {
 	int x, y;
-	x = (int)(pos.x / 80.0f);//座標をマップチップ一つの大きさで割る
-	y = (int)(pos.y / 80.0f);
+	x = (int)(pos.x / MAP_CHIP_SIZE_X);//座標をマップチップ一つの大きさで割る
+	y = (int)(pos.y / MAP_CHIP_SIZE_Y);
 
 	return g_map_hitchk[g_CurrentPos][y][x];
 }

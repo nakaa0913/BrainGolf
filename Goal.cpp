@@ -34,7 +34,7 @@
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-static GOAL g_Goal[GOAL_MAX];
+static GOAL g_Goal;
 
 static int aa;//画面（鳥）
 static int bb;//星（たこ）
@@ -59,11 +59,9 @@ HRESULT InitGoal(void)
 	ee = LoadTexture("data/TEXTURE/title.png");
 	ff = LoadTexture("data/TEXTURE/title.png");
 
-	for (int i = 0; i < GOAL_MAX; i++)
-	{
-		g_Goal[i].goaltime = 0;
-		g_Goal[i].selectpush = 0;
-	}
+	g_Goal.goaltime = 0;
+	g_Goal.selectpush = 0;
+
 
 
 	//初期化
@@ -85,125 +83,123 @@ void UninitGoal(void)
 //=============================================================================
 void UpdateGoal(void)
 {
-	for (int i = 0; i < GOAL_MAX; i++)
+
+	if (g_Goal.goaltime == 10)
 	{
-		if (g_Goal[i].goaltime == 10)
-		{
-			SetEffect(1, D3DXVECTOR2(275.0f, 500.0f), D3DXVECTOR2(300.0f, 500.0f), 1,
-				D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(500.0f, 600.0f), 1,
-				0.0f, 1.0f, 180, 999, 0, 180,
-				0.0f, 0.0f, 0);
+		SetEffect(1, D3DXVECTOR2(275.0f, 500.0f), D3DXVECTOR2(300.0f, 500.0f), 1,
+			D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(500.0f, 600.0f), 1,
+			0.0f, 1.0f, 180, 999, 0, 180,
+			0.0f, 0.0f, 0);
 
 
-			SetEffect(5, D3DXVECTOR2(275.0f, 60.0f), D3DXVECTOR2(275.0f, 60.0f), 0,
-				D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(400.0f, 100.0f), 1,
-				0.0f, 1.0f, 180, 999, 0, 180,
-				0.0f, 0.0f, 0);
-		}
+		SetEffect(5, D3DXVECTOR2(275.0f, 60.0f), D3DXVECTOR2(275.0f, 60.0f), 0,
+			D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(400.0f, 100.0f), 1,
+			0.0f, 1.0f, 180, 999, 0, 180,
+			0.0f, 0.0f, 0);
+	}
 
-		if (g_Goal[i].goaltime == 40)
-		{
-			SetEffect(2, D3DXVECTOR2(160.0f, 180.0f), D3DXVECTOR2(160.0f, 180.0f),0,
-				D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-				0.0f, 1.0f, 180, 999, 0, 60,
-				0.0f, 0.0f, 0);
-		}
+	if (g_Goal.goaltime == 40)
+	{
+		SetEffect(2, D3DXVECTOR2(160.0f, 180.0f), D3DXVECTOR2(160.0f, 180.0f), 0,
+			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+			0.0f, 1.0f, 180, 999, 0, 60,
+			0.0f, 0.0f, 0);
+	}
 
-		if (g_Goal[i].goaltime == 80)
-		{
+	if (g_Goal.goaltime == 80)
+	{
 
-			SetEffect(2, D3DXVECTOR2(280.0f, 180.0f), D3DXVECTOR2(280.0f, 180.0f), 0,
-				D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-				0.0f, 1.0f, 180, 999, 0, 60,
-				0.0f, 0.0f, 0);
-		}
+		SetEffect(2, D3DXVECTOR2(280.0f, 180.0f), D3DXVECTOR2(280.0f, 180.0f), 0,
+			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+			0.0f, 1.0f, 180, 999, 0, 60,
+			0.0f, 0.0f, 0);
+	}
 
-		if (g_Goal[i].goaltime == 120)
-		{
+	if (g_Goal.goaltime == 120)
+	{
 
-			SetEffect(2, D3DXVECTOR2(400.0f, 180.0f), D3DXVECTOR2(400.0f, 180.0f), 0,
-				D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-				0.0f, 1.0f, 180, 999, 0, 60,
-				0.0f, 0.0f, 0);
-		}
+		SetEffect(2, D3DXVECTOR2(400.0f, 180.0f), D3DXVECTOR2(400.0f, 180.0f), 0,
+			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+			0.0f, 1.0f, 180, 999, 0, 60,
+			0.0f, 0.0f, 0);
+	}
 
-		if (g_Goal[i].goaltime == 160)
-		{
-		}
+	if (g_Goal.goaltime == 160)
+	{
+	}
 
-		if (g_Goal[i].goaltime >= 160)
+	if (g_Goal.goaltime >= 160)
+	{
+		SetEffect(3, D3DXVECTOR2(290.0f, 400.0f), D3DXVECTOR2(290.0f, 400.0f), 1,
+			D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(300.0f, 80.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(3, D3DXVECTOR2(290.0f, 550.0f), D3DXVECTOR2(290.0f, 550.0f), 1,
+			D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(300.0f, 80.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		SetEffect(3, D3DXVECTOR2(290.0f, 700.0f), D3DXVECTOR2(290.0f, 700.0f), 1,
+			D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(300.0f, 80.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+
+		if (g_Goal.selectpush == 0)
 		{
 			SetEffect(3, D3DXVECTOR2(290.0f, 400.0f), D3DXVECTOR2(290.0f, 400.0f), 1,
-				D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(300.0f, 80.0f), 1,
+				D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(350.0f, 120.0f), 1,
 				0.0f, 1.0f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);
+		}
 
+		if (g_Goal.selectpush == 1)
+		{
 			SetEffect(3, D3DXVECTOR2(290.0f, 550.0f), D3DXVECTOR2(290.0f, 550.0f), 1,
-				D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(300.0f, 80.0f), 1,
+				D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(350.0f, 120.0f), 1,
 				0.0f, 1.0f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);
+		}
 
+		if (g_Goal.selectpush == 2)
+		{
 			SetEffect(3, D3DXVECTOR2(290.0f, 700.0f), D3DXVECTOR2(290.0f, 700.0f), 1,
-				D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(300.0f, 80.0f), 1,
+				D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(350.0f, 120.0f), 1,
 				0.0f, 1.0f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);
-
-			
-			if (g_Goal[i].selectpush == 0)
-			{
-				SetEffect(3, D3DXVECTOR2(290.0f, 400.0f), D3DXVECTOR2(290.0f, 400.0f), 1,
-					D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(350.0f, 120.0f), 1,
-					0.0f, 1.0f, 0, 1, 0, 1,
-					0.0f, 0.0f, 0);
-			}
-
-			if (g_Goal[i].selectpush == 1)
-			{
-				SetEffect(3, D3DXVECTOR2(290.0f, 550.0f), D3DXVECTOR2(290.0f, 550.0f), 1,
-					D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(350.0f, 120.0f), 1,
-					0.0f, 1.0f, 0, 1, 0, 1,
-					0.0f, 0.0f, 0);
-			}
-
-			if (g_Goal[i].selectpush == 2)
-			{
-				SetEffect(3, D3DXVECTOR2(290.0f, 700.0f), D3DXVECTOR2(290.0f, 700.0f), 1,
-					D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(350.0f, 120.0f), 1,
-					0.0f, 1.0f, 0, 1, 0, 1,
-					0.0f, 0.0f, 0);
-			}
 		}
 
 
 
-		g_Goal[i].goaltime++;
+		g_Goal.goaltime++;
 
-		if (g_Goal[i].selecttime <= 0)
+		if (g_Goal.selecttime <= 0)
 		{
 
 			if (GetKeyboardPress(DIK_DOWN))
 			{
-				g_Goal[i].selectpush++;
-				g_Goal[i].selecttime = 30;
+				g_Goal.selectpush++;
+				g_Goal.selecttime = 30;
 
 			}
-			if (g_Goal[i].selectpush >= 3)
+			if (g_Goal.selectpush >= 3)
 			{
-				g_Goal[i].selectpush = 0;
+				g_Goal.selectpush = 0;
 			}
 
 			if (GetKeyboardPress(DIK_UP))
 			{
-				g_Goal[i].selectpush--;
-				g_Goal[i].selecttime = 30;
+				g_Goal.selectpush--;
+				g_Goal.selecttime = 30;
 
 			}
-			if (g_Goal[i].selectpush < 0)
+			if (g_Goal.selectpush < 0)
 			{
-				g_Goal[i].selectpush = 2;
+				g_Goal.selectpush = 2;
 			}
 
-			if (g_Goal[i].selectpush == 0)
+			if (g_Goal.selectpush == 0)
 			{
 				if (GetKeyboardPress(DIK_RETURN))
 				{
@@ -213,7 +209,7 @@ void UpdateGoal(void)
 			}
 
 
-			if (g_Goal[i].selectpush == 1)
+			if (g_Goal.selectpush == 1)
 			{
 				if (GetKeyboardPress(DIK_RETURN))
 				{
@@ -222,7 +218,7 @@ void UpdateGoal(void)
 				}
 			}
 
-			if (g_Goal[i].selectpush == 2)
+			if (g_Goal.selectpush == 2)
 			{
 				if (GetKeyboardPress(DIK_RETURN))
 				{
@@ -235,8 +231,8 @@ void UpdateGoal(void)
 
 
 
-		if (g_Goal[i].selecttime >= 0)
-			g_Goal[i].selecttime--;
+		if (g_Goal.selecttime >= 0)
+			g_Goal.selecttime--;
 
 	}
 }
@@ -254,7 +250,7 @@ void DrawGoal(void)
 //=============================================================================
 GOAL* GetGoal(void)
 {
-	return &g_Goal[0];
+	return &g_Goal;
 }
 
 

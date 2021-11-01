@@ -100,24 +100,27 @@ void UpdateEffect(void)
 
 
 
-			// 毎フレームごとにカウントを進める
-			g_Effect[i].now_count++;
-			effectnum++;
+			
 
 			// 時間経過による破壊処理
-			if (g_Effect[i].now_count > g_Effect[i].fadeIn_count
+			if (g_Effect[i].now_count >= g_Effect[i].fadeIn_count
 				+ g_Effect[i].all_count + g_Effect[i].fadeOut_count)
 			{
 				// 無制限に表示させたい場合の処理.all_count == 999だったら無制限に表示
 				if (g_Effect[i].all_count == 999)
 				{
-					g_Effect[i].now_count = g_Effect[i].fadeIn_count + g_Effect[i].all_count;
+					g_Effect[i].now_count = g_Effect[i].fadeIn_count + g_Effect[i].all_count - 998;
 				}
 				else
+				{
 					g_Effect[i].isUse = false;
+				}
+					
 			}
 
-			
+			// 毎フレームごとにカウントを進める
+			g_Effect[i].now_count++;
+			effectnum++;
 			
 			// Draw用に調整
 			/*g_Effect[i].drawpos.x = g_Effect[i].pos1.x;

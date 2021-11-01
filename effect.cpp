@@ -11,6 +11,7 @@ static int aka_1;		// 1
 static int tako_2;		// 2
 static int title_3;		// 3
 static int black_4;		// 4
+static int clear_5;		// 5
 void InitEffect(void)
 {
 	//テクスチャの名前
@@ -19,7 +20,7 @@ void InitEffect(void)
 	tako_2 = LoadTexture("data/TEXTURE/tako.png");
 	title_3 = LoadTexture("data/TEXTURE/title.png");
 	black_4 = LoadTexture("data/TEXTURE/black.png");
-
+	clear_5 = LoadTexture("data/TEXTURE/clear.png");
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
 		g_Effect[i].id = ao_0;
@@ -172,7 +173,8 @@ void SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_patter
 			g_Effect[i].id = title_3;
 		if (id == 4)
 			g_Effect[i].id = black_4;
-
+		if (id == 5)
+			g_Effect[i].id = clear_5;
 
 		return;
 		}

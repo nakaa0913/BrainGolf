@@ -87,37 +87,23 @@ void UpdateGoal(void)
 {
 	for (int i = 0; i < GOAL_MAX; i++)
 	{
-
-
-
 		if (g_Goal[i].goaltime == 10)
 		{
-			//DrawSpriteColorRotate(aa, 275.0f, 500.0f, 500.0f, 600.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-			//DrawSpriteColorRotate(ff, 275.0f, 60.0f, 400.0f, 200.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-
-			//SetEffect(1, D3DXVECTOR2(275.0f, 500.0f), D3DXVECTOR2(500.0f, 600.0f), D3DXVECTOR2(0.0f, 0.0f), 180, 999, 0, -1);
 			SetEffect(1, D3DXVECTOR2(275.0f, 500.0f), D3DXVECTOR2(300.0f, 500.0f), 1,
 				D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(500.0f, 600.0f), 1,
 				0.0f, 1.0f, 180, 999, 0, 180,
 				0.0f, 0.0f, 0);
 
 
-			SetEffect(5, D3DXVECTOR2(275.0f, 60.0f), D3DXVECTOR2(275.0f, 60.0f), 1,
+			SetEffect(5, D3DXVECTOR2(275.0f, 60.0f), D3DXVECTOR2(275.0f, 60.0f), 0,
 				D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(400.0f, 100.0f), 1,
 				0.0f, 1.0f, 180, 999, 0, 180,
 				0.0f, 0.0f, 0);
-
-
-			//SetEffect(3, D3DXVECTOR2(280.0f, 60.0f), D3DXVECTOR2(400.0f, 200.0f), D3DXVECTOR2(0.0f, 0.0f), 180, 999, 0, -1);
-
 		}
 
 		if (g_Goal[i].goaltime == 40)
 		{
-			//DrawSpriteColorRotate(bb, 160.0f, 180.0f, 100.0f, 100.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-
-			//SetEffect(2, D3DXVECTOR2(160.0f, 180.0f), D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(0.0f, 0.0f), 180, 999, 0, -1);
-			SetEffect(2, D3DXVECTOR2(160.0f, 180.0f), D3DXVECTOR2(160.0f, 180.0f), 1,
+			SetEffect(2, D3DXVECTOR2(160.0f, 180.0f), D3DXVECTOR2(160.0f, 180.0f),0,
 				D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
 				0.0f, 1.0f, 180, 999, 0, 60,
 				0.0f, 0.0f, 0);
@@ -125,9 +111,8 @@ void UpdateGoal(void)
 
 		if (g_Goal[i].goaltime == 80)
 		{
-			//DrawSpriteColorRotate(bb, 280.0f, 180.0f, 100.0f, 100.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-			//SetEffect(2, D3DXVECTOR2(280.0f, 180.0f), D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(0.0f, 0.0f), 180, 999, 0, -1);
-			SetEffect(2, D3DXVECTOR2(280.0f, 180.0f), D3DXVECTOR2(280.0f, 180.0f), 1,
+
+			SetEffect(2, D3DXVECTOR2(280.0f, 180.0f), D3DXVECTOR2(280.0f, 180.0f), 0,
 				D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
 				0.0f, 1.0f, 180, 999, 0, 60,
 				0.0f, 0.0f, 0);
@@ -135,9 +120,8 @@ void UpdateGoal(void)
 
 		if (g_Goal[i].goaltime == 120)
 		{
-			//DrawSpriteColorRotate(bb, 400.0f, 180.0f, 100.0f, 100.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-			//SetEffect(2, D3DXVECTOR2(400.0f, 180.0f), D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(0.0f, 0.0f), 180, 999, 0, -1);
-			SetEffect(2, D3DXVECTOR2(400.0f, 180.0f), D3DXVECTOR2(400.0f, 180.0f), 1,
+
+			SetEffect(2, D3DXVECTOR2(400.0f, 180.0f), D3DXVECTOR2(400.0f, 180.0f), 0,
 				D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
 				0.0f, 1.0f, 180, 999, 0, 60,
 				0.0f, 0.0f, 0);
@@ -145,65 +129,47 @@ void UpdateGoal(void)
 
 		if (g_Goal[i].goaltime == 160)
 		{
-
-			//DrawSpriteColorRotate(cc, 290.0f, 400.0f, 300.0f, 80.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-			//DrawSpriteColorRotate(dd, 290.0f, 550.0f, 300.0f, 80.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-			//DrawSpriteColorRotate(ee, 290.0f, 700.0f, 300.0f, 80.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-
-			
-
 		}
 
 		if (g_Goal[i].goaltime >= 160)
 		{
-			//SetEffect(3, D3DXVECTOR2(290.0f, 400.0f), D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(0.0f, 0.0f), 0, 1, 0, -1);
-			//SetEffect(3, D3DXVECTOR2(290.0f, 550.0f), D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(0.0f, 0.0f), 0, 1, 0, -1);
-			//SetEffect(3, D3DXVECTOR2(290.0f, 700.0f), D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(0.0f, 0.0f), 0, 1, 0, -1);
-
 			SetEffect(3, D3DXVECTOR2(290.0f, 400.0f), D3DXVECTOR2(290.0f, 400.0f), 1,
 				D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(300.0f, 80.0f), 1,
-				0.0f, 1.0f, 1, 1, 0, 1,
+				0.0f, 1.0f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);
 
 			SetEffect(3, D3DXVECTOR2(290.0f, 550.0f), D3DXVECTOR2(290.0f, 550.0f), 1,
 				D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(300.0f, 80.0f), 1,
-				0.0f, 1.0f, 1, 1, 0, 1,
+				0.0f, 1.0f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);
 
 			SetEffect(3, D3DXVECTOR2(290.0f, 700.0f), D3DXVECTOR2(290.0f, 700.0f), 1,
 				D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(300.0f, 80.0f), 1,
-				0.0f, 1.0f, 1, 1, 0, 1,
+				0.0f, 1.0f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);
 
 			
 			if (g_Goal[i].selectpush == 0)
 			{
-				//DrawSpriteColorRotate(cc, 290.0f, 400.0f, 350.0f, 120.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-				//SetEffect(3, D3DXVECTOR2(290.0f, 400.0f), D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(0.0f, 0.0f), 0, 1, 0, -1);
 				SetEffect(3, D3DXVECTOR2(290.0f, 400.0f), D3DXVECTOR2(290.0f, 400.0f), 1,
 					D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(350.0f, 120.0f), 1,
-					0.0f, 1.0f, 1, 1, 0, 1,
+					0.0f, 1.0f, 0, 1, 0, 1,
 					0.0f, 0.0f, 0);
 			}
 
 			if (g_Goal[i].selectpush == 1)
 			{
-				//DrawSpriteColorRotate(dd, 290.0f, 550.0f, 350.0f, 120.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-				//SetEffect(3, D3DXVECTOR2(290.0f, 550.0f), D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(0.0f, 0.0f), 0, 1, 0, -1);
 				SetEffect(3, D3DXVECTOR2(290.0f, 550.0f), D3DXVECTOR2(290.0f, 550.0f), 1,
 					D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(350.0f, 120.0f), 1,
-					0.0f, 1.0f, 1, 1, 0, 1,
+					0.0f, 1.0f, 0, 1, 0, 1,
 					0.0f, 0.0f, 0);
 			}
 
 			if (g_Goal[i].selectpush == 2)
 			{
-				//DrawSpriteColorRotate(ee, 290.0f, 700.0f, 350.0f, 120.0f, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-
-				//SetEffect(3, D3DXVECTOR2(290.0f, 700.0f), D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(0.0f, 0.0f), 0, 1, 0, -1);
 				SetEffect(3, D3DXVECTOR2(290.0f, 700.0f), D3DXVECTOR2(290.0f, 700.0f), 1,
 					D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(350.0f, 120.0f), 1,
-					0.0f, 1.0f, 1, 1, 0, 1,
+					0.0f, 1.0f, 0, 1, 0, 1,
 					0.0f, 0.0f, 0);
 			}
 		}

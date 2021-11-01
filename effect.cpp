@@ -12,6 +12,7 @@ static int tako_2;		// 2
 static int title_3;		// 3
 static int black_4;		// 4
 static int clear_5;		// 5
+
 void InitEffect(void)
 {
 	//テクスチャの名前
@@ -21,6 +22,7 @@ void InitEffect(void)
 	title_3 = LoadTexture("data/TEXTURE/title.png");
 	black_4 = LoadTexture("data/TEXTURE/black.png");
 	clear_5 = LoadTexture("data/TEXTURE/clear.png");
+
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
 		g_Effect[i].id = ao_0;
@@ -221,6 +223,7 @@ void PosMovingPattern(int i)
 		{
 			g_Effect[i].pos = g_Effect[i].pos1;
 		}
+
 		// 1	pos1からpos2まで直線的な移動をする
 		if (g_Effect[i].pos_moving_pattern == 1)
 		{
@@ -255,6 +258,7 @@ void SizeMovingPattern(int i)
 		{
 			g_Effect[i].size = g_Effect[i].size1;
 		}
+
 		// 1	size1からsize2まで直線的な移動をする
 		if (g_Effect[i].size_moving_pattern == 1)
 		{
@@ -296,6 +300,7 @@ void RotMovingPattern(int i)
 		{
 			g_Effect[i].rot = AngleToRadian(g_Effect[i].rot_angle);
 		}
+
 		// 1	rot_angle1からrot_angle2まで直線的な移動をする
 		if (g_Effect[i].rot_moving_pattern == 1)
 		{
@@ -310,6 +315,7 @@ void RotMovingPattern(int i)
 				g_Effect[i].rot		  = AngleToRadian(g_Effect[i].rot_angle);
 			}
 		}
+
 		// 2	rot_angle1からrot_angle2 まで直線的な回転をする。 1とは違い、moving_countが終わっても回転し続ける。
 		if (g_Effect[i].rot_moving_pattern == 2)
 		{

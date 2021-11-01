@@ -314,11 +314,16 @@ void UpdateSelect(void)
 			if (g_Select.selecttime <= 0)
 			{
 
-				
 				if (g_Select.selectvertical >= 2)
 				{
 					g_Select.selectvertical = 0;
 				}
+
+				if (g_Select.selectvertical < 0)
+				{
+					g_Select.selectvertical = 1;
+				}
+			
 
 				if (GetKeyboardPress(DIK_UP))
 				{
@@ -326,10 +331,8 @@ void UpdateSelect(void)
 					g_Select.selecttime = 30;
 
 				}
-				if (g_Select.selectvertical < 0)
-				{
-					g_Select.selectvertical = 1;
-				}
+
+				
 
 				if (GetKeyboardPress(DIK_RIGHT))
 				{

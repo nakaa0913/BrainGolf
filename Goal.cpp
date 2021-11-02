@@ -86,9 +86,9 @@ void UpdateGoal(void)
 
 	if (g_Goal.goaltime == 10)
 	{
-		SetEffect(1, D3DXVECTOR2(275.0f, 500.0f), D3DXVECTOR2(300.0f, 500.0f), 1,
-			D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(500.0f, 600.0f), 1,
-			0.0f, 1.0f, 180, 999, 0, 180,
+		SetEffect(4, D3DXVECTOR2(280.0f, 400.0f), D3DXVECTOR2(280.0f, 400.0f), 0,
+			D3DXVECTOR2(560.0f, 800.0f), D3DXVECTOR2(560.0f, 800.0f), 1,
+			0.0f, 0.5f, 100, 999, 0, 180,
 			0.0f, 0.0f, 0);
 
 

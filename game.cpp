@@ -110,8 +110,7 @@ void UpdateGame(void)
 void DrawGame(void)
 {
 
-	//DrawBG();
-	DrawBG2();
+	DrawBG();
 	DrawBullet();
 	DrawEnemy();
 	DrawPlayer();

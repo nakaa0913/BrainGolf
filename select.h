@@ -3,7 +3,7 @@
 
 #define SELECT_MAX (5)
 
-
+#define TIME (15)
 // プレイヤー構造体
 struct SELECT
 {

@@ -26,15 +26,17 @@ struct MAP_DATA_T
 
 };
 
-MAP_DATA_T g_MapInfo[7] =
+MAP_DATA_T g_MapInfo[9] =
 {
 	{ { 0.25f,   0.0f}, 0},//なにもなし
-	{ {  0.0f, 0.625f}, 1},//木
-	{ {0.625f, 0.625f}, 1},//切り株
-	{ {0.375f, 0.625f}, 1},//枯れ木
-	{ {0.625f, 0.75f}, 1},//花
-	{ {0.625f, 0.75f}, 1},//花
-	{ {0.75f, 0.75f}, 1},//ひまわり(砂)
+	{ {  0.125f, 0.125f}, 1},//block
+	{ {0.375f, 0.125f}, 1},//goal
+	{ {0.625f, 0.125f}, 1},//speedup
+	{ {0.25f, 0.125f}, 1},//warp
+	{ {0.25f, 0.125f}, 1},//warp
+	{ {0.75f, 0.0f}, 1},//bunker
+	{ {0.75f, 0.125f}, 1},//switch
+	{ {0.5f, 0.125f}, 1},//hansya
 };
 
 
@@ -142,7 +144,7 @@ static int g_CurrentPos = 0;	// 現在のマップ座標
 HRESULT InitBG(void)
 {
 	//g_Ground = LoadTexture("data/TEXTURE/basechip.png");
-	g_Ground = LoadTexture("data/TEXTURE/basechip_line.png");
+	g_Ground = LoadTexture("data/TEXTURE/basechip.png");
 
 	return S_OK;
 }
@@ -190,22 +192,22 @@ void DrawBG(void)
 				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
 				break;
 			case 1://道
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.625f, 0.0f, 0.125f, 0.125f);
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
 				break;
 			case 2://ゴール
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.625f, 0.0f, 0.125f, 0.125f);
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
 				break;
 			case 3://加速
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.625f, 0.0f, 0.125f, 0.125f);
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
 				break;
 			case 4://ワープ
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.625f, 0.0f, 0.125f, 0.125f);
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
 				break;
 			case 5://ワープ
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.625f, 0.0f, 0.125f, 0.125f);
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
 				break;
 			case 6://砂
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.625f, 0.0f, 0.125f, 0.125f);
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
 				break;
 			default:
 				//exit(4);			// ふつうここに来ることはないのでエラーとして強制しておく

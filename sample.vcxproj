@@ -131,6 +131,7 @@
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemy_emitter.cpp" />
     <ClCompile Include="fade.cpp" />
+    <ClCompile Include="FileDataManagement.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="input.cpp" />
@@ -145,6 +146,7 @@
     <ClCompile Include="select.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="sprite.cpp" />
+    <ClCompile Include="stagedata.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="title.cpp" />
   </ItemGroup>
@@ -152,6 +154,7 @@
     <ClInclude Include="bg.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="collision.h" />
+    <ClInclude Include="FileDataManagement.h" />
     <ClInclude Include="stagedata.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="enemy.h" />

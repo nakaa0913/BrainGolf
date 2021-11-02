@@ -15,6 +15,8 @@
 #include "select.h"
 #include "effect.h"
 #include "logo.h"
+#include "stagedata.h"
+#include "FileDataManagement.h"
 
 /*------------------------------------------------------------------------------
    íËêîíËã`
@@ -50,6 +52,7 @@ void InitScene(SCENE index)
 	case SCENE_LOGO:
 			InitEffect();
 			InitLogo();
+			InitStagedata();
 			break;
 
 	case SCENE_TITLE:
@@ -124,26 +127,31 @@ void UpdateScene(void)
 	case SCENE_LOGO:
 		UpdateEffect();
 		UpdateLogo();
+		UpdateStagedata();
 		break;
 
 	case SCENE_TITLE:
 		UpdateEffect();
 		UpdateTitle();
+		UpdateStagedata();
 		break;
 
 	case SCENE_SELECT:
 		UpdateEffect();
 		UpdateSelect();
+		UpdateStagedata();
 		break;
 
 	case SCENE_GAME:
 		UpdateEffect();
 		UpdateGame();
+		UpdateStagedata();
 		break;
 
 	case SCENE_RESULT:
 		UpdateEffect();
 		UpdateResult();
+		UpdateStagedata();
 		break;
 	}
 

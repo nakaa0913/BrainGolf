@@ -29,6 +29,3 @@ void SetCurrentMap(int next);
 int CheckBlockdata(int BlockX, int BlockY);
 
 
-void DrawBG2(void);
-int GetMapEnter2(D3DXVECTOR2 pos);
-int CheckBlockdata2(int BlockX, int BlockY);

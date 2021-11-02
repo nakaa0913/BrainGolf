@@ -222,11 +222,13 @@ void DrawBG(void)
 
 int GetMapEnter(D3DXVECTOR2 pos)
 {
+	STAGEDATA* p_Stagedata = GetStagedata();
+
 	int x, y;
 	x = (int)(pos.x / MAP_CHIP_SIZE_X);//座標をマップチップ一つの大きさで割る
 	y = (int)(pos.y / MAP_CHIP_SIZE_Y);
 
-	return g_map_hitchk[g_CurrentPos][y][x];
+	return p_Stagedata->maparray[y][x];
 }
 
 void SetCurrentMap(int next)
@@ -236,8 +238,16 @@ void SetCurrentMap(int next)
 
 int CheckBlockdata(int BlockX, int BlockY)
 {
+	//int BlockData = 0;
+	//BlockData = g_map_hitchk[0][BlockY][BlockX];
+	////BlockData = p_Stagedata->maparray[y][x];
+
+	//return BlockData;
+
+	STAGEDATA* p_Stagedata = GetStagedata();
+
 	int BlockData = 0;
-	BlockData = g_map_hitchk[0][BlockY][BlockX];
+	BlockData = p_Stagedata->maparray[BlockY][BlockX];
 
 	return BlockData;
 }
@@ -308,23 +318,23 @@ void DrawBG2(void)
 	}
 }
 
-int GetMapEnter2(D3DXVECTOR2 pos)
-{
-	STAGEDATA* p_Stagedata = GetStagedata();
+//int GetMapEnter2(D3DXVECTOR2 pos)
+//{
+//	STAGEDATA* p_Stagedata = GetStagedata();
+//
+//	int x, y;
+//	x = (int)(pos.x / MAP_CHIP_SIZE_X);//座標をマップチップ一つの大きさで割る
+//	y = (int)(pos.y / MAP_CHIP_SIZE_Y);
+//
+//	return p_Stagedata->maparray[y][x];
+//}
 
-	int x, y;
-	x = (int)(pos.x / MAP_CHIP_SIZE_X);//座標をマップチップ一つの大きさで割る
-	y = (int)(pos.y / MAP_CHIP_SIZE_Y);
-
-	return p_Stagedata->maparray[y][x];
-}
-
-int CheckBlockdata2(int BlockX, int BlockY)
-{
-	STAGEDATA* p_Stagedata = GetStagedata();
-
-	int BlockData = 0;
-	BlockData = p_Stagedata->maparray[BlockY][BlockX];
-
-	return BlockData;
-}
+//int CheckBlockdata2(int BlockX, int BlockY)
+//{
+//	STAGEDATA* p_Stagedata = GetStagedata();
+//
+//	int BlockData = 0;
+//	BlockData = p_Stagedata->maparray[BlockY][BlockX];
+//
+//	return BlockData;
+//}

@@ -16,7 +16,7 @@
 #define	length (3)
 
 
-//// fgets(1行ずつ) + sscanf
+// fgets(1行ずつ) + sscanf
 //void LoadMapdata(char* fileName)
 //{
 //	// stagedataに出力していくので、ポインターで持ってきておく
@@ -74,7 +74,7 @@
 
 
 
-// fgetc(1文字ずつ) + sscanf
+ // fgetc(1文字ずつ) + sscanf
 //void LoadMapdata(char* fileName)
 //{
 //	// stagedataに出力していくので、ポインターで持ってきておく

@@ -330,7 +330,7 @@ void UpdateSelect(void)
 				if (GetKeyboardPress(DIK_UP))
 				{
 					g_Select.selectvertical--;
-					g_Select.selecttime = 30;
+					g_Select.selecttime = 10;
 
 				}
 
@@ -339,7 +339,7 @@ void UpdateSelect(void)
 				if (GetKeyboardPress(DIK_RIGHT))
 				{
 					g_Select.selectpush++;
-					g_Select.selecttime = 30;
+					g_Select.selecttime = TIME;
 				}
 				if (g_Select.selectpush >= 5)
 				{
@@ -349,7 +349,7 @@ void UpdateSelect(void)
 				if (GetKeyboardPress(DIK_LEFT))
 				{
 					g_Select.selectpush--;
-					g_Select.selecttime = 30;
+					g_Select.selecttime = TIME;
 
 				}
 				if (g_Select.selectpush < 0)
@@ -363,7 +363,7 @@ void UpdateSelect(void)
 					if (GetKeyboardPress(DIK_DOWN))
 					{
 						g_Select.selectvertical++;
-						g_Select.selecttime = 30;
+						g_Select.selecttime = 10;
 					}
 
 					if (GetKeyboardPress(DIK_RETURN))
@@ -379,7 +379,7 @@ void UpdateSelect(void)
 					if (GetKeyboardPress(DIK_DOWN))
 					{
 						g_Select.selectvertical++;
-						g_Select.selecttime = 30;
+						g_Select.selecttime = TIME;
 					}
 					if (GetKeyboardPress(DIK_RETURN))
 					{
@@ -392,7 +392,7 @@ void UpdateSelect(void)
 					if (GetKeyboardPress(DIK_DOWN))
 					{
 						g_Select.selectvertical++;
-						g_Select.selecttime = 30;
+						g_Select.selecttime = TIME;
 					}
 					if (GetKeyboardPress(DIK_RETURN))
 					{
@@ -405,7 +405,7 @@ void UpdateSelect(void)
 					if (GetKeyboardPress(DIK_DOWN))
 					{
 						g_Select.selectvertical++;
-						g_Select.selecttime = 30;
+						g_Select.selecttime = TIME;
 					}
 					if (GetKeyboardPress(DIK_RETURN))
 					{
@@ -418,7 +418,7 @@ void UpdateSelect(void)
 					if (GetKeyboardPress(DIK_DOWN))
 					{
 						g_Select.selectvertical++;
-						g_Select.selecttime = 30;
+						g_Select.selecttime = TIME;
 					}
 					if (GetKeyboardPress(DIK_RETURN))
 					{

@@ -26,17 +26,24 @@ struct MAP_DATA_T
 
 };
 
-MAP_DATA_T g_MapInfo[9] =
+MAP_DATA_T g_MapInfo[16] =
 {
-	{ { 0.25f,   0.0f}, 0},//なにもなし
-	{ {  0.125f, 0.125f}, 1},//block
-	{ {0.375f, 0.125f}, 1},//goal
-	{ {0.625f, 0.125f}, 1},//speedup
-	{ {0.25f, 0.125f}, 1},//warp
-	{ {0.25f, 0.125f}, 1},//warp
-	{ {0.75f, 0.0f}, 1},//bunker
-	{ {0.75f, 0.125f}, 1},//switch
-	{ {0.5f, 0.125f}, 1},//hansya
+	{ {0.25f , 0.0f}, 0},//なにもなし		0
+	{ {0.125f, 0.125f}, 1},//block			1
+	{ {0.375f, 0.125f}, 1},//goal			2
+	{ {0.625f, 0.125f}, 1},//speedup上		3
+	{ {0.625f, 0.25f}, 1},//speedup下		4
+	{ {0.625f, 0.375f}, 1},//speedup右		5
+	{ {0.625f, 0.5f}, 1},//speedup左		6
+	{ {0.875f, 0.25f}, 1},//speedup右上		7
+	{ {0.875f, 0.375f}, 1},//speedup右下	8
+	{ {0.75f , 0.375f}, 1},//speedup左下	9
+	{ {0.75f , 0.25f}, 1},//speedup左上		10
+	{ {0.25f , 0.125f}, 1},//warp			11
+	{ {0.25f , 0.125f}, 1},//warp			12
+	{ {0.75f , 0.0f}, 1},//bunker			13
+	{ {0.75f , 0.125f}, 1},//switch			14
+	{ {0.5f  , 0.125f}, 1},//hansya			15
 };
 
 
@@ -144,7 +151,7 @@ static int g_CurrentPos = 0;	// 現在のマップ座標
 HRESULT InitBG(void)
 {
 	//g_Ground = LoadTexture("data/TEXTURE/basechip.png");
-	g_Ground = LoadTexture("data/TEXTURE/basechip.png");
+	g_Ground = LoadTexture("data/TEXTURE/basechip_test.png");
 
 	return S_OK;
 }
@@ -186,41 +193,42 @@ void DrawBG(void)
 	{
 		for (int x = 0; x < MAP_X; x++)
 		{
-			switch (p_Stagedata->maparray[y][x])
-			{
-			case 0://草原
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-				break;
-			case 1://道
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-				break;
-			case 2://ゴール
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-				break;
-			case 3://加速
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-				break;
-			case 4://ワープ
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-				break;
-			case 5://ワープ
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-				break;
-			case 6://砂
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-				break;
-			case 7://switch
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-				break;
-			case 8://hansya
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-				break;
-			default:
-				//exit(4);			// ふつうここに来ることはないのでエラーとして強制しておく
-				//					// 下の背景オブジェクトの設定をしていないと、case10とか11とかを設定しても反映されない。
-				break;
+			DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
 
-			}
+			//switch (p_Stagedata->maparray[y][x])
+			//{
+			//case 0://草原
+			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+			//	break;
+			//case 1://道
+			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+			//	break;
+			//case 2://ゴール
+			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+			//	break;
+			//case 3://加速
+			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+			//	break;
+			//case 4://ワープ
+			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+			//	break;
+			//case 5://ワープ
+			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+			//	break;
+			//case 6://砂
+			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+			//	break;
+			//case 7://switch
+			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+			//	break;
+			//case 8://hansya
+			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+			//	break;
+			//default:
+			//	exit(4);			// ふつうここに来ることはないのでエラーとして強制しておく
+			//						// 下の背景オブジェクトの設定をしていないと、case10とか11とかを設定しても反映されない。
+			//	break;
+			//}
 		}
 	}
 

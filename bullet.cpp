@@ -508,7 +508,106 @@ void UpdateBullet(void)
 
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 3)
 			{
-				// 加速板に乗った時の処理
+				// 加速板（上）に乗った時の処理
+				if (g_Bullet[i].accboardcool <= 0)
+				{
+					g_Bullet[i].shotpower = 2.0f;
+
+					g_Bullet[i].accboardcool = 60;
+					
+					//g_Bullet[i]. = 1;
+				}
+			}
+			if (g_Bullet[i].accboardcool > 0)
+				g_Bullet[i].accboardcool--;
+
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 4)
+			{
+				// 加速板（下）に乗った時の処理
+				if (g_Bullet[i].accboardcool <= 0)
+				{
+					g_Bullet[i].shotpower = 2.0f;
+
+					g_Bullet[i].accboardcool = 60;
+
+				}
+			}
+			if (g_Bullet[i].accboardcool > 0)
+				g_Bullet[i].accboardcool--;
+
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 5)
+			{
+				// 加速板（右）に乗った時の処理
+				if (g_Bullet[i].accboardcool <= 0)
+				{
+					g_Bullet[i].shotpower = 2.0f;
+
+					g_Bullet[i].accboardcool = 60;
+
+				}
+			}
+			if (g_Bullet[i].accboardcool > 0)
+				g_Bullet[i].accboardcool--;
+
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 6)
+			{
+				// 加速板（左）に乗った時の処理
+				if (g_Bullet[i].accboardcool <= 0)
+				{
+					g_Bullet[i].shotpower = 2.0f;
+
+					g_Bullet[i].accboardcool = 60;
+
+				}
+			}
+			if (g_Bullet[i].accboardcool > 0)
+				g_Bullet[i].accboardcool--;
+
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 7)
+			{
+				// 加速板（右上）に乗った時の処理
+				if (g_Bullet[i].accboardcool <= 0)
+				{
+					g_Bullet[i].shotpower = 2.0f;
+
+					g_Bullet[i].accboardcool = 60;
+
+				}
+			}
+			if (g_Bullet[i].accboardcool > 0)
+				g_Bullet[i].accboardcool--;
+
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 8)
+			{
+				// 加速板（右下）に乗った時の処理
+				if (g_Bullet[i].accboardcool <= 0)
+				{
+					g_Bullet[i].shotpower = 2.0f;
+
+					g_Bullet[i].accboardcool = 60;
+
+				}
+			}
+			if (g_Bullet[i].accboardcool > 0)
+				g_Bullet[i].accboardcool--;
+
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 9)
+			{
+				// 加速板（左下）に乗った時の処理
+				if (g_Bullet[i].accboardcool <= 0)
+				{
+					g_Bullet[i].shotpower = 2.0f;
+
+					g_Bullet[i].accboardcool = 60;
+
+				}
+			}
+			if (g_Bullet[i].accboardcool > 0)
+				g_Bullet[i].accboardcool--;
+
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 10)
+			{
+				// 加速板（左上）に乗った時の処理
 				if (g_Bullet[i].accboardcool <= 0)
 				{
 					g_Bullet[i].shotpower = 2.0f;
@@ -521,7 +620,7 @@ void UpdateBullet(void)
 				g_Bullet[i].accboardcool--;
 
 			//ワープ
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 4)
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 11)
 			{
 				if (g_Bullet[i].warpcool <= 0)
 				{
@@ -532,7 +631,7 @@ void UpdateBullet(void)
 							// そのブロックが当たり判定があるブロックかどうか調べるa
 							int BlockData = CheckBlockdata(x, y);
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
-							if (BlockData == 5)
+							if (BlockData == 12)
 							{
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
@@ -546,7 +645,7 @@ void UpdateBullet(void)
 				}
 			}
 
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 5)
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 12)
 			{
 				if (g_Bullet[i].warpcool <= 0)
 				{
@@ -557,7 +656,7 @@ void UpdateBullet(void)
 							// そのブロックが当たり判定があるブロックかどうか調べるa
 							int BlockData = CheckBlockdata(x, y);
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
-							if (BlockData == 4)
+							if (BlockData == 11)
 							{
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
@@ -575,7 +674,7 @@ void UpdateBullet(void)
 				g_Bullet[i].CornerCollicionCool--;
 
 			//砂
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 6)
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 13)
 			{
 				// 加速板に乗った時の処理
 

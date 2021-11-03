@@ -501,9 +501,6 @@ void UpdateBullet(void)
 				// ゴールに入った時の処理
 				GoalTrue();
 				// g_Bullet[i].use = false;
-
-
-				/*SceneTransition(SCENE_RESULT);*/
 			}
 
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 3)
@@ -511,113 +508,112 @@ void UpdateBullet(void)
 				// 加速板（上）に乗った時の処理
 				if (g_Bullet[i].accboardcool <= 0)
 				{
-					g_Bullet[i].shotpower = 2.0f;
-
-					g_Bullet[i].accboardcool = 60;
+					g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
+					g_Bullet[i].angle = 90.0f;									// 角度を設定
+					g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 					
-					//g_Bullet[i]. = 1;
+					g_Bullet[i].accboardcool = 60;
 				}
 			}
-			if (g_Bullet[i].accboardcool > 0)
-				g_Bullet[i].accboardcool--;
 
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 4)
 			{
 				// 加速板（下）に乗った時の処理
 				if (g_Bullet[i].accboardcool <= 0)
 				{
-					g_Bullet[i].shotpower = 2.0f;
+					g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
+					g_Bullet[i].angle = 270.0f;									// 角度を設定
+					g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
+
 
 					g_Bullet[i].accboardcool = 60;
 
 				}
 			}
-			if (g_Bullet[i].accboardcool > 0)
-				g_Bullet[i].accboardcool--;
 
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 5)
 			{
 				// 加速板（右）に乗った時の処理
 				if (g_Bullet[i].accboardcool <= 0)
 				{
-					g_Bullet[i].shotpower = 2.0f;
+					g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
+					g_Bullet[i].angle = 0.0f;									// 角度を設定
+					g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
 					g_Bullet[i].accboardcool = 60;
 
 				}
 			}
-			if (g_Bullet[i].accboardcool > 0)
-				g_Bullet[i].accboardcool--;
 
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 6)
 			{
 				// 加速板（左）に乗った時の処理
 				if (g_Bullet[i].accboardcool <= 0)
 				{
-					g_Bullet[i].shotpower = 2.0f;
+					g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
+					g_Bullet[i].angle = 180.0f;									// 角度を設定
+					g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
 					g_Bullet[i].accboardcool = 60;
 
 				}
 			}
-			if (g_Bullet[i].accboardcool > 0)
-				g_Bullet[i].accboardcool--;
 
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 7)
 			{
 				// 加速板（右上）に乗った時の処理
 				if (g_Bullet[i].accboardcool <= 0)
 				{
-					g_Bullet[i].shotpower = 2.0f;
+					g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
+					g_Bullet[i].angle = 45.0f;									// 角度を設定
+					g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
 					g_Bullet[i].accboardcool = 60;
 
 				}
 			}
-			if (g_Bullet[i].accboardcool > 0)
-				g_Bullet[i].accboardcool--;
 
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 8)
 			{
 				// 加速板（右下）に乗った時の処理
 				if (g_Bullet[i].accboardcool <= 0)
 				{
-					g_Bullet[i].shotpower = 2.0f;
+					g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
+					g_Bullet[i].angle = 315.0f;									// 角度を設定
+					g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
 					g_Bullet[i].accboardcool = 60;
 
 				}
 			}
-			if (g_Bullet[i].accboardcool > 0)
-				g_Bullet[i].accboardcool--;
 
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 9)
 			{
 				// 加速板（左下）に乗った時の処理
 				if (g_Bullet[i].accboardcool <= 0)
 				{
-					g_Bullet[i].shotpower = 2.0f;
+					g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
+					g_Bullet[i].angle = 225.0f;									// 角度を設定
+					g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
 					g_Bullet[i].accboardcool = 60;
 
 				}
 			}
-			if (g_Bullet[i].accboardcool > 0)
-				g_Bullet[i].accboardcool--;
 
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 10)
 			{
 				// 加速板（左上）に乗った時の処理
 				if (g_Bullet[i].accboardcool <= 0)
 				{
-					g_Bullet[i].shotpower = 2.0f;
+					g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
+					g_Bullet[i].angle = 135.0f;									// 角度を設定
+					g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
 					g_Bullet[i].accboardcool = 60;
 
 				}
 			}
-			if (g_Bullet[i].accboardcool > 0)
-				g_Bullet[i].accboardcool--;
 
 			//ワープ
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 11)
@@ -668,20 +664,31 @@ void UpdateBullet(void)
 					}
 				}
 			}
-			if (g_Bullet[i].warpcool > 0)
-				g_Bullet[i].warpcool--;
-			if (g_Bullet[i].CornerCollicionCool > 0)
-				g_Bullet[i].CornerCollicionCool--;
 
 			//砂
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 13)
 			{
-				// 加速板に乗った時の処理
-
+				// パワーを減衰させる
 				if (g_Bullet[i].shotpower > 0.3f)
 					g_Bullet[i].shotpower = 0.3f;
 
 			}
+
+
+
+
+
+			// クールタイムを減らす処理一覧
+			// 球が角に当たった時の判定のクールタイムを減らしていく
+			if (g_Bullet[i].CornerCollicionCool > 0)
+				g_Bullet[i].CornerCollicionCool--;
+			// ワープのクールタイムを減らしていく
+			if (g_Bullet[i].warpcool > 0)
+				g_Bullet[i].warpcool--;
+			// 加速版のクールタイムを減らしていく
+			if (g_Bullet[i].accboardcool > 0)
+				g_Bullet[i].accboardcool--;
+
 
 			// 最期にposにnextposを反映させる
 			g_Bullet[i].pos = g_Bullet[i].nextpos;
@@ -745,8 +752,8 @@ void SetBullet(D3DXVECTOR2 pos, float angle, int ShotPower)
 			g_Bullet[i].pos = pos;			// 座標をセット
 
 			g_Bullet[i].shotpower = ShotBairitu;			// shotpowerの設定
-
-			g_Bullet[i].vector = AngleToVector2(angle);	// 角度からベクトルを設定
+			g_Bullet[i].angle = angle;						// 角度を設定
+			g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);	// 角度からベクトルを設定
 			g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * g_Bullet[i].shotpower * g_Bullet[i].vector.x,
 				-BULLET_SPEED * g_Bullet[i].shotpower * g_Bullet[i].vector.y);	// ベクトルからmoveを設定
 

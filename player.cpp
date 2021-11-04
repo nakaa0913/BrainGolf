@@ -69,6 +69,18 @@ HRESULT InitPlayer(void)
 		g_Player[i].ShotPower = 0;
 		g_Player[i].ConfirmAngle = false;
 		g_Player[i].ConfirmCooltime = 10;
+
+		for (int num = 0; num < ORDER_MAX; num++)
+		{
+			g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[num] = -1;
+			g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[num] = -1;
+		}
+		g_Player[i].move_around = false;
+		g_Player[i].move_speed = PLAYER_MOVE_SPEED;
+
+
+
+
 	}
 
 	g_Player[0].have = true;
@@ -289,13 +301,44 @@ PLAYER *GetPlayer(void)
 
 void SetPlayer(D3DXVECTOR2 pos)
 {
-	// もし未使用の弾が無かったら発射しない( =これ以上撃てないって事 )
+	// もし未使用のプレイヤーがいなかったら追加できない。
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
-		if (g_Player[i].use == false)		// 未使用状態のバレットを見つける
+		if (g_Player[i].use == false)		// 未使用状態のプレイヤーを見つける
 		{
 			g_Player[i].use = true;			// 使用状態へ変更する
 			g_Player[i].pos = pos;			// 座標をセット
+			g_Player[i].h = PLAYER_H;
+			g_Player[i].w = PLAYER_W;
+
+			return;							// 1発セットしたので終了する
+		}
+	}
+}
+
+// 構造体をポインタではなく普通に受け取ると中身は上書きできない。参照はできる。
+void SetPlayerUseFile(MAPCHIP_POS_STRUCT Receive_Mapchip_Pos_Struct, float movespeed)
+{
+	// もし未使用のプレイヤーがいなかったら追加できない。
+	for (int i = 0; i < PLAYER_MAX; i++)
+	{
+		if (g_Player[i].use == false)		// 未使用状態のプレイヤーを見つける
+		{
+			// 受け取ったマップチップでの座標と往復する順番を渡す
+			// 同じ構造体のものだからこうやって受け取れる
+			g_Player[i].Mapchip_Pos_Struct = Receive_Mapchip_Pos_Struct;
+
+			// 座標をセット		マップチップでの座標からちゃんとした座標へ変換
+			g_Player[i].pos.x = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[0] * MAP_CHIP_SIZE_X - (MAP_CHIP_SIZE_X / 2);
+			g_Player[i].pos.y = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[0] * MAP_CHIP_SIZE_Y - (MAP_CHIP_SIZE_Y / 2);
+
+			// 移動する用であったら移動するかどうかをtrueへ
+			if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[1] != -1)
+				g_Player[i].move_around = true;
+
+			g_Player[i].move_speed = movespeed;
+
+			g_Player[i].use = true;			// 使用状態へ変更する
 			g_Player[i].h = PLAYER_H;
 			g_Player[i].w = PLAYER_W;
 

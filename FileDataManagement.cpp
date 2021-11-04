@@ -37,7 +37,7 @@ void LoadMapdataMain(char* fileName)
 	char now_strings[256] = "";			// 読み込んでいった文字列を連結させている。
 	int pattern = PATTERN_NULL;			// 読み込んだ文字列から、今何を読み込んでいるかを判別するためのもの。
 
-	while (pattern == PATTERN_NULL)
+	while (pattern != PATTERN_END)
 	{
 		// ファイルを1文字ずつ読み込む	fscanfは返り値として読み込んだ数(%sとか%dの数)を返すが、今回は無視するので(void)をつける
 		(void)fscanf(fp, "%1s", loadchar);
@@ -85,7 +85,7 @@ void LoadMapdataMain(char* fileName)
 
 		if (pattern == PATTERN_PLAYER)
 		{
-			// pattern = LoadMapdata(fp);
+			pattern = LoadPlayerdata(fp);
 		}
 
 
@@ -427,6 +427,13 @@ int LoadMapdata(FILE* fp)
 		// カンマが来たら文字列を確定させて次の文字列へ		// strcmpは比較して等しいと0を返す。
 		if (strcmp(loadchar, ",") == 0)
 		{
+			// 現在の文字列がカンマだけだった場合、削除して次の文字の検索へ。これをすることによって、(,1)とかの心配がなくなる
+			if (strcmp(now_strings, ",") == 0)
+			{
+				strcpy(now_strings, "");
+				continue;
+			}
+
 			// 確定した文字列を数字に変換しマップデータに反映させる処理
 			applyMapArray(x, y, now_strings);
 
@@ -477,6 +484,163 @@ int LoadMapdata(FILE* fp)
 	return PATTERN_NULL;
 }
 
+int LoadPlayerdata(FILE* fp)
+{
+	// stagedataに出力していくので、ポインターで持ってきておく
+	STAGEDATA* p_Stagedata = GetStagedata();
+
+	// 構造体を作って、そのポインタも用意しておく
+	MAPCHIP_POS_STRUCT s_mapchip_pos{};
+	MAPCHIP_POS_STRUCT* p_mapchip_pos = &s_mapchip_pos;
+
+	char loadchar[4] = "";
+	char now_strings[256] = "";
+
+	int order = 0;		// 動いていく順番	最大ORDER_MAX(5)
+	int XorY = 0;		// 0:X,1:Y	今がXかYどっちの座標に値を入れようとしているか
+	float movespeed = PLAYER_MOVE_SPEED;
+	int decimal_point = 0;		// 小数点の位置が左から何番目にあるか
+	bool decision_decima = false;		// 小数点の位置を決定したかどうか
+
+	int pattern = PATTERN_PLAYER_NULL;			// 読み込んだ文字列から、今何を読み込んでいるかを判別するためのもの。
+
+	int x = 0;
+	int y = 0;
+
+	// Setplayerでセットするのは、pの設定中に新しいpが読み込まれた時と、最期終了文字を見た時の2パターンある。
+
+	while (1)
+	{
+		// ファイルを1文字ずつ読み込む	fscanfは返り値として読み込んだ数(%sとか%dの数)を返すが、今回は無視するので(void)をつける
+		(void)fscanf(fp, "%1s", loadchar);
+
+		int fasf = 5;
+		// 文字を発見したらパターン変更と初期化
+		if (pattern == PATTERN_PLAYER_NULL)
+		{
+			// NULLの状態でpを見つけた場合(最初の1回目)
+			if (strcmp(loadchar, "p") == 0)
+			{
+				order = 0;
+				XorY = 0;
+				movespeed = PLAYER_MOVE_SPEED;
+				decimal_point = 0;
+				decision_decima = false;
+				pattern = PATTERN_PLAYER_POS;
+				strcpy(now_strings, "");
+				continue;
+			}
+		}
+		else
+		{
+			// 設定中に新しいposを見つけた場合(PATTERN_PLAYER_POSの時にもっかい来た場合,もしくはPATTERN_PLAYER_MOVESPEED中)
+			if (strcmp(now_strings, "pos") == 0)
+			{
+				//if (pattern == PATTERN_PLAYER_MOVESPEED)
+				//	movespeed = SetMoveSpeed(decimal_point, now_strings);
+				// SetPlayerでセットしてから初期化
+				SetPlayerUseFile(s_mapchip_pos, movespeed);
+
+				order = 0;
+				XorY = 0;
+				decimal_point = 0;
+				decision_decima = false;
+				movespeed = PLAYER_MOVE_SPEED;
+				pattern = PATTERN_PLAYER_POS;
+				strcpy(now_strings, "");
+				continue;
+			}
+		}
+		if (strcmp(now_strings, "nex") == 0)
+		{
+			order++;
+			XorY = 0;
+			// pattern = PATTERN_PLAYER_NEXTPOS;
+			strcpy(now_strings, "");
+			continue;
+		}
+		if (strcmp(now_strings, "spe") == 0)
+		{
+			pattern = PATTERN_PLAYER_MOVESPEED;
+			strcpy(now_strings, "");
+			continue;
+		}
+
+		// カンマが来たら文字列を確定させて次の文字列へ		// strcmpは比較して等しいと0を返す。
+		if (strcmp(loadchar, ",") == 0)
+		{
+			// 現在の文字列がカンマだけだった場合、削除して次の文字の検索へ。これをすることによって、(,1)とかの心配がなくなる
+			if (strcmp(now_strings, ",") == 0)
+			{
+				strcpy(now_strings, "");
+				continue;
+			}
+
+			// 確定した文字列を数字に変換しデータに反映させる処理
+			if (pattern == PATTERN_PLAYER_POS)
+			{
+				// 構造体の中身をセット(SetPlayerで渡すためのデータの保存と更新)
+				SetMAPCHIP_POS_STRUCT(p_mapchip_pos, now_strings, order, XorY);
+				// now_stringsを初期化する
+				strcpy(now_strings, "");
+
+				// Xの設定が終わったら次はYの設定なので+1しておく
+				XorY++;
+			}
+			// if (pattern == PATTERN_PLAYER_MOVESPEED) はここでは何もしないので書かない
+
+		}
+		else
+		{
+			// カンマじゃない場合文字をつなげる前に、PATTERN_PLAYER_MOVESPEEDの処理中の場合の処理を行う
+			if (pattern == PATTERN_PLAYER_MOVESPEED)
+			{
+				if (strcmp(loadchar, ".") == 0)
+				{
+					// .の場合、.を無視して入力を続ける。.が左から何個目にあったかだけ保存しておく
+					decision_decima = true;
+					continue;
+
+				}
+				else if (decision_decima == false)
+					decimal_point++;
+			}
+
+
+			// カンマでなければ文字を繋げていく。p,n,sの場合ここまでたどり着かないので大丈夫。もしくは"."の場合もここには来ない
+			strcat(now_strings, loadchar);
+		}
+
+		// PlayerdataEND を見つけた場合処理は終了とみなしてNULLを返す
+		if (strstr(now_strings, "PlayerdataEnd") != NULL)
+		{
+			// PlayerdataEnd まで読み込んでしまってる状態なので、文字数分カットしてあげる
+			int len = strlen(now_strings);
+			strncpy(now_strings, now_strings, len - 13);
+
+			//if (pattern == PATTERN_PLAYER_MOVESPEED)
+			//	movespeed = SetMoveSpeed(decimal_point, now_strings);
+			// SetPlayerでセットしてから初期化
+			SetPlayerUseFile(s_mapchip_pos, movespeed);
+
+			return PATTERN_NULL;
+		}
+
+		// 50文字以上の文字列になってしまったらエラーとみなし強制終了させる
+		if (strlen(now_strings) > 50)
+		{
+			int aaaaa = 5;
+			exit(5);
+		}
+
+
+	}
+
+
+
+	return PATTERN_NULL;
+}
+
 
 // char型の数字(1桁のみ)からint型の数字へ
 int charToint(char c) 
@@ -493,6 +657,7 @@ int charToint(char c)
 	case '7': return 7;
 	case '8': return 8;
 	case '9': return 9;
+	case 'f': return 0;
 	default: 
 		// 正しいマップの書き方になっていなくて十分な数(14)が読み込まれなかった場合やへんに文字が紛れ込んでいた場合
 		exit(3);			// 強制終了。エラー3
@@ -500,27 +665,54 @@ int charToint(char c)
 	}
 }
 
-// char型の数字(1桁のみ)からint型の数字へ
-//int shortToint(char c)
-//{
-//	switch (c)
-//	{
-//	case "0": return 0;
-//	case '1': return 1;
-//	case '2': return 2;
-//	case '3': return 3;
-//	case '4': return 4;
-//	case '5': return 5;
-//	case '6': return 6;
-//	case '7': return 7;
-//	case '8': return 8;
-//	case '9': return 9;
-//	default: 
-		// 正しいマップの書き方になっていなくて十分な数(14)が読み込まれなかった場合やへんに文字が紛れ込んでいた場合
-	//exit(3);			// 強制終了。エラー3
-	//return 0;
-//	}
-//}
+// char型の数字(1桁のみ)からfloat型の数字へ
+float charTofloat(char *strings, int num)
+{
+	if (strcmp(&strings[0], "0") == 0)
+		return 0.0f;
+	if (strcmp(&strings[0], "1") == 0)
+		return 1.0f;
+	if (strcmp(&strings[0], "2") == 0)
+		return 2.0f;
+	if (strcmp(&strings[0], "3") == 0)
+		return 3.0f;
+	if (strcmp(&strings[0], "4") == 0)
+		return 4.0f;
+	if (strcmp(&strings[0], "5") == 0)
+		return 5.0f;
+	if (strcmp(&strings[0], "6") == 0)
+		return 6.0f;
+	if (strcmp(&strings[0], "7") == 0)
+		return 7.0f;
+	if (strcmp(&strings[0], "8") == 0)
+		return 8.0f;
+	if (strcmp(&strings[0], "9") == 0)
+		return 9.0f;
+	if (strcmp(&strings[0], "f") == 0)
+		return 0.0f;
+
+	return 0.0f;
+}
+
+// int型の数字(1桁のみ)からchar型の数字の文字へ
+char intTochar(int num)
+{
+	switch (num)
+	{
+	case 0: return '0';
+	case 1: return '1';
+	case 2: return '2';
+	case 3: return '3';
+	case 4: return '4';
+	case 5: return '5';
+	case 6: return '6';
+	case 7: return '7';
+	case 8: return '8';
+	case 9: return '9';
+	}
+	exit(6);
+	return 'e';
+}
 
 
 void applyMapArray(int x, int y, char strings[])
@@ -550,5 +742,72 @@ void applyMapArray(int x, int y, char strings[])
 
 	return;
 }
+
+float SetMoveSpeed(int decimal_point, char strings[])
+{
+
+	float speed = 0.0f;
+	int below = 0;
+	int len = strlen(strings);
+
+	char* p_str = strings;
+
+	// 小数点より上の計算
+	for (int num = 0; num < decimal_point; num++)
+	{
+		float movespeeddata = charTofloat(p_str, num);
+		speed = speed + (movespeeddata * (pow(10, decimal_point - num)));
+	}
+	// 小数点以下の計算
+	for (int num = decimal_point; num < len; num++)
+	{
+		float movespeeddata = charTofloat(p_str, num);
+		speed = speed + (movespeeddata * (pow(0.1, below + 1)));
+		below++;
+	}
+
+	return speed;
+}
+
+void SetMAPCHIP_POS_STRUCT(MAPCHIP_POS_STRUCT * s_mapchip_pos, char strings[] , int order, int XorY)
+{
+	int fffffdfg = 0;
+	// 文字列が何文字か調べ、文字数に応じて数字に変換したときの桁数を変える
+	int len = strlen(strings);
+	if (len == 1)
+	{
+		int mapchip_pos = charToint(strings[0]);
+
+		if(XorY == 0)
+			s_mapchip_pos->mapchip_pos_x[order] = mapchip_pos;
+		else
+			s_mapchip_pos->mapchip_pos_x[order] = mapchip_pos;
+	}
+	if (len == 2)
+	{
+		int mapchip_pos = 10 * charToint(strings[0]) + charToint(strings[1]);
+
+		if (XorY == 0)
+			s_mapchip_pos->mapchip_pos_x[order] = mapchip_pos;
+		else
+			s_mapchip_pos->mapchip_pos_x[order] = mapchip_pos;
+	}
+	if (len == 3)
+	{
+		int mapchip_pos = 100 * charToint(strings[0]) + 10 * charToint(strings[1]) + charToint(strings[2]);
+
+		if (XorY == 0)
+			s_mapchip_pos->mapchip_pos_x[order] = mapchip_pos;
+		else
+			s_mapchip_pos->mapchip_pos_x[order] = mapchip_pos;
+	}
+
+	return;
+}
+
+
+
+
+
 
 

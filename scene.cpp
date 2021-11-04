@@ -15,6 +15,7 @@
 #include "select.h"
 #include "effect.h"
 #include "logo.h"
+#include "player.h"
 #include "stagedata.h"
 #include "FileDataManagement.h"
 
@@ -52,7 +53,7 @@ void InitScene(SCENE index)
 	case SCENE_LOGO:
 			InitEffect();
 			InitLogo();
-			InitStagedata();
+			//InitStagedata();
 			break;
 
 	case SCENE_TITLE:
@@ -68,6 +69,7 @@ void InitScene(SCENE index)
 	case SCENE_GAME:
 		InitEffect();
 		InitGame();
+		InitStagedata();
 		break;
 
 	case SCENE_RESULT:

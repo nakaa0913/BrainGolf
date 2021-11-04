@@ -22,4 +22,4 @@ void UpdateStagedata();
 
 STAGEDATA* GetStagedata();
 
-void SetStageDataMapArray(int stage);
+void SetStageData(int stagenum);

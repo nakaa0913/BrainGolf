@@ -134,21 +134,21 @@ void UpdateEnemy(void)
 //=============================================================================
 void DrawEnemy(void)
 {
-	for (int i = 0; i < ENEMY_MAX; i++)
-	{
-		if (g_Enemy[i].use == true)
-		{
-			//エネミーの位置やテクスチャー座標を反映
-			float px = g_Enemy[i].pos.x;	// エネミーの表示位置X
-			float py = g_Enemy[i].pos.y;	// エネミーの表示位置Y
-			float pw = g_Enemy[i].w;		// エネミーの表示幅
-			float ph = g_Enemy[i].h;		// エネミーの表示高さ
-			D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	//for (int i = 0; i < ENEMY_MAX; i++)
+	//{
+	//	if (g_Enemy[i].use == true)
+	//	{
+	//		//エネミーの位置やテクスチャー座標を反映
+	//		float px = g_Enemy[i].pos.x;	// エネミーの表示位置X
+	//		float py = g_Enemy[i].pos.y;	// エネミーの表示位置Y
+	//		float pw = g_Enemy[i].w;		// エネミーの表示幅
+	//		float ph = g_Enemy[i].h;		// エネミーの表示高さ
+	//		D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
-			// １枚のポリゴンの頂点とテクスチャ座標を設定
-			DrawSpriteColorRotate(g_Enemy[i].texNo, px, py, pw, ph, 0.0f, 0.0f, 1.0f, 1.0f, col, g_Enemy[i].rot);
-		}
-	}
+	//		// １枚のポリゴンの頂点とテクスチャ座標を設定
+	//		DrawSpriteColorRotate(g_Enemy[i].texNo, px, py, pw, ph, 0.0f, 0.0f, 1.0f, 1.0f, col, g_Enemy[i].rot);
+	//	}
+	//}
 }
 
 //=============================================================================

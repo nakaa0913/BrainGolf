@@ -460,8 +460,8 @@ int LoadMapdata(FILE* fp)
 			strcat(now_strings, loadchar);
 		}
 
-		// PlayerdataEND ‚ðŒ©‚Â‚¯‚½ê‡ˆ—‚ÍI—¹‚Æ‚Ý‚È‚µ‚ÄNULL‚ð•Ô‚·
-		if (strstr(now_strings, "PlayerdataEnd") != NULL)
+		// MapdataEnd ‚ðŒ©‚Â‚¯‚½ê‡ˆ—‚ÍI—¹‚Æ‚Ý‚È‚µ‚ÄNULL‚ð•Ô‚·
+		if (strstr(now_strings, "MapdataEnd") != NULL)
 		{
 			// now_strings‚ð‰Šú‰»‚·‚é
 			strcpy(now_strings, "");
@@ -519,7 +519,7 @@ int LoadPlayerdata(FILE* fp)
 		if (pattern == PATTERN_PLAYER_NULL)
 		{
 			// NULL‚Ìó‘Ô‚Åp‚ðŒ©‚Â‚¯‚½ê‡(Å‰‚Ì1‰ñ–Ú)
-			if (strcmp(loadchar, "p") == 0)
+			if (strcmp(now_strings, "pos") == 0)
 			{
 				order = 0;
 				XorY = 0;
@@ -586,6 +586,7 @@ int LoadPlayerdata(FILE* fp)
 
 				// X‚ÌÝ’è‚ªI‚í‚Á‚½‚çŽŸ‚ÍY‚ÌÝ’è‚È‚Ì‚Å+1‚µ‚Ä‚¨‚­
 				XorY++;
+				int sffd = 4;
 			}
 			// if (pattern == PATTERN_PLAYER_MOVESPEED) ‚Í‚±‚±‚Å‚Í‰½‚à‚µ‚È‚¢‚Ì‚Å‘‚©‚È‚¢
 
@@ -781,7 +782,7 @@ void SetMAPCHIP_POS_STRUCT(MAPCHIP_POS_STRUCT * s_mapchip_pos, char strings[] , 
 		if(XorY == 0)
 			s_mapchip_pos->mapchip_pos_x[order] = mapchip_pos;
 		else
-			s_mapchip_pos->mapchip_pos_x[order] = mapchip_pos;
+			s_mapchip_pos->mapchip_pos_y[order] = mapchip_pos;
 	}
 	if (len == 2)
 	{
@@ -790,7 +791,7 @@ void SetMAPCHIP_POS_STRUCT(MAPCHIP_POS_STRUCT * s_mapchip_pos, char strings[] , 
 		if (XorY == 0)
 			s_mapchip_pos->mapchip_pos_x[order] = mapchip_pos;
 		else
-			s_mapchip_pos->mapchip_pos_x[order] = mapchip_pos;
+			s_mapchip_pos->mapchip_pos_y[order] = mapchip_pos;
 	}
 	if (len == 3)
 	{
@@ -799,7 +800,7 @@ void SetMAPCHIP_POS_STRUCT(MAPCHIP_POS_STRUCT * s_mapchip_pos, char strings[] , 
 		if (XorY == 0)
 			s_mapchip_pos->mapchip_pos_x[order] = mapchip_pos;
 		else
-			s_mapchip_pos->mapchip_pos_x[order] = mapchip_pos;
+			s_mapchip_pos->mapchip_pos_y[order] = mapchip_pos;
 	}
 
 	return;

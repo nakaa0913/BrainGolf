@@ -88,9 +88,10 @@ HRESULT InitPlayer(void)
 
 	//初期化
 
-	SetPlayer(D3DXVECTOR2(SCREEN_WIDTH / 2, 100));
-	SetPlayer(D3DXVECTOR2(SCREEN_WIDTH / 2, 300));
-	SetPlayer(D3DXVECTOR2(SCREEN_WIDTH / 2, 500));
+	// 今は、ファイルから読み込んで設定している。SetPlayerUseFile関数
+	//////////SetPlayer(D3DXVECTOR2(SCREEN_WIDTH / 2, 100));
+	//////////SetPlayer(D3DXVECTOR2(SCREEN_WIDTH / 2, 300));
+	//////////SetPlayer(D3DXVECTOR2(SCREEN_WIDTH / 2, 500));
 
 	return S_OK;
 }
@@ -329,8 +330,8 @@ void SetPlayerUseFile(MAPCHIP_POS_STRUCT Receive_Mapchip_Pos_Struct, float moves
 			g_Player[i].Mapchip_Pos_Struct = Receive_Mapchip_Pos_Struct;
 
 			// 座標をセット		マップチップでの座標からちゃんとした座標へ変換
-			g_Player[i].pos.x = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[0] * MAP_CHIP_SIZE_X - (MAP_CHIP_SIZE_X / 2);
-			g_Player[i].pos.y = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[0] * MAP_CHIP_SIZE_Y - (MAP_CHIP_SIZE_Y / 2);
+			g_Player[i].pos.x = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[0] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+			g_Player[i].pos.y = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[0] * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
 			// 移動する用であったら移動するかどうかをtrueへ
 			if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[1] != -1)

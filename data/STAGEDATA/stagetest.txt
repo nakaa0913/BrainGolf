@@ -21,16 +21,25 @@ MapdataStart
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 MapdataEnd
 PlayerdataStart
-pos,7,2,nex,3,3,
-pos,7,7,spe,2.1,
-pos,7,14,spe,2.1,
+pos,7,2,
+pos,7,7,nex,4,7,
+pos,7,14,nex,5,12,spe,2.1,
 PlayerdataEnd
 
 EndLoadFile
 
 
 // ここまでしかとりあえず読まれない。
+
 ,(カンマ)を語尾につけ忘れないで！！！！
+
+
+Playerdataのとこは、
+pos,x,y,nex,x,y,nex,x,y,nex,x,y,nex,x,y,nex,x,y,spe,1.0f,
+みたいに設定できるよ！
+posは必須でほかは書かなくてもOK!
+nexは最大5つまで設定できて、書いた順番に移動して最後まで行くとまた最初(pos)に戻るを繰り返す予定！
+speはその移動の時のスピードだよ！何も書かなければ3.0fに設定されてるよ！
 
 MapdataStart とかの英語のやつは、
 そこからデータを読み込み始めるよっていう

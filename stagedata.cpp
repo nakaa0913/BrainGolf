@@ -52,7 +52,7 @@ void SetStageDataMapArray(int stage)
 	
 
 	// ‚Æ‚è‚ ‚¦‚¸ƒeƒXƒg
-	LoadMapdata("data/STAGEDATA/stagetest.txt");
+	LoadMapdataMain("data/STAGEDATA/stagetest.txt");
 
 	return;
 }

@@ -39,6 +39,7 @@ struct PLAYER
 	bool					use;					// true:使っている  false:未使用
 	float					w, h;					// 幅と高さ
 	D3DXVECTOR2				pos;					// ポリゴンの座標
+	D3DXVECTOR2				nextpos;				// 次の予定の座標
 	float					rot;					// ポリゴンの回転量
 	int						texNo;					// テクスチャ番号
 
@@ -53,6 +54,10 @@ struct PLAYER
 
 	struct					MAPCHIP_POS_STRUCT Mapchip_Pos_Struct;
 	bool					move_around;			// プレイヤーが初期位置から動き回るかどうか。
+	int						now_array_num;			// 現在配列の何番の動作中か
+	int						order_max_num;			// ちゃんと中身が入っている状態がどこまでか
+
+
 	int						now_count;				////一時的なもの
 	int						moving_count;			////
 	int						pos_moving_pattern;		// 初期位置から終了位置に移動するときの動き方 0:pos1から動かない

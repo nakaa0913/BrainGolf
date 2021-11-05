@@ -26,3 +26,4 @@ char intTochar(int num);
 void applyMapArray(int x, int y, char strings[]);
 void SetMAPCHIP_POS_STRUCT(MAPCHIP_POS_STRUCT* s_mapchip_pos, char strings[], int order, int XorY);
 float SetMoveSpeed(int decimal_point, char strings[]);
+int strcmpNumber(char* strings);

@@ -314,6 +314,9 @@ void UpdatePlayer(void)
 				}
 			}
 
+
+			int sasdafff = 4;
+
 			if (g_Player[i].catchwait > 0)
 				g_Player[i].catchwait--;
 		}

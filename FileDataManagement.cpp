@@ -547,6 +547,13 @@ int LoadPlayerdata(FILE* fp)
 				//	movespeed = SetMoveSpeed(decimal_point, now_strings);
 				// SetPlayerでセットしてから初期化
 				SetPlayerUseFile(s_mapchip_pos, movespeed);
+				// 構造体の初期化(-1)を入れる
+				for (int num = 0; num < ORDER_MAX; num++)
+				{
+					s_mapchip_pos.mapchip_pos_x[num] = -1;
+					s_mapchip_pos.mapchip_pos_y[num] = -1;
+				}
+
 
 				order = 0;
 				XorY = 0;
@@ -610,6 +617,23 @@ int LoadPlayerdata(FILE* fp)
 					continue;
 
 				}
+				else if (strcmpNumber(loadchar) != 0)
+				{
+					// 数字じゃない文字だった場合の処理
+					//if (pattern == PATTERN_PLAYER_MOVESPEED)
+				//	movespeed = SetMoveSpeed(decimal_point, now_strings);
+				// SetPlayerでセットしてから初期化
+					SetPlayerUseFile(s_mapchip_pos, movespeed);
+					// 構造体の初期化(-1)を入れる
+					for (int num = 0; num < ORDER_MAX; num++)
+					{
+						s_mapchip_pos.mapchip_pos_x[num] = -1;
+						s_mapchip_pos.mapchip_pos_y[num] = -1;
+					}
+					// now_stringsを初期化する
+					strcpy(now_strings, "");
+					pattern = PATTERN_PLAYER_NULL;
+				}
 				else if (decision_decima == false)
 					decimal_point++;
 			}
@@ -630,6 +654,12 @@ int LoadPlayerdata(FILE* fp)
 			//	movespeed = SetMoveSpeed(decimal_point, now_strings);
 			// SetPlayerでセットしてから初期化
 			SetPlayerUseFile(s_mapchip_pos, movespeed);
+			// 構造体の初期化(-1)を入れる
+			for (int num = 0; num < ORDER_MAX; num++)
+			{
+				s_mapchip_pos.mapchip_pos_x[num] = -1;
+				s_mapchip_pos.mapchip_pos_y[num] = -1;
+			}
 
 			return PATTERN_NULL;
 		}
@@ -814,7 +844,32 @@ void SetMAPCHIP_POS_STRUCT(MAPCHIP_POS_STRUCT * s_mapchip_pos, char strings[] , 
 }
 
 
+// 読み込んだ１文字が数字であるかどうか.数字であれば0を返すそれ以外は-1を返す
+int strcmpNumber(char* strings)
+{
+	if (strcmp(&strings[0], "0") == 0)
+		return 0;
+	if (strcmp(&strings[0], "1") == 0)
+		return 0;
+	if (strcmp(&strings[0], "2") == 0)
+		return 0;
+	if (strcmp(&strings[0], "3") == 0)
+		return 0;
+	if (strcmp(&strings[0], "4") == 0)
+		return 0;
+	if (strcmp(&strings[0], "5") == 0)
+		return 0;
+	if (strcmp(&strings[0], "6") == 0)
+		return 0;
+	if (strcmp(&strings[0], "7") == 0)
+		return 0;
+	if (strcmp(&strings[0], "8") == 0)
+		return 0;
+	if (strcmp(&strings[0], "9") == 0)
+		return 0;
 
+	return -1;
+}
 
 
 

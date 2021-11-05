@@ -493,6 +493,13 @@ int LoadPlayerdata(FILE* fp)
 	MAPCHIP_POS_STRUCT s_mapchip_pos{};
 	MAPCHIP_POS_STRUCT* p_mapchip_pos = &s_mapchip_pos;
 
+	// \‘¢‘Ì‚Ì‰Šú‰»(-1)‚ğ“ü‚ê‚é
+	for (int num = 0; num < ORDER_MAX; num++)
+	{
+		s_mapchip_pos.mapchip_pos_x[num] = -1;
+		s_mapchip_pos.mapchip_pos_y[num] = -1;
+	}
+
 	char loadchar[4] = "";
 	char now_strings[256] = "";
 

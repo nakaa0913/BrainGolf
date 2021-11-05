@@ -53,7 +53,15 @@ struct PLAYER
 
 	struct					MAPCHIP_POS_STRUCT Mapchip_Pos_Struct;
 	bool					move_around;			// プレイヤーが初期位置から動き回るかどうか。
+	int						now_count;				////一時的なもの
+	int						moving_count;			////
+	int						pos_moving_pattern;		// 初期位置から終了位置に移動するときの動き方 0:pos1から動かない
 	float					move_speed;				// プレイヤーの移動速度
+
+	int						roundtrip_x;			// プレイヤーを往復させる処理X
+	int						roundtrip_y;			// プレイヤーを往復させる処理Y
+	float					animeptn2;				// プレイヤーの歩行アニメーション
+	int						animewaitframe2;		// プレイヤーの歩行アニメーション待ち時間
 };
 
 

@@ -14,6 +14,7 @@
 #include "score.h"
 #include "sound.h"
 #include "bg.h"
+#include "FileDataManagement.h"
 
 #define PLAYER_H (50)
 #define PLAYER_W (50)
@@ -37,6 +38,7 @@ static int tex_yazirushi = 0;
 
 static float g_CharaUV = 0.0f;
 static int g_AnimePtn = 0;
+static int g_AnimeSpd = 0;
 static int g_AnimeWaitFrame = 0;
 
 //=============================================================================
@@ -45,7 +47,7 @@ static int g_AnimeWaitFrame = 0;
 HRESULT InitPlayer(void)
 {
 	//テクスチャ読み込み
-	
+
 
 	//
 	g_ShotSENo = LoadSound("data/SE/shot000.wav");
@@ -195,155 +197,214 @@ void UpdatePlayer(void)
 			g_AnimeWaitFrame++;
 		}
 
-		//マップ1へ切り替える
-		if (GetKeyboardTrigger(DIK_L))
-		{
-			SetCurrentMap(1);
-		}
-		//マップ0へ切り替える
-		if (GetKeyboardTrigger(DIK_K))
-		{
-			SetCurrentMap(0);
-		}
+		if (g_Player[i].have == false && g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[1] != -1) {
 
-
-		// 弾発射
-		if (g_Player[i].have == true)
-		{
-			if (g_Player[i].ConfirmAngle == false)
+			//歩きアニメーション
+			if (g_Player[i].animewaitframe2 > 10)
 			{
-				// プレイヤーの角度を変える処理,回転させる処理
-				g_Player[i].angle += 6.0f;
-				if (g_Player[i].angle > 360.0f)
-					g_Player[i].angle = 0.0f;
-				g_Player[i].direction = 0;
-				if (GetKeyboardTrigger(DIK_SPACE))
-				{
-					g_Player[i].ConfirmAngle = true;
+				if (g_Player[i].animeptn2 > 2)
+					g_Player[i].animeptn2 = 0;
+
+				g_Player[i].animewaitframe2 = 0;
+			}
+			g_Player[i].animewaitframe2++;
+
+			if (g_Player[i].roundtrip_x == 0) {
+				if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[1] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2) < g_Player[i].pos.x) {
+					g_Player[i].pos.x -= 1.0f;
+					g_Player[i].direction = 1;
+
+					if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[1] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2) >= g_Player[i].pos.x) {
+						g_Player[i].roundtrip_x = 1;
+					}
 				}
 			}
 
-			if (g_Player[i].ConfirmAngle == true)
-			{
-				// クールタイムの減少
-				if(g_Player[i].ConfirmCooltime >= 0)
-					g_Player[i].ConfirmCooltime--;
+			if (g_Player[i].roundtrip_y == 0) {
+				if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[1] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2) < g_Player[i].pos.y) {
+					g_Player[i].pos.y -= 1.0f;
+					g_Player[i].direction = 1;
 
-				g_Player[i].direction = 0;
-				// ShotPowerの変動の設定
-				g_Player[i].ShotPower++;
-				if (g_Player[i].ShotPower > 100)
-					g_Player[i].ShotPower = 0;
-
-				// 表示だけ↓scoreと同じもの
-				SetShotPower(g_Player[i].ShotPower);
-
-				if (GetKeyboardTrigger(DIK_SPACE) && g_Player[i].ConfirmCooltime < 0)
-				{
-					g_Player[i].catchwait = 60;
-					g_Player[i].have = false;
-
-					PlaySound(g_ShotSENo, 0);
-
-					SetVolume(g_ShotSENo, 0.1f);
-
-					D3DXVECTOR2 pos = g_Player[i].pos;
-					SetBullet(pos, g_Player[i].angle, g_Player[i].ShotPower);
+					if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[1] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2) >= g_Player[i].pos.y) {
+						g_Player[i].roundtrip_y = 1;
+					}
 				}
+			}
 
+			if (g_Player[i].roundtrip_x == 1) {
+				if (g_Player[i].pos.x < g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[0] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2)) {
+					g_Player[i].pos.x += 1.0f;
+					g_Player[i].direction = 2;
+
+					if (g_Player[i].pos.x >= g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[0] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2)) {
+						g_Player[i].roundtrip_x = 0;
+					}
+				}
+			}
+
+			if (g_Player[i].roundtrip_y == 1) {
+				if (g_Player[i].pos.y < g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[0] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2)) {
+					g_Player[i].pos.y += 1.0f;
+					g_Player[i].direction = 2;
+
+					if (g_Player[i].pos.y >= g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[0] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2)) {
+						g_Player[i].roundtrip_y = 0;
+					}
+				}
 			}
 		}
+		
 
-		if(g_Player[i].catchwait > 0)
-			g_Player[i].catchwait--;
-
-	}
-
-}
-
-//=============================================================================
-// 描画処理
-//=============================================================================
-void DrawPlayer(void)
-{
-	for (int i = 0; i < PLAYER_MAX; i++)
-	{
-		if (g_Player[i].use == true)
-		{
-			float directionUV = 0.0f + 0.25f * g_Player[i].direction;
-
-			float rot = AngleToRot(g_Player[i].angle);
+			//マップ1へ切り替える
+			if (GetKeyboardTrigger(DIK_L))
+			{
+				SetCurrentMap(1);
+			}
+			//マップ0へ切り替える
+			if (GetKeyboardTrigger(DIK_K))
+			{
+				SetCurrentMap(0);
+			}
 
 
-			// 矢印の描写
+			// 弾発射
 			if (g_Player[i].have == true)
 			{
-				// ShotPowerによる倍率
-				float ShotBairitu = 0.5f + (g_Player[i].ShotPower / 100.0f);
+				if (g_Player[i].ConfirmAngle == false)
+				{
+					// プレイヤーの角度を変える処理,回転させる処理
+					g_Player[i].angle += 6.0f;
+					if (g_Player[i].angle > 360.0f)
+						g_Player[i].angle = 0.0f;
+					g_Player[i].direction = 0;
+					if (GetKeyboardTrigger(DIK_SPACE))
+					{
+						g_Player[i].ConfirmAngle = true;
+					}
+				}
 
-				DrawSpriteColorRotate(tex_yazirushi, g_Player[i].pos.x, g_Player[i].pos.y, 500.0f * ShotBairitu, 500.0f * ShotBairitu,
-					0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), -rot);
+				if (g_Player[i].ConfirmAngle == true)
+				{
+					// クールタイムの減少
+					if (g_Player[i].ConfirmCooltime >= 0)
+						g_Player[i].ConfirmCooltime--;
+
+					g_Player[i].direction = 0;
+					// ShotPowerの変動の設定
+					g_Player[i].ShotPower++;
+					if (g_Player[i].ShotPower > 100)
+						g_Player[i].ShotPower = 0;
+
+					// 表示だけ↓scoreと同じもの
+					SetShotPower(g_Player[i].ShotPower);
+
+					if (GetKeyboardTrigger(DIK_SPACE) && g_Player[i].ConfirmCooltime < 0)
+					{
+						g_Player[i].catchwait = 60;
+						g_Player[i].have = false;
+
+						PlaySound(g_ShotSENo, 0);
+
+						SetVolume(g_ShotSENo, 0.1f);
+
+						D3DXVECTOR2 pos = g_Player[i].pos;
+						SetBullet(pos, g_Player[i].angle, g_Player[i].ShotPower);
+					}
+
+				}
 			}
 
-			DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
-				g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+			if (g_Player[i].catchwait > 0)
+				g_Player[i].catchwait--;
 		}
 	}
-}
 
-//=============================================================================
-// プレイヤー構造体の先頭アドレスを取得
-//=============================================================================
-PLAYER *GetPlayer(void)
-{
-	return &g_Player[0];
-}
-
-
-void SetPlayer(D3DXVECTOR2 pos)
-{
-	// もし未使用のプレイヤーがいなかったら追加できない。
-	for (int i = 0; i < PLAYER_MAX; i++)
+	//=============================================================================
+	// 描画処理
+	//=============================================================================
+	void DrawPlayer(void)
 	{
-		if (g_Player[i].use == false)		// 未使用状態のプレイヤーを見つける
+		for (int i = 0; i < PLAYER_MAX; i++)
 		{
-			g_Player[i].use = true;			// 使用状態へ変更する
-			g_Player[i].pos = pos;			// 座標をセット
-			g_Player[i].h = PLAYER_H;
-			g_Player[i].w = PLAYER_W;
+			if (g_Player[i].use == true)
+			{
+				float directionUV = 0.0f + 0.25f * g_Player[i].direction;
 
-			return;							// 1発セットしたので終了する
+				float rot = AngleToRot(g_Player[i].angle);
+
+
+				// 矢印の描写
+				if (g_Player[i].have == true)
+				{
+					// ShotPowerによる倍率
+					float ShotBairitu = 0.5f + (g_Player[i].ShotPower / 100.0f);
+
+					DrawSpriteColorRotate(tex_yazirushi, g_Player[i].pos.x, g_Player[i].pos.y, 500.0f * ShotBairitu, 500.0f * ShotBairitu,
+						0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), -rot);
+				}
+
+				//DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
+				//	g_Player[i].animeptn2 * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+
+				DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
+					g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+			}
 		}
 	}
-}
 
-// 構造体をポインタではなく普通に受け取ると中身は上書きできない。参照はできる。
-void SetPlayerUseFile(MAPCHIP_POS_STRUCT Receive_Mapchip_Pos_Struct, float movespeed)
-{
-	// もし未使用のプレイヤーがいなかったら追加できない。
-	for (int i = 0; i < PLAYER_MAX; i++)
+	//=============================================================================
+	// プレイヤー構造体の先頭アドレスを取得
+	//=============================================================================
+	PLAYER* GetPlayer(void)
 	{
-		if (g_Player[i].use == false)		// 未使用状態のプレイヤーを見つける
+		return &g_Player[0];
+	}
+
+
+	void SetPlayer(D3DXVECTOR2 pos)
+	{
+		// もし未使用のプレイヤーがいなかったら追加できない。
+		for (int i = 0; i < PLAYER_MAX; i++)
 		{
-			// 受け取ったマップチップでの座標と往復する順番を渡す
-			// 同じ構造体のものだからこうやって受け取れる
-			g_Player[i].Mapchip_Pos_Struct = Receive_Mapchip_Pos_Struct;
+			if (g_Player[i].use == false)		// 未使用状態のプレイヤーを見つける
+			{
+				g_Player[i].use = true;			// 使用状態へ変更する
+				g_Player[i].pos = pos;			// 座標をセット
+				g_Player[i].h = PLAYER_H;
+				g_Player[i].w = PLAYER_W;
 
-			// 座標をセット		マップチップでの座標からちゃんとした座標へ変換
-			g_Player[i].pos.x = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[0] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
-			g_Player[i].pos.y = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[0] * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
-
-			// 移動する用であったら移動するかどうかをtrueへ
-			if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[1] != -1)
-				g_Player[i].move_around = true;
-
-			g_Player[i].move_speed = movespeed;
-
-			g_Player[i].use = true;			// 使用状態へ変更する
-			g_Player[i].h = PLAYER_H;
-			g_Player[i].w = PLAYER_W;
-
-			return;							// 1発セットしたので終了する
+				return;							// 1発セットしたので終了する
+			}
 		}
 	}
-}
+
+	// 構造体をポインタではなく普通に受け取ると中身は上書きできない。参照はできる。
+	void SetPlayerUseFile(MAPCHIP_POS_STRUCT Receive_Mapchip_Pos_Struct, float movespeed)
+	{
+		// もし未使用のプレイヤーがいなかったら追加できない。
+		for (int i = 0; i < PLAYER_MAX; i++)
+		{
+			if (g_Player[i].use == false)		// 未使用状態のプレイヤーを見つける
+			{
+				// 受け取ったマップチップでの座標と往復する順番を渡す
+				// 同じ構造体のものだからこうやって受け取れる
+				g_Player[i].Mapchip_Pos_Struct = Receive_Mapchip_Pos_Struct;
+
+				// 座標をセット		マップチップでの座標からちゃんとした座標へ変換
+				g_Player[i].pos.x = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[0] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+				g_Player[i].pos.y = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[0] * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+				// 移動する用であったら移動するかどうかをtrueへ
+				if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[1] != -1)
+					g_Player[i].move_around = true;
+
+				g_Player[i].move_speed = movespeed;
+
+				g_Player[i].use = true;			// 使用状態へ変更する
+				g_Player[i].h = PLAYER_H;
+				g_Player[i].w = PLAYER_W;
+
+				return;							// 1発セットしたので終了する
+			}
+		}
+	}

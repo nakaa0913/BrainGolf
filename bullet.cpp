@@ -707,6 +707,39 @@ void UpdateBullet(void)
 
 			}
 
+			//反射板
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 15)
+			{
+				// 反射板（右に行く）に乗った時の処理
+					g_Bullet[i].angle = 0.0f;									// 角度を設定
+					g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
+
+			}
+
+			//if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 15)
+			//{
+			//	// 反射板（左に行く）に乗った時の処理
+			//	g_Bullet[i].angle = 180.0f;									// 角度を設定
+			//	g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
+
+			//}
+
+			//if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 15)
+			//{
+			//	// 反射板（上に行く）に乗った時の処理
+			//	g_Bullet[i].angle = 90.0f;									// 角度を設定
+			//	g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
+
+			//}
+
+			//if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 15)
+			//{
+			//	// 反射板（下に行く）に乗った時の処理
+			//	g_Bullet[i].angle = 270.0f;									// 角度を設定
+			//	g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
+
+			//}
+
 
 
 

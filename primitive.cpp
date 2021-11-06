@@ -138,3 +138,92 @@ bool CheckHit2DBoxBox(Float2 pos1, Float2 size1, Float2 pos2, Float2 size2)
 	return true;
 }
 
+double DegreeToRadian(double degree)
+{
+	// 角度が360度以上の場合、0~360度になるように調整
+	if (degree >= 360)
+	{
+		while (degree >= 360)
+		{
+			degree -= 360.0;
+		}
+	}
+	// 角度が0度未満の場合、0~360度になるように調整
+	if (degree < 0)
+	{
+		while (degree < 0)
+		{
+			degree += 360.0;
+		}
+	}
+
+	// 角度 * 3.14 / 180.0 で角度からラジアンに変換できる
+	return  degree * PI / 180.0;
+}
+
+double RadianToDegree(double radian)
+{
+	// atan2の場合。0度のスタート位置から反時計回りに0~3.14~-3.14~0となる。
+	// まずラジアンがマイナスだった場合の調整
+	if (radian < 0)
+		radian += PI * 2;
+
+	// ラジアン * 180.0 / 3.14 でラジアンから角度に変換できる
+	return  radian * 180.0 / PI;
+}
+
+// 入力した角度の真逆の角度を返す(270度だったら90度)
+double ReverseDegree(double degree)
+{
+
+	double new_degree = degree + 180.0;
+
+
+	// 角度が360度以上の場合、0~360度になるように調整
+	if (new_degree >= 360)
+	{
+		while (new_degree >= 360)
+		{
+			new_degree -= 360.0;
+		}
+	}
+	// 角度が0度未満の場合、0~360度になるように調整
+	if (new_degree < 0)
+	{
+		while (new_degree < 0)
+		{
+			new_degree += 360.0;
+		}
+	}
+
+	return  new_degree;
+}
+
+// 2つの点から①の点から②を見た時のラジアンを計算する
+double CalculateRadianFrom2Points(double point1x, double point1y, double point2x, double point2y)
+{
+	double distance_x = point2x - point1x;
+	double distance_y = point2y - point1y;
+
+	double radian = atan2(distance_y, distance_x);
+
+	if (radian < 0)
+		radian += PI * 2;
+
+	int asdasd = 5;
+
+	return radian;
+}
+
+// ラジアンをYだけ反転させる(X軸で反転)
+double InversionYRadian(double radian)
+{
+	double newradian = -radian;
+
+	if (newradian < 0)
+		newradian += PI * 2;
+
+	int asdads = 5;
+
+	return newradian;
+}

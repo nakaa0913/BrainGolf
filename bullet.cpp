@@ -61,6 +61,8 @@ HRESULT InitBullet(void)
 		g_Bullet[i].angle = 0.0f;
 		g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED, -BULLET_SPEED);	// 移動量を初期化
 		g_Bullet[i].vector = D3DXVECTOR2(1.0f, 1.0f);
+
+		g_Bullet[i].CollicionCool = 0;
 	}
 
 	return S_OK;
@@ -108,6 +110,9 @@ void UpdateBullet(void)
 			// oldposにmove等の移動を反映させてnextposとする
 			g_Bullet[i].nextpos = g_Bullet[i].oldpos + g_Bullet[i].move;
 
+
+			
+
 			// マップとの当たり判定の計算の下準備
 			int hitcount = 0;			// 四角形で当たり判定を計算したときに当たっているブロックの数
 			int hitcountCorner = 0;		// 当たっているブロックの角の数
@@ -125,117 +130,122 @@ void UpdateBullet(void)
 				HitBlockDatas2D[k].isUse = false;
 			}
 
-
-			// マップとの当たり判定処理
-			for (int y = 0; y < MAP_Y; y++)
+			// CollicionCool中なら当たり判定の判定を行わない
+			if (g_Bullet[i].CollicionCool <= 0)
 			{
-				for (int x = 0; x < MAP_X; x++)
+
+
+				// マップとの当たり判定処理
+				for (int y = 0; y < MAP_Y; y++)
 				{
-					// そのブロックが当たり判定があるブロックかどうか調べるa
-					int BlockData = CheckBlockdata(x, y);
-					// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
-					if (BlockData == 1)
+					for (int x = 0; x < MAP_X; x++)
 					{
-						// ブロックの4隅の座標の保存
-						D3DXVECTOR2 LU_block = D3DXVECTOR2(x * MAP_CHIP_SIZE_X - (MAP_CHIP_SIZE_X / 2) + (MAP_CHIP_SIZE_X / 2), y * MAP_CHIP_SIZE_Y - (MAP_CHIP_SIZE_Y / 2) + (MAP_CHIP_SIZE_Y / 2));
-						D3DXVECTOR2 RU_block = D3DXVECTOR2(x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2) + (MAP_CHIP_SIZE_X / 2), y * MAP_CHIP_SIZE_Y - (MAP_CHIP_SIZE_Y / 2) + (MAP_CHIP_SIZE_Y / 2));
-						D3DXVECTOR2 LD_block = D3DXVECTOR2(x * MAP_CHIP_SIZE_X - (MAP_CHIP_SIZE_X / 2) + (MAP_CHIP_SIZE_X / 2), y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2) + (MAP_CHIP_SIZE_Y / 2));
-						D3DXVECTOR2 RD_block = D3DXVECTOR2(x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2) + (MAP_CHIP_SIZE_X / 2), y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2) + (MAP_CHIP_SIZE_Y / 2));
-
-						// 最初は四角で当たり判定を調べる、必須。そこから当たってるであろうことを調べる。
-						if (CheckHit(D3DXVECTOR2(g_Bullet[i].nextpos.x - (g_Bullet[i].w / 2), g_Bullet[i].nextpos.y - (g_Bullet[i].h / 2)), D3DXVECTOR2(g_Bullet[i].w, g_Bullet[i].h),
-							D3DXVECTOR2(x * MAP_CHIP_SIZE_X, y * MAP_CHIP_SIZE_Y), D3DXVECTOR2(MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y)) == true
-							)
+						// そのブロックが当たり判定があるブロックかどうか調べるa
+						int BlockData = CheckBlockdata(x, y);
+						// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+						if (BlockData == 1)
 						{
-							// ヒットカウントを増やし、当たっているブロックの最大値と最低値を保存する
-							hitcount++;
-							block_last.x = x;
-							block_last.y = y;
+							// ブロックの4隅の座標の保存
+							D3DXVECTOR2 LU_block = D3DXVECTOR2(x * MAP_CHIP_SIZE_X - (MAP_CHIP_SIZE_X / 2) + (MAP_CHIP_SIZE_X / 2), y * MAP_CHIP_SIZE_Y - (MAP_CHIP_SIZE_Y / 2) + (MAP_CHIP_SIZE_Y / 2));
+							D3DXVECTOR2 RU_block = D3DXVECTOR2(x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2) + (MAP_CHIP_SIZE_X / 2), y * MAP_CHIP_SIZE_Y - (MAP_CHIP_SIZE_Y / 2) + (MAP_CHIP_SIZE_Y / 2));
+							D3DXVECTOR2 LD_block = D3DXVECTOR2(x * MAP_CHIP_SIZE_X - (MAP_CHIP_SIZE_X / 2) + (MAP_CHIP_SIZE_X / 2), y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2) + (MAP_CHIP_SIZE_Y / 2));
+							D3DXVECTOR2 RD_block = D3DXVECTOR2(x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2) + (MAP_CHIP_SIZE_X / 2), y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2) + (MAP_CHIP_SIZE_Y / 2));
 
-							if (x > block_max.x) block_max.x = x;
-							if (x < block_min.x) block_min.x = x;
-							if (y > block_max.y) block_max.y = y;
-							if (y < block_min.y) block_min.y = y;
-
-							// 四隅はまだわからないけど当たっているので入れておく
-							for (int k = 0; k < HitBlockData2DMax; k++)			// 使われていないものにいれていく
+							// 最初は四角で当たり判定を調べる、必須。そこから当たってるであろうことを調べる。
+							if (CheckHit(D3DXVECTOR2(g_Bullet[i].nextpos.x - (g_Bullet[i].w / 2), g_Bullet[i].nextpos.y - (g_Bullet[i].h / 2)), D3DXVECTOR2(g_Bullet[i].w, g_Bullet[i].h),
+								D3DXVECTOR2(x * MAP_CHIP_SIZE_X, y * MAP_CHIP_SIZE_Y), D3DXVECTOR2(MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y)) == true
+								)
 							{
-								if (HitBlockDatas2D[k].isUse == false)
-								{
-									HitBlockDatas2D[k].BlockPosX = x;
-									HitBlockDatas2D[k].BlockPosY = y;
-									// HitBlockDatas2D[k].CornerNum = corner;
-									// HitBlockDatas2D[k].isUse = true;		// 使われてる状態にはまだしない。
-									break;									// 登録したので抜ける
-								}
-							}
+								// ヒットカウントを増やし、当たっているブロックの最大値と最低値を保存する
+								hitcount++;
+								block_last.x = x;
+								block_last.y = y;
 
-							// 円の当たり判定と、四つ角のどこに当たっているかを調べる
-							for (int corner = 0; corner < 4; corner++)
-							{
-								D3DXVECTOR2 point_pos = D3DXVECTOR2(0.0f, 0.0f);
-								if (corner == 0)
-								{
-									point_pos = LU_block;
-								}
-								if (corner == 1)
-								{
-									point_pos = RU_block;
-								}
-								if (corner == 2)
-								{
-									point_pos = LD_block;
-								}
-								if (corner == 3)
-								{
-									point_pos = RD_block;
-								}
+								if (x > block_max.x) block_max.x = x;
+								if (x < block_min.x) block_min.x = x;
+								if (y > block_max.y) block_max.y = y;
+								if (y < block_min.y) block_min.y = y;
 
-								// 円の情報の整理(Bullet)
-								Circle2D BulletCircle = {
-									g_Bullet[i].nextpos.x,
-									g_Bullet[i].nextpos.y,
-									g_Bullet[i].w / 2,		// 半径だから横幅の半分
-								};
-								// 点の情報の整理(ブロックの角)
-								Float2 CornerPoint = {
-									point_pos.x,
-									point_pos.y,
-								};
-								// 円と４つ角のどこが当たっているか調べる
-								if (OnCollisionPointAndCircle(CornerPoint, BulletCircle) == true)
+								// 四隅はまだわからないけど当たっているので入れておく
+								for (int k = 0; k < HitBlockData2DMax; k++)			// 使われていないものにいれていく
 								{
-									// ChangeMapdata(2, x, y);
-
-									// 円の当たり判定で当たっている場合
-									// 当たっているブロックの保存
-									hitcountCorner++;
-
-									for (int k = 0; k < HitBlockData2DMax; k++)			// 使われていないものにいれていく
+									if (HitBlockDatas2D[k].isUse == false)
 									{
-										if (HitBlockDatas2D[k].isUse == false)
-										{
-											HitBlockDatas2D[k].BlockPosX = x;
-											HitBlockDatas2D[k].BlockPosY = y;
-											HitBlockDatas2D[k].CornerNum = corner;
-											HitBlockDatas2D[k].isUse = true;			// 使われてる状態にする
-											break;									// 登録したので抜ける
-										}
+										HitBlockDatas2D[k].BlockPosX = x;
+										HitBlockDatas2D[k].BlockPosY = y;
+										// HitBlockDatas2D[k].CornerNum = corner;
+										// HitBlockDatas2D[k].isUse = true;		// 使われてる状態にはまだしない。
+										break;									// 登録したので抜ける
+									}
+								}
+
+								// 円の当たり判定と、四つ角のどこに当たっているかを調べる
+								for (int corner = 0; corner < 4; corner++)
+								{
+									D3DXVECTOR2 point_pos = D3DXVECTOR2(0.0f, 0.0f);
+									if (corner == 0)
+									{
+										point_pos = LU_block;
+									}
+									if (corner == 1)
+									{
+										point_pos = RU_block;
+									}
+									if (corner == 2)
+									{
+										point_pos = LD_block;
+									}
+									if (corner == 3)
+									{
+										point_pos = RD_block;
 									}
 
+									// 円の情報の整理(Bullet)
+									Circle2D BulletCircle = {
+										g_Bullet[i].nextpos.x,
+										g_Bullet[i].nextpos.y,
+										g_Bullet[i].w / 2,		// 半径だから横幅の半分
+									};
+									// 点の情報の整理(ブロックの角)
+									Float2 CornerPoint = {
+										point_pos.x,
+										point_pos.y,
+									};
+									// 円と４つ角のどこが当たっているか調べる
+									if (OnCollisionPointAndCircle(CornerPoint, BulletCircle) == true)
+									{
+										// ChangeMapdata(2, x, y);
+
+										// 円の当たり判定で当たっている場合
+										// 当たっているブロックの保存
+										hitcountCorner++;
+
+										for (int k = 0; k < HitBlockData2DMax; k++)			// 使われていないものにいれていく
+										{
+											if (HitBlockDatas2D[k].isUse == false)
+											{
+												HitBlockDatas2D[k].BlockPosX = x;
+												HitBlockDatas2D[k].BlockPosY = y;
+												HitBlockDatas2D[k].CornerNum = corner;
+												HitBlockDatas2D[k].isUse = true;			// 使われてる状態にする
+												break;									// 登録したので抜ける
+											}
+										}
 
 
 
 
 
 
+
+									}
 								}
+
 							}
 
 						}
 
 					}
-
 				}
 			}
 
@@ -247,7 +257,7 @@ void UpdateBullet(void)
 			};
 
 			// 当たっているブロックが0以上かつ1こ単体の場合の処理
-			if (hitcount > 0 && hitcount == 1)
+			if (hitcount == 1)
 			{
 				int OriginLengthAndWidthPos = -1;					// -1:Nohit,:0:左,1:右,2:上,3:下,円の原点が縦横4方向のどこに位置するか
 				int OriginCornerPos = -1;							// -1:Nohit,:0:左上,1:右上,2:左下,3:右下,円の原点が斜め4方向のどこに位置するか
@@ -301,26 +311,38 @@ void UpdateBullet(void)
 					if (OriginLengthAndWidthPos == 0)
 					{
 						g_Bullet[i].nextpos.x = HitBlockDatas2D[0].BlockPosX * MAP_CHIP_SIZE_X + 0.0f - (g_Bullet[i].w / 2);
-						//g_Bullet[i].move.x *= -1;
-						g_Bullet[i].vector.x *= -1;
+						////g_Bullet[i].move.x *= -1;
+						//g_Bullet[i].vector.x *= -1;
+						//CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, HitBlockDatas2D[0].BlockPosX* MAP_CHIP_SIZE_X + 0.0f, g_Bullet[i].nextpos.y);
+						InversionVecAng(i, 0);
+
 					}
 					if (OriginLengthAndWidthPos == 1)
 					{
 						g_Bullet[i].nextpos.x = HitBlockDatas2D[0].BlockPosX * MAP_CHIP_SIZE_X + MAP_CHIP_SIZE_X + (g_Bullet[i].w / 2);
-						//g_Bullet[i].move.x *= -1;
-						g_Bullet[i].vector.x *= -1;
+						////g_Bullet[i].move.x *= -1;
+						//g_Bullet[i].vector.x *= -1;
+						//CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, HitBlockDatas2D[0].BlockPosX* MAP_CHIP_SIZE_X + MAP_CHIP_SIZE_X, g_Bullet[i].nextpos.y);
+						InversionVecAng(i, 0);
+
 					}
 					if (OriginLengthAndWidthPos == 2)
 					{
-						g_Bullet[i].nextpos.y = HitBlockDatas2D[0].BlockPosY * MAP_CHIP_SIZE_Y + 0.0 - (g_Bullet[i].h / 2);
-						//g_Bullet[i].move.y *= -1;
-						g_Bullet[i].vector.y *= -1;
+						g_Bullet[i].nextpos.y = HitBlockDatas2D[0].BlockPosY * MAP_CHIP_SIZE_Y + 0.0f - (g_Bullet[i].h / 2);
+						////g_Bullet[i].move.y *= -1;
+						//g_Bullet[i].vector.y *= -1;
+						//CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, g_Bullet[i].nextpos.x, HitBlockDatas2D[0].BlockPosY* MAP_CHIP_SIZE_Y + 0.0f);
+						InversionVecAng(i, 1);
+
 					}
 					if (OriginLengthAndWidthPos == 3)
 					{
 						g_Bullet[i].nextpos.y = HitBlockDatas2D[0].BlockPosY * MAP_CHIP_SIZE_Y + MAP_CHIP_SIZE_Y + (g_Bullet[i].h / 2);
-						//g_Bullet[i].move.y *= -1;
-						g_Bullet[i].vector.y *= -1;
+						////g_Bullet[i].move.y *= -1;
+						//g_Bullet[i].vector.y *= -1;
+						//CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, g_Bullet[i].nextpos.x, HitBlockDatas2D[0].BlockPosY* MAP_CHIP_SIZE_Y + MAP_CHIP_SIZE_Y);
+						InversionVecAng(i, 1);
+
 					}
 				}
 
@@ -381,7 +403,7 @@ void UpdateBullet(void)
 					movedistance = { finpos.x - BigCornerPoint.x, finpos.y - BigCornerPoint.y };
 					movedistance = { fabsf(movedistance.x), fabsf(movedistance.y) };
 
-					if (hit && g_Bullet[i].CornerCollicionCool <= 0)
+					if (hit)
 					{
 						int divnum = 10;		// 分割数
 						Float2 onemove{ -1, -1 };
@@ -406,21 +428,20 @@ void UpdateBullet(void)
 						Float2 newpos = MoreAccurateCircleCollision(BigBulletCircle.x, BigBulletCircle.y, BigBulletCircle.r, BigCornerPoint.x, BigCornerPoint.y, onemove, divnum);
 						g_Bullet[i].nextpos.x = newpos.x / BigMagnification;
 						g_Bullet[i].nextpos.y = newpos.y / BigMagnification;
-						//g_Bullet[i].move.x *= -1;
-						//g_Bullet[i].move.y *= -1;
 
-						//// 前の座標とぶつかる角の座標からラジアンを出して角度を出す。-3.14~3.14の範囲で出るので調整をしてあげる。
-						////float radian = atan2(g_Bullet[i].nextpos.y - (BigCornerPoint.y / BigMagnification), g_Bullet[i].nextpos.x - (BigCornerPoint.x / BigMagnification));
-						//float radian = atan2(g_Bullet[i].nextpos.y - (HitBlockDatas2D[0].BlockPosY * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2) / BigMagnification), HitBlockDatas2D[0].BlockPosX * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2) - (BigCornerPoint.x / BigMagnification));
-						//if (radian < 0)
-						//	radian += D3DX_PI * 2;
-						//// バレットのベクトルの更新をする
-						//Float2 oldmove = { g_Bullet[i].move.x, g_Bullet[i].move.y };
-						//g_Bullet[i].vector = D3DXVECTOR2(cos(radian), sin(radian));
-						//// g_Bullet[i].move = D3DXVECTOR2(g_Bullet[i].move.x * g_Bullet[i].vector.x, g_Bullet[i].move.y * g_Bullet[i].vector.y);
+						// 当たっているブロックの真ん中の座標を求める
+						float HitBlockCenterPosX = HitBlockDatas2D[0].BlockPosX * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+						float HitBlockCenterPosY = HitBlockDatas2D[0].BlockPosY * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+						// 当たっているブロックの角までの差を出す
+						float difference_CornerPosX = CalculateCornerDistanceX(HitBlockDatas2D[0].CornerNum, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y);
+						float difference_CornerPosY = CalculateCornerDistanceY(HitBlockDatas2D[0].CornerNum, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y);
+						// 当たっているブロックの角の座標を出す
+						float CornerPosX = HitBlockCenterPosX + difference_CornerPosX;
+						float CornerPosY = HitBlockCenterPosY + difference_CornerPosY;
 
-						//g_Bullet[i].CornerCollicionCool = 0;
-						//int aadadad = 6;
+						// 値の更新をさせる。
+						CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, CornerPosX, CornerPosY);
+
 					}
 
 
@@ -429,7 +450,7 @@ void UpdateBullet(void)
 
 
 			}
-			else if (hitcount <= 4)
+			else if (hitcount > 0 && hitcount <= 4)
 			{
 				// ブロックに当たっており、かつ2個以上かつ4個以下の場合の場合
 				// x座標のブロックに完全に左右どちらかからあたっている場合
@@ -443,16 +464,22 @@ void UpdateBullet(void)
 						// バレットはブロックの左側から右側に向かって進んでいて衝突したのでブロックの左側にnextposを固定し、左に向かって反射させる
 						LeftorRight = 0;
 						g_Bullet[i].nextpos.x = block_min.x * MAP_CHIP_SIZE_X + 0.0f - (g_Bullet[i].w / 2);
-						//g_Bullet[i].move.x *= -1;
-						g_Bullet[i].vector.x *= -1;
+						////g_Bullet[i].move.x *= -1;
+						//g_Bullet[i].vector.x *= -1;
+						//CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, block_min.x* MAP_CHIP_SIZE_X + 0.0f, g_Bullet[i].nextpos.y);
+						InversionVecAng(i, 0);
+
 					}
 					if (BulletCircle.x > block_min.x * MAP_CHIP_SIZE_X + MAP_CHIP_SIZE_X)
 					{
 						// バレットはブロックの右側から左側に向かって進んでいて衝突したのでブロックの右側にnextposを固定し、右に向かって反射させる
 						LeftorRight = 1;
 						g_Bullet[i].nextpos.x = block_min.x * MAP_CHIP_SIZE_X + MAP_CHIP_SIZE_X + (g_Bullet[i].w / 2);
-						//g_Bullet[i].move.x *= -1;
-						g_Bullet[i].vector.x *= -1;
+						////g_Bullet[i].move.x *= -1;
+						//g_Bullet[i].vector.x *= -1;
+						//CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, block_min.x* MAP_CHIP_SIZE_X + MAP_CHIP_SIZE_X, g_Bullet[i].nextpos.y);
+						InversionVecAng(i, 0);
+
 					}
 
 					if (BulletCircle.x > HitBlockDatas2D[0].BlockPosX * MAP_CHIP_SIZE_X + 0.0f && BulletCircle.x < HitBlockDatas2D[0].BlockPosX * MAP_CHIP_SIZE_X + MAP_CHIP_SIZE_X)
@@ -474,15 +501,21 @@ void UpdateBullet(void)
 					{
 						// バレットはブロックの上側から下側に向かって進んでいて衝突したのでブロックの上側にnextposを固定し、上に向かって反射させる
 						g_Bullet[i].nextpos.y = block_min.y * MAP_CHIP_SIZE_Y + 0.0 - (g_Bullet[i].h / 2);
-						//g_Bullet[i].move.y *= -1;
-						g_Bullet[i].vector.y *= -1;
+						////g_Bullet[i].move.y *= -1;
+						//g_Bullet[i].vector.y *= -1;
+						//CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, g_Bullet[i].nextpos.x, block_min.y* MAP_CHIP_SIZE_Y + 0.0);
+						InversionVecAng(i, 1);
+
 					}
 					if (BulletCircle.y > block_min.y * MAP_CHIP_SIZE_Y + MAP_CHIP_SIZE_Y)
 					{
 						// バレットはブロックの下側から上側に向かって進んでいて衝突したのでブロックの下側にnextposを固定し、下に向かって反射させる
 						g_Bullet[i].nextpos.y = block_min.y * MAP_CHIP_SIZE_Y + MAP_CHIP_SIZE_Y + (g_Bullet[i].h / 2);
-						//g_Bullet[i].move.y *= -1;
-						g_Bullet[i].vector.y *= -1;
+						////g_Bullet[i].move.y *= -1;
+						//g_Bullet[i].vector.y *= -1;
+						//CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, g_Bullet[i].nextpos.x, block_min.y* MAP_CHIP_SIZE_Y + MAP_CHIP_SIZE_Y);
+						InversionVecAng(i, 1);
+
 					}
 				}
 
@@ -678,16 +711,16 @@ void UpdateBullet(void)
 
 
 
-			// クールタイムを減らす処理一覧
-			// 球が角に当たった時の判定のクールタイムを減らしていく
-			if (g_Bullet[i].CornerCollicionCool > 0)
-				g_Bullet[i].CornerCollicionCool--;
-			// ワープのクールタイムを減らしていく
-			if (g_Bullet[i].warpcool > 0)
-				g_Bullet[i].warpcool--;
-			// 加速版のクールタイムを減らしていく
-			if (g_Bullet[i].accboardcool > 0)
-				g_Bullet[i].accboardcool--;
+			//// クールタイムを減らす処理一覧
+			//// 球がブロックに当たった時の判定のクールタイムを減らしていく
+			//if (g_Bullet[i].CollicionCool > 0)
+			//	g_Bullet[i].CollicionCool--;
+			//// ワープのクールタイムを減らしていく
+			//if (g_Bullet[i].warpcool > 0)
+			//	g_Bullet[i].warpcool--;
+			//// 加速版のクールタイムを減らしていく
+			//if (g_Bullet[i].accboardcool > 0)
+			//	g_Bullet[i].accboardcool--;
 
 
 			// 最期にposにnextposを反映させる
@@ -696,6 +729,18 @@ void UpdateBullet(void)
 
 
 		}
+
+		// クールタイムを減らす処理一覧
+		// 球がブロックに当たった時の判定のクールタイムを減らしていく
+		if (g_Bullet[i].CollicionCool > 0)
+			g_Bullet[i].CollicionCool--;
+		// ワープのクールタイムを減らしていく
+		if (g_Bullet[i].warpcool > 0)
+			g_Bullet[i].warpcool--;
+		// 加速版のクールタイムを減らしていく
+		if (g_Bullet[i].accboardcool > 0)
+			g_Bullet[i].accboardcool--;
+
 	}
 }
 
@@ -767,3 +812,94 @@ D3DXVECTOR2 AngleToVector2(float angle)
 	float radian = angle * (D3DX_PI / 180);
 	return  D3DXVECTOR2(cos(radian), sin(radian));
 }
+
+
+// -1:NoHit,0,左上,1:右上,2:左下,3:右下,四隅のどれに当たっているか。またはどれにも当たっていないか。
+// ブロックの中心からの角までの座標の計算。今どこの角に当たっているかをもらうと計算できる。こっちはXだけ。
+float CalculateCornerDistanceX(int CornerNum, float size_x, float size_y)
+{
+	float distance_x = 0;
+
+	if (CornerNum == 0 || CornerNum == 2)
+		distance_x = -size_x / 2;
+	if (CornerNum == 1 || CornerNum == 3)
+		distance_x = size_x / 2;
+
+	return distance_x;
+}
+
+// ブロックの中心からの角までの座標の計算。今どこの角に当たっているかをもらうと計算できる。こっちはYだけ。
+float CalculateCornerDistanceY(int CornerNum, float size_x, float size_y)
+{
+	float distance_y = 0;
+
+	if (CornerNum == 2 || CornerNum == 3)
+		distance_y = -size_y / 2;
+	if (CornerNum == 0 || CornerNum == 1)
+		distance_y = size_y / 2;
+
+	return distance_y;
+}
+
+// 衝突した2点の座標から計算して新しく設定する角度とベクトルを求める。void型で最期に値の更新をこの関数内で直接行っている。
+void CalculateNewVecAng(int i, float bulletposX, float bulletposY, float CornerPosX, float CornerPosY)
+{
+
+	// ボールベクトルの角度
+	// g_Bullet[i].angle
+	// 壁のベクトルの角度
+	//float wall_radian = CalculateRadianFrom2Points(CornerPosX, CornerPosY, g_Bullet[i].oldpos.x, g_Bullet[i].oldpos.y);
+	float wall_radian = CalculateRadianFrom2Points(CornerPosX, CornerPosY, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y);
+	wall_radian = InversionYRadian(wall_radian);
+	//float wall_radian = atan2(g_Bullet[i].nextpos.y - (HitBlockDatas2D[0].BlockPosY * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2) / BigMagnification), HitBlockDatas2D[0].BlockPosX * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2) - (BigCornerPoint.x / BigMagnification));
+	float wall_angle = RadianToDegree(wall_radian);
+	// 壁ベクトルの角度の真逆の角度
+	float wall_angle_reverse = ReverseDegree(wall_angle);
+
+	// 壁の真逆の角度からボールの角度を引いて差を出す
+	float difference_angle = wall_angle_reverse - g_Bullet[i].angle;
+	float adjustAngle = 55.0f;
+	// カスあたりでも壁ベクトルの角度から adjustangle 以上の角度はつかないよっていうゲームっぽく見せるための調整。リアルすぎないように。
+	if (difference_angle > adjustAngle)
+		difference_angle = adjustAngle;
+	if (difference_angle < -adjustAngle)
+		difference_angle = -adjustAngle;
+	// 壁の角度に差の角度を足す
+	float new_bullet_angle = wall_angle + difference_angle;
+	if (new_bullet_angle >= 360.0)
+		new_bullet_angle -= 360.0;
+	if (new_bullet_angle < 0)
+		new_bullet_angle += 360.0;
+
+	// 角度とベクトルの更新
+	g_Bullet[i].angle = new_bullet_angle;							// 角度を設定
+	g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
+
+	g_Bullet[i].CollicionCool = COL_COOL;
+
+	return;
+}
+
+// 反転させたいものが、Xなら0,Yなら1
+void InversionVecAng(int i, int XorY)
+{
+	// 角度はx,y関係なくこれで反転
+	float newang = g_Bullet[i].angle + 180.0;
+	if (newang >= 360)
+		newang -= 360;
+
+	D3DXVECTOR2 newvec = D3DXVECTOR2(g_Bullet[i].vector.x, g_Bullet[i].vector.y);
+	if (XorY == 0)
+		newvec.x *= -1;
+	else
+		newvec.y *= -1;
+
+	// 角度とベクトルの更新
+	g_Bullet[i].angle = newang;									// 角度を設定
+	g_Bullet[i].vector = newvec;		// 角度からベクトルを設定
+
+	g_Bullet[i].CollicionCool = COL_COOL;
+
+	return;
+}
+

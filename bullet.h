@@ -14,6 +14,7 @@
 //*****************************************************************************
 #define BULLET_MAX		(50)		// バレットのMax数
 #define BULLET_SPEED	(4.0f)		// バレットの移動スピード
+#define COL_COOL		(10)			// CollicionCoolの長さ
 
 
 // バレット構造体a
@@ -31,7 +32,7 @@ struct BULLET
 	float					angle;					// 角度
 	D3DXVECTOR2				vector;					// ベクトル
 	float					shotpower;				// 球の力の倍率
-	int						CornerCollicionCool;	// 球がブロックの4隅に当たった時のクールタイム
+	int						CollicionCool;			// 球がブロックに当たった時のクールタイム
 	int						accboardcool;			//加速のクールタイム
 	int						warpcool;				//ワープのクールタイム
 };
@@ -49,3 +50,7 @@ BULLET* GetBullet(void);
 
 D3DXVECTOR2 AngleToVector2(float angle);
 void SetBullet(D3DXVECTOR2 pos, float angle, int ShotPower);
+float CalculateCornerDistanceX(int CornerNum, float size_x, float size_y);
+float CalculateCornerDistanceY(int CornerNum, float size_x, float size_y);
+void CalculateNewVecAng(int i, float bulletposX, float bulletposY, float CornerPosX, float CornerPosY);
+void InversionVecAng(int i, int XorY);

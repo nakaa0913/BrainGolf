@@ -7,6 +7,8 @@
 #ifndef __IKD_OX_PRIMITIVE_H__
 #define __IKD_OX_PRIMITIVE_H__
 
+#define PI  (3.141593)
+
 
 #include <math.h>
 
@@ -123,9 +125,9 @@ struct HitBlockData2D
 {
 	float BlockPosX;		// ブロックの座標(マップチップでの座標)
 	float BlockPosY;		// ブロックの座標(マップチップでの座標)
-	int CornerNum;		// -1:NoHit,0,左上,1:右上,2:左下,3:右下,四隅のどれに当たっているか。またはどれにも当たっていないか。
+	int CornerNum;			// -1:NoHit,0,左上,1:右上,2:左下,3:右下,四隅のどれに当たっているか。またはどれにも当たっていないか。
 
-	bool isUse;			// 現在このデータが使用中かどうか。
+	bool isUse;				// 現在このデータが使用中かどうか。
 
 } ;
 
@@ -251,5 +253,10 @@ bool OnCollisionPointAndCircle(Float2 point, Circle2D circle);
 float CalculationDistance(float point1pos1, float point1pos2, float point2pos1, float point2pos2);
 Float2 MoreAccurateCircleCollision(float OriginX, float OriginY, float radius, float pointposX, float pointposY, Float2 onemove, int divnum);
 bool CheckHit2DBoxBox(Float2 pos1, Float2 size1, Float2 pos2, Float2 size2);
+double RadianToDegree(double radian);
+double DegreeToRadian(double degree);
+double ReverseDegree(double degree);
+double CalculateRadianFrom2Points(double point1x, double point1y, double point2x, double point2y);
+double InversionYRadian(double radian);
 
 #endif

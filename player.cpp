@@ -124,7 +124,7 @@ void UpdatePlayer(void)
 		if (GetKeyboardPress(DIK_UP))
 		{
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x, g_Player[i].pos.y - 3.0f)) != 1)
-				g_Player[i].pos.y -= 3.0f;
+				g_Player[i].nextpos.y -= 3.0f;
 
 			g_Player[i].direction = 3;
 			//g_CharaUV = 0.75f;
@@ -144,7 +144,7 @@ void UpdatePlayer(void)
 		if (GetKeyboardPress(DIK_DOWN))
 		{
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x, g_Player[i].pos.y + 3.0f)) != 1)
-				g_Player[i].pos.y += 3.0f;
+				g_Player[i].nextpos.y += 3.0f;
 
 			g_Player[i].direction = 0;
 			//g_CharaUV = 0.0f;
@@ -164,7 +164,7 @@ void UpdatePlayer(void)
 		if (GetKeyboardPress(DIK_LEFT))
 		{
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x - 3.0f, g_Player[i].pos.y)) != 1)
-				g_Player[i].pos.x -= 3.0f;
+				g_Player[i].nextpos.x -= 3.0f;
 
 			g_Player[i].direction = 1;
 			//g_CharaUV = 0.25f;
@@ -184,7 +184,7 @@ void UpdatePlayer(void)
 		if (GetKeyboardPress(DIK_RIGHT))
 		{
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x + 3.0f, g_Player[i].pos.y)) != 1)
-				g_Player[i].pos.x += 3.0f;
+				g_Player[i].nextpos.x += 3.0f;
 
 			g_Player[i].direction = 2;
 			//g_CharaUV = 0.5f;
@@ -205,93 +205,93 @@ void UpdatePlayer(void)
 
 		// 柴田がやってみたとこ
 		// ボールを持っていなくて、往復移動をする場合の処理。
-		//if (g_Player[i].have == false && g_Player[i].move_around == true)
-		//{
-		//	for (int array_num = 0; array_num < g_Player[i].order_max_num; array_num++)
-		//	{
-		//		 今配列の何番目の移動をしているかを検索している(例：配列の0番目の移動をしているよ)
-		//		if (g_Player[i].now_array_num == array_num)
-		//		{
-		//			 次の配列の番号を分かりやすくしておく
-		//			int next_array = g_Player[i].now_array_num + 1;
-		//			if (next_array >= g_Player[i].order_max_num)
-		//				next_array = 0;
+		if (g_Player[i].have == false && g_Player[i].move_around == true)
+		{
+			for (int array_num = 0; array_num < g_Player[i].order_max_num; array_num++)
+			{
+				// 今配列の何番目の移動をしているかを検索している(例：配列の0番目の移動をしているよ)
+				if (g_Player[i].now_array_num == array_num)
+				{
+					// 次の配列の番号を分かりやすくしておく
+					int next_array = g_Player[i].now_array_num + 1;
+					if (next_array >= g_Player[i].order_max_num)
+						next_array = 0;
 
-		//			 どっちもtureになったら次の配列の移動へ
-		//			bool	move_end_x = false;
-		//			bool	move_end_y = false;
+					// どっちもtureになったら次の配列の移動へ
+					bool	move_end_x = false;
+					bool	move_end_y = false;
 
-		//			 実際の移動処理
-		//			 右向きに進むか左向きに進むか		== の場合は動かないので無視
-		//			if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[array_num] < g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[next_array])
-		//			{
-		//				 右向きに進む処理(+)
-		//				g_Player[i].nextpos.x += g_Player[i].move_speed;
-		//				 移動制限の処理。
-		//				if (g_Player[i].nextpos.x > g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[next_array] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2))
-		//				{
-		//					g_Player[i].nextpos.x = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[next_array] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
-		//					move_end_x = true;
-		//				}
-		//			}
-		//			else if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[array_num] > g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[next_array])
-		//			{
-		//				 左向きに進む処理(-)
-		//				g_Player[i].nextpos.x -= g_Player[i].move_speed;
-		//				 移動制限の処理。
-		//				if (g_Player[i].nextpos.x < g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[next_array] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2))
-		//				{
-		//					g_Player[i].nextpos.x = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[next_array] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
-		//					move_end_x = true;
-		//				}
-		//			}
-		//			else
-		//			{
-		//				 == の場合
-		//				move_end_x = true;
-		//			}
-		//			 下向きに進むか上向きに進むか		== の場合は動かないので無視
-		//			if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[array_num] < g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[next_array])
-		//			{
-		//				 下向きに進む処理(+)
-		//				g_Player[i].nextpos.y += g_Player[i].move_speed;
-		//				 移動制限の処理。
-		//				if (g_Player[i].nextpos.y > g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[next_array] * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2))
-		//				{
-		//					g_Player[i].nextpos.y = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[next_array] * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
-		//					move_end_y = true;
-		//				}
-		//			}
-		//			else if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[array_num] > g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[next_array])
-		//			{
-		//				 上向きに進む処理(-)
-		//				g_Player[i].nextpos.y -= g_Player[i].move_speed;
-		//				 移動制限の処理。
-		//				if (g_Player[i].nextpos.y < g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[next_array] * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2))
-		//				{
-		//					g_Player[i].nextpos.y = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[next_array] * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
-		//					move_end_y = true;
-		//				}
-		//			}
-		//			else
-		//			{
-		//				 == の場合
-		//				move_end_y = true;
-		//			}
+					// 実際の移動処理
+					// 下向きに進むか上向きに進むか
+					if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[array_num] < g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[next_array])
+					{
+						// 下向きに進む処理(+)
+						g_Player[i].nextpos.y += g_Player[i].move_speed;
+						// 移動制限の処理。
+						if (g_Player[i].nextpos.y > g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[next_array] * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2))
+						{
+							g_Player[i].nextpos.y = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[next_array] * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+							move_end_y = true;
+						}
+					}
+					else if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[array_num] > g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[next_array])
+					{
+						// 上向きに進む処理(-)
+						g_Player[i].nextpos.y -= g_Player[i].move_speed;
+						// 移動制限の処理。
+						if (g_Player[i].nextpos.y < g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[next_array] * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2))
+						{
+							g_Player[i].nextpos.y = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[next_array] * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+							move_end_y = true;
+						}
+					}
+					else
+					{
+						// == の場合
+						move_end_y = true;
+					}
+					// 右向きに進むか左向きに進むか
+					if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[array_num] < g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[next_array])
+					{
+						// 右向きに進む処理(+)
+						g_Player[i].nextpos.x += g_Player[i].move_speed;
+						//移動制限の処理。
+						if (g_Player[i].nextpos.x > g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[next_array] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2))
+						{
+							g_Player[i].nextpos.x = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[next_array] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+							move_end_x = true;
+						}
+					}
+					else if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[array_num] > g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[next_array])
+					{
+						// 左向きに進む処理(-)
+						g_Player[i].nextpos.x -= g_Player[i].move_speed;
+						// 移動制限の処理。
+						if (g_Player[i].nextpos.x < g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[next_array] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2))
+						{
+							g_Player[i].nextpos.x = g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[next_array] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+							move_end_x = true;
+						}
+					}
+					else
+					{
+						// == の場合
+						move_end_x = true;
+					}
 
-		//			if (move_end_x && move_end_y)
-		//			{
-		//				g_Player[i].now_array_num = next_array;
-		//			}
-		//			
-		//			break;
+					if (move_end_x && move_end_y)
+					{
+						g_Player[i].now_array_num = next_array;
+					}
+					
+					break;
 
-		//		}
-		//	}
-		//}
+				}
+			}
+		}
 
-		// nextpos(計算用のポジション)をpos(ちゃんとしたポジション)に適用
-		//g_Player[i].pos = g_Player[i].nextpos;
+		 // nextpos(計算用のポジション)をpos(ちゃんとしたポジション)に適用
+		g_Player[i].pos = g_Player[i].nextpos;
 
 
 

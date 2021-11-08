@@ -143,6 +143,7 @@ int g_map_hitchk[2][MAP_Y][MAP_X] =
 
 
 static int g_Ground = 0;		// 背景用テクスチャ情報
+static int tex_floor = 0;		// 背景用テクスチャ情報
 static int g_CurrentPos = 0;	// 現在のマップ座標
 
 //=============================================================================
@@ -152,6 +153,7 @@ HRESULT InitBG(void)
 {
 	//g_Ground = LoadTexture("data/TEXTURE/basechip.png");
 	g_Ground = LoadTexture("data/TEXTURE/basechip_test.png");
+	tex_floor = LoadTexture("data/TEXTURE/floor.png");
 
 	return S_OK;
 }
@@ -193,7 +195,18 @@ void DrawBG(void)
 	{
 		for (int x = 0; x < MAP_X; x++)
 		{
-			DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+			//DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+
+			float start_x = 0.0f;
+			float start_y = SCREEN_HEIGHT / 2;
+
+			float tex_floor_size_x = 80;
+			float tex_floor_size_y = 40;
+
+			float tex_floor_x = start_x + x * (tex_floor_size_x / 2) + y * (tex_floor_size_x / 2);
+			float tex_floor_y = start_y + -y * (tex_floor_size_y / 2) + x * (tex_floor_size_y / 2);
+
+			DrawSpriteLeftTop(tex_floor, tex_floor_x, tex_floor_y, tex_floor_size_x, tex_floor_size_y, 0.0f, 0.0f, 1.0f, 1.0f);
 
 			//switch (p_Stagedata->maparray[y][x])
 			//{
@@ -235,16 +248,16 @@ void DrawBG(void)
 
 
 	//背景オブジェクトの表示
-	for (int y = 0; y < MAP_Y; y++)
-	{
-		for (int x = 0; x < MAP_X; x++)
-		{
-			MAP_DATA_T mapchip;
-			mapchip = g_MapInfo[p_Stagedata->maparray[y][x]];
+	//for (int y = 0; y < MAP_Y; y++)
+	//{
+	//	for (int x = 0; x < MAP_X; x++)
+	//	{
+	//		MAP_DATA_T mapchip;
+	//		mapchip = g_MapInfo[p_Stagedata->maparray[y][x]];
 
-			DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
-		}
-	}
+	//		DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
+	//	}
+	//}
 }
 
 int GetMapEnter(D3DXVECTOR2 pos)
@@ -278,27 +291,3 @@ int CheckBlockdata(int BlockX, int BlockY)
 
 	return BlockData;
 }
-
-//////////////////////////////////////////////////stagedataにあわせてここから追加したやつ
-
-
-//int GetMapEnter2(D3DXVECTOR2 pos)
-//{
-//	STAGEDATA* p_Stagedata = GetStagedata();
-//
-//	int x, y;
-//	x = (int)(pos.x / MAP_CHIP_SIZE_X);//座標をマップチップ一つの大きさで割る
-//	y = (int)(pos.y / MAP_CHIP_SIZE_Y);
-//
-//	return p_Stagedata->maparray[y][x];
-//}
-
-//int CheckBlockdata2(int BlockX, int BlockY)
-//{
-//	STAGEDATA* p_Stagedata = GetStagedata();
-//
-//	int BlockData = 0;
-//	BlockData = p_Stagedata->maparray[BlockY][BlockX];
-//
-//	return BlockData;
-//}

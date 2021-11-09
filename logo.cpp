@@ -46,7 +46,7 @@ static int	g_BGMNo = 0;		// BGM識別子
 void InitLogo(void)
 {
 	//テクスチャ生成
-	g_TextureNo = LoadTexture("data/TEXTURE/HEW.jpg");
+	g_TextureNo = LoadTexture("data/TEXTURE/HEW2.png");
 
 	g_BGMNo = LoadSound("data/BGM/sample000.wav");
 
@@ -81,7 +81,7 @@ void UpdateLogo(void)
 void DrawLogo(void)
 {
 	// １枚のポリゴンの頂点とテクスチャ座標を設定
-	DrawSpriteLeftTop(g_TextureNo, 0.0f, 200.0f, 560, 400, 0.0f, 0.0f, 1.0f, 1.0f);
+	DrawSpriteLeftTop(g_TextureNo, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
 
 }
 

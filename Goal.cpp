@@ -86,61 +86,91 @@ void UpdateGoal(void)
 
 	if (g_Goal.goaltime == 10)
 	{
-		SetEffect(4, D3DXVECTOR2(280.0f, 400.0f), D3DXVECTOR2(280.0f, 400.0f), 0,
-			D3DXVECTOR2(560.0f, 800.0f), D3DXVECTOR2(560.0f, 800.0f), 1,
+		//暗闇
+		SetEffect(4, D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(0.0f, 0.0f), 0,
+			D3DXVECTOR2(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2), D3DXVECTOR2(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2), 1,
+			0.0f, 0.5f, 100, 999, 0, 180,
+			0.0f, 0.0f, 0);
+		//横1440
+		//縦810
+		//ゲームクリア
+		SetEffect(5, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+			D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT / 2), 1,
+			0.0f, 1.0f, 30, 120, 60, 90,
+			0.0f, 0.0f, 0);
+	}
+
+
+	if (g_Goal.goaltime == 240)
+	{
+		//赤丸（アドバイス？）
+		SetEffect(1, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT), 0,
+			D3DXVECTOR2(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2), D3DXVECTOR2(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2), 1,
 			0.0f, 0.5f, 100, 999, 0, 180,
 			0.0f, 0.0f, 0);
 
-
-		SetEffect(5, D3DXVECTOR2(275.0f, 60.0f), D3DXVECTOR2(275.0f, 60.0f), 0,
-			D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(400.0f, 100.0f), 1,
-			0.0f, 1.0f, 180, 999, 0, 180,
-			0.0f, 0.0f, 0);
 	}
 
-	if (g_Goal.goaltime == 40)
+	if (g_Goal.goaltime == 300)
 	{
-		SetEffect(2, D3DXVECTOR2(160.0f, 180.0f), D3DXVECTOR2(160.0f, 180.0f), 0,
+		//星（たこ）
+		SetEffect(2, D3DXVECTOR2(440.0f, 80.0f), D3DXVECTOR2(440.0f, 80.0f), 0,
+			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+			0.0f, 1.0f, 180, 999, 0, 60,
+			0.0f, 0.0f, 0);
+		//横1440
+		//縦810
+	}
+
+	if (g_Goal.goaltime == 330)
+	{
+		//星（たこ）
+		SetEffect(2, D3DXVECTOR2(440.0f, 180.0f), D3DXVECTOR2(440.0f, 180.0f), 0,
 			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
 			0.0f, 1.0f, 180, 999, 0, 60,
 			0.0f, 0.0f, 0);
 	}
 
-	if (g_Goal.goaltime == 80)
+	if (g_Goal.goaltime == 360)
 	{
-
-		SetEffect(2, D3DXVECTOR2(280.0f, 180.0f), D3DXVECTOR2(280.0f, 180.0f), 0,
+		//星（たこ）
+		SetEffect(2, D3DXVECTOR2(440.0f, 280.0f), D3DXVECTOR2(440.0f, 280.0f), 0,
 			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
 			0.0f, 1.0f, 180, 999, 0, 60,
 			0.0f, 0.0f, 0);
+
 	}
 
-	if (g_Goal.goaltime == 120)
+	if (g_Goal.goaltime >= 370)
 	{
 
-		SetEffect(2, D3DXVECTOR2(400.0f, 180.0f), D3DXVECTOR2(400.0f, 180.0f), 0,
-			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-			0.0f, 1.0f, 180, 999, 0, 60,
+		if (GetKeyboardPress(DIK_A))
+		{
+			g_Goal.goaltime = 9000;
+		}
+	}
+
+	if (g_Goal.goaltime >= 9000)
+	{
+	
+
+		//暗闇
+		SetEffect(4, D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(0.0f, 0.0f), 0,
+			D3DXVECTOR2(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2), D3DXVECTOR2(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2), 1,
+			0.0f, 0.5f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
-	}
 
-	if (g_Goal.goaltime == 160)
-	{
-	}
-
-	if (g_Goal.goaltime >= 160)
-	{
-		SetEffect(3, D3DXVECTOR2(290.0f, 400.0f), D3DXVECTOR2(290.0f, 400.0f), 1,
+		SetEffect(3, D3DXVECTOR2(SCREEN_WIDTH / 2, 400.0f), D3DXVECTOR2(SCREEN_WIDTH / 2, 400.0f), 1,
 			D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(300.0f, 80.0f), 1,
 			0.0f, 1.0f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
 
-		SetEffect(3, D3DXVECTOR2(290.0f, 550.0f), D3DXVECTOR2(290.0f, 550.0f), 1,
+		SetEffect(3, D3DXVECTOR2(SCREEN_WIDTH / 2, 550.0f), D3DXVECTOR2(SCREEN_WIDTH / 2, 550.0f), 1,
 			D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(300.0f, 80.0f), 1,
 			0.0f, 1.0f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
 
-		SetEffect(3, D3DXVECTOR2(290.0f, 700.0f), D3DXVECTOR2(290.0f, 700.0f), 1,
+		SetEffect(3, D3DXVECTOR2(SCREEN_WIDTH / 2, 700.0f), D3DXVECTOR2(SCREEN_WIDTH / 2, 700.0f), 1,
 			D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(300.0f, 80.0f), 1,
 			0.0f, 1.0f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
@@ -148,7 +178,7 @@ void UpdateGoal(void)
 
 		if (g_Goal.selectpush == 0)
 		{
-			SetEffect(3, D3DXVECTOR2(290.0f, 400.0f), D3DXVECTOR2(290.0f, 400.0f), 1,
+			SetEffect(3, D3DXVECTOR2(SCREEN_WIDTH / 2, 400.0f), D3DXVECTOR2(SCREEN_WIDTH / 2, 400.0f), 1,
 				D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(350.0f, 120.0f), 1,
 				0.0f, 1.0f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);
@@ -156,7 +186,7 @@ void UpdateGoal(void)
 
 		if (g_Goal.selectpush == 1)
 		{
-			SetEffect(3, D3DXVECTOR2(290.0f, 550.0f), D3DXVECTOR2(290.0f, 550.0f), 1,
+			SetEffect(3, D3DXVECTOR2(SCREEN_WIDTH / 2, 550.0f), D3DXVECTOR2(SCREEN_WIDTH / 2, 550.0f), 1,
 				D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(350.0f, 120.0f), 1,
 				0.0f, 1.0f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);
@@ -164,7 +194,7 @@ void UpdateGoal(void)
 
 		if (g_Goal.selectpush == 2)
 		{
-			SetEffect(3, D3DXVECTOR2(290.0f, 700.0f), D3DXVECTOR2(290.0f, 700.0f), 1,
+			SetEffect(3, D3DXVECTOR2(SCREEN_WIDTH / 2, 700.0f), D3DXVECTOR2(SCREEN_WIDTH / 2, 700.0f), 1,
 				D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(350.0f, 120.0f), 1,
 				0.0f, 1.0f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);

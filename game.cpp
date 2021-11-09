@@ -94,14 +94,16 @@ void UpdateGame(void)
 		UpdateGoal();
 	}
 
-	//スペースキーが押されていて、フェード処理中ではないとき
-	if (GetKeyboardTrigger(DIK_RETURN) && GetFadeState() == FADE_NONE) 
-	{
-		SetVolume(g_BGMNo, 0.1f);
 
-		//RESULTへ移行する
-		SceneTransition(SCENE_RESULT);
-	}
+
+	////スペースキーが押されていて、フェード処理中ではないとき
+	//if (GetKeyboardTrigger(DIK_RETURN) && GetFadeState() == FADE_NONE) 
+	//{
+	//	SetVolume(g_BGMNo, 0.1f);
+
+	//	//RESULTへ移行する
+	//	SceneTransition(SCENE_RESULT);
+	//}
 }
 
 /*------------------------------------------------------------------------------

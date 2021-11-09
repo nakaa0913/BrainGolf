@@ -224,29 +224,34 @@ void DrawBG(void)
 			if (x < MAP_X && y < MAP_Y)
 			{
 				// 床の描写
-				//DrawSpriteLeftTop(tex_floor_huchinasi, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
-				DrawSpriteColorRotate(tex_floor_huchinasi, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+				DrawSpriteLeftTop(tex_floor_huchinasi, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
+				// DrawSpriteColorRotate(tex_floor_huchinasi, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+
+
+				// 今までの。
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
 
 			}
 
-			if (x == MAP_X || y == MAP_Y)
-			{
-				// tex_base_wall
-				// tex_base_wall_center
-				// tex_base_wall_left
-				// tex_base_wall_right
-				// 手前(見えてる側面)の壁の描写
 
-				// 真ん中	(x == MAP_X && y == MAP_Y)		// 左端	(x == 0 && y == MAP_Y)		// 右端	(x == MAP_X && y == 0)		// 他全て
-				if (x == MAP_X && y == MAP_Y)
-					DrawSpriteLeftTop(tex_base_wall_center, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
-				else if (x == 0 && y == MAP_Y)
-					DrawSpriteLeftTop(tex_base_wall_left, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
-				else if (x == MAP_X && y == 0)
-					DrawSpriteLeftTop(tex_base_wall_right, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
-				else
-					DrawSpriteLeftTop(tex_base_wall, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
-			}
+			//// 手前(見えてる側面)の壁の描写
+			//if (x == MAP_X || y == MAP_Y)
+			//{
+			//	// tex_base_wall
+			//	// tex_base_wall_center
+			//	// tex_base_wall_left
+			//	// tex_base_wall_right
+
+			//	// 真ん中	(x == MAP_X && y == MAP_Y)		// 左端	(x == 0 && y == MAP_Y)		// 右端	(x == MAP_X && y == 0)		// 他全て
+			//	if (x == MAP_X && y == MAP_Y)
+			//		DrawSpriteLeftTop(tex_base_wall_center, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
+			//	else if (x == 0 && y == MAP_Y)
+			//		DrawSpriteLeftTop(tex_base_wall_left, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
+			//	else if (x == MAP_X && y == 0)
+			//		DrawSpriteLeftTop(tex_base_wall_right, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
+			//	else
+			//		DrawSpriteLeftTop(tex_base_wall, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
+			//}
 
 		
 

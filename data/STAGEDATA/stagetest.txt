@@ -27,7 +27,7 @@ pos,7,7,nex,4,7,nex,4,14,
 pos,7,14,nex,5,12,spe,2.1,
 pos,8,3,
 pos,1,1,
-pos,13,19,
+pos,12,1,
 PlayerdataEnd
 
 EndLoadFile

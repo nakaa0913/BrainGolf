@@ -223,3 +223,9 @@ void CheckScene(void)
 		InitScene(g_SceneNextIndex);
 	}
 }
+
+
+SCENE* GetScene(void)
+{
+	return &g_SceneIndex;
+}

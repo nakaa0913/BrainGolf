@@ -19,3 +19,5 @@ void DrawScene(void);
 
 void SetScene(SCENE index);
 void CheckScene(void);
+
+SCENE* GetScene(void);

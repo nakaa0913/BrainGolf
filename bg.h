@@ -36,6 +36,8 @@
 #define MAP_CHIP_SIZE_X (40)
 #define MAP_CHIP_SIZE_Y (40)
 
+#define DRAW_GAP	 (20)			// 上画面をレフトトップでやってたせいで出たずれ
+
 #define DRAW_MAP_CHIP_SIZE_X (80)
 #define DRAW_MAP_CHIP_SIZE_Y (40)
 

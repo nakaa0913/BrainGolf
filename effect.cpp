@@ -3,6 +3,8 @@
 #include "Texture.h"
 #include "sprite.h"
 #include "score.h"
+#include "scene.h"
+#include "bg.h"
 
 EFFECT g_Effect[MAX_EFFECT];
 
@@ -124,9 +126,16 @@ void UpdateEffect(void)
 			// 毎フレームごとにカウントを進める
 			g_Effect[i].now_count++;
 			effectnum++;
-			
-			// pos を drawpos に変換
+
+
+			// pos を drawpos に変換	エフェクトの場合、drawposから
 			g_Effect[i].drawpos = g_Effect[i].pos;
+
+
+
+
+
+
 		}
 	}
 	SetScore(effectnum);
@@ -219,6 +228,84 @@ void SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_patter
 	// MAX_EFFECT を超えた数エフェクトを作成しようとするとゲームが落ちる
 	 exit(1);
 }
+
+// ゲーム内でのエフェクトを使う場合はこっち。座標を自動的に斜めに修正してくれる。例えばゲーム内のボールに追従するとかの時便利
+// all_count == 999だったら無制限に表示
+void SetGameEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
+	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
+	float rot_angle1, float rot_angle2, int rot_moving_pattern)
+{
+	for (int i = 0; i < MAX_EFFECT; i++)
+	{
+		if (g_Effect[i].isUse == false)
+		{
+			//g_Effect[i].id = id;	下で引数で入力した値によってテクスチャを変更している
+			
+			// pos を drawpos に変換 しているけど、エフェクトの場合posのままやる。
+
+
+			g_Effect[i].pos.x = GAME_ORIGIN_POINT_X + ((pos1.x - DRAW_GAP) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_X / 2) - ((pos1.y - DRAW_GAP) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_X / 2);
+			g_Effect[i].pos.y = GAME_ORIGIN_POINT_Y + ((pos1.y - DRAW_GAP) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_Y / 2) + ((pos1.x - DRAW_GAP) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_Y / 2);
+			g_Effect[i].pos1 = g_Effect[i].pos;
+
+			g_Effect[i].pos2.x = GAME_ORIGIN_POINT_X + ((pos2.x - DRAW_GAP) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_X / 2) - ((pos2.y - DRAW_GAP) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_X / 2);
+			g_Effect[i].pos2.y = GAME_ORIGIN_POINT_Y + ((pos2.y - DRAW_GAP) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_Y / 2) + ((pos2.x - DRAW_GAP) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_Y / 2);
+
+			g_Effect[i].pos_moving_pattern = pos_moving_pattern;
+			g_Effect[i].size = size1;
+			g_Effect[i].size1 = size1;
+			g_Effect[i].size2 = size2;
+			g_Effect[i].size_moving_pattern = size_moving_pattern;
+			g_Effect[i].Clarity_min = Clarity_min;
+			g_Effect[i].Clarity_max = Clarity_max;
+			g_Effect[i].Clarity = g_Effect[i].Clarity_min;
+			g_Effect[i].fadeIn_count = fadeIn_count;
+			g_Effect[i].all_count = all_count;
+			g_Effect[i].fadeOut_count = fadeOut_count;
+			g_Effect[i].now_count = 0;
+			g_Effect[i].moving_count = moving_count;
+			g_Effect[i].rot = AngleToRadian(rot_angle1);
+			g_Effect[i].rot_angle = rot_angle1;
+			g_Effect[i].rot_angle1 = rot_angle1;
+			g_Effect[i].rot_angle2 = rot_angle2;
+			g_Effect[i].rot_moving_pattern = rot_moving_pattern;
+			g_Effect[i].rot_count = 0;
+
+			g_Effect[i].drawpos = g_Effect[i].pos1;
+			g_Effect[i].isUse = true;
+
+			if (id == 0)
+				g_Effect[i].id = ao_0;
+			if (id == 1)
+				g_Effect[i].id = aka_1;
+			if (id == 2)
+				g_Effect[i].id = tako_2;
+			if (id == 3)
+				g_Effect[i].id = title_3;
+			if (id == 4)
+				g_Effect[i].id = black_4;
+			if (id == 5)
+				g_Effect[i].id = clear_5;
+			if (id == 6)
+				g_Effect[i].id = select_6;
+			if (id == 7)
+				g_Effect[i].id = select2_7;
+			if (id == 8)
+				g_Effect[i].id = mission_8;
+			if (id == 9)
+				g_Effect[i].id = selectstar_9;
+			if (id == 10)
+				g_Effect[i].id = selectlock_10;
+
+			return;
+		}
+
+	}
+
+	// MAX_EFFECT を超えた数エフェクトを作成しようとするとゲームが落ちる
+	exit(1);
+}
+
 
 void Fadeprocess(int i)
 {

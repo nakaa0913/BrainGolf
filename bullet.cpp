@@ -764,7 +764,8 @@ void UpdateBullet(void)
 			g_Bullet[i].pos = g_Bullet[i].nextpos;
 
 			// pos ‚ð drawpos ‚É•ÏŠ·
-			g_Bullet[i].drawpos = g_Bullet[i].pos;
+			g_Bullet[i].drawpos.x = GAME_ORIGIN_POINT_X + ((g_Bullet[i].pos.x - DRAW_GAP) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_X / 2) - ((g_Bullet[i].pos.y - DRAW_GAP) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_X / 2);
+			g_Bullet[i].drawpos.y = GAME_ORIGIN_POINT_Y + ((g_Bullet[i].pos.y - DRAW_GAP) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_Y / 2) + ((g_Bullet[i].pos.x - DRAW_GAP) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_Y / 2);
 
 		}
 

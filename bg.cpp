@@ -144,6 +144,16 @@ int g_map_hitchk[2][MAP_Y][MAP_X] =
 
 static int g_Ground = 0;		// 背景用テクスチャ情報
 static int tex_floor = 0;		// 背景用テクスチャ情報
+static int tex_floor_mozinasi = 0;		// 背景用テクスチャ情報
+static int tex_floor_huchinasi = 0;		// 背景用テクスチャ情報
+
+static int tex_base_wall = 0;		// 背景用テクスチャ情報
+static int tex_base_wall_center = 0;		// 背景用テクスチャ情報
+static int tex_base_wall_left = 0;		// 背景用テクスチャ情報
+static int tex_base_wall_right = 0;		// 背景用テクスチャ情報
+
+
+
 static int g_CurrentPos = 0;	// 現在のマップ座標
 
 //=============================================================================
@@ -154,6 +164,13 @@ HRESULT InitBG(void)
 	//g_Ground = LoadTexture("data/TEXTURE/basechip.png");
 	g_Ground = LoadTexture("data/TEXTURE/basechip_test.png");
 	tex_floor = LoadTexture("data/TEXTURE/floor.png");
+	tex_floor_mozinasi = LoadTexture("data/TEXTURE/floor_mozinasi.png");
+	tex_floor_huchinasi = LoadTexture("data/TEXTURE/floor_huchinasi.png");
+
+	tex_base_wall = LoadTexture("data/TEXTURE/base_wall.png");
+	tex_base_wall_center = LoadTexture("data/TEXTURE/base_wall_center.png");
+	tex_base_wall_left = LoadTexture("data/TEXTURE/base_wall_left.png");
+	tex_base_wall_right = LoadTexture("data/TEXTURE/base_wall_right.png");
 
 	return S_OK;
 }
@@ -190,23 +207,59 @@ void DrawBG(void)
 
 	int asdddddd = 0;
 
+	float start_x = 0.0f;
+	float start_y = SCREEN_HEIGHT / 2;
+
+	float tex_floor_size_x = 80;
+	float tex_floor_size_y = 40;
+
 	//レイヤー０の表示
-	for (int y = 0; y < MAP_Y; y++)
+	for (int y = -1; y < MAP_Y; y++)
 	{
-		for (int x = 0; x < MAP_X; x++)
+		for (int x = 0; x < MAP_X + 1; x++)
 		{
 			//DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-
-			float start_x = 0.0f;
-			float start_y = SCREEN_HEIGHT / 2;
-
-			float tex_floor_size_x = 80;
-			float tex_floor_size_y = 40;
 
 			float tex_floor_x = start_x + x * (tex_floor_size_x / 2) + y * (tex_floor_size_x / 2);
 			float tex_floor_y = start_y + -y * (tex_floor_size_y / 2) + x * (tex_floor_size_y / 2);
 
-			DrawSpriteLeftTop(tex_floor, tex_floor_x, tex_floor_y, tex_floor_size_x, tex_floor_size_y, 0.0f, 0.0f, 1.0f, 1.0f);
+			// テスト用に3種類のテクスチャ
+			// tex_floor
+			// tex_floor_mozinasi
+			// tex_floor_huchinasi
+			// tex_base_wall
+
+			if (x < MAP_X && y >= 0)
+			{
+				// 床の描写
+				DrawSpriteLeftTop(tex_floor_huchinasi, tex_floor_x, tex_floor_y, tex_floor_size_x, tex_floor_size_y, 0.0f, 0.0f, 1.0f, 1.0f);
+			}
+
+			if (x == MAP_X || y == -1)
+			{
+				// tex_base_wall
+				// tex_base_wall_center
+				// tex_base_wall_left
+				// tex_base_wall_right
+				// 手前(見えてる側面)の壁の描写
+
+				// 真ん中	(x == MAP_X && y == -1)		// 左端	(x == 0 && y == -1)		// 右端	(x == MAP_X && y == MAP_Y - 1)		// 他全て
+				if (x == MAP_X && y == -1)
+					DrawSpriteLeftTop(tex_base_wall_center, tex_floor_x, tex_floor_y, tex_floor_size_x, tex_floor_size_y, 0.0f, 0.0f, 1.0f, 1.0f);
+				else if (x == 0 && y == -1)
+					DrawSpriteLeftTop(tex_base_wall_left, tex_floor_x, tex_floor_y, tex_floor_size_x, tex_floor_size_y, 0.0f, 0.0f, 1.0f, 1.0f);
+				else if (x == MAP_X && y == MAP_Y - 1)
+					DrawSpriteLeftTop(tex_base_wall_right, tex_floor_x, tex_floor_y, tex_floor_size_x, tex_floor_size_y, 0.0f, 0.0f, 1.0f, 1.0f);
+				else
+					DrawSpriteLeftTop(tex_base_wall, tex_floor_x, tex_floor_y, tex_floor_size_x, tex_floor_size_y, 0.0f, 0.0f, 1.0f, 1.0f);
+
+
+
+
+
+			}
+
+		
 
 			//switch (p_Stagedata->maparray[y][x])
 			//{

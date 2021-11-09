@@ -143,6 +143,8 @@ int g_map_hitchk[2][MAP_Y][MAP_X] =
 
 
 static int g_Ground = 0;		// 背景用テクスチャ情報
+static int tex_mapchip_3d = 0;		// 背景用テクスチャ情報
+
 static int tex_floor = 0;		// 背景用テクスチャ情報
 static int tex_floor_mozinasi = 0;		// 背景用テクスチャ情報
 static int tex_floor_huchinasi = 0;		// 背景用テクスチャ情報
@@ -163,6 +165,8 @@ HRESULT InitBG(void)
 {
 	//g_Ground = LoadTexture("data/TEXTURE/basechip.png");
 	g_Ground = LoadTexture("data/TEXTURE/basechip_test.png");
+	tex_mapchip_3d = LoadTexture("data/TEXTURE/mapchip_3d.png");
+
 	tex_floor = LoadTexture("data/TEXTURE/floor.png");
 	tex_floor_mozinasi = LoadTexture("data/TEXTURE/floor_mozinasi.png");
 	tex_floor_huchinasi = LoadTexture("data/TEXTURE/floor_huchinasi.png");
@@ -302,12 +306,22 @@ void DrawBG(void)
 			MAP_DATA_T mapchip;
 			mapchip = g_MapInfo[p_Stagedata->maparray[y][x]];
 
-			float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2);
-			float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2);
+			// マップのデータが0の場合何も表示しないし計算もしない。
+			if (p_Stagedata->maparray[y][x] != 0)
+			{
+				float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2);
+				float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2);
 
-			DrawSpriteLeftTop(g_Ground, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
+				float mapchip3d_size_x = 240;
+				float mapchip3d_size_y = 400;
 
-			DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
+				float mapchip3d_gap_x = 80;
+				float mapchip3d_gap_y = 360;
+
+				DrawSpriteLeftTop(tex_mapchip_3d, slanted_x - mapchip3d_gap_x, slanted_y - mapchip3d_gap_y, mapchip3d_size_x, mapchip3d_size_y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
+
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
+			}
 		}
 	}
 }

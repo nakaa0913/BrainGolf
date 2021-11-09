@@ -272,6 +272,64 @@ void DrawSpriteColorRotate(int texNo, float X, float Y, float Width, float Heigh
 	GetDeviceContext()->Draw(NUM_VERTEX, 0);
 }
 
+
+// 中心の真下をもらって描く
+void DrawSpriteColorRotateCenterDown(int texNo, float X, float Y, float Width, float Height,
+	float U, float V, float UW, float VH,
+	D3DXCOLOR Color, float Rot)
+{
+	D3D11_MAPPED_SUBRESOURCE msr;
+	GetDeviceContext()->Map(g_VertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &msr);
+
+	VERTEX_3D* vertex = (VERTEX_3D*)msr.pData;
+
+	float hw, hh;
+	hw = Width * 0.5f;
+	hh = Height * 0.5f;
+
+	float BaseAngle = atan2f(hh, hw);		// 中心点から頂点に対する角度
+	D3DXVECTOR2 temp = D3DXVECTOR2(hw, hh);
+	float Radius = D3DXVec2Length(&temp);	// 中心点から頂点に対する距離
+
+	// 左上
+	vertex[0].Position = D3DXVECTOR3(X - Width / 2, Y - Height, 0.0f);
+	vertex[0].TexCoord = D3DXVECTOR2(U, V);
+
+	// 右上
+	vertex[1].Position = D3DXVECTOR3(X + Width / 2, Y - Height, 0.0f);
+	vertex[1].TexCoord = D3DXVECTOR2(U + UW, V);
+
+	// 左下
+	vertex[2].Position = D3DXVECTOR3(X - Width / 2, Y, 0.0f);
+	vertex[2].TexCoord = D3DXVECTOR2(U, V + VH);
+
+	// 右下
+	vertex[3].Position = D3DXVECTOR3(X + Width / 2, Y, 0.0f);
+	vertex[3].TexCoord = D3DXVECTOR2(U + UW, V + VH);
+
+	vertex[0].Diffuse = Color;
+	vertex[1].Diffuse = Color;
+	vertex[2].Diffuse = Color;
+	vertex[3].Diffuse = Color;
+
+	GetDeviceContext()->Unmap(g_VertexBuffer, 0);
+
+	// 頂点バッファ設定
+	UINT stride = sizeof(VERTEX_3D);
+	UINT offset = 0;
+	GetDeviceContext()->IASetVertexBuffers(0, 1, &g_VertexBuffer, &stride, &offset);
+
+	// プリミティブトポロジ設定
+	GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	// テクスチャ設定
+	GetDeviceContext()->PSSetShaderResources(0, 1, GetTexture(texNo));
+
+	// ポリゴン描画
+	GetDeviceContext()->Draw(NUM_VERTEX, 0);
+}
+
+
 float AngleToRot(float angle)
 {
 	// rot 6.28 で 360度

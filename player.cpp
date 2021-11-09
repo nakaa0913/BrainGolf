@@ -64,6 +64,11 @@ HRESULT InitPlayer(void)
 		g_Player[i].h = PLAYER_H;
 		g_Player[i].use = false;
 
+
+		g_Player[i].drawpos = g_Player[i].pos;
+		g_Player[i].drawsize = D3DXVECTOR2(g_Player[i].w, g_Player[i].h);
+
+
 		g_Player[i].act = 0;
 		g_Player[i].direction = 0;
 		g_Player[i].have = false;
@@ -203,7 +208,6 @@ void UpdatePlayer(void)
 		
 
 
-		// 柴田がやってみたとこ
 		// ボールを持っていなくて、往復移動をする場合の処理。
 		if (g_Player[i].have == false && g_Player[i].move_around == true)
 		{
@@ -292,6 +296,13 @@ void UpdatePlayer(void)
 
 		 // nextpos(計算用のポジション)をpos(ちゃんとしたポジション)に適用
 		g_Player[i].pos = g_Player[i].nextpos;
+
+		// pos を drawpos に変換
+		g_Player[i].drawpos.x = GAME_ORIGIN_POINT_X + (g_Player[i].pos.x / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_X / 2) - (g_Player[i].pos.y / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_X / 2);
+		g_Player[i].drawpos.y = GAME_ORIGIN_POINT_Y + (g_Player[i].pos.y / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_Y / 2) + (g_Player[i].pos.x / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_Y / 2);
+
+
+
 
 
 
@@ -437,14 +448,14 @@ void UpdatePlayer(void)
 					// ShotPowerによる倍率
 					float ShotBairitu = 0.5f + (g_Player[i].ShotPower / 100.0f);
 
-					DrawSpriteColorRotate(tex_yazirushi, g_Player[i].pos.x, g_Player[i].pos.y, 500.0f * ShotBairitu, 500.0f * ShotBairitu,
+					DrawSpriteColorRotate(tex_yazirushi, g_Player[i].drawpos.x, g_Player[i].drawpos.y, 500.0f * ShotBairitu, 500.0f * ShotBairitu,
 						0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), -rot);
 				}
 
-				//DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
+				//DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].drawpos.x, g_Player[i].drawpos.y, g_Player[i].w, g_Player[i].h,
 				//	g_Player[i].animeptn2 * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 
-				DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
+				DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].drawpos.x, g_Player[i].drawpos.y, g_Player[i].w, g_Player[i].h,
 					g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 			}
 		}

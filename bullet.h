@@ -25,6 +25,10 @@ struct BULLET
 	D3DXVECTOR2				pos;					// バレットの座標
 	D3DXVECTOR2				nextpos;				// バレットの座標
 	D3DXVECTOR2				oldpos;					// バレットの座標
+
+	D3DXVECTOR2				drawpos;				// 表示する際の座標
+	D3DXVECTOR2				drawsize;				// 表示する際のサイズ
+
 	float					rot;					// バレットの回転量
 	D3DXVECTOR2				move;					// バレットの移動量
 	int						texNo;					// 何番目のテクスチャーを使用するのか

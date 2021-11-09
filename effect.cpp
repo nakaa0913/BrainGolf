@@ -60,6 +60,9 @@ void InitEffect(void)
 		g_Effect[i].rot_moving_pattern = 0;
 		g_Effect[i].rot_count = 0;
 
+		g_Effect[i].drawpos = g_Effect[i].pos;
+		g_Effect[i].drawsize = g_Effect[i].size;
+
 		g_Effect[i].drawpos = g_Effect[i].pos1;
 		g_Effect[i].isUse = false;
 
@@ -122,9 +125,8 @@ void UpdateEffect(void)
 			g_Effect[i].now_count++;
 			effectnum++;
 			
-			// DrawópÇ…í≤êÆ
-			/*g_Effect[i].drawpos.x = g_Effect[i].pos1.x;
-			g_Effect[i].drawpos.y = g_Effect[i].pos1.y;*/
+			// pos Ç drawpos Ç…ïœä∑
+			g_Effect[i].drawpos = g_Effect[i].pos;
 		}
 	}
 	SetScore(effectnum);
@@ -138,7 +140,7 @@ void DrawEffect(void)
 		if (g_Effect[i].isUse == true)
 		{
 			D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, g_Effect[i].Clarity);
-			DrawSpriteColorRotate(g_Effect[i].id, g_Effect[i].pos.x, g_Effect[i].pos.y, g_Effect[i].size.x, g_Effect[i].size.y, 0.0f, 0.0f, 1.0f, 1.0f, col, g_Effect[i].rot);
+			DrawSpriteColorRotate(g_Effect[i].id, g_Effect[i].drawpos.x, g_Effect[i].drawpos.y, g_Effect[i].size.x, g_Effect[i].size.y, 0.0f, 0.0f, 1.0f, 1.0f, col, g_Effect[i].rot);
 		}
 	}
 	DrawScore();

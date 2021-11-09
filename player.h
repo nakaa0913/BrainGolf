@@ -40,6 +40,8 @@ struct PLAYER
 	float					w, h;					// 幅と高さ
 	D3DXVECTOR2				pos;					// ポリゴンの座標
 	D3DXVECTOR2				nextpos;				// 次の予定の座標
+	D3DXVECTOR2				drawpos;				// 表示する際の座標
+	D3DXVECTOR2				drawsize;				// 表示する際のサイズ
 	float					rot;					// ポリゴンの回転量
 	int						texNo;					// テクスチャ番号
 

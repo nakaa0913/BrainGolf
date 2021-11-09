@@ -54,6 +54,10 @@ HRESULT InitBullet(void)
 		g_Bullet[i].pos = D3DXVECTOR2(300, 300.0f);
 		g_Bullet[i].nextpos = g_Bullet[i].pos;
 		g_Bullet[i].oldpos = g_Bullet[i].pos;
+
+		g_Bullet[i].drawpos = g_Bullet[i].pos;
+		g_Bullet[i].drawsize = D3DXVECTOR2(g_Bullet[i].w, g_Bullet[i].h);
+
 		g_Bullet[i].rot = 0.0f;
 		g_Bullet[i].texNo = texNo;
 
@@ -759,7 +763,8 @@ void UpdateBullet(void)
 			// 最期にposにnextposを反映させる
 			g_Bullet[i].pos = g_Bullet[i].nextpos;
 
-
+			// pos を drawpos に変換
+			g_Bullet[i].drawpos = g_Bullet[i].pos;
 
 		}
 
@@ -787,8 +792,8 @@ void DrawBullet(void)
 		if (g_Bullet[i].use == true)	// このバレットが使われている？
 		{								// Yes
 			//バレットの位置やテクスチャー座標を反映
-			float px = g_Bullet[i].pos.x;	// バレットの表示位置X
-			float py = g_Bullet[i].pos.y;	// バレットの表示位置Y
+			float px = g_Bullet[i].drawpos.x;	// バレットの表示位置X
+			float py = g_Bullet[i].drawpos.y;	// バレットの表示位置Y
 			float pw = g_Bullet[i].w;		// バレットの表示幅
 			float ph = g_Bullet[i].h;		// バレットの表示高さ
 			D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);

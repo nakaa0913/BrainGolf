@@ -18,6 +18,9 @@ typedef struct
 	D3DXVECTOR2		size2;					// サイズの終了値
 	int				size_moving_pattern;	// 初期サイズから終了サイズに変化するときの変化の仕方 0:size1から動かない
 
+	D3DXVECTOR2				drawpos;				// 表示する際の座標
+	D3DXVECTOR2				drawsize;				// 表示する際のサイズ
+
 	int				fadeIn_count;			// 0カウントからフェードインが始まり、フェードインが完了するまでのカウント
 	int				all_count;				// 999 に設定することで無限にエフェクトを表示する。fadeIn_count から透明度がMAXの状態になり、それを fadeOut_count+fadeIn_count まで維持する
 	int				fadeOut_count;			// fadeOut_count+fadeIn_count からフェードアウトが始まり、フェードアウトが完了するまでのカウント
@@ -36,7 +39,6 @@ typedef struct
 	int				rot_moving_pattern;		// 回転のパターン。
 	int				rot_count;				// 回転し始めてからのカウント。無限回転用。
 
-	D3DXVECTOR2		drawpos;				// 描写位置。現在未使用だから最終的に使わなければ消します。
 	bool			isUse;					// 使用フラグ
 }EFFECT;
 

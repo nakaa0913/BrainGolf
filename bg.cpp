@@ -207,21 +207,13 @@ void DrawBG(void)
 
 	int asdddddd = 0;
 
-	float start_x = 0.0f;
-	float start_y = SCREEN_HEIGHT / 2;
-
-	float tex_floor_size_x = 80;
-	float tex_floor_size_y = 40;
-
 	//レイヤー０の表示
-	for (int y = -1; y < MAP_Y; y++)
+	for (int x = 0; x < MAP_X + 1; x++)
 	{
-		for (int x = 0; x < MAP_X + 1; x++)
+		for(int y = 0; y < MAP_Y + 1; y++)
 		{
-			//DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-
-			float tex_floor_x = start_x + x * (tex_floor_size_x / 2) + y * (tex_floor_size_x / 2);
-			float tex_floor_y = start_y + -y * (tex_floor_size_y / 2) + x * (tex_floor_size_y / 2);
+			float tex_floor_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2);
+			float tex_floor_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2);
 
 			// テスト用に3種類のテクスチャ
 			// tex_floor
@@ -229,13 +221,15 @@ void DrawBG(void)
 			// tex_floor_huchinasi
 			// tex_base_wall
 
-			if (x < MAP_X && y >= 0)
+			if (x < MAP_X && y < MAP_Y)
 			{
 				// 床の描写
-				DrawSpriteLeftTop(tex_floor_huchinasi, tex_floor_x, tex_floor_y, tex_floor_size_x, tex_floor_size_y, 0.0f, 0.0f, 1.0f, 1.0f);
+				//DrawSpriteLeftTop(tex_floor_huchinasi, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
+				DrawSpriteColorRotate(tex_floor_huchinasi, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+
 			}
 
-			if (x == MAP_X || y == -1)
+			if (x == MAP_X || y == MAP_Y)
 			{
 				// tex_base_wall
 				// tex_base_wall_center
@@ -243,20 +237,15 @@ void DrawBG(void)
 				// tex_base_wall_right
 				// 手前(見えてる側面)の壁の描写
 
-				// 真ん中	(x == MAP_X && y == -1)		// 左端	(x == 0 && y == -1)		// 右端	(x == MAP_X && y == MAP_Y - 1)		// 他全て
-				if (x == MAP_X && y == -1)
-					DrawSpriteLeftTop(tex_base_wall_center, tex_floor_x, tex_floor_y, tex_floor_size_x, tex_floor_size_y, 0.0f, 0.0f, 1.0f, 1.0f);
-				else if (x == 0 && y == -1)
-					DrawSpriteLeftTop(tex_base_wall_left, tex_floor_x, tex_floor_y, tex_floor_size_x, tex_floor_size_y, 0.0f, 0.0f, 1.0f, 1.0f);
-				else if (x == MAP_X && y == MAP_Y - 1)
-					DrawSpriteLeftTop(tex_base_wall_right, tex_floor_x, tex_floor_y, tex_floor_size_x, tex_floor_size_y, 0.0f, 0.0f, 1.0f, 1.0f);
+				// 真ん中	(x == MAP_X && y == MAP_Y)		// 左端	(x == 0 && y == MAP_Y)		// 右端	(x == MAP_X && y == 0)		// 他全て
+				if (x == MAP_X && y == MAP_Y)
+					DrawSpriteLeftTop(tex_base_wall_center, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
+				else if (x == 0 && y == MAP_Y)
+					DrawSpriteLeftTop(tex_base_wall_left, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
+				else if (x == MAP_X && y == 0)
+					DrawSpriteLeftTop(tex_base_wall_right, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
 				else
-					DrawSpriteLeftTop(tex_base_wall, tex_floor_x, tex_floor_y, tex_floor_size_x, tex_floor_size_y, 0.0f, 0.0f, 1.0f, 1.0f);
-
-
-
-
-
+					DrawSpriteLeftTop(tex_base_wall, tex_floor_x, tex_floor_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
 			}
 
 		

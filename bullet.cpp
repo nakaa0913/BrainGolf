@@ -44,7 +44,7 @@ static BULLET g_Bullet[BULLET_MAX];					// バレット構造体
 //=============================================================================
 HRESULT InitBullet(void)
 {
-	int texNo = LoadTexture("data/TEXTURE/ao.png");
+	int texNo = LoadTexture("data/TEXTURE/bullet/ao.png");
 	// バレット構造体の初期化 でも実際はSetBulletで呼ぶときにそっちで値が代入される
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
@@ -77,7 +77,7 @@ HRESULT InitBullet(void)
 //=============================================================================
 void UninitBullet(void)
 {
-	UnloadTexture("data/TEXTURE/ao.png");
+	UnloadTexture("data/TEXTURE/bullet/ao.png");
 }
 
 //=============================================================================

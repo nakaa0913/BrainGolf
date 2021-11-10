@@ -53,7 +53,7 @@ static int	g_BGMNo = 0;		// BGM識別子
 void InitStageSelect(void)
 {
 	//テクスチャ生成
-	g_TextureNo = LoadTexture("data/TEXTURE/select.png");
+	g_TextureNo = LoadTexture("data/TEXTURE/stage_select.png");
 
 
 	
@@ -77,7 +77,7 @@ void InitStageSelect(void)
 ------------------------------------------------------------------------------*/
 void UninitStageSelect()
 {
-	UnloadTexture("data/TEXTURE/select.png");
+	UnloadTexture("data/TEXTURE/stage_select.png");
 
 }
 

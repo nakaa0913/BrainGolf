@@ -50,14 +50,6 @@ HRESULT InitGoal(void)
 	//テクスチャ読み込み
 
 
-	//
-	/*g_ShotSENo = LoadSound("data/SE/shot000.wav");*/
-	/*aa = LoadTexture("data/TEXTURE/aka.png");
-	bb = LoadTexture("data/TEXTURE/tako.png");
-	cc = LoadTexture("data/TEXTURE/title.png");
-	dd = LoadTexture("data/TEXTURE/title.png");
-	ee = LoadTexture("data/TEXTURE/title.png");
-	ff = LoadTexture("data/TEXTURE/title.png");*/
 
 	g_Goal.goaltime = 0;
 	g_Goal.selectpush = 0;

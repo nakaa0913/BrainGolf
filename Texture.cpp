@@ -48,6 +48,7 @@ int LoadTexture(char* fileName)
 	//読み込み最大数を超えていたら負の値を返す
 	if (g_TextureIndex == MAX_TEXTURE_NUM)
 	{
+		int fsdf = 4;		// デバッグテスト用
 		return -1;
 	}
 
@@ -63,6 +64,7 @@ int LoadTexture(char* fileName)
 	if (S_OK != hr)
 	{
 		//読み込みに失敗した場合、負の値を返す
+		int sda = 9;		// デバッグテスト用
 		return -1;
 	}
 
@@ -96,11 +98,15 @@ ID3D11ShaderResourceView** GetTexture(int index)
 {
 	//indexの不正値チェック(負の値)
 	if (index < 0)
+	{
 		return NULL;
+	}
 
 	//indexの不正値チェック(最大数オーバー)
 	if (index >= (int)g_TextureIndex)
+	{
 		return NULL;
+	}
 
 	return &g_pTexture[index];
 }
@@ -119,11 +125,12 @@ void UnloadTexture(char* fileName)
 		{
 			g_pTexture[i]->Release();
 			g_pTexture[i] = NULL;
+
 			return;
 		}
 	}
 	
 	// 指定したファイル名のものがない場合
-	exit(20);
+	// exit(20);
 	return;
 }

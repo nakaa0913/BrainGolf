@@ -54,7 +54,7 @@ static int	g_BGMNo = 0;		// BGM識別子
 void InitWorldSelect(void)
 {
 	//テクスチャ生成
-	g_TextureNo = LoadTexture("data/TEXTURE/select.png");
+	g_TextureNo = LoadTexture("data/TEXTURE/world_select.png");
 
 
 
@@ -78,7 +78,7 @@ void InitWorldSelect(void)
 ------------------------------------------------------------------------------*/
 void UninitWorldSelect()
 {
-	UnloadTexture("data/TEXTURE/select.png");
+	UnloadTexture("data/TEXTURE/world_select.png");
 
 }
 

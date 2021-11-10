@@ -37,6 +37,8 @@
 static SCENE g_SceneIndex = SCENE_NONE;
 static SCENE g_SceneNextIndex = g_SceneIndex;
 
+int gas = 0;
+
 
 /*------------------------------------------------------------------------------
    èâä˙âªä÷êî
@@ -84,6 +86,7 @@ void InitScene(SCENE index)
 ------------------------------------------------------------------------------*/
 void UninitScene(void)
 {
+	
 	switch (g_SceneIndex)
 	{
 	case SCENE_NONE:

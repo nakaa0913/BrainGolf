@@ -141,12 +141,14 @@ void UpdateGoal(void)
 
 	}
 
-	if (g_Goal.goaltime <= 8000)
+	if (g_Goal.goaltime >= 400)
 	{
-		
-		if (GetKeyboardPress(DIK_RETURN))
+		if (g_Goal.goaltime <= 8000)
 		{
-			g_Goal.goaltime = 9000;
+			if (GetKeyboardPress(DIK_RETURN))
+			{
+				g_Goal.goaltime = 9000;
+			}
 		}
 	}
 

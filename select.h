@@ -24,7 +24,8 @@ struct SELECT
 	int						goaltime;				//ゴールしてからの時間
 	int						selectpush;				//選択してるやつ
 	int						selectvertical;			//縦選択
-	int						selecttime;				//選択クールタイム
+	int						selectcooltime;			//選択クールタイム
+	int						selecttime;				//セレクトフレーム
 };
 
 void InitSelect(void);

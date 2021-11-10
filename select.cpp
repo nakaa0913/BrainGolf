@@ -68,6 +68,8 @@ void InitSelect(void)
 	//255(-1)をループ指定すると無限ループ
 	PlaySound(g_BGMNo, -1);
 
+	g_Select.selecttime = 0;
+
 	return ;
 }
 
@@ -98,46 +100,52 @@ void UpdateSelect(void)
 
 	
 		//ミッション
-		SetEffect(8, D3DXVECTOR2(280.0f, 700.0f), D3DXVECTOR2(280.0f, 700.0f), 0,
+		/*SetEffect(8, D3DXVECTOR2(280.0f, 700.0f), D3DXVECTOR2(280.0f, 700.0f), 0,
 			D3DXVECTOR2(500.0f, 200.0f), D3DXVECTOR2(500.0f, 200.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
+			0.0f, 0.0f, 0);*/
 
-		//ロック
+		//星
 		SetEffect(9, D3DXVECTOR2(280.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
 			D3DXVECTOR2(500.0f, 150.0f), D3DXVECTOR2(500.0f, 150.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 0,
 			0.0f, 0.0f, 0);
 
+		//ロック
+		/*SetEffect(10, D3DXVECTOR2(280.0f, 450.0f), D3DXVECTOR2(280.0f, 450.0f), 0,
+			D3DXVECTOR2(450.0f, 100.0f), D3DXVECTOR2(450.0f, 100.0f), 0,
+			0.0f, 1.0f, 0, 1, 0, 0,
+			0.0f, 0.0f, 0);*/
+
 		
-
-		SetEffect(6, D3DXVECTOR2(60.0f, 200.0f), D3DXVECTOR2(60.0f, 200.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
+		//1段目
+		SetEffect(6, D3DXVECTOR2(240.0f, 200.0f), D3DXVECTOR2(240.0f, 200.0f), 0,
+			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 0,
 			0.0f, 0.0f, 0);
 
-		SetEffect(7, D3DXVECTOR2(170.0f, 200.0f), D3DXVECTOR2(170.0f, 200.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
+		SetEffect(7, D3DXVECTOR2(480.0f, 500.0f), D3DXVECTOR2(480.0f, 500.0f), 0,
+			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 0,
 			0.0f, 0.0f, 0);
 
-		SetEffect(6, D3DXVECTOR2(280.0f, 200.0f), D3DXVECTOR2(280.0f, 200.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
+		SetEffect(6, D3DXVECTOR2(720.0f, 250.0f), D3DXVECTOR2(720.0f, 250.0f), 0,
+			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 0,
 			0.0f, 0.0f, 0);
 
-		SetEffect(6, D3DXVECTOR2(390.0f, 200.0f), D3DXVECTOR2(390.0f, 200.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
+		SetEffect(6, D3DXVECTOR2(960.0f, 550.0f), D3DXVECTOR2(960.0f, 550.0f), 0,
+			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 0,
 			0.0f, 0.0f, 0);
 
-		SetEffect(6, D3DXVECTOR2(500.0f, 200.0f), D3DXVECTOR2(500.0f, 200.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
+		SetEffect(6, D3DXVECTOR2(1200.0f, 400.0f), D3DXVECTOR2(1200.0f, 400.0f), 0,
+			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 0,
 			0.0f, 0.0f, 0);
 
 		//二段目
-		SetEffect(6, D3DXVECTOR2(60.0f, 300.0f), D3DXVECTOR2(60.0f, 300.0f), 0,
+		/*SetEffect(6, D3DXVECTOR2(60.0f, 300.0f), D3DXVECTOR2(60.0f, 300.0f), 0,
 			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 0,
 			0.0f, 0.0f, 0);
@@ -212,13 +220,7 @@ void UpdateSelect(void)
 		SetEffect(6, D3DXVECTOR2(500.0f, 500.0f), D3DXVECTOR2(500.0f, 500.0f), 0,
 			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
-
-		//条件
-		SetEffect(10, D3DXVECTOR2(280.0f, 450.0f), D3DXVECTOR2(280.0f, 450.0f), 0,
-			D3DXVECTOR2(450.0f, 100.0f), D3DXVECTOR2(450.0f, 100.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
+			0.0f, 0.0f, 0);*/
 
 		//セレクト一番上
 
@@ -226,47 +228,47 @@ void UpdateSelect(void)
 		{
 			if (g_Select.selectpush == 0)
 			{
-				SetEffect(6, D3DXVECTOR2(60.0f, 200.0f), D3DXVECTOR2(60.0f, 200.0f), 0,
-					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-					0.0f, 1.0f, 0, 1, 0, 0,
-					0.0f, 0.0f, 0);
+					SetEffect(6, D3DXVECTOR2(240.0f, 200.0f), D3DXVECTOR2(240.0f, 200.0f), 0,
+						D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
+						1.0f, 1.0f, 0, 1, 0, 0,
+						0.0f, 0.0f, 0);
 			}
 
 			if (g_Select.selectpush == 1)
 			{
-				SetEffect(7, D3DXVECTOR2(170.0f, 200.0f), D3DXVECTOR2(170.0f, 200.0f), 0,
-					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+				SetEffect(7, D3DXVECTOR2(480.0f, 500.0f), D3DXVECTOR2(480.0f, 500.0f), 0,
+					D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
 					0.0f, 1.0f, 0, 1, 0, 0,
 					0.0f, 0.0f, 0);
 			}
 
 			if (g_Select.selectpush == 2)
 			{
-				SetEffect(6, D3DXVECTOR2(280.0f, 200.0f), D3DXVECTOR2(280.0f, 200.0f), 0,
-					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+				SetEffect(6, D3DXVECTOR2(720.0f, 250.0f), D3DXVECTOR2(720.0f, 250.0f), 0,
+					D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
 					0.0f, 1.0f, 0, 1, 0, 0,
 					0.0f, 0.0f, 0);
 			}
 
 			if (g_Select.selectpush == 3)
 			{
-				SetEffect(6, D3DXVECTOR2(390.0f, 200.0f), D3DXVECTOR2(390.0f, 200.0f), 0,
-					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+				SetEffect(6, D3DXVECTOR2(960.0f, 550.0f), D3DXVECTOR2(960.0f, 550.0f), 0,
+					D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
 					0.0f, 1.0f, 0, 1, 0, 0,
 					0.0f, 0.0f, 0);
 			}
 
 			if (g_Select.selectpush == 4)
 			{
-				SetEffect(6, D3DXVECTOR2(500.0f, 200.0f), D3DXVECTOR2(500.0f, 200.0f), 0,
-					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+				SetEffect(6, D3DXVECTOR2(1200.0f, 400.0f), D3DXVECTOR2(1200.0f, 400.0f), 0,
+					D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
 					0.0f, 1.0f, 0, 1, 0, 0,
 					0.0f, 0.0f, 0);
 			}
 		}
 
 			//セレクト二段目
-			if (g_Select.selectvertical == 1)
+			/*if (g_Select.selectvertical == 1)
 			{
 				if (g_Select.selectpush == 0)
 				{
@@ -307,13 +309,13 @@ void UpdateSelect(void)
 						0.0f, 1.0f, 0, 1, 0, 0,
 						0.0f, 0.0f, 0);
 				}
-			}
+			}*/
 
 			
 
 
 
-			if (g_Select.selecttime <= 0)
+			if (g_Select.selectcooltime <= 0)
 			{
 
 				if (g_Select.selectvertical >= 2)
@@ -330,7 +332,7 @@ void UpdateSelect(void)
 				if (GetKeyboardPress(DIK_UP))
 				{
 					g_Select.selectvertical--;
-					g_Select.selecttime = 10;
+					g_Select.selectcooltime = 10;
 
 				}
 
@@ -339,7 +341,7 @@ void UpdateSelect(void)
 				if (GetKeyboardPress(DIK_RIGHT))
 				{
 					g_Select.selectpush++;
-					g_Select.selecttime = TIME;
+					g_Select.selectcooltime = TIME;
 				}
 				if (g_Select.selectpush >= 5)
 				{
@@ -349,7 +351,7 @@ void UpdateSelect(void)
 				if (GetKeyboardPress(DIK_LEFT))
 				{
 					g_Select.selectpush--;
-					g_Select.selecttime = TIME;
+					g_Select.selectcooltime = TIME;
 
 				}
 				if (g_Select.selectpush < 0)
@@ -363,7 +365,7 @@ void UpdateSelect(void)
 					if (GetKeyboardPress(DIK_DOWN))
 					{
 						g_Select.selectvertical++;
-						g_Select.selecttime = 10;
+						g_Select.selectcooltime = 10;
 					}
 
 					if (GetKeyboardPress(DIK_RETURN))
@@ -379,7 +381,7 @@ void UpdateSelect(void)
 					if (GetKeyboardPress(DIK_DOWN))
 					{
 						g_Select.selectvertical++;
-						g_Select.selecttime = TIME;
+						g_Select.selectcooltime = TIME;
 					}
 					if (GetKeyboardPress(DIK_RETURN))
 					{
@@ -392,7 +394,7 @@ void UpdateSelect(void)
 					if (GetKeyboardPress(DIK_DOWN))
 					{
 						g_Select.selectvertical++;
-						g_Select.selecttime = TIME;
+						g_Select.selectcooltime = TIME;
 					}
 					if (GetKeyboardPress(DIK_RETURN))
 					{
@@ -405,7 +407,7 @@ void UpdateSelect(void)
 					if (GetKeyboardPress(DIK_DOWN))
 					{
 						g_Select.selectvertical++;
-						g_Select.selecttime = TIME;
+						g_Select.selectcooltime = TIME;
 					}
 					if (GetKeyboardPress(DIK_RETURN))
 					{
@@ -418,7 +420,7 @@ void UpdateSelect(void)
 					if (GetKeyboardPress(DIK_DOWN))
 					{
 						g_Select.selectvertical++;
-						g_Select.selecttime = TIME;
+						g_Select.selectcooltime = TIME;
 					}
 					if (GetKeyboardPress(DIK_RETURN))
 					{
@@ -432,8 +434,8 @@ void UpdateSelect(void)
 
 
 
-			if (g_Select.selecttime >= 0)
-				g_Select.selecttime--;
+			if (g_Select.selectcooltime >= 0)
+				g_Select.selectcooltime--;
 
 	
 
@@ -441,8 +443,7 @@ void UpdateSelect(void)
 		
 
 
-
-
+			g_Select.selecttime++;
 	
 }
 

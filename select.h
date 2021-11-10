@@ -4,6 +4,10 @@
 //#define SELECT_MAX (5)
 
 #define TIME (15)
+
+#define SELECT_MAX_X (5)       // select_xのMAX
+#define SELECT_MAX_Y (2)       // select_yのMAX
+
 // プレイヤー構造体
 struct SELECT
 {
@@ -20,6 +24,8 @@ struct SELECT
 
 	float					origin_x;			    // xの原点(0,0を選択しているとき)
 	float					origin_y;			    // yの原点(0,0を選択しているとき)
+
+
 };
 
 void InitSelect(void);

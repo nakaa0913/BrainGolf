@@ -96,8 +96,14 @@ void UpdateSelect(void)
 
 
 	/////////////
+	for (int x = 0; x < SELECT_MAX_X; x++)
+	{
+		for (int y = 0; y < SELECT_MAX_Y; y++)
+		{
+			
 
-	
+		}
+	}
 		//ƒ~ƒbƒVƒ‡ƒ“
 		/*SetEffect(8, D3DXVECTOR2(280.0f, 700.0f), D3DXVECTOR2(280.0f, 700.0f), 0,
 			D3DXVECTOR2(500.0f, 200.0f), D3DXVECTOR2(500.0f, 200.0f), 0,

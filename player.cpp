@@ -15,6 +15,7 @@
 #include "sound.h"
 #include "bg.h"
 #include "FileDataManagement.h"
+#include "camera.h"
 
 #define PLAYER_H (50)
 #define PLAYER_W (50)
@@ -121,6 +122,7 @@ void UninitPlayer(void)
 void UpdatePlayer(void)
 {
 	BULLET bullet = *GetBullet();
+	CAMERA* p_Camera = GetCamera();
 
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
@@ -299,8 +301,10 @@ void UpdatePlayer(void)
 		g_Player[i].pos = g_Player[i].nextpos;
 
 		// pos を drawpos に変換		DRAW_GAP は、上から見た時の描写でのマップの描写はレフトトップで、プレイヤーはど真ん中でやってるから、そのずれ。
-		g_Player[i].drawpos.x = GAME_ORIGIN_POINT_X + ((g_Player[i].pos.x + DRAW_GAP_X) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_X / 2) - ((g_Player[i].pos.y - DRAW_GAP_X) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_X / 2);
-		g_Player[i].drawpos.y = GAME_ORIGIN_POINT_Y + ((g_Player[i].pos.y - DRAW_GAP_Y) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_Y / 2) + ((g_Player[i].pos.x + DRAW_GAP_Y) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_Y / 2);
+		g_Player[i].drawpos.x = GAME_ORIGIN_POINT_X + ((g_Player[i].pos.x + DRAW_GAP_X) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_X / 2) - ((g_Player[i].pos.y - DRAW_GAP_X) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_X / 2) - p_Camera->pos.x;
+		g_Player[i].drawpos.y = GAME_ORIGIN_POINT_Y + ((g_Player[i].pos.y - DRAW_GAP_Y) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_Y / 2) + ((g_Player[i].pos.x + DRAW_GAP_Y) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_Y / 2) - p_Camera->pos.y;
+		g_Player[i].drawsize.x = g_Player[i].w * p_Camera->magnification;
+		g_Player[i].drawsize.y = g_Player[i].h * p_Camera->magnification;
 
 
 		int dffs = 5;
@@ -482,6 +486,7 @@ void UpdatePlayer(void)
 
 	void DrawPlayerSpecifyNum(int i)
 	{
+		CAMERA* p_Camera = GetCamera();
 
 		float directionUV = 0.0f + 0.25f * g_Player[i].direction;
 
@@ -494,11 +499,11 @@ void UpdatePlayer(void)
 			// ShotPowerによる倍率
 			float ShotBairitu = 0.5f + (g_Player[i].ShotPower / 100.0f);
 
-			DrawSpriteColorRotate(tex_yazirushi, g_Player[i].drawpos.x, g_Player[i].drawpos.y, 500.0f * ShotBairitu, 500.0f * ShotBairitu,
+			DrawSpriteColorRotate(tex_yazirushi, g_Player[i].drawpos.x, g_Player[i].drawpos.y, 500.0f * ShotBairitu * p_Camera->magnification, 500.0f * ShotBairitu * p_Camera->magnification,
 				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), -rot);
 		}
 
-		DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].drawpos.x, g_Player[i].drawpos.y, g_Player[i].w, g_Player[i].h,
+		DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].drawpos.x, g_Player[i].drawpos.y, g_Player[i].drawsize.x, g_Player[i].drawsize.y,
 			g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 
 		// 上から見た時の表示

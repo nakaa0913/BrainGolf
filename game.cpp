@@ -20,6 +20,7 @@
 #include "score.h"
 #include "bg.h"
 #include "Goal.h"
+#include "camera.h"
 /*------------------------------------------------------------------------------
    ’è”’è‹`
 ------------------------------------------------------------------------------*/
@@ -52,6 +53,7 @@ void InitGame(void)
 	InitScore();
 	InitBG();
 	InitGoal();
+	InitCamera();
 	g_BGMNo = LoadSound("data/BGM/sample001.wav");
 
 	SetVolume(g_BGMNo, 1.0f);
@@ -64,6 +66,7 @@ void InitGame(void)
 void UninitGame()
 {
 	//‰Šú‰»‚Æ‚Í‹t‡‚ÉI—¹ˆ—‚ğs‚¤
+	UninitCamera();
 	UninitBG();
 	UninitScore();
 	UninitBullet();
@@ -80,6 +83,7 @@ void UpdateGame(void)
 {
 	if (goal == false)
 	{
+		UpdateCamera();
 		UpdateBG();
 		UpdatePlayer();
 		UpdateEnemy();

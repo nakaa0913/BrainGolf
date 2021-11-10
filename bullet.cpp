@@ -15,6 +15,7 @@
 #include "game.h"
 #include "primitive.h"
 #include "collision.h"
+#include "camera.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -85,7 +86,7 @@ void UninitBullet(void)
 //=============================================================================
 void UpdateBullet(void)
 {
-
+	CAMERA* p_Camera = GetCamera();
 
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
@@ -764,8 +765,10 @@ void UpdateBullet(void)
 			g_Bullet[i].pos = g_Bullet[i].nextpos;
 
 			// pos を drawpos に変換		DRAW_GAP は、上から見た時の描写でのマップの描写はレフトトップで、プレイヤーはど真ん中でやってるから、そのずれ。
-			g_Bullet[i].drawpos.x = GAME_ORIGIN_POINT_X + ((g_Bullet[i].pos.x + DRAW_GAP_X) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_X / 2) - ((g_Bullet[i].pos.y - DRAW_GAP_X) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_X / 2);
-			g_Bullet[i].drawpos.y = GAME_ORIGIN_POINT_Y + ((g_Bullet[i].pos.y - DRAW_GAP_Y) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_Y / 2) + ((g_Bullet[i].pos.x + DRAW_GAP_Y) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_Y / 2);
+			g_Bullet[i].drawpos.x = GAME_ORIGIN_POINT_X + ((g_Bullet[i].pos.x + DRAW_GAP_X) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_X / 2) - ((g_Bullet[i].pos.y - DRAW_GAP_X) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_X / 2) - p_Camera->pos.x;
+			g_Bullet[i].drawpos.y = GAME_ORIGIN_POINT_Y + ((g_Bullet[i].pos.y - DRAW_GAP_Y) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_Y / 2) + ((g_Bullet[i].pos.x + DRAW_GAP_Y) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_Y / 2) - p_Camera->pos.y;
+			g_Bullet[i].drawsize.x = g_Bullet[i].w * p_Camera->magnification;
+			g_Bullet[i].drawsize.y = g_Bullet[i].h * p_Camera->magnification;
 
 		}
 
@@ -788,6 +791,8 @@ void UpdateBullet(void)
 //=============================================================================
 void DrawBullet(void)
 {
+	CAMERA* p_Camera = GetCamera();
+
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
 		if (g_Bullet[i].use == true)	// このバレットが使われている？
@@ -817,8 +822,8 @@ void DrawBulletSpecifyNum(int i)
 			//バレットの位置やテクスチャー座標を反映
 			float px = g_Bullet[i].drawpos.x;	// バレットの表示位置X
 			float py = g_Bullet[i].drawpos.y;	// バレットの表示位置Y
-			float pw = g_Bullet[i].w;		// バレットの表示幅
-			float ph = g_Bullet[i].h;		// バレットの表示高さ
+			float pw = g_Bullet[i].drawsize.x;		// バレットの表示幅
+			float ph = g_Bullet[i].drawsize.y;		// バレットの表示高さ
 			D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 

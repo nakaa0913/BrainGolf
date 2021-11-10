@@ -5,6 +5,7 @@
 #include "score.h"
 #include "scene.h"
 #include "bg.h"
+#include "camera.h"
 
 EFFECT g_Effect[MAX_EFFECT];
 
@@ -107,6 +108,8 @@ void UninitEffect(void)
 
 void UpdateEffect(void)
 {
+	CAMERA* p_Camera = GetCamera();
+
 	int effectnum = 0;
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -154,6 +157,7 @@ void UpdateEffect(void)
 
 			// pos を drawpos に変換	エフェクトの場合、drawposから
 			g_Effect[i].drawpos = g_Effect[i].pos;
+			// g_Effect[i].drawsize = g_Effect[i].size * p_Camera->magnification;
 
 
 
@@ -267,6 +271,8 @@ void SetGameEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pa
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
 	float rot_angle1, float rot_angle2, int rot_moving_pattern)
 {
+	CAMERA* p_Camera = GetCamera();
+
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
 		if (g_Effect[i].isUse == false)
@@ -284,9 +290,9 @@ void SetGameEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pa
 			g_Effect[i].pos2.y = GAME_ORIGIN_POINT_Y + ((pos2.y - DRAW_GAP_Y) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_Y / 2) + ((pos2.x + DRAW_GAP_Y) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_Y / 2);
 
 			g_Effect[i].pos_moving_pattern = pos_moving_pattern;
-			g_Effect[i].size = size1;
-			g_Effect[i].size1 = size1;
-			g_Effect[i].size2 = size2;
+			g_Effect[i].size = size1 * p_Camera->magnification;
+			g_Effect[i].size1 = size1 * p_Camera->magnification;
+			g_Effect[i].size2 = size2 * p_Camera->magnification;
 			g_Effect[i].size_moving_pattern = size_moving_pattern;
 			g_Effect[i].Clarity_min = Clarity_min;
 			g_Effect[i].Clarity_max = Clarity_max;

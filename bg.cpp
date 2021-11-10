@@ -10,6 +10,7 @@
 #include "stagedata.h"
 #include "FileDataManagement.h"
 #include "bullet.h"
+#include "camera.h"
 
 
 //*****************************************************************************
@@ -211,6 +212,7 @@ void UpdateBG(void)
 void DrawBG(void)
 {
 	STAGEDATA* p_Stagedata = GetStagedata();
+	CAMERA* p_Camera = GetCamera();
 
 	float offset_y;
 
@@ -226,8 +228,9 @@ void DrawBG(void)
 	{
 		for(int y = 0; y < MAP_Y + 1; y++)
 		{
-			float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2);
-			float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2);
+
+			float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) - p_Camera->pos.x;
+			float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) - p_Camera->pos.y;
 
 			// テスト用に3種類のテクスチャ
 			// tex_floor
@@ -331,14 +334,14 @@ void DrawBG(void)
 			// マップのデータが0の場合何も表示しないし計算もしない。
 			if (p_Stagedata->maparray[y][x] != 0)
 			{
-				float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2);
-				float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2);
+				float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) - p_Camera->pos.x;
+				float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) - p_Camera->pos.y;
 
-				float mapchip3d_size_x = 240;
-				float mapchip3d_size_y = 400;
+				float mapchip3d_size_x = 240 * p_Camera->magnification;
+				float mapchip3d_size_y = 400 * p_Camera->magnification;
 
-				float mapchip3d_gap_x = 80;
-				float mapchip3d_gap_y = 360;
+				float mapchip3d_gap_x = 80 * p_Camera->magnification;
+				float mapchip3d_gap_y = 360 * p_Camera->magnification;
 
 				
 

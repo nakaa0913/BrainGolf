@@ -91,21 +91,7 @@ void UpdateGoal(void)
 			0.0f, 1.0f, 30, 120, 60, 90,
 			0.0f, 0.0f, 0);*/
 
-		//¯(‰e)
-		SetEffect(14, D3DXVECTOR2(440.0f, 80.0f), D3DXVECTOR2(440.0f, 80.0f), 0,
-			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-			0.0f, 1.0f, 180, 999, 0, 60,
-			0.0f, 0.0f, 0);
-		//¯(‰e)
-		SetEffect(14, D3DXVECTOR2(440.0f, 180.0f), D3DXVECTOR2(440.0f, 180.0f), 0,
-			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-			0.0f, 1.0f, 180, 999, 0, 60,
-			0.0f, 0.0f, 0);
-		//¯(‰e)
-		SetEffect(14, D3DXVECTOR2(440.0f, 280.0f), D3DXVECTOR2(440.0f, 280.0f), 0,
-			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-			0.0f, 1.0f, 180, 999, 0, 60,
-			0.0f, 0.0f, 0);
+		
 	}
 
 
@@ -121,6 +107,25 @@ void UpdateGoal(void)
 
 	if (g_Goal.goaltime == 300)
 	{
+		//¯(‰e)
+		SetEffect(14, D3DXVECTOR2(440.0f, 80.0f), D3DXVECTOR2(440.0f, 80.0f), 0,
+			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+			0.0f, 1.0f, 60, 999, 0, 60,
+			0.0f, 0.0f, 0);
+		//¯(‰e)
+		SetEffect(14, D3DXVECTOR2(440.0f, 180.0f), D3DXVECTOR2(440.0f, 180.0f), 0,
+			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+			0.0f, 1.0f, 60, 999, 0, 60,
+			0.0f, 0.0f, 0);
+		//¯(‰e)
+		SetEffect(14, D3DXVECTOR2(440.0f, 280.0f), D3DXVECTOR2(440.0f, 280.0f), 0,
+			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+			0.0f, 1.0f, 60, 999, 0, 60,
+			0.0f, 0.0f, 0);
+	}
+
+	if (g_Goal.goaltime == 400)
+	{
 		////¯
 		SetEffect(11, D3DXVECTOR2(440.0f, 80.0f), D3DXVECTOR2(440.0f, 80.0f), 0,
 			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
@@ -130,7 +135,7 @@ void UpdateGoal(void)
 		//c810
 	}
 
-	if (g_Goal.goaltime == 330)
+	if (g_Goal.goaltime == 430)
 	{
 		//¯
 		SetEffect(11, D3DXVECTOR2(440.0f, 180.0f), D3DXVECTOR2(440.0f, 180.0f), 0,
@@ -139,7 +144,7 @@ void UpdateGoal(void)
 			0.0f, 0.0f, 0);
 	}
 
-	if (g_Goal.goaltime == 360)
+	if (g_Goal.goaltime == 460)
 	{
 		//¯
 		SetEffect(11, D3DXVECTOR2(440.0f, 280.0f), D3DXVECTOR2(440.0f, 280.0f), 0,
@@ -149,7 +154,7 @@ void UpdateGoal(void)
 
 	}
 
-	if (g_Goal.goaltime >= 400)
+	if (g_Goal.goaltime >= 500)
 	{
 		if (g_Goal.goaltime <= 8000)
 		{

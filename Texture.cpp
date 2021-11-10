@@ -125,4 +125,5 @@ void UnloadTexture(char* fileName)
 	
 	// 指定したファイル名のものがない場合
 	exit(20);
+	return;
 }

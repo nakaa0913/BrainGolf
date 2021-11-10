@@ -296,12 +296,12 @@ void DrawBG(void)
 		}
 	}
 
-
+	PLAYER *p_player = GetPlayer();
 
 	// 背景オブジェクトの表示
-	for (int y = 0; y < MAP_Y; y++)
+	for (int x = 0; x < MAP_X; x++)
 	{
-		for (int x = 0; x < MAP_X; x++)
+		for (int y = 0; y < MAP_Y; y++)
 		{
 			MAP_DATA_T mapchip;
 			mapchip = g_MapInfo[p_Stagedata->maparray[y][x]];
@@ -322,6 +322,28 @@ void DrawBG(void)
 
 				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
 			}
+
+			// プレイヤーやバレットやエフェクト等ブロックとの表示順が大事な奴の処理
+			for (int i = 0; i < PLAYER_MAX; i++)
+			{
+				if (p_player[i].use)
+				{
+					// マップでの座標に変換する
+					D3DXVECTOR2 mappos = PosToMappos(p_player[i].pos);
+					// 変換した座標の小数点を切り捨てる
+					int mappos_x = mappos.x;
+					int mappos_y = mappos.y;
+
+					// 描写するタイミングだったら描写する
+					if(x == mappos_x && y == mappos_y)
+						DrawPlayerSpecifyNum(i);
+
+					int ada = 0;
+				}
+				
+			}
+
+
 		}
 	}
 }
@@ -356,4 +378,22 @@ int CheckBlockdata(int BlockX, int BlockY)
 	BlockData = p_Stagedata->maparray[BlockY][BlockX];
 
 	return BlockData;
+}
+
+D3DXVECTOR2 PosToMappos(D3DXVECTOR2 pos)
+{
+	D3DXVECTOR2 mappos;
+	mappos.x = pos.x / MAP_CHIP_SIZE_X;
+	mappos.y = pos.y / MAP_CHIP_SIZE_Y;
+
+	return mappos;
+}
+
+D3DXVECTOR2 MapposToPos(D3DXVECTOR2 mappos)
+{
+	D3DXVECTOR2 pos;
+	pos.x = mappos.x * MAP_CHIP_SIZE_X;
+	pos.y = mappos.y * MAP_CHIP_SIZE_Y;
+
+	return pos;
 }

@@ -80,6 +80,7 @@ HRESULT InitPlayer(void);
 void UninitPlayer(void);
 void UpdatePlayer(void);
 void DrawPlayer(void);
+void DrawPlayerSpecifyNum(int i);
 void SetPlayer(D3DXVECTOR2 pos);
 PLAYER *GetPlayer(void);
 

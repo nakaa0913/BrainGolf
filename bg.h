@@ -36,7 +36,12 @@
 #define MAP_CHIP_SIZE_X (40)
 #define MAP_CHIP_SIZE_Y (40)
 
-#define DRAW_GAP	 (20)			// 上画面をレフトトップでやってたせいで出たずれ
+//#define DRAW_GAP	 (0)			// 上画面をレフトトップでやってたせいで出たずれ
+#define DRAW_GAP_X	 (20)			// 上画面をレフトトップでやってたせいで出たずれ
+#define DRAW_GAP_Y	 (20)			// 上画面をレフトトップでやってたせいで出たずれ？
+									// ここいじって表示を足元に当たり判定が来るようにする。
+									// でもプレイヤーだから使わないかも
+
 
 #define DRAW_MAP_CHIP_SIZE_X (80)
 #define DRAW_MAP_CHIP_SIZE_Y (40)
@@ -57,4 +62,6 @@ void SetCurrentMap(int next);
 
 int CheckBlockdata(int BlockX, int BlockY);
 
+D3DXVECTOR2 PosToMappos(D3DXVECTOR2 pos);
+D3DXVECTOR2 MapposToPos(D3DXVECTOR2 mappos);
 

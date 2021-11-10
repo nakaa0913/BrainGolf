@@ -65,3 +65,4 @@ int CheckBlockdata(int BlockX, int BlockY);
 D3DXVECTOR2 PosToMappos(D3DXVECTOR2 pos);
 D3DXVECTOR2 MapposToPos(D3DXVECTOR2 mappos);
 
+int LimitRange(int num, int min, int max);

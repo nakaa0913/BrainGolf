@@ -793,6 +793,28 @@ void DrawBullet(void)
 		if (g_Bullet[i].use == true)	// このバレットが使われている？
 		{								// Yes
 			//バレットの位置やテクスチャー座標を反映
+			float px = g_Bullet[i].pos.x;	// バレットの表示位置X
+			float py = g_Bullet[i].pos.y;	// バレットの表示位置Y
+			float pw = g_Bullet[i].w;		// バレットの表示幅
+			float ph = g_Bullet[i].h;		// バレットの表示高さ
+			D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+
+
+			// １枚のポリゴンの頂点とテクスチャ座標を設定
+			DrawSpriteColorRotate(g_Bullet[i].texNo, px, py, pw, ph, 0.0f, 0.0f, 1.0f, 1.0f, col, g_Bullet[i].rot);
+		}
+	}
+}
+
+
+void DrawBulletSpecifyNum(int i)
+{
+	for (int i = 0; i < BULLET_MAX; i++)
+	{
+		if (g_Bullet[i].use == true)	// このバレットが使われている？
+		{								// Yes
+			//バレットの位置やテクスチャー座標を反映
 			float px = g_Bullet[i].drawpos.x;	// バレットの表示位置X
 			float py = g_Bullet[i].drawpos.y;	// バレットの表示位置Y
 			float pw = g_Bullet[i].w;		// バレットの表示幅
@@ -805,9 +827,7 @@ void DrawBullet(void)
 			DrawSpriteColorRotate(g_Bullet[i].texNo, px, py, pw, ph, 0.0f, 0.0f, 1.0f, 1.0f, col, g_Bullet[i].rot);
 		}
 	}
-
 }
-
 
 //=============================================================================
 // バレット構造体の先頭アドレスを取得

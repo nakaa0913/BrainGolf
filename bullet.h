@@ -12,12 +12,12 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define BULLET_MAX		(50)		// バレットのMax数
+#define BULLET_MAX		(3)		// バレットのMax数
 #define BULLET_SPEED	(4.0f)		// バレットの移動スピード
-#define COL_COOL		(10)			// CollicionCoolの長さ
+#define COL_COOL		(3)			// CollicionCoolの長さ
 
 
-// バレット構造体a
+// バレット構造体
 struct BULLET
 {
 	bool					use;					// true:使っている  false:未使用
@@ -58,3 +58,4 @@ float CalculateCornerDistanceX(int CornerNum, float size_x, float size_y);
 float CalculateCornerDistanceY(int CornerNum, float size_x, float size_y);
 void CalculateNewVecAng(int i, float bulletposX, float bulletposY, float CornerPosX, float CornerPosY);
 void InversionVecAng(int i, int XorY);
+void DrawBulletSpecifyNum(int i);

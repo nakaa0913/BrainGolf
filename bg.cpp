@@ -9,6 +9,7 @@
 #include "sprite.h"
 #include "stagedata.h"
 #include "FileDataManagement.h"
+#include "bullet.h"
 
 
 //*****************************************************************************
@@ -297,9 +298,18 @@ void DrawBG(void)
 	}
 
 	PLAYER *p_player = GetPlayer();
+	BULLET *p_bullet = GetBullet();
 
-	// ブロックの色の設定(リセット)
-	D3DXCOLOR color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	// ブロックの色の設定(リセット)		順番的に(0,0)は透明度は変えられない。けど問題ない。
+	D3DXCOLOR color[10 * MAP_Y + MAP_X];
+	for (int x = 0; x < MAP_X; x++)
+	{
+		for (int y = 0; y < MAP_Y; y++)
+		{
+			// 色データのリセット。
+			color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		}
+	}
 
 	// 背景オブジェクトの表示
 	for (int x = 0; x < MAP_X; x++)
@@ -308,8 +318,6 @@ void DrawBG(void)
 		{
 			MAP_DATA_T mapchip;
 			mapchip = g_MapInfo[p_Stagedata->maparray[y][x]];
-
-			
 
 			// マップのデータが0の場合何も表示しないし計算もしない。
 			if (p_Stagedata->maparray[y][x] != 0)
@@ -326,16 +334,13 @@ void DrawBG(void)
 				
 
 				// ブロックの描写
-				DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - mapchip3d_gap_x, slanted_y - mapchip3d_gap_y, mapchip3d_size_x, mapchip3d_size_y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f, color);
-
-				// ブロックの透明度のリセット
-				color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+				DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - mapchip3d_gap_x, slanted_y - mapchip3d_gap_y, mapchip3d_size_x, mapchip3d_size_y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f, color[10 * y + x]);
 
 				// 今までの上からの視点
 				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
 			}
 
-			// プレイヤーやバレットやエフェクト等ブロックとの表示順が大事な奴の処理
+			// プレイヤーの表示、表示順が大事
 			for (int i = 0; i < PLAYER_MAX; i++)
 			{
 				if (p_player[i].use)
@@ -346,33 +351,48 @@ void DrawBG(void)
 					int mappos_x = mappos.x;
 					int mappos_y = mappos.y;
 
-					if (x == mappos_x && y == mappos_y - 1)
+					// 描写するタイミングだったら描写する
+					if (x == mappos_x && y == mappos_y)
 					{
-						// ブロックの透明度を下げる設定
-						color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						DrawPlayerSpecifyNum(i);			// iのプレイヤーが描かれるかどうか(使われてるかどうか)は、これらの関数の中で検索される。
+
+						// ブロックの透明度を下げる処理
+						color[LimitRange(10 * (y - 1) + x + 1, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						color[LimitRange(10 * (y + 0) + x + 1, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						color[LimitRange(10 * (y + 1) + x + 1, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						color[LimitRange(10 * (y + 2) + x + 1, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						color[LimitRange(10 * (y + 1) + x + 0, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 					}
+				}
+			}
+			// バレットの表示
+			for (int i = 0; i < BULLET_MAX; i++)
+			{
+				if (p_bullet[i].use)
+				{
+					// マップでの座標に変換する
+					D3DXVECTOR2 mappos = PosToMappos(p_bullet[i].pos);
+					// 変換した座標の小数点を切り捨てる
+					int mappos_x = mappos.x;
+					int mappos_y = mappos.y;
 
 					// 描写するタイミングだったら描写する
 					if (x == mappos_x && y == mappos_y)
 					{
-						DrawPlayerSpecifyNum(i);
+						DrawBulletSpecifyNum(i);			// iのバレットが描かれるかどうか(使われてるかどうか)は、これらの関数の中で検索される。
 
-						// ブロックの透明度を下げる設定
-						color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						// ブロックの透明度を下げる処理
+						color[LimitRange(10 * (y - 1) + x + 1, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						color[LimitRange(10 * (y + 0) + x + 1, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						color[LimitRange(10 * (y + 1) + x + 1, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						color[LimitRange(10 * (y + 2) + x + 1, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						color[LimitRange(10 * (y + 1) + x + 0, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 					}
-
-
-
-					if (x == mappos_x && y == mappos_y + 1)
-					{
-						// ブロックの透明度を下げる設定
-						color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-					}
-
-					int ada = 0;
 				}
-				
 			}
+
+
+
 
 
 		}
@@ -427,4 +447,15 @@ D3DXVECTOR2 MapposToPos(D3DXVECTOR2 mappos)
 	pos.y = mappos.y * MAP_CHIP_SIZE_Y;
 
 	return pos;
+}
+
+// numがminとmaxの値からはみ出た場合minかnumに調整してくれる
+int LimitRange(int num, int min, int max)
+{
+	if (num < min)
+		num = min;
+	if (num > max)
+		num = max;
+
+	return num;
 }

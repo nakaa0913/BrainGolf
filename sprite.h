@@ -22,6 +22,7 @@ void UninitSprite();
 
 void DrawSprite(int texNo, float X, float Y, float Width, float Height, float U, float V, float UW, float VH);
 void DrawSpriteLeftTop(int texNo, float X, float Y, float Width, float Height, float U, float V, float UW, float VH);
+void DrawSpriteLeftTopColor(int texNo, float X, float Y, float Width, float Height, float U, float V, float UW, float VH, D3DXCOLOR color);
 void DrawSpriteColor(int texNo, float X, float Y, float Width, float Height, float U, float V, float UW, float VH, D3DXCOLOR color);
 void DrawSpriteColorRotate(int texNo, float X, float Y, float Width, float Height, float U, float V, float UW, float VH, D3DXCOLOR Color, float Rot);
 void DrawSpriteColorRotateCenterDown(int texNo, float X, float Y, float Width, float Height,

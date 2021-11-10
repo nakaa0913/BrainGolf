@@ -153,6 +153,51 @@ void DrawSpriteLeftTop(int texNo, float X, float Y, float Width, float Height, f
 }
 
 
+
+
+void DrawSpriteLeftTopColor(int texNo, float X, float Y, float Width, float Height, float U, float V, float UW, float VH, D3DXCOLOR color)
+{
+	D3D11_MAPPED_SUBRESOURCE msr;
+	GetDeviceContext()->Map(g_VertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &msr);
+
+	VERTEX_3D* vertex = (VERTEX_3D*)msr.pData;
+
+	// 左上を原点として設定するプログラム
+	vertex[0].Position = D3DXVECTOR3(X, Y, 0.0f);
+	vertex[0].TexCoord = D3DXVECTOR2(U, V);
+
+	vertex[1].Position = D3DXVECTOR3(X + Width, Y, 0.0f);
+	vertex[1].TexCoord = D3DXVECTOR2(U + UW, V);
+
+	vertex[2].Position = D3DXVECTOR3(X, Y + Height, 0.0f);
+	vertex[2].TexCoord = D3DXVECTOR2(U, V + VH);
+
+	vertex[3].Position = D3DXVECTOR3(X + Width, Y + Height, 0.0f);
+	vertex[3].TexCoord = D3DXVECTOR2(U + UW, V + VH);
+
+	vertex[0].Diffuse = color;
+	vertex[1].Diffuse = color;
+	vertex[2].Diffuse = color;
+	vertex[3].Diffuse = color;
+
+	GetDeviceContext()->Unmap(g_VertexBuffer, 0);
+
+	// 頂点バッファ設定
+	UINT stride = sizeof(VERTEX_3D);
+	UINT offset = 0;
+	GetDeviceContext()->IASetVertexBuffers(0, 1, &g_VertexBuffer, &stride, &offset);
+
+	// プリミティブトポロジ設定
+	GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	// テクスチャ設定
+	GetDeviceContext()->PSSetShaderResources(0, 1, GetTexture(texNo));
+
+	// ポリゴン描画
+	GetDeviceContext()->Draw(NUM_VERTEX, 0);
+}
+
+
 //=============================================================================
 // スプライトデータ設定
 // 座標・サイズ・UV指定・頂点色

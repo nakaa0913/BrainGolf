@@ -298,6 +298,9 @@ void DrawBG(void)
 
 	PLAYER *p_player = GetPlayer();
 
+	// ブロックの色の設定
+	D3DXCOLOR color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
 	// 背景オブジェクトの表示
 	for (int x = 0; x < MAP_X; x++)
 	{
@@ -305,6 +308,8 @@ void DrawBG(void)
 		{
 			MAP_DATA_T mapchip;
 			mapchip = g_MapInfo[p_Stagedata->maparray[y][x]];
+
+			
 
 			// マップのデータが0の場合何も表示しないし計算もしない。
 			if (p_Stagedata->maparray[y][x] != 0)
@@ -318,8 +323,15 @@ void DrawBG(void)
 				float mapchip3d_gap_x = 80;
 				float mapchip3d_gap_y = 360;
 
-				DrawSpriteLeftTop(tex_mapchip_3d, slanted_x - mapchip3d_gap_x, slanted_y - mapchip3d_gap_y, mapchip3d_size_x, mapchip3d_size_y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
+				
 
+				// ブロックの描写
+				DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - mapchip3d_gap_x, slanted_y - mapchip3d_gap_y, mapchip3d_size_x, mapchip3d_size_y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f, color);
+
+				// ブロックの透明度のリセット
+				color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+				// 今までの上からの視点
 				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
 			}
 
@@ -334,9 +346,28 @@ void DrawBG(void)
 					int mappos_x = mappos.x;
 					int mappos_y = mappos.y;
 
+					if (x == mappos_x && y == mappos_y - 1)
+					{
+						// ブロックの透明度を下げる設定
+						color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+					}
+
 					// 描写するタイミングだったら描写する
-					if(x == mappos_x && y == mappos_y)
+					if (x == mappos_x && y == mappos_y)
+					{
 						DrawPlayerSpecifyNum(i);
+
+						// ブロックの透明度を下げる設定
+						color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+					}
+
+
+
+					if (x == mappos_x && y == mappos_y + 1)
+					{
+						// ブロックの透明度を下げる設定
+						color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+					}
 
 					int ada = 0;
 				}

@@ -11,7 +11,7 @@ EFFECT g_Effect[MAX_EFFECT];
 //テクスチャの名前定義
 static int ao_0;		 // 0
 static int aka_1;		 // 1
-//static int tako_2;		 // 2
+//static int tako_2;	 // 2
 static int title_3;		 // 3
 static int black_4;		 // 4
 static int clear_5;		 // 5
@@ -42,7 +42,7 @@ void InitEffect(void)
 	clear_star1_11 = LoadTexture("data/TEXTURE/result/clear_star_1.png");
 	clear_star2_12 = LoadTexture("data/TEXTURE/result/clear_star_2.png");
 	clear_star3_13 = LoadTexture("data/TEXTURE/result/clear_star_3.png");
-	clear_star4_14 = LoadTexture("data/TEXTURE/result/clear_star_brack_1.png");
+	clear_star4_14 = LoadTexture("data/TEXTURE/result/clear_star_black_1.png");
 
 
 
@@ -101,7 +101,7 @@ void UninitEffect(void)
 	UnloadTexture("data/TEXTURE/result/clear_star_1.png");
 	UnloadTexture("data/TEXTURE/result/clear_star_2.png");
 	UnloadTexture("data/TEXTURE/result/clear_star_3.png");
-	UnloadTexture("data/TEXTURE/result/clear_star_brack_1.png");
+	UnloadTexture("data/TEXTURE/result/clear_star_black_1.png");
 
 }
 

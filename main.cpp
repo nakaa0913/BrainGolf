@@ -40,6 +40,11 @@ void Draw(void);
 // グローバル変数:
 //*****************************************************************************
 
+// マウス使う処理
+long g_MouseX = 0;
+long g_MouseY = 0;
+bool g_MouseLClick = false;
+
 #ifdef _DEBUG
 int		g_CountFPS;							// FPSカウンタ
 char	g_DebugStr[2048] = WINDOW_CAPTION;	// デバッグ文字表示用
@@ -189,8 +194,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 
+	case WM_MOUSEMOVE:
+		g_MouseX = LOWORD(lParam);		// マウスのX座標を取得
+		g_MouseY = HIWORD(lParam);		// マウスのY座標を取得
+		break;
+
+	case WM_LBUTTONDOWN:
+		g_MouseLClick = true;			// 左クリックでtrue
+		break;
+
+	case WM_LBUTTONUP:
+		g_MouseLClick = false;			// 左クリックしていないとfalse
+		break;
+
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
+		g_MouseX = LOWORD(lParam);		// マウスのX座標を取得
+		g_MouseY = HIWORD(lParam);		// マウスのY座標を取得
 	}
 
 	return 0;
@@ -286,4 +306,21 @@ void Draw(void)
 float frand(void)
 {
 	return (float)rand() / RAND_MAX;
+}
+
+// マウスの処理
+long GetMousePosX(void)
+{
+	return g_MouseX;
+}
+
+
+long GetMousePosY(void)
+{
+	return g_MouseY;
+}
+
+bool GetMouseLClick(void)
+{
+	return g_MouseLClick;
 }

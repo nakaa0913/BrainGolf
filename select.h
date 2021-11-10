@@ -22,10 +22,6 @@ struct SELECT
 	int						selectcooltime;			//選択クールタイム
 	int						selecttime;				//セレクトフレーム
 
-	float					origin_x;			    // xの原点(0,0を選択しているとき)
-	float					origin_y;			    // yの原点(0,0を選択しているとき)
-
-
 };
 
 void InitSelect(void);

@@ -96,12 +96,40 @@ void UpdateSelect(void)
 
 
 	/////////////
+
+	// ステージ選択の時の原点となる場所
+	float	stage_origin_x = 240.0f;			    // xの原点(0,0を選択しているとき)
+	float	stage_origin_y = 200.0f;			    // yの原点(0,0を選択しているとき)
+
+	// ステージ選択の時1個離れたらこれだけ離れるよってやつ
+	float distance_x = 240.0f;
+	float distance_y = 240.0f;
+
 	for (int x = 0; x < SELECT_MAX_X; x++)
 	{
 		for (int y = 0; y < SELECT_MAX_Y; y++)
 		{
-			
+			// 現在の座標を求める
+			float now_x = stage_origin_x + distance_x * x;
+			float now_y = stage_origin_y + distance_y * y;
 
+			// 選択されてないときの表示を出す(ステージすべて)
+			SetEffect(6, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
+				D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+				0.0f, 1.0f, 0, 1, 0, 0,
+				0.0f, 0.0f, 0);
+
+			// 検索。選択しているとこを見つけて大きいサイズで表示。
+			if (g_Select.select_x == x)
+			{
+				if (g_Select.select_y == y)
+				{
+					SetEffect(6, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
+						D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
+						1.0f, 1.0f, 0, 1, 0, 0,
+						0.0f, 0.0f, 0);
+				}
+			}
 		}
 	}
 		//ミッション
@@ -123,7 +151,7 @@ void UpdateSelect(void)
 			0.0f, 0.0f, 0);*/
 
 		
-		//1段目
+		// ワールド選択の時
 		SetEffect(6, D3DXVECTOR2(240.0f, 200.0f), D3DXVECTOR2(240.0f, 200.0f), 0,
 			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 0,
@@ -148,84 +176,6 @@ void UpdateSelect(void)
 			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 0,
 			0.0f, 0.0f, 0);
-
-		//二段目
-		/*SetEffect(6, D3DXVECTOR2(60.0f, 300.0f), D3DXVECTOR2(60.0f, 300.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
-
-		SetEffect(7, D3DXVECTOR2(170.0f, 300.0f), D3DXVECTOR2(170.0f, 300.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
-
-		SetEffect(6, D3DXVECTOR2(280.0f, 300.0f), D3DXVECTOR2(280.0f, 300.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
-
-		SetEffect(6, D3DXVECTOR2(390.0f, 300.0f), D3DXVECTOR2(390.0f, 300.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
-
-		SetEffect(6, D3DXVECTOR2(500.0f, 300.0f), D3DXVECTOR2(500.0f, 300.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
-
-		//三段目
-		SetEffect(6, D3DXVECTOR2(60.0f, 400.0f), D3DXVECTOR2(60.0f, 400.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
-
-		SetEffect(7, D3DXVECTOR2(170.0f, 400.0f), D3DXVECTOR2(170.0f, 400.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
-
-		SetEffect(6, D3DXVECTOR2(280.0f, 400.0f), D3DXVECTOR2(280.0f, 400.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
-
-		SetEffect(6, D3DXVECTOR2(390.0f, 400.0f), D3DXVECTOR2(390.0f, 400.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
-
-		SetEffect(6, D3DXVECTOR2(500.0f, 400.0f), D3DXVECTOR2(500.0f, 400.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
-
-		//四段目
-		SetEffect(6, D3DXVECTOR2(60.0f, 500.0f), D3DXVECTOR2(60.0f, 500.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
-
-		SetEffect(7, D3DXVECTOR2(170.0f, 500.0f), D3DXVECTOR2(170.0f, 500.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
-
-		SetEffect(6, D3DXVECTOR2(280.0f, 500.0f), D3DXVECTOR2(280.0f, 500.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
-
-		SetEffect(6, D3DXVECTOR2(390.0f, 500.0f), D3DXVECTOR2(390.0f, 500.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
-
-		SetEffect(6, D3DXVECTOR2(500.0f, 500.0f), D3DXVECTOR2(500.0f, 500.0f), 0,
-			D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);*/
 
 		//セレクト一番上
 

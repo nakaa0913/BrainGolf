@@ -51,6 +51,7 @@ HRESULT InitFade(void)
 //=============================================================================
 void UninitFade(void)
 {
+	UnloadTexture("data/TEXTURE/fade_white.png");
 
 }
 

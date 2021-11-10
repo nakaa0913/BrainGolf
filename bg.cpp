@@ -185,6 +185,15 @@ HRESULT InitBG(void)
 //=============================================================================
 void UninitBG(void)
 {
+	UnloadTexture("data/TEXTURE/basechip_test.png");
+	UnloadTexture("data/TEXTURE/mapchip_3d.png");
+	UnloadTexture("data/TEXTURE/floor.png");
+	UnloadTexture("data/TEXTURE/floor_mozinasi.png");
+	UnloadTexture("data/TEXTURE/floor_huchinasi.png");
+	UnloadTexture("data/TEXTURE/base_wall.png");
+	UnloadTexture("data/TEXTURE/base_wall_center.png");
+	UnloadTexture("data/TEXTURE/base_wall_left.png");
+	UnloadTexture("data/TEXTURE/base_wall_right.png");
 
 }
 

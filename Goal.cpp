@@ -36,12 +36,12 @@
 //*****************************************************************************
 static GOAL g_Goal;
 
-static int aa;//画面（鳥）
-static int bb;//星（たこ）
-static int cc;//リザルト
-static int dd;//選択画面（タイトル）
-static int ee;//タイトル
-static int ff;//クリア～（タイトル）
+//static int aa;//画面（鳥）
+//static int bb;//星（たこ）
+//static int cc;//リザルト
+//static int dd;//選択画面（タイトル）
+//static int ee;//タイトル
+//static int ff;//クリア～（タイトル）
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -52,12 +52,12 @@ HRESULT InitGoal(void)
 
 	//
 	/*g_ShotSENo = LoadSound("data/SE/shot000.wav");*/
-	aa = LoadTexture("data/TEXTURE/aka.png");
+	/*aa = LoadTexture("data/TEXTURE/aka.png");
 	bb = LoadTexture("data/TEXTURE/tako.png");
 	cc = LoadTexture("data/TEXTURE/title.png");
 	dd = LoadTexture("data/TEXTURE/title.png");
 	ee = LoadTexture("data/TEXTURE/title.png");
-	ff = LoadTexture("data/TEXTURE/title.png");
+	ff = LoadTexture("data/TEXTURE/title.png");*/
 
 	g_Goal.goaltime = 0;
 	g_Goal.selectpush = 0;
@@ -94,9 +94,25 @@ void UpdateGoal(void)
 		//横1440
 		//縦810
 		//ゲームクリア
-		SetEffect(5, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+		/*SetEffect(5, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
 			D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT / 2), 1,
 			0.0f, 1.0f, 30, 120, 60, 90,
+			0.0f, 0.0f, 0);*/
+
+		//星(影)
+		SetEffect(14, D3DXVECTOR2(440.0f, 80.0f), D3DXVECTOR2(440.0f, 80.0f), 0,
+			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+			0.0f, 1.0f, 180, 999, 0, 60,
+			0.0f, 0.0f, 0);
+		//星(影)
+		SetEffect(14, D3DXVECTOR2(440.0f, 180.0f), D3DXVECTOR2(440.0f, 180.0f), 0,
+			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+			0.0f, 1.0f, 180, 999, 0, 60,
+			0.0f, 0.0f, 0);
+		//星(影)
+		SetEffect(14, D3DXVECTOR2(440.0f, 280.0f), D3DXVECTOR2(440.0f, 280.0f), 0,
+			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+			0.0f, 1.0f, 180, 999, 0, 60,
 			0.0f, 0.0f, 0);
 	}
 
@@ -113,8 +129,8 @@ void UpdateGoal(void)
 
 	if (g_Goal.goaltime == 300)
 	{
-		//星（たこ）
-		SetEffect(2, D3DXVECTOR2(440.0f, 80.0f), D3DXVECTOR2(440.0f, 80.0f), 0,
+		////星
+		SetEffect(11, D3DXVECTOR2(440.0f, 80.0f), D3DXVECTOR2(440.0f, 80.0f), 0,
 			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
 			0.0f, 1.0f, 180, 999, 0, 60,
 			0.0f, 0.0f, 0);
@@ -124,8 +140,8 @@ void UpdateGoal(void)
 
 	if (g_Goal.goaltime == 330)
 	{
-		//星（たこ）
-		SetEffect(2, D3DXVECTOR2(440.0f, 180.0f), D3DXVECTOR2(440.0f, 180.0f), 0,
+		//星
+		SetEffect(11, D3DXVECTOR2(440.0f, 180.0f), D3DXVECTOR2(440.0f, 180.0f), 0,
 			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
 			0.0f, 1.0f, 180, 999, 0, 60,
 			0.0f, 0.0f, 0);
@@ -133,8 +149,8 @@ void UpdateGoal(void)
 
 	if (g_Goal.goaltime == 360)
 	{
-		//星（たこ）
-		SetEffect(2, D3DXVECTOR2(440.0f, 280.0f), D3DXVECTOR2(440.0f, 280.0f), 0,
+		//星
+		SetEffect(11, D3DXVECTOR2(440.0f, 280.0f), D3DXVECTOR2(440.0f, 280.0f), 0,
 			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
 			0.0f, 1.0f, 180, 999, 0, 60,
 			0.0f, 0.0f, 0);

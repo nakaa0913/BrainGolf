@@ -50,6 +50,7 @@ HRESULT InitTitle(void)
 void UninitTitle(void)
 {
 	StopSoundAll();
+	UnloadTexture("data/TEXTURE/title.png");
 }
 
 //=============================================================================

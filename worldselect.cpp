@@ -78,6 +78,7 @@ void InitWorldSelect(void)
 ------------------------------------------------------------------------------*/
 void UninitWorldSelect()
 {
+	UnloadTexture("data/TEXTURE/select.png");
 
 }
 

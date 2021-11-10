@@ -56,6 +56,7 @@ HRESULT InitScore(void)
 //=============================================================================
 void UninitScore(void)
 {
+	UnloadTexture("data/TEXTURE/number.png");
 
 }
 

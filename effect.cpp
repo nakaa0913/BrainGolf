@@ -11,7 +11,7 @@ EFFECT g_Effect[MAX_EFFECT];
 //テクスチャの名前定義
 static int ao_0;		 // 0
 static int aka_1;		 // 1
-static int tako_2;		 // 2
+//static int tako_2;		 // 2
 static int title_3;		 // 3
 static int black_4;		 // 4
 static int clear_5;		 // 5
@@ -20,21 +20,31 @@ static int select2_7;    // 7
 static int mission_8;    // 8
 static int selectstar_9; // 9
 static int selectlock_10;// 10
+static int clear_star1_11;// 11
+static int clear_star2_12;// 12
+static int clear_star3_13;// 13
+static int clear_star4_14;// 14
 
 void InitEffect(void)
 {
 	//テクスチャの名前
 	ao_0 = LoadTexture("data/TEXTURE/ao.png");
 	aka_1 = LoadTexture("data/TEXTURE/aka.png");
-	tako_2 = LoadTexture("data/TEXTURE/tako.png");
+	//tako_2 = LoadTexture("data/TEXTURE/result/tako.png");
 	title_3 = LoadTexture("data/TEXTURE/title.png");
 	black_4 = LoadTexture("data/TEXTURE/black.png");
-	clear_5 = LoadTexture("data/TEXTURE/clear.png");
+	/*clear_5 = LoadTexture("data/TEXTURE/result/clear.png");*/
 	select_6 = LoadTexture("data/TEXTURE/1.png");
 	select2_7 = LoadTexture("data/TEXTURE/2.png");
 	mission_8 = LoadTexture("data/TEXTURE/mission.png");
 	selectstar_9 = LoadTexture("data/TEXTURE/selectstar.png");
 	selectlock_10 = LoadTexture("data/TEXTURE/selectlock.png");
+	clear_star1_11 = LoadTexture("data/TEXTURE/result/crear_star_1.png");
+	clear_star2_12 = LoadTexture("data/TEXTURE/result/clear_star_2.png");
+	clear_star3_13 = LoadTexture("data/TEXTURE/result/clear_star_3.png");
+	clear_star4_14 = LoadTexture("data/TEXTURE/result/clear_star_brack_1.png");
+
+
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -79,6 +89,20 @@ void UninitEffect(void)
 		g_Effect[i].isUse = false;
 	}
 	UninitScore();
+	UnloadTexture("data/TEXTURE/ao.png");
+	UnloadTexture("data/TEXTURE/aka.png");
+	UnloadTexture("data/TEXTURE/title.png");
+	UnloadTexture("data/TEXTURE/black.png");
+	UnloadTexture("data/TEXTURE/1.png");
+	UnloadTexture("data/TEXTURE/2.png");
+	UnloadTexture("data/TEXTURE/mission.png");
+	UnloadTexture("data/TEXTURE/selectstar.png");
+	UnloadTexture("data/TEXTURE/selectlock.png");
+	UnloadTexture("data/TEXTURE/result/crear_star_1.png");
+	UnloadTexture("data/TEXTURE/result/crear_star_2.png");
+	UnloadTexture("data/TEXTURE/result/crear_star_3.png");
+	UnloadTexture("data/TEXTURE/result/clear_star_brack_1.png");
+
 }
 
 void UpdateEffect(void)
@@ -201,14 +225,14 @@ void SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_patter
 			g_Effect[i].id = ao_0;
 		if (id == 1)
 			g_Effect[i].id = aka_1;
-		if (id == 2)
-			g_Effect[i].id = tako_2;
+		/*if (id == 2)
+			g_Effect[i].id = tako_2;*/
 		if (id == 3)
 			g_Effect[i].id = title_3;
 		if (id == 4)
 			g_Effect[i].id = black_4;
-		if (id == 5)
-			g_Effect[i].id = clear_5;
+		/*if (id == 5)
+			g_Effect[i].id = clear_5;*/
 		if (id == 6)
 			g_Effect[i].id = select_6;
 		if (id == 7)
@@ -219,6 +243,14 @@ void SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_patter
 			g_Effect[i].id = selectstar_9;
 		if (id == 10)
 			g_Effect[i].id = selectlock_10;
+		if (id == 11)
+			g_Effect[i].id = clear_star1_11;
+		if (id == 12)
+			g_Effect[i].id = clear_star2_12;
+		if (id == 13)
+			g_Effect[i].id = clear_star3_13;
+		if (id == 14)
+			g_Effect[i].id = clear_star4_14;
 
 		return;
 		}
@@ -278,8 +310,8 @@ void SetGameEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pa
 				g_Effect[i].id = ao_0;
 			if (id == 1)
 				g_Effect[i].id = aka_1;
-			if (id == 2)
-				g_Effect[i].id = tako_2;
+		/*	if (id == 2)
+				g_Effect[i].id = tako_2;*/
 			if (id == 3)
 				g_Effect[i].id = title_3;
 			if (id == 4)

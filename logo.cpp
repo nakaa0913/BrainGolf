@@ -62,6 +62,8 @@ void InitLogo(void)
 void UninitLogo(void)
 {
 	StopSoundAll();
+	UnloadTexture("data/TEXTURE/HEW2.png");
+
 }
 
 //=============================================================================

@@ -41,6 +41,7 @@ HRESULT InitResult(void)
 //=============================================================================
 void UninitResult(void)
 {
+	UnloadTexture("data/TEXTURE/result.png");
 
 }
 

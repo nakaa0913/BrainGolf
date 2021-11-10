@@ -111,7 +111,8 @@ HRESULT InitPlayer(void)
 //=============================================================================
 void UninitPlayer(void)
 {
-
+	UnloadTexture("data/TEXTURE/yazirusi.png");
+	UnloadTexture("data/TEXTURE/majo.png");	
 }
 
 //=============================================================================

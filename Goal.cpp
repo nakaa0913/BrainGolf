@@ -143,10 +143,11 @@ void UpdateGoal(void)
 
 	if (g_Goal.goaltime >= 370)
 	{
-
-		if (GetKeyboardPress(DIK_A))
+		
+		if (GetKeyboardPress(DIK_RETURN))
 		{
 			g_Goal.goaltime = 9000;
+			g_Goal.selecttime = 60;
 		}
 	}
 
@@ -159,17 +160,17 @@ void UpdateGoal(void)
 			D3DXVECTOR2(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2), D3DXVECTOR2(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2), 1,
 			0.0f, 0.5f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
-
+		//
 		SetEffect(3, D3DXVECTOR2(SCREEN_WIDTH / 2, 400.0f), D3DXVECTOR2(SCREEN_WIDTH / 2, 400.0f), 1,
 			D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(300.0f, 80.0f), 1,
 			0.0f, 1.0f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
-
+		//ステージ選択
 		SetEffect(3, D3DXVECTOR2(SCREEN_WIDTH / 2, 550.0f), D3DXVECTOR2(SCREEN_WIDTH / 2, 550.0f), 1,
 			D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(300.0f, 80.0f), 1,
 			0.0f, 1.0f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
-
+		//タイトル
 		SetEffect(3, D3DXVECTOR2(SCREEN_WIDTH / 2, 700.0f), D3DXVECTOR2(SCREEN_WIDTH / 2, 700.0f), 1,
 			D3DXVECTOR2(300.0f, 80.0f), D3DXVECTOR2(300.0f, 80.0f), 1,
 			0.0f, 1.0f, 0, 1, 0, 1,

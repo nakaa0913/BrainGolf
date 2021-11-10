@@ -9,7 +9,7 @@
 #define SELECT_MAX_Y (2)       // select_yのMAX
 
 // プレイヤー構造体
-struct SELECT
+struct STAGESELECT
 {
 	bool					use;					// true:使っている  false:未使用
 	float					w, h;					// 幅と高さ
@@ -24,7 +24,7 @@ struct SELECT
 
 };
 
-void InitSelect(void);
-void UninitSelect(void);
-void UpdateSelect(void);
-void DrawSelect(void);
+void InitStageSelect(void);
+void UninitStageSelect(void);
+void UpdateStageSelect(void);
+void DrawStageSelect(void);

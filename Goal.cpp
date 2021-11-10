@@ -141,13 +141,12 @@ void UpdateGoal(void)
 
 	}
 
-	if (g_Goal.goaltime >= 370)
+	if (g_Goal.goaltime <= 8000)
 	{
 		
 		if (GetKeyboardPress(DIK_RETURN))
 		{
 			g_Goal.goaltime = 9000;
-			g_Goal.selecttime = 60;
 		}
 	}
 
@@ -183,6 +182,8 @@ void UpdateGoal(void)
 				D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(350.0f, 120.0f), 1,
 				0.0f, 1.0f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);
+
+			
 		}
 
 		if (g_Goal.selectpush == 1)
@@ -227,7 +228,7 @@ void UpdateGoal(void)
 				g_Goal.selectpush = 2;
 			}
 
-			if (g_Goal.selectpush == 0)
+			if (g_Goal.goaltime >= 9060)
 			{
 				if (GetKeyboardPress(DIK_RETURN))
 				{
@@ -235,7 +236,6 @@ void UpdateGoal(void)
 
 				}
 			}
-
 
 			if (g_Goal.selectpush == 1)
 			{

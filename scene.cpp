@@ -12,7 +12,7 @@
 #include "game.h"
 #include "result.h"
 #include "fade.h"
-#include "select.h"
+#include "stageselect.h"
 #include "effect.h"
 #include "logo.h"
 #include "player.h"
@@ -63,7 +63,7 @@ void InitScene(SCENE index)
 
 	case SCENE_SELECT:
 		InitEffect();
-		InitSelect();
+		InitStageSelect();
 		break;
 
 	case SCENE_GAME:
@@ -101,7 +101,7 @@ void UninitScene(void)
 
 	case SCENE_SELECT:
 		UninitEffect();
-		UninitSelect();
+		UninitStageSelect();
 		break;
 
 	case SCENE_GAME:
@@ -140,7 +140,7 @@ void UpdateScene(void)
 
 	case SCENE_SELECT:
 		UpdateEffect();
-		UpdateSelect();
+		UpdateStageSelect();
 		UpdateStagedata();
 		break;
 
@@ -181,7 +181,7 @@ void DrawScene(void)
 		break;
 
 	case SCENE_SELECT:
-		DrawSelect();
+		DrawStageSelect();
 		DrawEffect();
 		break;
 

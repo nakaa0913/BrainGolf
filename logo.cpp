@@ -17,7 +17,7 @@
 #include "score.h"
 #include "bg.h"
 #include "Goal.h"
-#include"select.h"
+#include"stageselect.h"
 #include "Texture.h"
 #include "logo.h"
 #include "sprite.h"

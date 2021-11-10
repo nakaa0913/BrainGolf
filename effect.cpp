@@ -39,7 +39,7 @@ void InitEffect(void)
 	mission_8 = LoadTexture("data/TEXTURE/mission.png");
 	selectstar_9 = LoadTexture("data/TEXTURE/selectstar.png");
 	selectlock_10 = LoadTexture("data/TEXTURE/selectlock.png");
-	clear_star1_11 = LoadTexture("data/TEXTURE/result/crear_star_1.png");
+	clear_star1_11 = LoadTexture("data/TEXTURE/result/clear_star_1.png");
 	clear_star2_12 = LoadTexture("data/TEXTURE/result/clear_star_2.png");
 	clear_star3_13 = LoadTexture("data/TEXTURE/result/clear_star_3.png");
 	clear_star4_14 = LoadTexture("data/TEXTURE/result/clear_star_brack_1.png");
@@ -89,19 +89,19 @@ void UninitEffect(void)
 		g_Effect[i].isUse = false;
 	}
 	// UninitScore();
-	//UnloadTexture("data/TEXTURE/ao.png");
-	//UnloadTexture("data/TEXTURE/aka.png");
-	//UnloadTexture("data/TEXTURE/title_effect.png");
-	//UnloadTexture("data/TEXTURE/black.png");
-	//UnloadTexture("data/TEXTURE/1.png");
-	//UnloadTexture("data/TEXTURE/2.png");
-	//UnloadTexture("data/TEXTURE/mission.png");
-	//UnloadTexture("data/TEXTURE/selectstar.png");
-	//UnloadTexture("data/TEXTURE/selectlock.png");
-	//UnloadTexture("data/TEXTURE/result/crear_star_1.png");
-	//UnloadTexture("data/TEXTURE/result/crear_star_2.png");
-	//UnloadTexture("data/TEXTURE/result/crear_star_3.png");
-	//UnloadTexture("data/TEXTURE/result/clear_star_brack_1.png");
+	UnloadTexture("data/TEXTURE/ao.png");
+	UnloadTexture("data/TEXTURE/aka.png");
+	UnloadTexture("data/TEXTURE/title_effect.png");
+	UnloadTexture("data/TEXTURE/black.png");
+	UnloadTexture("data/TEXTURE/1.png");
+	UnloadTexture("data/TEXTURE/2.png");
+	UnloadTexture("data/TEXTURE/mission.png");
+	UnloadTexture("data/TEXTURE/selectstar.png");
+	UnloadTexture("data/TEXTURE/selectlock.png");
+	UnloadTexture("data/TEXTURE/result/clear_star_1.png");
+	UnloadTexture("data/TEXTURE/result/clear_star_2.png");
+	UnloadTexture("data/TEXTURE/result/clear_star_3.png");
+	UnloadTexture("data/TEXTURE/result/clear_star_brack_1.png");
 
 }
 

@@ -118,17 +118,17 @@ void UnloadTexture(char* fileName)
 {
 	//読み込まれているテクスチャ名を調べて、同名のものが
 	//すでに読み込まれていたらその番号を返す
-	for (unsigned int i = 0; i < g_TextureIndex; i++)
-	{
-		//テクスチャ名を比較
-		if (strcmp(g_TextureName[i], fileName) == 0)
-		{
-			g_pTexture[i]->Release();
-			g_pTexture[i] = NULL;
+	//for (unsigned int i = 0; i < g_TextureIndex; i++)
+	//{
+	//	//テクスチャ名を比較
+	//	if (strcmp(g_TextureName[i], fileName) == 0)
+	//	{
+	//		g_pTexture[i]->Release();
+	//		g_pTexture[i] = NULL;
 
-			return;
-		}
-	}
+	//		return;
+	//	}
+	//}
 	
 	// 指定したファイル名のものがない場合
 	// exit(20);

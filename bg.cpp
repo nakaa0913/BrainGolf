@@ -298,7 +298,7 @@ void DrawBG(void)
 
 	PLAYER *p_player = GetPlayer();
 
-	// ブロックの色の設定
+	// ブロックの色の設定(リセット)
 	D3DXCOLOR color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 	// 背景オブジェクトの表示

@@ -156,6 +156,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 				Update();			// 更新処理
 				Draw();				// 描画処理
 
+#ifdef _DEBUG	// デバッグ版の時だけ表示する
+				wsprintf(&g_DebugStr[strlen(g_DebugStr)], " MX:%d MY:%d Click:%d ", GetMousePosX(), GetMousePosY(), GetMouseLClickNum());
+				SetWindowText(hWnd, g_DebugStr);
+#endif
+
+
+
 				CheckScene();		//シーン移行のチェック
 
 				dwFrameCount++;		// 処理回数のカウントを加算
@@ -323,4 +330,12 @@ long GetMousePosY(void)
 bool GetMouseLClick(void)
 {
 	return g_MouseLClick;
+}
+
+int GetMouseLClickNum(void)
+{
+	if (g_MouseLClick)
+		return 1;
+
+	return 0;
 }

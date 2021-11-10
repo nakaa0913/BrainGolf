@@ -53,3 +53,8 @@
 // プロトタイプ宣言
 //*****************************************************************************
 float frand();
+
+long GetMousePosX(void);
+long GetMousePosY(void);
+bool GetMouseLClick(void);
+int GetMouseLClickNum(void);

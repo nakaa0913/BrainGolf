@@ -34,7 +34,7 @@ void InitEffect(void)
 	//tako_2 = LoadTexture("data/TEXTURE/result/tako.png");
 	title_3 = LoadTexture("data/TEXTURE/title_effect.png");
 	black_4 = LoadTexture("data/TEXTURE/black.png");
-	/*clear_5 = LoadTexture("data/TEXTURE/result/clear.png");*/
+	clear_5 = LoadTexture("data/TEXTURE/result/clear.png");
 	select_6 = LoadTexture("data/TEXTURE/1.png");
 	select2_7 = LoadTexture("data/TEXTURE/2.png");
 	mission_8 = LoadTexture("data/TEXTURE/mission.png");
@@ -235,8 +235,8 @@ void SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_patter
 			g_Effect[i].id = title_3;
 		if (id == 4)
 			g_Effect[i].id = black_4;
-		/*if (id == 5)
-			g_Effect[i].id = clear_5;*/
+		if (id == 5)
+			g_Effect[i].id = clear_5;
 		if (id == 6)
 			g_Effect[i].id = select_6;
 		if (id == 7)

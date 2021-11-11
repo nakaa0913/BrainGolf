@@ -30,7 +30,7 @@ void InitEffect(void)
 {
 	//テクスチャの名前
 	ao_0 = LoadTexture("data/TEXTURE/ao.png");
-	aka_1 = LoadTexture("data/TEXTURE/aka.png");
+	aka_1 = LoadTexture("data/TEXTURE/result/advice.png");
 	//tako_2 = LoadTexture("data/TEXTURE/result/tako.png");
 	title_3 = LoadTexture("data/TEXTURE/title_effect.png");
 	black_4 = LoadTexture("data/TEXTURE/black.png");
@@ -91,7 +91,7 @@ void UninitEffect(void)
 	}
 	// UninitScore();
 	UnloadTexture("data/TEXTURE/ao.png");
-	UnloadTexture("data/TEXTURE/aka.png");
+	UnloadTexture("data/TEXTURE/advice.png");
 	UnloadTexture("data/TEXTURE/title_effect.png");
 	UnloadTexture("data/TEXTURE/black.png");
 	UnloadTexture("data/TEXTURE/1.png");

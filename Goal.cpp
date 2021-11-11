@@ -98,9 +98,9 @@ void UpdateGoal(void)
 	if (g_Goal.goaltime == 240)
 	{
 		//ê‘ä€ÅiÉAÉhÉoÉCÉXÅHÅj
-		SetEffect(1, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT), 0,
-			D3DXVECTOR2(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2), D3DXVECTOR2(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2), 1,
-			0.0f, 0.5f, 100, 999, 0, 180,
+		SetEffect(1, D3DXVECTOR2(SCREEN_WIDTH / 2, 405), D3DXVECTOR2(SCREEN_WIDTH / 2, 405), 0,
+			D3DXVECTOR2(590, 1000), D3DXVECTOR2(590, 1000), 1,
+			0.0f, 1.0f, 100, 999, 0, 180,
 			0.0f, 0.0f, 0);
 
 	}
@@ -108,18 +108,18 @@ void UpdateGoal(void)
 	if (g_Goal.goaltime == 300)
 	{
 		//êØ(âe)
-		SetEffect(14, D3DXVECTOR2(440.0f, 80.0f), D3DXVECTOR2(440.0f, 80.0f), 0,
-			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+		SetEffect(14, D3DXVECTOR2(550.0f, 68.0f), D3DXVECTOR2(550.0f, 68.0f), 0,
+			D3DXVECTOR2(90.0f, 90.0f), D3DXVECTOR2(90.0f, 90.0f), 1,
 			0.0f, 1.0f, 60, 999, 0, 60,
 			0.0f, 0.0f, 0);
 		//êØ(âe)
-		SetEffect(14, D3DXVECTOR2(440.0f, 180.0f), D3DXVECTOR2(440.0f, 180.0f), 0,
-			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+		SetEffect(14, D3DXVECTOR2(550.0f, 163.0f), D3DXVECTOR2(550.0f, 163.0f), 0,
+			D3DXVECTOR2(90.0f, 90.0f), D3DXVECTOR2(90.0f, 90.0f), 1,
 			0.0f, 1.0f, 60, 999, 0, 60,
 			0.0f, 0.0f, 0);
 		//êØ(âe)
-		SetEffect(14, D3DXVECTOR2(440.0f, 280.0f), D3DXVECTOR2(440.0f, 280.0f), 0,
-			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+		SetEffect(14, D3DXVECTOR2(550.0f, 250.0f), D3DXVECTOR2(550.0f, 250.0f), 0,
+			D3DXVECTOR2(90.0f, 90.0f), D3DXVECTOR2(90.0f, 90.0f), 1,
 			0.0f, 1.0f, 60, 999, 0, 60,
 			0.0f, 0.0f, 0);
 	}
@@ -127,9 +127,9 @@ void UpdateGoal(void)
 	if (g_Goal.goaltime == 400)
 	{
 		////êØ
-		SetEffect(11, D3DXVECTOR2(440.0f, 80.0f), D3DXVECTOR2(440.0f, 80.0f), 0,
+		SetEffect(11, D3DXVECTOR2(550.0f, 68.0f), D3DXVECTOR2(550.0f, 68.0f), 0,
 			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-			0.0f, 1.0f, 180, 999, 0, 60,
+			0.0f, 1.0f, 120, 999, 0, 60,
 			0.0f, 0.0f, 0);
 		//â°1440
 		//èc810
@@ -138,18 +138,18 @@ void UpdateGoal(void)
 	if (g_Goal.goaltime == 430)
 	{
 		//êØ
-		SetEffect(11, D3DXVECTOR2(440.0f, 180.0f), D3DXVECTOR2(440.0f, 180.0f), 0,
+		SetEffect(11, D3DXVECTOR2(550.0f, 163.0f), D3DXVECTOR2(550.0f, 163.0f), 0,
 			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-			0.0f, 1.0f, 180, 999, 0, 60,
+			0.0f, 1.0f, 120, 999, 0, 60,
 			0.0f, 0.0f, 0);
 	}
 
 	if (g_Goal.goaltime == 460)
 	{
 		//êØ
-		SetEffect(11, D3DXVECTOR2(440.0f, 280.0f), D3DXVECTOR2(440.0f, 280.0f), 0,
+		SetEffect(11, D3DXVECTOR2(550.0f, 250.0f), D3DXVECTOR2(550.0f, 250.0f), 0,
 			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-			0.0f, 1.0f, 180, 999, 0, 60,
+			0.0f, 1.0f, 120, 999, 0, 60,
 			0.0f, 0.0f, 0);
 
 	}

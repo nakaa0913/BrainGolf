@@ -21,6 +21,9 @@
 #include "bg.h"
 #include "Goal.h"
 #include "camera.h"
+#include "predictionbullet.h"
+
+
 /*------------------------------------------------------------------------------
    ’è”’è‹`
 ------------------------------------------------------------------------------*/
@@ -54,6 +57,7 @@ void InitGame(void)
 	InitBG();
 	InitGoal();
 	InitCamera();
+	InitPrediction();
 	g_BGMNo = LoadSound("data/BGM/sample001.wav");
 
 	SetVolume(g_BGMNo, 1.0f);
@@ -66,6 +70,7 @@ void InitGame(void)
 void UninitGame()
 {
 	//‰Šú‰»‚Æ‚Í‹t‡‚ÉI—¹ˆ—‚ğs‚¤
+	UninitPrediction();
 	UninitCamera();
 	UninitBG();
 	UninitScore();
@@ -93,6 +98,7 @@ void UpdateGame(void)
 		UpdateEnemyEmitter();
 
 		UpdateCollision();
+		UpdatePrediction();
 	}
 	else {
 		UpdateGoal();
@@ -118,6 +124,7 @@ void DrawGame(void)
 
 	DrawBG();
 	DrawBullet();
+	DrawPrediction();
 	DrawEnemy();
 	DrawPlayer();
 

@@ -139,6 +139,7 @@
     <ClCompile Include="logo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="predictionbullet.cpp" />
     <ClCompile Include="primitive.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="result.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="FileDataManagement.h" />
+    <ClInclude Include="predictionbullet.h" />
     <ClInclude Include="stagedata.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="enemy.h" />

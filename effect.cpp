@@ -225,36 +225,7 @@ void SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_patter
 		g_Effect[i].drawpos = g_Effect[i].pos1;
 		g_Effect[i].isUse = true;
 		
-		if(id == 0)
-			g_Effect[i].id = ao_0;
-		if (id == 1)
-			g_Effect[i].id = aka_1;
-		/*if (id == 2)
-			g_Effect[i].id = tako_2;*/
-		if (id == 3)
-			g_Effect[i].id = title_3;
-		if (id == 4)
-			g_Effect[i].id = black_4;
-		if (id == 5)
-			g_Effect[i].id = clear_5;
-		if (id == 6)
-			g_Effect[i].id = select_6;
-		if (id == 7)
-			g_Effect[i].id = select2_7;
-		if (id == 8)
-			g_Effect[i].id = mission_8;
-		if (id == 9)
-			g_Effect[i].id = selectstar_9;
-		if (id == 10)
-			g_Effect[i].id = selectlock_10;
-		if (id == 11)
-			g_Effect[i].id = clear_star1_11;
-		if (id == 12)
-			g_Effect[i].id = clear_star2_12;
-		if (id == 13)
-			g_Effect[i].id = clear_star3_13;
-		if (id == 14)
-			g_Effect[i].id = clear_star4_14;
+		g_Effect[i].id = GetTextureData(id);
 
 		return;
 		}
@@ -312,28 +283,8 @@ void SetGameEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pa
 			g_Effect[i].drawpos = g_Effect[i].pos1;
 			g_Effect[i].isUse = true;
 
-			if (id == 0)
-				g_Effect[i].id = ao_0;
-			if (id == 1)
-				g_Effect[i].id = aka_1;
-		/*	if (id == 2)
-				g_Effect[i].id = tako_2;*/
-			if (id == 3)
-				g_Effect[i].id = title_3;
-			if (id == 4)
-				g_Effect[i].id = black_4;
-			if (id == 5)
-				g_Effect[i].id = clear_5;
-			if (id == 6)
-				g_Effect[i].id = select_6;
-			if (id == 7)
-				g_Effect[i].id = select2_7;
-			if (id == 8)
-				g_Effect[i].id = mission_8;
-			if (id == 9)
-				g_Effect[i].id = selectstar_9;
-			if (id == 10)
-				g_Effect[i].id = selectlock_10;
+			g_Effect[i].id = GetTextureData(id);
+
 
 			return;
 		}
@@ -497,4 +448,61 @@ float AngleToRadian(float angle)
 {
 	float radian = angle * (D3DX_PI / 180);
 	return  radian;
+}
+
+int GetTextureData(int id)
+{
+
+	switch (id)
+	{
+	case 0:
+		return ao_0;
+		break;
+	case 1:
+		return aka_1;
+		break;
+	//case 2:
+	//	return tako_2;
+	//	break;
+	case 3:
+		return title_3;
+		break;
+	case 4:
+		return black_4;
+		break;
+	case 5:
+		return clear_5;
+		break;
+	case 6:
+		return select_6;
+		break;
+	case 7:
+		return select2_7;
+		break;
+	case 8:
+		return mission_8;
+		break;
+	case 9:
+		return selectstar_9;
+		break;
+	case 10:
+		return selectlock_10;
+		break;
+	case 11:
+		return clear_star1_11;
+		break;
+	case 12:
+		return clear_star2_12;
+		break;
+	case 13:
+		return clear_star3_13;
+		break;
+	case 14:
+		return clear_star4_14;
+		break;
+	}
+
+	// Ç«Ç±Ç…Ç‡ÇΩÇ«ÇËíÖÇ©Ç»Ç©Ç¡ÇΩèÍçá
+	exit(21);
+	return -1;
 }

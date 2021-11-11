@@ -63,3 +63,5 @@ void Fadeprocess(int i);
 void PosMovingPattern(int i);
 void SizeMovingPattern(int i);
 void RotMovingPattern(int i);
+
+int GetTextureData(int id);

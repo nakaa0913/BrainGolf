@@ -26,6 +26,7 @@
 #include "effect.h"
 #include "stagedata.h"
 #include "FileDataManagement.h"
+#include "worldselect.h"
 /*------------------------------------------------------------------------------
    定数定義
 ------------------------------------------------------------------------------*/
@@ -47,16 +48,44 @@ static STAGESELECT g_StageSelect;
 static int	g_TextureNo = 0;	// テクスチャ情報
 static int	g_BGMNo = 0;		// BGM識別子
 
+//static int world_1_background;
+//static int world_2_background;
+//static int world_3_background;
+//static int world_4_background;
+//static int world_5_background;
+//
+//static int world_1_stagechoice;
+//static int world_2_stagechoice;
+//static int world_3_stagechoice;
+//static int world_4_stagechoice;
+//static int world_5_stagechoice;
+//
+//static int world_1_mission;
+
+int NowWorld = 0;				   //今選択してるやつ
+int tex_NowWorld_background = -1;  //背景
+int tex_NowWorld_stagechoice = -1; //ステージ選択の四角いやつ
+int tex_NowWorld_mission = -1;     //ミッション
 /*------------------------------------------------------------------------------
    初期化関数
 ------------------------------------------------------------------------------*/
 void InitStageSelect(void)
 {
 	//テクスチャ生成
-	g_TextureNo = LoadTexture("data/TEXTURE/select/stage_select.png");
+	/*g_TextureNo = LoadTexture("data/TEXTURE/select/stage_select.png");*/
 
 
-	
+	//テクスチャの名前
+	//world_1_background = LoadTexture("data/TEXTURE/select/stage_select.png");
+	//world_2_background = LoadTexture("data/TEXTURE/select/stage_select.png");
+	//world_3_background = LoadTexture("data/TEXTURE/select/stage_select.png");
+	//world_4_background = LoadTexture("data/TEXTURE/select/stage_select.png");
+	//world_5_background = LoadTexture("data/TEXTURE/select/stage_select.png");
+
+	//world_1_stagechoice = LoadTexture("data/TEXTURE/select/1.png");
+
+
+
 		g_StageSelect.select_x = 0;
 		g_StageSelect.select_y = 0;
 	
@@ -68,6 +97,64 @@ void InitStageSelect(void)
 	PlaySound(g_BGMNo, -1);
 
 	g_StageSelect.selecttime = 0;
+
+	NowWorld = GetNowWorld();
+
+	
+	//
+	if (NowWorld == 1)
+	{
+		tex_NowWorld_background = 15;
+		tex_NowWorld_stagechoice = 20;
+		tex_NowWorld_mission = 25;
+	}
+
+	if (NowWorld == 2)
+	{
+		tex_NowWorld_background = 16;
+		tex_NowWorld_stagechoice = 21;
+		tex_NowWorld_mission = 26;
+	}
+
+	if (NowWorld == 3)
+	{
+		tex_NowWorld_background = 17;
+		tex_NowWorld_stagechoice = 22;
+		tex_NowWorld_mission = 27;
+	}
+
+	if (NowWorld == 4)
+	{
+		tex_NowWorld_background = 18;
+		tex_NowWorld_stagechoice = 23;
+		tex_NowWorld_mission = 28;
+	}
+
+	if (NowWorld == 5)
+	{
+		tex_NowWorld_background = 19;
+		tex_NowWorld_stagechoice = 24;
+		tex_NowWorld_mission = 29;
+	}
+
+	
+	//背景表示
+	SetEffect(tex_NowWorld_background, D3DXVECTOR2(SCREEN_WIDTH / 2, 405), D3DXVECTOR2(SCREEN_WIDTH / 2, 405), 0,
+		D3DXVECTOR2(590, 1000), D3DXVECTOR2(590, 1000), 1,
+		0.0f, 1.0f, 100, 999, 0, 180,
+		0.0f, 0.0f, 0);
+
+	//ステージ選択の四角いやつ
+	SetEffect(tex_NowWorld_stagechoice, D3DXVECTOR2(SCREEN_WIDTH / 2, 405), D3DXVECTOR2(SCREEN_WIDTH / 2, 405), 0,
+		D3DXVECTOR2(590, 1000), D3DXVECTOR2(590, 1000), 1,
+		0.0f, 1.0f, 100, 999, 0, 180,
+		0.0f, 0.0f, 0);
+
+	//ミッション
+	SetEffect(tex_NowWorld_mission, D3DXVECTOR2(SCREEN_WIDTH / 2, 405), D3DXVECTOR2(SCREEN_WIDTH / 2, 405), 0,
+		D3DXVECTOR2(590, 1000), D3DXVECTOR2(590, 1000), 1,
+		0.0f, 1.0f, 100, 999, 0, 180,
+		0.0f, 0.0f, 0);
 
 	return ;
 }
@@ -406,13 +493,26 @@ void UpdateStageSelect(void)
 	
 }
 
+STAGESELECT* GetStageSelect()
+{
+	return &g_StageSelect;
+}
+
 /*------------------------------------------------------------------------------
    描画処理をする関数
 ------------------------------------------------------------------------------*/
 void DrawStageSelect(void)
 {
-	// １枚のポリゴンの頂点とテクスチャ座標を設定
-	DrawSpriteLeftTop(g_TextureNo, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
+	
+
+
+	//// １枚のポリゴンの頂点とテクスチャ座標を設定
+	//DrawSpriteColorRotate(tex_NowWorld_background, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR (1.0f, 1.0f, 1.0f, 1.0f), 1.0f);
+
+	/*static int world_1_background;
+	static int world_2_stagechoice;
+	static int world_3_mission;
+	static int world_4_selectstar;*/
 
 }
 

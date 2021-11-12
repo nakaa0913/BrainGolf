@@ -28,3 +28,6 @@ void InitStageSelect(void);
 void UninitStageSelect(void);
 void UpdateStageSelect(void);
 void DrawStageSelect(void);
+
+STAGESELECT* GetStageSelect();
+//void SetStageSelect(int stagenum);

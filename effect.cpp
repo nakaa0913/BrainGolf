@@ -26,16 +26,19 @@ static int clear_star2_12;// 12
 static int clear_star3_13;// 13
 static int clear_star4_14;// 14
 
+//ステージ選択の背景
 static int stage_select1_15;// 15
 static int stage_select2_16;// 16
 static int stage_select3_17;// 17
 static int stage_select4_18;// 18
 static int stage_select5_19;// 19
+//ステージ選択の四角いやつ
 static int stage_choice1_20;// 20
 static int stage_choice2_21;// 21
 static int stage_choice3_22;// 22
 static int stage_choice4_23;// 23
 static int stage_choice5_24;// 24
+//ステージ選択のミッション
 static int stage_mission1_25;// 25
 static int stage_mission2_26;// 26
 static int stage_mission3_27;// 27
@@ -64,6 +67,23 @@ void InitEffect(void)
 	clear_star3_13 = LoadTexture("data/TEXTURE/result/clear_star_3.png");
 	clear_star4_14 = LoadTexture("data/TEXTURE/result/clear_star_black_1.png");
 
+	stage_select1_15 = LoadTexture("data/TEXTURE/select/stage_select.png");
+	stage_select2_16 = LoadTexture("data/TEXTURE/select/stage_select.png");
+	stage_select3_17 = LoadTexture("data/TEXTURE/select/stage_select.png");
+	stage_select4_18 = LoadTexture("data/TEXTURE/select/stage_select.png");
+	stage_select5_19 = LoadTexture("data/TEXTURE/select/stage_select.png");
+
+	stage_choice1_20 = LoadTexture("data/TEXTURE/select/1.png");
+	stage_choice2_21 = LoadTexture("data/TEXTURE/select/1.png");
+	stage_choice3_22 = LoadTexture("data/TEXTURE/select/1.png");
+	stage_choice4_23 = LoadTexture("data/TEXTURE/select/1.png");
+	stage_choice5_24 = LoadTexture("data/TEXTURE/select/1.png");
+
+	stage_mission1_25 = LoadTexture("data/TEXTURE/select/mission.png");
+	stage_mission2_26 = LoadTexture("data/TEXTURE/select/mission.png");
+	stage_mission3_27 = LoadTexture("data/TEXTURE/select/mission.png");
+	stage_mission4_28 = LoadTexture("data/TEXTURE/select/mission.png");
+	stage_mission5_29 = LoadTexture("data/TEXTURE/select/selectlock.png");
 
 
 	for (int i = 0; i < MAX_EFFECT; i++)
@@ -520,6 +540,51 @@ int GetTextureData(int id)
 		break;
 	case 14:
 		return clear_star4_14;
+		break;
+	case 15:
+		return stage_select1_15;
+		break;
+	case 16:
+		return stage_select2_16;
+		break;
+	case 17:
+		return stage_select3_17;
+		break;
+	case 18:
+		return stage_select4_18;
+		break;
+	case 19:
+		return stage_select5_19;
+		break;
+	case 20:
+		return stage_choice1_20;
+		break;
+	case 21:
+		return stage_choice2_21;
+		break;
+	case 22:
+		return stage_choice3_22;
+		break;
+	case 23:
+		return stage_choice4_23;
+		break;
+	case 24:
+		return stage_choice5_24;
+		break;
+	case 25:
+		return stage_mission1_25;
+		break;
+	case 26:
+		return stage_mission2_26;
+		break;
+	case 27:
+		return stage_mission3_27;
+		break;
+	case 28:
+		return stage_mission4_28;
+		break;
+	case 29:
+		return stage_mission5_29;
 		break;
 	}
 

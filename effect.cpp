@@ -509,6 +509,62 @@ int GetTextureData(int id)
 	return -1;
 }
 
+
+// 最初にuse_array_numが必要だが、そのuse_array_numのエフェクトを途中でも変更できる
+void ChangeEffect(int use_array_num, int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
+	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
+	float rot_angle1, float rot_angle2, int rot_moving_pattern)
+{
+	if (g_Effect[use_array_num].isUse)
+	{
+		//g_Effect[use_array_num].id = id;	下で引数で入力した値によってテクスチャを変更している
+		g_Effect[use_array_num].pos = pos1;
+		g_Effect[use_array_num].pos1 = pos1;
+		g_Effect[use_array_num].pos2 = pos2;
+		g_Effect[use_array_num].pos_moving_pattern = pos_moving_pattern;
+		g_Effect[use_array_num].size = size1;
+		g_Effect[use_array_num].size1 = size1;
+		g_Effect[use_array_num].size2 = size2;
+		g_Effect[use_array_num].size_moving_pattern = size_moving_pattern;
+		g_Effect[use_array_num].Clarity_min = Clarity_min;
+		g_Effect[use_array_num].Clarity_max = Clarity_max;
+		g_Effect[use_array_num].Clarity = g_Effect[use_array_num].Clarity_min;
+		g_Effect[use_array_num].fadeIn_count = fadeIn_count;
+		g_Effect[use_array_num].all_count = all_count;
+		g_Effect[use_array_num].fadeOut_count = fadeOut_count;
+		g_Effect[use_array_num].now_count = 0;
+		g_Effect[use_array_num].moving_count = moving_count;
+		g_Effect[use_array_num].rot = AngleToRadian(rot_angle1);
+		g_Effect[use_array_num].rot_angle = rot_angle1;
+		g_Effect[use_array_num].rot_angle1 = rot_angle1;
+		g_Effect[use_array_num].rot_angle2 = rot_angle2;
+		g_Effect[use_array_num].rot_moving_pattern = rot_moving_pattern;
+		g_Effect[use_array_num].rot_count = 0;
+
+		g_Effect[use_array_num].drawpos = g_Effect[use_array_num].pos1;
+		//g_Effect[use_array_num].use_array_num = 
+		g_Effect[use_array_num].isUse = true;
+
+		g_Effect[use_array_num].id = GetTextureData(id);
+
+		return;
+
+
+	}
+
+	// MAX_EFFECT を超えた数エフェクトを作成しようとするとゲームが落ちる
+	exit(1);
+}
+
+
+// use_array_numのエフェクトのnow_countだけを設定できる
+void ChangeEffectCount(int use_array_num, int setcount)
+{
+	g_Effect[use_array_num].now_count = setcount;
+
+	return;
+}
+
 // 配列の何番目かを指定してエフェクトを消す
 void EffectBreak(int use_array_num)
 {

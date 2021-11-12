@@ -59,6 +59,10 @@ int SetGameEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pat
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
 	float rot_angle1, float rot_angle2, int rot_moving_pattern);
 
+void ChangeEffect(int use_array_num, int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
+	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
+	float rot_angle1, float rot_angle2, int rot_moving_pattern);
+
 float AngleToRadian(float angle);	// Šp“x‚ðƒ‰ƒWƒAƒ“‚Ö
 
 void Fadeprocess(int i);
@@ -67,4 +71,5 @@ void SizeMovingPattern(int i);
 void RotMovingPattern(int i);
 
 int GetTextureData(int id);
+void ChangeEffectCount(int use_array_num, int setcount);
 void EffectBreak(int use_array_num);

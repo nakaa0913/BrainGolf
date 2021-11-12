@@ -138,14 +138,10 @@ void InitStageSelect(void)
 	}
 
 	
+	// たぶんこれだよ！！！！！！
+	
 	//背景表示
 	SetEffect(tex_NowWorld_background, D3DXVECTOR2(SCREEN_WIDTH / 2, 405), D3DXVECTOR2(SCREEN_WIDTH / 2, 405), 0,
-		D3DXVECTOR2(590, 1000), D3DXVECTOR2(590, 1000), 1,
-		0.0f, 1.0f, 100, 999, 0, 180,
-		0.0f, 0.0f, 0);
-
-	//ステージ選択の四角いやつ
-	SetEffect(tex_NowWorld_stagechoice, D3DXVECTOR2(SCREEN_WIDTH / 2, 405), D3DXVECTOR2(SCREEN_WIDTH / 2, 405), 0,
 		D3DXVECTOR2(590, 1000), D3DXVECTOR2(590, 1000), 1,
 		0.0f, 1.0f, 100, 999, 0, 180,
 		0.0f, 0.0f, 0);
@@ -203,7 +199,7 @@ void UpdateStageSelect(void)
 			float now_y = stage_origin_y + distance_y * y;
 
 			// 選択されてないときの表示を出す(ステージすべて)
-			SetEffect(6, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
+			SetEffect(tex_NowWorld_stagechoice, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
 				D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 				0.0f, 1.0f, 0, 1, 0, 0,
 				0.0f, 0.0f, 0);
@@ -213,7 +209,7 @@ void UpdateStageSelect(void)
 			{
 				if (g_StageSelect.select_y == y)
 				{
-					SetEffect(6, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
+					SetEffect(tex_NowWorld_stagechoice, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
 						D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
 						1.0f, 1.0f, 0, 1, 0, 0,
 						0.0f, 0.0f, 0);

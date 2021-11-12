@@ -261,13 +261,13 @@ void UpdateWorldSelect(void)
 		}
 
 		// 選択しているところが限界を超えないようにする処理
-		if (g_WorldSelect.select_x >= 5)
+		if (g_WorldSelect.select_x >= WORLD_SELECT_MAX_X)
 		{
 			g_WorldSelect.select_x = 0;
 		}
 		if (g_WorldSelect.select_x < 0)
 		{
-			g_WorldSelect.select_x = 4;
+			g_WorldSelect.select_x = WORLD_SELECT_MAX_X - 1;
 		}
 
 		// 選択されているときにエンターキーが押された場合の処理

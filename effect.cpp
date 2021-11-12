@@ -190,7 +190,7 @@ EFFECT* GetEffect(void)
 
 
 // all_count == 999だったら無制限に表示
-void SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
+int SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
 			   float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
 			   float rot_angle1, float rot_angle2, int rot_moving_pattern)
 {
@@ -223,11 +223,12 @@ void SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_patter
 		g_Effect[i].rot_count = 0;
 
 		g_Effect[i].drawpos = g_Effect[i].pos1;
+		g_Effect[i].use_array_num = i;
 		g_Effect[i].isUse = true;
 		
 		g_Effect[i].id = GetTextureData(id);
 
-		return;
+		return i;
 		}
 
 	}
@@ -238,7 +239,7 @@ void SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_patter
 
 // ゲーム内でのエフェクトを使う場合はこっち。座標を自動的に斜めに修正してくれる。例えばゲーム内のボールに追従するとかの時便利
 // all_count == 999だったら無制限に表示
-void SetGameEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
+int SetGameEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
 	float rot_angle1, float rot_angle2, int rot_moving_pattern)
 {
@@ -281,12 +282,13 @@ void SetGameEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pa
 			g_Effect[i].rot_count = 0;
 
 			g_Effect[i].drawpos = g_Effect[i].pos1;
+			g_Effect[i].use_array_num = i;
 			g_Effect[i].isUse = true;
 
 			g_Effect[i].id = GetTextureData(id);
 
 
-			return;
+			return i;
 		}
 
 	}
@@ -505,4 +507,13 @@ int GetTextureData(int id)
 	// どこにもたどり着かなかった場合
 	exit(21);
 	return -1;
+}
+
+// 配列の何番目かを指定してエフェクトを消す
+void EffectBreak(int use_array_num)
+{
+	g_Effect[use_array_num].isUse = false;
+	g_Effect[use_array_num].use_array_num = -1;
+
+	return;
 }

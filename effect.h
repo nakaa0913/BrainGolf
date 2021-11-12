@@ -39,6 +39,8 @@ typedef struct
 	int				rot_moving_pattern;		// 回転のパターン。
 	int				rot_count;				// 回転し始めてからのカウント。無限回転用。
 
+	int				use_array_num;			// 配列の何番を使っているか
+
 	bool			isUse;					// 使用フラグ
 }EFFECT;
 
@@ -49,11 +51,11 @@ void DrawEffect(void);
 
 EFFECT* GetEffect(void);
 
-void SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
+int SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
 	float rot_angle1, float rot_angle2, int rot_moving_pattern);
 
-void SetGameEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
+int SetGameEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
 	float rot_angle1, float rot_angle2, int rot_moving_pattern);
 
@@ -65,3 +67,4 @@ void SizeMovingPattern(int i);
 void RotMovingPattern(int i);
 
 int GetTextureData(int id);
+void EffectBreak(int use_array_num);

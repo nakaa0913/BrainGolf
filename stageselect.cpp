@@ -360,14 +360,14 @@ void UpdateStageSelect(void)
 			if (g_StageSelect.selectcooltime <= 0)
 			{
 
-				if (g_StageSelect.select_y >= 2)
+				if (g_StageSelect.select_y >= SELECT_MAX_Y)
 				{
 					g_StageSelect.select_y = 0;
 				}
 
 				if (g_StageSelect.select_y < 0)
 				{
-					g_StageSelect.select_y = 1;
+					g_StageSelect.select_y = SELECT_MAX_Y - 1;
 				}
 			
 
@@ -385,7 +385,7 @@ void UpdateStageSelect(void)
 					g_StageSelect.select_x++;
 					g_StageSelect.selectcooltime = TIME;
 				}
-				if (g_StageSelect.select_x >= 5)
+				if (g_StageSelect.select_x >= SELECT_MAX_X)
 				{
 					g_StageSelect.select_x = 0;
 				}
@@ -398,7 +398,7 @@ void UpdateStageSelect(void)
 				}
 				if (g_StageSelect.select_x < 0)
 				{
-					g_StageSelect.select_x = 4;
+					g_StageSelect.select_x = SELECT_MAX_X - 1;
 				}
 
 

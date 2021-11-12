@@ -98,7 +98,6 @@ void InitEffect(void)
 		g_Effect[i].drawpos = g_Effect[i].pos1;
 		g_Effect[i].isUse = false;
 
-
 	}
 	InitScore();
 }

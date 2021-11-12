@@ -36,7 +36,7 @@ D3DXCOLOR						g_Color;					// フェードのカラー
 HRESULT InitFade(void)
 {
 	//テクスチャ生成
-	g_TextureNo = LoadTexture("data/TEXTURE/fade_white.png");
+	g_TextureNo = LoadTexture("data/TEXTURE/other_effect/fade_white.png");
 
 	//初期化
 	g_FadeState  = FADE_NONE;
@@ -51,7 +51,7 @@ HRESULT InitFade(void)
 //=============================================================================
 void UninitFade(void)
 {
-	UnloadTexture("data/TEXTURE/fade_white.png");
+	UnloadTexture("data/TEXTURE/other_effect/fade_white.png");
 
 }
 

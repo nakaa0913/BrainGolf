@@ -46,7 +46,7 @@ static int	g_BGMNo = 0;		// BGM識別子
 void InitLogo(void)
 {
 	//テクスチャ生成
-	g_TextureNo = LoadTexture("data/TEXTURE/HEW2.png");
+	g_TextureNo = LoadTexture("data/TEXTURE/logo/HEW2.png");
 
 	g_BGMNo = LoadSound("data/BGM/sample000.wav");
 
@@ -62,7 +62,7 @@ void InitLogo(void)
 void UninitLogo(void)
 {
 	StopSoundAll();
-	UnloadTexture("data/TEXTURE/HEW2.png");
+	UnloadTexture("data/TEXTURE/logo/HEW2.png");
 
 }
 

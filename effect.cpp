@@ -29,7 +29,7 @@ static int clear_star4_14;// 14
 void InitEffect(void)
 {
 	//テクスチャの名前
-	//ao_0 = LoadTexture("data/TEXTURE/ao.png");
+	ao_0 = LoadTexture("data/TEXTURE/ao.png");
 	aka_1 = LoadTexture("data/TEXTURE/result/advice.png");
 	//tako_2 = LoadTexture("data/TEXTURE/result/tako.png");
 	title_3 = LoadTexture("data/TEXTURE/title/title_effect.png");
@@ -91,14 +91,14 @@ void UninitEffect(void)
 	}
 	// UninitScore();
 	UnloadTexture("data/TEXTURE/ao.png");
-	UnloadTexture("data/TEXTURE/advice.png");
-	UnloadTexture("data/TEXTURE/title_effect.png");
-	UnloadTexture("data/TEXTURE/black.png");
-	UnloadTexture("data/TEXTURE/1.png");
-	UnloadTexture("data/TEXTURE/2.png");
-	UnloadTexture("data/TEXTURE/mission.png");
-	UnloadTexture("data/TEXTURE/selectstar.png");
-	UnloadTexture("data/TEXTURE/selectlock.png");
+	UnloadTexture("data/TEXTURE/result/advice.png");
+	UnloadTexture("data/TEXTURE/title/title_effect.png");
+	UnloadTexture("data/TEXTURE/other_effect/black.png");
+	UnloadTexture("data/TEXTURE/select/1.png");
+	UnloadTexture("data/TEXTURE/select/2.png");
+	UnloadTexture("data/TEXTURE/select/mission.png");
+	UnloadTexture("data/TEXTURE/select/selectstar.png");
+	UnloadTexture("data/TEXTURE/select/selectlock.png");
 	UnloadTexture("data/TEXTURE/result/clear_star_1.png");
 	UnloadTexture("data/TEXTURE/result/clear_star_2.png");
 	UnloadTexture("data/TEXTURE/result/clear_star_3.png");

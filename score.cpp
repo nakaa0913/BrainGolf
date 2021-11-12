@@ -38,7 +38,7 @@ static int						g_ShotPower;				// 弾を打ち出すときの力0~100
 HRESULT InitScore(void)
 {
 	//テクスチャ生成
-	g_TexNo = LoadTexture("data/TEXTURE/number.png");
+	g_TexNo = LoadTexture("data/TEXTURE/other_effect/number.png");
 
 	//初期化
 	g_Use   = true;
@@ -56,7 +56,7 @@ HRESULT InitScore(void)
 //=============================================================================
 void UninitScore(void)
 {
-	UnloadTexture("data/TEXTURE/number.png");
+	UnloadTexture("data/TEXTURE/other_effect/number.png");
 
 }
 

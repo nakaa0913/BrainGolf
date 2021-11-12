@@ -29,17 +29,17 @@ static int clear_star4_14;// 14
 void InitEffect(void)
 {
 	//テクスチャの名前
-	ao_0 = LoadTexture("data/TEXTURE/ao.png");
+	//ao_0 = LoadTexture("data/TEXTURE/ao.png");
 	aka_1 = LoadTexture("data/TEXTURE/result/advice.png");
 	//tako_2 = LoadTexture("data/TEXTURE/result/tako.png");
-	title_3 = LoadTexture("data/TEXTURE/title_effect.png");
-	black_4 = LoadTexture("data/TEXTURE/black.png");
+	title_3 = LoadTexture("data/TEXTURE/title/title_effect.png");
+	black_4 = LoadTexture("data/TEXTURE/other_effect/black.png");
 	clear_5 = LoadTexture("data/TEXTURE/result/clear.png");
-	select_6 = LoadTexture("data/TEXTURE/1.png");
-	select2_7 = LoadTexture("data/TEXTURE/2.png");
-	mission_8 = LoadTexture("data/TEXTURE/mission.png");
-	selectstar_9 = LoadTexture("data/TEXTURE/selectstar.png");
-	selectlock_10 = LoadTexture("data/TEXTURE/selectlock.png");
+	select_6 = LoadTexture("data/TEXTURE/select/1.png");
+	select2_7 = LoadTexture("data/TEXTURE/select/2.png");
+	mission_8 = LoadTexture("data/TEXTURE/select/mission.png");
+	selectstar_9 = LoadTexture("data/TEXTURE/select/selectstar.png");
+	selectlock_10 = LoadTexture("data/TEXTURE/select/selectlock.png");
 	clear_star1_11 = LoadTexture("data/TEXTURE/result/clear_star_1.png");
 	clear_star2_12 = LoadTexture("data/TEXTURE/result/clear_star_2.png");
 	clear_star3_13 = LoadTexture("data/TEXTURE/result/clear_star_3.png");

@@ -34,7 +34,7 @@ static int	g_BGMNo = 0;		// BGM識別子
 HRESULT InitTitle(void)
 {
 	//テクスチャ生成
-	g_TextureNo = LoadTexture("data/TEXTURE/title.png");
+	g_TextureNo = LoadTexture("data/TEXTURE/title/title.png");
 
 	g_BGMNo = LoadSound("data/BGM/sample000.wav");
 
@@ -50,7 +50,7 @@ HRESULT InitTitle(void)
 void UninitTitle(void)
 {
 	StopSoundAll();
-	UnloadTexture("data/TEXTURE/title.png");
+	UnloadTexture("data/TEXTURE/title/title.png");
 }
 
 //=============================================================================

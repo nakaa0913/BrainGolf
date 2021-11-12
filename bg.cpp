@@ -166,17 +166,17 @@ static int g_CurrentPos = 0;	// 現在のマップ座標
 HRESULT InitBG(void)
 {
 	//g_Ground = LoadTexture("data/TEXTURE/basechip.png");
-	g_Ground = LoadTexture("data/TEXTURE/basechip_test.png");
-	tex_mapchip_3d = LoadTexture("data/TEXTURE/mapchip_3d.png");
+	g_Ground = LoadTexture("data/TEXTURE/game/above/basechip_test.png");
+	tex_mapchip_3d = LoadTexture("data/TEXTURE/game/side/mapchip_3d.png");
 
-	tex_floor = LoadTexture("data/TEXTURE/floor.png");
-	tex_floor_mozinasi = LoadTexture("data/TEXTURE/floor_mozinasi.png");
-	tex_floor_huchinasi = LoadTexture("data/TEXTURE/floor_huchinasi.png");
+	tex_floor = LoadTexture("data/TEXTURE/game/side/floor.png");
+	tex_floor_mozinasi = LoadTexture("data/TEXTURE/game/side/floor_mozinasi.png");
+	tex_floor_huchinasi = LoadTexture("data/TEXTURE/game/side/floor_huchinasi.png");
 
-	tex_base_wall = LoadTexture("data/TEXTURE/base_wall.png");
-	tex_base_wall_center = LoadTexture("data/TEXTURE/base_wall_center.png");
-	tex_base_wall_left = LoadTexture("data/TEXTURE/base_wall_left.png");
-	tex_base_wall_right = LoadTexture("data/TEXTURE/base_wall_right.png");
+	tex_base_wall = LoadTexture("data/TEXTURE/game/side/base_wall.png");
+	tex_base_wall_center = LoadTexture("data/TEXTURE/game/side/base_wall_center.png");
+	tex_base_wall_left = LoadTexture("data/TEXTURE/game/side/base_wall_left.png");
+	tex_base_wall_right = LoadTexture("data/TEXTURE/game/side/base_wall_right.png");
 
 	return S_OK;
 }
@@ -186,15 +186,15 @@ HRESULT InitBG(void)
 //=============================================================================
 void UninitBG(void)
 {
-	UnloadTexture("data/TEXTURE/basechip_test.png");
-	UnloadTexture("data/TEXTURE/mapchip_3d.png");
-	UnloadTexture("data/TEXTURE/floor.png");
-	UnloadTexture("data/TEXTURE/floor_mozinasi.png");
-	UnloadTexture("data/TEXTURE/floor_huchinasi.png");
-	UnloadTexture("data/TEXTURE/base_wall.png");
-	UnloadTexture("data/TEXTURE/base_wall_center.png");
-	UnloadTexture("data/TEXTURE/base_wall_left.png");
-	UnloadTexture("data/TEXTURE/base_wall_right.png");
+	UnloadTexture("data/TEXTURE/game/above/basechip_test.png");
+	UnloadTexture("data/TEXTURE/game/side/mapchip_3d.png");
+	UnloadTexture("data/TEXTURE/game/side/floor.png");
+	UnloadTexture("data/TEXTURE/game/side/floor_mozinasi.png");
+	UnloadTexture("data/TEXTURE/game/side/floor_huchinasi.png");
+	UnloadTexture("data/TEXTURE/game/side/base_wall.png");
+	UnloadTexture("data/TEXTURE/game/side/base_wall_center.png");
+	UnloadTexture("data/TEXTURE/game/side/base_wall_left.png");
+	UnloadTexture("data/TEXTURE/game/side/base_wall_right.png");
 
 }
 

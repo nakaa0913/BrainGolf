@@ -52,11 +52,11 @@ HRESULT InitPlayer(void)
 
 	//
 	g_ShotSENo = LoadSound("data/SE/shot000.wav");
-	tex_yazirushi = LoadTexture("data/TEXTURE/yazirusi.png");
+	tex_yazirushi = LoadTexture("data/TEXTURE/game/player/yazirusi.png");
 
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
-		g_Player[i].texNo = LoadTexture("data/TEXTURE/majo.png");
+		g_Player[i].texNo = LoadTexture("data/TEXTURE/game/player/majo.png");
 
 		g_Player[i].pos.x = SCREEN_WIDTH / 2;
 		g_Player[i].pos.y = 440;
@@ -112,8 +112,8 @@ HRESULT InitPlayer(void)
 //=============================================================================
 void UninitPlayer(void)
 {
-	UnloadTexture("data/TEXTURE/yazirusi.png");
-	UnloadTexture("data/TEXTURE/majo.png");	
+	UnloadTexture("data/TEXTURE/game/player/yazirusi.png");
+	UnloadTexture("data/TEXTURE/game/player/majo.png");	
 }
 
 //=============================================================================

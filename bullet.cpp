@@ -68,6 +68,8 @@ HRESULT InitBullet(void)
 		g_Bullet[i].vector = D3DXVECTOR2(1.0f, 1.0f);
 
 		g_Bullet[i].CollicionCool = 0;
+
+		g_Bullet[i].shottime = 0;
 	}
 
 	return S_OK;
@@ -97,7 +99,11 @@ void UpdateBullet(void)
 
 
 			// 摩擦とか抵抗力の計算
-			g_Bullet[i].friction = 0.9815;
+			// 最初の15フレームは摩擦なし
+			if(g_Bullet[i].shottime < 15)
+				g_Bullet[i].friction = 1.0f;
+			else
+				g_Bullet[i].friction = 0.9815f;
 
 			if (g_Bullet[i].shotpower < 0.14f)
 			{
@@ -783,6 +789,9 @@ void UpdateBullet(void)
 		if (g_Bullet[i].accboardcool > 0)
 			g_Bullet[i].accboardcool--;
 
+		// 弾が発射されてからのカウントを増やす
+		g_Bullet[i].shottime++;
+
 	}
 }
 
@@ -861,6 +870,7 @@ void SetBullet(D3DXVECTOR2 pos, float angle, int ShotPower)
 			g_Bullet[i].pos = pos;			// 座標をセット
 
 			g_Bullet[i].shotpower = ShotBairitu;			// shotpowerの設定
+			g_Bullet[i].shottime = 0;						// 弾が発射されてからの時間の初期化
 			g_Bullet[i].angle = angle;						// 角度を設定
 			g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);	// 角度からベクトルを設定
 			g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * g_Bullet[i].shotpower * g_Bullet[i].vector.x,

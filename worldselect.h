@@ -5,8 +5,8 @@
 
 #define TIME (15)
 
-#define SELECT_MAX_X (5)       // select_xのMAX
-#define SELECT_MAX_Y (1)       // select_yのMAX
+#define WORLD_SELECT_MAX_X (5)       // select_xのMAX
+#define WORLD_SELECT_MAX_Y (1)       // select_yのMAX
 
 // プレイヤー構造体
 struct WORLDSELECT

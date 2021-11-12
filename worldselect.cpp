@@ -369,6 +369,11 @@ void UpdateWorldSelect(void)
 
 }
 
+WORLDSELECT* GetWorldSelect()
+{
+	return &g_WorldSelect;
+}
+
 /*------------------------------------------------------------------------------
    •`‰æˆ—‚ğ‚·‚éŠÖ”
 ------------------------------------------------------------------------------*/
@@ -379,3 +384,8 @@ void DrawWorldSelect(void)
 
 }
 
+
+int GetNowWorld()
+{
+	return g_WorldSelect.select_x + 1;
+}

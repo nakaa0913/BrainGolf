@@ -26,6 +26,25 @@ static int clear_star2_12;// 12
 static int clear_star3_13;// 13
 static int clear_star4_14;// 14
 
+static int stage_select1_15;// 15
+static int stage_select2_16;// 16
+static int stage_select3_17;// 17
+static int stage_select4_18;// 18
+static int stage_select5_19;// 19
+static int stage_choice1_20;// 20
+static int stage_choice2_21;// 21
+static int stage_choice3_22;// 22
+static int stage_choice4_23;// 23
+static int stage_choice5_24;// 24
+static int stage_mission1_25;// 25
+static int stage_mission2_26;// 26
+static int stage_mission3_27;// 27
+static int stage_mission4_28;// 28
+static int stage_mission5_29;// 29
+
+
+
+
 void InitEffect(void)
 {
 	//テクスチャの名前

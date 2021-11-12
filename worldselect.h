@@ -28,3 +28,6 @@ void InitWorldSelect(void);
 void UninitWorldSelect(void);
 void UpdateWorldSelect(void);
 void DrawWorldSelect(void);
+
+WORLDSELECT* GetWorldSelect();
+int GetNowWorld();

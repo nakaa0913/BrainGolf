@@ -50,6 +50,7 @@ static int	g_BGMNo = 0;		// BGM識別子
 
 int now_select_EffectArray = -1;
 bool select_once = false;
+int select_once_time = 0;
 
 /*------------------------------------------------------------------------------
    初期化関数
@@ -74,41 +75,10 @@ void InitWorldSelect(void)
 	g_WorldSelect.selecttime = 0;
 	select_once = false;
 	now_select_EffectArray = -1;
+	select_once_time = 0;
 
-
-
-
-	// 現在獲得している星の数の表示
-	SetEffect(9, D3DXVECTOR2(280.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
-		D3DXVECTOR2(500.0f, 150.0f), D3DXVECTOR2(500.0f, 150.0f), 0,
-		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
-
-	// 選ばれてないときの表示
-	SetEffect(6, D3DXVECTOR2(240.0f, 200.0f), D3DXVECTOR2(240.0f, 200.0f), 0,
-		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
-
-	SetEffect(7, D3DXVECTOR2(480.0f, 500.0f), D3DXVECTOR2(480.0f, 500.0f), 0,
-		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
-
-	SetEffect(6, D3DXVECTOR2(720.0f, 250.0f), D3DXVECTOR2(720.0f, 250.0f), 0,
-		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
-
-	SetEffect(6, D3DXVECTOR2(960.0f, 550.0f), D3DXVECTOR2(960.0f, 550.0f), 0,
-		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
-
-	SetEffect(6, D3DXVECTOR2(1200.0f, 400.0f), D3DXVECTOR2(1200.0f, 400.0f), 0,
-		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
+	// ワールドセレクト画面の最初に描写される者たち
+	StartWorldSelectScreen();
 
 	return;
 }
@@ -194,9 +164,11 @@ void UpdateWorldSelect(void)
 	//セレクト一番上
 	if (select_once == false)
 	{
+
+		select_once = true;
+
 		if (g_WorldSelect.select_y == 0)
 		{
-			select_once = true;
 
 			// 選択されているときの表示
 			if (g_WorldSelect.select_x == 0)
@@ -250,7 +222,17 @@ void UpdateWorldSelect(void)
 		}
 	}
 
+	if (select_once == true)
+	{
+		if (select_once_time % 60 == 0)
+		{
+			ChangeEffectCount(now_select_EffectArray, 0);
+		}
 
+
+		// 選択されてからの時間が増えていく
+		select_once_time++;
+	}
 
 
 	// キーが押されて、クールタイム以下なら
@@ -265,14 +247,17 @@ void UpdateWorldSelect(void)
 
 			EffectBreak(now_select_EffectArray);
 			select_once = false;
+			select_once_time = 0;
 		}
+
+
 		if (GetKeyboardPress(DIK_LEFT))
 		{
 			g_WorldSelect.select_x--;
 			g_WorldSelect.selectcooltime = TIME;
 			EffectBreak(now_select_EffectArray);
 			select_once = false;
-
+			select_once_time = 0;
 		}
 
 		// 選択しているところが限界を超えないようにする処理
@@ -388,4 +373,42 @@ void DrawWorldSelect(void)
 int GetNowWorld()
 {
 	return g_WorldSelect.select_x + 1;
+}
+
+
+void StartWorldSelectScreen()
+{
+	// 現在獲得している星の数の表示
+	SetEffect(9, D3DXVECTOR2(280.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+		D3DXVECTOR2(500.0f, 150.0f), D3DXVECTOR2(500.0f, 150.0f), 0,
+		0.0f, 1.0f, 0, 999, 0, 0,
+		0.0f, 0.0f, 0);
+
+	// 選ばれてないときの表示
+	SetEffect(6, D3DXVECTOR2(240.0f, 200.0f), D3DXVECTOR2(240.0f, 200.0f), 0,
+		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+		0.0f, 1.0f, 0, 999, 0, 0,
+		0.0f, 0.0f, 0);
+
+	SetEffect(7, D3DXVECTOR2(480.0f, 500.0f), D3DXVECTOR2(480.0f, 500.0f), 0,
+		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+		0.0f, 1.0f, 0, 999, 0, 0,
+		0.0f, 0.0f, 0);
+
+	SetEffect(6, D3DXVECTOR2(720.0f, 250.0f), D3DXVECTOR2(720.0f, 250.0f), 0,
+		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+		0.0f, 1.0f, 0, 999, 0, 0,
+		0.0f, 0.0f, 0);
+
+	SetEffect(6, D3DXVECTOR2(960.0f, 550.0f), D3DXVECTOR2(960.0f, 550.0f), 0,
+		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+		0.0f, 1.0f, 0, 999, 0, 0,
+		0.0f, 0.0f, 0);
+
+	SetEffect(6, D3DXVECTOR2(1200.0f, 400.0f), D3DXVECTOR2(1200.0f, 400.0f), 0,
+		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+		0.0f, 1.0f, 0, 999, 0, 0,
+		0.0f, 0.0f, 0);
+
+	return;
 }

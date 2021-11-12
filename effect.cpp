@@ -160,7 +160,7 @@ void UpdateEffect(void)
 				// –³§ŒÀ‚É•\¦‚³‚¹‚½‚¢ê‡‚Ìˆ—.all_count == 999‚¾‚Á‚½‚ç–³§ŒÀ‚É•\¦
 				if (g_Effect[i].all_count == 999)
 				{
-					g_Effect[i].now_count = g_Effect[i].fadeIn_count + g_Effect[i].all_count - 998;
+					g_Effect[i].now_count = g_Effect[i].fadeIn_count + 998;
 				}
 				else
 				{

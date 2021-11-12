@@ -31,3 +31,5 @@ void DrawWorldSelect(void);
 
 WORLDSELECT* GetWorldSelect();
 int GetNowWorld();
+
+void StartWorldSelectScreen();

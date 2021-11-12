@@ -334,6 +334,9 @@ void DrawBG(void)
 			// マップのデータが0の場合何も表示しないし計算もしない。
 			if (p_Stagedata->maparray[y][x] != 0)
 			{
+				// 色(透明度の初期化)
+				color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
 				float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) - p_Camera->pos.x;
 				float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) - p_Camera->pos.y;
 
@@ -342,6 +345,69 @@ void DrawBG(void)
 
 				float mapchip3d_gap_x = 80 * p_Camera->magnification;
 				float mapchip3d_gap_y = 360 * p_Camera->magnification;
+
+				// プレイヤー周りにいるかの検索とその時ブロックを透明にする処理
+				for (int i = 0; i < PLAYER_MAX; i++)
+				{
+					if (p_player[i].use)
+					{
+						// マップでの座標に変換する
+						D3DXVECTOR2 mappos = PosToMappos(p_player[i].pos);
+						// 変換した座標の小数点を切り捨てる
+						int mappos_x = mappos.x;
+						int mappos_y = mappos.y;
+
+						// ブロックの周りにプレイヤーがいた場合透明度を下げる
+						if (x - 1 == mappos_x && y == mappos_y - 1)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						}
+						if (x - 1 == mappos_x && y == mappos_y + 0)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						}
+						if (x - 1 == mappos_x && y == mappos_y + 1)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						}
+						if (x == mappos_x && y == mappos_y + 1)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						}
+					}
+				}
+				// バレットが周りにいるかの検索とその時ブロックを透明にする処理
+				for (int i = 0; i < BULLET_MAX; i++)
+				{
+					if (p_bullet[i].use)
+					{
+						// マップでの座標に変換する
+						D3DXVECTOR2 mappos = PosToMappos(p_bullet[i].pos);
+						// 変換した座標の小数点を切り捨てる
+						int mappos_x = mappos.x;
+						int mappos_y = mappos.y;
+
+						// ブロックの周りに弾がいた場合透明度を下げる
+						if (x - 1 == mappos_x && y == mappos_y - 1)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						}
+						if (x - 1 == mappos_x && y == mappos_y + 0)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						}
+						if (x - 1 == mappos_x && y == mappos_y + 1)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						}
+						if (x == mappos_x && y == mappos_y + 1)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						}
+					}
+
+				}
+
 
 				
 
@@ -367,13 +433,6 @@ void DrawBG(void)
 					if (x == mappos_x && y == mappos_y)
 					{
 						DrawPlayerSpecifyNum(i);			// iのプレイヤーが描かれるかどうか(使われてるかどうか)は、これらの関数の中で検索される。
-
-						// ブロックの透明度を下げる処理
-						color[LimitRange(10 * (y - 1) + x + 1, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-						color[LimitRange(10 * (y + 0) + x + 1, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-						color[LimitRange(10 * (y + 1) + x + 1, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-						color[LimitRange(10 * (y + 2) + x + 1, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-						color[LimitRange(10 * (y + 1) + x + 0, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 					}
 				}
 			}
@@ -392,13 +451,6 @@ void DrawBG(void)
 					if (x == mappos_x && y == mappos_y)
 					{
 						DrawBulletSpecifyNum(i);			// iのバレットが描かれるかどうか(使われてるかどうか)は、これらの関数の中で検索される。
-
-						// ブロックの透明度を下げる処理
-						color[LimitRange(10 * (y - 1) + x + 1, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-						color[LimitRange(10 * (y + 0) + x + 1, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-						color[LimitRange(10 * (y + 1) + x + 1, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-						color[LimitRange(10 * (y + 2) + x + 1, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-						color[LimitRange(10 * (y + 1) + x + 0, 0, 10 * MAP_Y + MAP_X - 1)] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 					}
 				}
 			}

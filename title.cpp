@@ -60,7 +60,7 @@ void UpdateTitle(void)
 {
 	if (GetKeyboardTrigger(DIK_RETURN) && GetFadeState() == FADE_NONE)
 	{
-		SceneTransition(SCENE_SELECT);
+		SceneTransition(SCENE_WORLD_SELECT);
 	}
 }
 

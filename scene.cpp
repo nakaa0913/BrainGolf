@@ -18,6 +18,7 @@
 #include "player.h"
 #include "stagedata.h"
 #include "FileDataManagement.h"
+#include "worldselect.h"
 
 /*------------------------------------------------------------------------------
    íËêîíËã`
@@ -63,7 +64,13 @@ void InitScene(SCENE index)
 		InitTitle();
 		break;
 
-	case SCENE_SELECT:
+	case SCENE_WORLD_SELECT:
+		InitEffect();
+		InitWorldSelect();
+		break;
+
+		
+	case SCENE_STAGE_SELECT:
 		InitEffect();
 		InitStageSelect();
 		break;
@@ -102,7 +109,12 @@ void UninitScene(void)
 		UninitTitle();
 		break;
 
-	case SCENE_SELECT:
+	case SCENE_WORLD_SELECT:
+		UninitEffect();
+		UninitWorldSelect();
+		break;
+
+	case SCENE_STAGE_SELECT:
 		UninitEffect();
 		UninitStageSelect();
 		break;
@@ -141,7 +153,13 @@ void UpdateScene(void)
 		UpdateStagedata();
 		break;
 
-	case SCENE_SELECT:
+	case SCENE_WORLD_SELECT:
+		UpdateEffect();
+		UpdateWorldSelect();
+		UpdateStagedata();
+		break;
+
+	case SCENE_STAGE_SELECT:
 		UpdateEffect();
 		UpdateStageSelect();
 		UpdateStagedata();
@@ -183,7 +201,12 @@ void DrawScene(void)
 		DrawEffect();
 		break;
 
-	case SCENE_SELECT:
+	case SCENE_WORLD_SELECT:
+		DrawWorldSelect();
+		DrawEffect();
+		break;
+
+	case SCENE_STAGE_SELECT:
 		DrawStageSelect();
 		DrawEffect();
 		break;

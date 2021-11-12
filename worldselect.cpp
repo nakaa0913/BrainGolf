@@ -93,7 +93,7 @@ void UpdateWorldSelect(void)
 		SetVolume(g_BGMNo, 0.1f);
 
 		//RESULTÇ÷à⁄çsÇ∑ÇÈ
-		SceneTransition(SCENE_GAME);
+		SceneTransition(SCENE_STAGE_SELECT);
 	}
 
 
@@ -332,7 +332,7 @@ void UpdateWorldSelect(void)
 
 			if (GetKeyboardPress(DIK_RETURN))
 			{
-				SceneTransition(SCENE_GAME);
+				SceneTransition(SCENE_STAGE_SELECT);
 			}
 		}
 
@@ -347,7 +347,7 @@ void UpdateWorldSelect(void)
 			//}
 			if (GetKeyboardPress(DIK_RETURN))
 			{
-				SceneTransition(SCENE_GAME);
+				SceneTransition(SCENE_STAGE_SELECT);
 			}
 		}
 
@@ -360,7 +360,7 @@ void UpdateWorldSelect(void)
 			//}
 			if (GetKeyboardPress(DIK_RETURN))
 			{
-				SceneTransition(SCENE_GAME);
+				SceneTransition(SCENE_STAGE_SELECT);
 			}
 		}
 
@@ -373,7 +373,7 @@ void UpdateWorldSelect(void)
 			//}
 			if (GetKeyboardPress(DIK_RETURN))
 			{
-				SceneTransition(SCENE_GAME);
+				SceneTransition(SCENE_STAGE_SELECT);
 			}
 		}
 
@@ -386,7 +386,7 @@ void UpdateWorldSelect(void)
 			//}
 			if (GetKeyboardPress(DIK_RETURN))
 			{
-				SceneTransition(SCENE_GAME);
+				SceneTransition(SCENE_STAGE_SELECT);
 			}
 		}
 

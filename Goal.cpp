@@ -247,7 +247,7 @@ void UpdateGoal(void)
 			{
 				if (GetKeyboardPress(DIK_RETURN))
 				{
-					SceneTransition(SCENE_RESULT);
+					SceneTransition(SCENE_WORLD_SELECT);
 
 				}
 			}
@@ -256,7 +256,7 @@ void UpdateGoal(void)
 			{
 				if (GetKeyboardPress(DIK_RETURN))
 				{
-					SceneTransition(SCENE_SELECT);
+					SceneTransition(SCENE_STAGE_SELECT);
 
 				}
 			}

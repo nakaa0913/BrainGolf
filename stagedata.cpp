@@ -17,9 +17,11 @@ void InitStagedata()
 	// 構造体の初期化
 	g_Stagedata.stagenum = 0;
 	g_Stagedata.maparray[MAP_Y - 1][MAP_X - 1] = {};
-	g_Stagedata.mission1 = 0;
-	g_Stagedata.mission2 = 1;
-	g_Stagedata.mission3 = 2;
+	for (int i = 0; i < MAX_MISSION; i++)
+	{
+		g_Stagedata.mission_ContentsNum[i] = 0;
+		g_Stagedata.mission_UseNum[i]	   = 0;
+	}
 
 
 	SetStageData(1);				// テストでこれしてるだけ。実際はセットステージはInitGameが終わった後にする。

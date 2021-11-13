@@ -66,7 +66,17 @@ void LoadMapdataMain(char* fileName)
 			// now_stringsを初期化する
 			strcpy(now_strings, "");
 		}
-		// PlayerdataStart の場合プレイヤーがどこに配置されているかと、どんな動きをするかの読み込みが始まる
+		// MissiondataStart の場合ミッションに関する読み込みが開始される
+		if (strstr(now_strings, "MissiondataStart") != NULL)
+		{
+			pattern = PATTERN_MISSION;
+
+			// now_stringsを初期化する
+			strcpy(now_strings, "");
+		}
+
+
+		// ファイル読み込み終了を読み取る終了処理
 		if (strstr(now_strings, "EndLoadFile") != NULL)
 		{
 			pattern = PATTERN_END;
@@ -82,10 +92,13 @@ void LoadMapdataMain(char* fileName)
 		{
 			pattern = LoadMapdata(fp);			// 関数が終了した時戻り値でPATTERN_NULLをもらう
 		}
-
 		if (pattern == PATTERN_PLAYER)
 		{
 			pattern = LoadPlayerdata(fp);
+		}
+		if (pattern == PATTERN_MISSION)
+		{
+			pattern = LoadMissiondata(fp);
 		}
 
 
@@ -679,6 +692,79 @@ int LoadPlayerdata(FILE* fp)
 	return PATTERN_NULL;
 }
 
+// ミッションデータの読み込み
+int LoadMissiondata(FILE* fp)
+{
+	// stagedataに出力していくので、ポインターで持ってきておく
+	STAGEDATA* p_Stagedata = GetStagedata();
+
+	char loadchar[4] = "";
+	char now_strings[256] = "";
+	char decision_strings[256] = "";
+	bool decision = false;
+
+	int addednumtime = 0;	// 読み込んで追加した回数
+
+	while (1)
+	{
+		// ファイルを1文字ずつ読み込む	fscanfは返り値として読み込んだ数(%sとか%dの数)を返すが、今回は無視するので(void)をつける
+		(void)fscanf(fp, "%1s", loadchar);
+
+		// カンマが来たら文字列を確定させて次の文字列へ		// strcmpは比較して等しいと0を返す。
+		if (strcmp(loadchar, ",") == 0)
+		{
+			// 現在の文字列がカンマだけだった場合、削除して次の文字の検索へ。これをすることによって、(,1)とかの心配がなくなる
+			if (strcmp(now_strings, ",") == 0)
+			{
+				strcpy(now_strings, "");
+				continue;
+			}
+
+			// 確定した文字列を数字に変換しミッションにに反映させる処理。内容なのか使う値なのかの判別も処理
+			applyMissionArray(addednumtime, now_strings);
+
+			// now_stringsを初期化する
+			strcpy(now_strings, "");
+
+			// 確定したので追加した回数を+1回する
+			addednumtime++;
+
+			// マップ配列分文字を読み終わったら終了とみなしてNULLを返す
+			if (addednumtime == MAX_MISSION * 2 - 1)
+			{
+				return PATTERN_NULL;
+			}
+
+		}
+		else
+		{
+			// カンマでなければ文字を繋げていく
+			strcat(now_strings, loadchar);
+		}
+
+		// MapdataEnd を見つけた場合処理は終了とみなしてNULLを返す
+		if (strstr(now_strings, "MissiondataEnd") != NULL)
+		{
+			// now_stringsを初期化する
+			strcpy(now_strings, "");
+
+			return PATTERN_NULL;
+		}
+
+		// 50文字以上の文字列になってしまったらエラーとみなし強制終了させる
+		if (strlen(now_strings) > 50)
+		{
+			//exit(5);
+		}
+
+
+	}
+
+
+
+	return PATTERN_NULL;
+}
+
 
 // char型の数字(1桁のみ)からint型の数字へ
 int charToint(char c) 
@@ -809,7 +895,6 @@ float SetMoveSpeed(int decimal_point, char strings[])
 
 void SetMAPCHIP_POS_STRUCT(MAPCHIP_POS_STRUCT * s_mapchip_pos, char strings[] , int order, int XorY)
 {
-	int fffffdfg = 0;
 	// 文字列が何文字か調べ、文字数に応じて数字に変換したときの桁数を変える
 	int len = strlen(strings);
 	if (len == 1)
@@ -838,6 +923,46 @@ void SetMAPCHIP_POS_STRUCT(MAPCHIP_POS_STRUCT * s_mapchip_pos, char strings[] , 
 			s_mapchip_pos->mapchip_pos_x[order] = mapchip_pos;
 		else
 			s_mapchip_pos->mapchip_pos_y[order] = mapchip_pos;
+	}
+
+	return;
+}
+
+// nowstringsからミッションに追加する処理
+void applyMissionArray(int addednumtime, char strings[])
+{
+	// addednumtimeから何番目のミッションに追加するかを調べておく
+	int missionnum = addednumtime / 2;		// 2で割るので、0,1=0 2,3=1 4,5 = 2 となる
+
+
+	// stagedataに出力していくので、ポインターで持ってきておく
+	STAGEDATA* p_Stagedata = GetStagedata();
+
+	// 文字列が何文字か調べ、文字数に応じて数字に変換したときの桁数を変える
+	int len = strlen(strings);
+	if (len == 1)
+	{
+		int data = charToint(strings[0]);
+		if (addednumtime % 2 == 0)
+			p_Stagedata->mission_ContentsNum[missionnum] = data;
+		else
+			p_Stagedata->mission_UseNum[missionnum] = data;
+	}
+	if (len == 2)
+	{
+		int data = 10 * charToint(strings[0]) + charToint(strings[1]);
+		if (addednumtime % 2 == 0)
+			p_Stagedata->mission_ContentsNum[missionnum] = data;
+		else
+			p_Stagedata->mission_UseNum[missionnum] = data;
+	}
+	if (len == 3)
+	{
+		int data = 100 * charToint(strings[0]) + 10 * charToint(strings[1]) + charToint(strings[2]);
+		if (addednumtime % 2 == 0)
+			p_Stagedata->mission_ContentsNum[missionnum] = data;
+		else
+			p_Stagedata->mission_UseNum[missionnum] = data;
 	}
 
 	return;

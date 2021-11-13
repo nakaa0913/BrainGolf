@@ -17,6 +17,7 @@
 #include "FileDataManagement.h"
 #include "camera.h"
 #include "predictionbullet.h"
+#include "gamedata.h"
 
 #define PLAYER_H (50)
 #define PLAYER_W (50)
@@ -124,6 +125,7 @@ void UpdatePlayer(void)
 {
 	BULLET bullet = *GetBullet();
 	CAMERA* p_Camera = GetCamera();
+	GAMEDATA* p_Gamedata = GetGamedata();
 
 	// 誰か一人でも持っている状態かどうか
 	bool now_have = false;
@@ -419,6 +421,9 @@ void UpdatePlayer(void)
 
 				if (GetKeyboardTrigger(DIK_SPACE) && g_Player[i].ConfirmCooltime < 0)
 				{
+					// パスした回数を増やす
+					p_Gamedata->pass_count++;
+					
 					g_Player[i].catchwait = 60;
 					g_Player[i].have = false;
 

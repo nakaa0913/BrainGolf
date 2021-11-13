@@ -22,6 +22,7 @@
 #include "Goal.h"
 #include "camera.h"
 #include "predictionbullet.h"
+#include "gamedata.h"
 
 
 /*------------------------------------------------------------------------------
@@ -42,6 +43,7 @@
 ------------------------------------------------------------------------------*/
 static int g_BGMNo = 0;
 bool goal = false;
+int game_frame_time = 0;
 
 /*------------------------------------------------------------------------------
    初期化関数
@@ -49,6 +51,8 @@ bool goal = false;
 void InitGame(void)
 {
 	goal = false;
+	game_frame_time = 0;
+
 	InitPlayer();
 	InitEnemy();
 	InitEnemyEmitter();
@@ -58,6 +62,7 @@ void InitGame(void)
 	InitGoal();
 	InitCamera();
 	InitPrediction();
+	InitGamedata();
 	g_BGMNo = LoadSound("data/BGM/sample001.wav");
 
 	SetVolume(g_BGMNo, 1.0f);
@@ -70,6 +75,7 @@ void InitGame(void)
 void UninitGame()
 {
 	//初期化とは逆順に終了処理を行う
+	UninitGamedata();
 	UninitPrediction();
 	UninitCamera();
 	UninitBG();
@@ -99,6 +105,18 @@ void UpdateGame(void)
 
 		UpdateCollision();
 		UpdatePrediction();
+		UpdateGamedata();
+
+		// ゲームスタートしてからのフレーム時間を+1する
+		game_frame_time++;
+
+		// ゲームスタートしてからの時間(秒)を+1する,60フレームごとに+1
+		if (game_frame_time % 60 == 0)
+		{
+			GAMEDATA* p_Gamedata = GetGamedata();
+			p_Gamedata->game_time++;
+		}
+
 	}
 	else {
 		UpdateGoal();

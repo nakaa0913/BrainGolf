@@ -39,10 +39,11 @@ static int stage_choice3_22;// 22
 static int stage_choice4_23;// 23
 static int stage_choice5_24;// 24
 //ステージ選択のミッション
-static int stage_mission1_25;// 25
-static int stage_mission2_26;// 26
-static int stage_mission3_27;// 27
-static int stage_mission4_28;// 28
+static int stage_mission_background_25;// 25
+static int stage_mission0_26;// 26
+static int stage_mission1_27;// 27
+static int stage_mission2_28;// 28
+
 static int stage_mission5_29;// 29
 
 
@@ -79,10 +80,11 @@ void InitEffect(void)
 	stage_choice4_23 = LoadTexture("data/TEXTURE/select/1.png");
 	stage_choice5_24 = LoadTexture("data/TEXTURE/select/1.png");
 
-	stage_mission1_25 = LoadTexture("data/TEXTURE/select/mission.png");
-	stage_mission2_26 = LoadTexture("data/TEXTURE/select/mission.png");
-	stage_mission3_27 = LoadTexture("data/TEXTURE/select/mission.png");
-	stage_mission4_28 = LoadTexture("data/TEXTURE/select/mission.png");
+	stage_mission_background_25 = LoadTexture("data/TEXTURE/select/mission/mission_background.png");
+	stage_mission0_26 = LoadTexture("data/TEXTURE/select/mission/mission_0.png");
+	stage_mission1_27 = LoadTexture("data/TEXTURE/select/mission/mission_1.png");
+	stage_mission2_28 = LoadTexture("data/TEXTURE/select/mission/mission_2.png");
+
 	stage_mission5_29 = LoadTexture("data/TEXTURE/select/selectlock.png");
 
 
@@ -173,14 +175,14 @@ void UpdateEffect(void)
 
 			
 
-			// 時間経過による破壊処理
-			if (g_Effect[i].now_count >= g_Effect[i].fadeIn_count
+			// 時間経過による破壊処理		== にすることで999の処理が楽になる
+			if (g_Effect[i].now_count == g_Effect[i].fadeIn_count
 				+ g_Effect[i].all_count + g_Effect[i].fadeOut_count)
 			{
 				// 無制限に表示させたい場合の処理.all_count == 999だったら無制限に表示
 				if (g_Effect[i].all_count == 999)
 				{
-					g_Effect[i].now_count = g_Effect[i].fadeIn_count + 998;
+					// g_Effect[i].now_count = g_Effect[i].fadeIn_count + 998;　こんなことしなくていい
 				}
 				else
 				{
@@ -572,16 +574,16 @@ int GetTextureData(int id)
 		return stage_choice5_24;
 		break;
 	case 25:
-		return stage_mission1_25;
+		return stage_mission_background_25;
 		break;
 	case 26:
-		return stage_mission2_26;
+		return stage_mission0_26;
 		break;
 	case 27:
-		return stage_mission3_27;
+		return stage_mission1_27;
 		break;
 	case 28:
-		return stage_mission4_28;
+		return stage_mission2_28;
 		break;
 	case 29:
 		return stage_mission5_29;

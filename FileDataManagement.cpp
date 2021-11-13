@@ -946,7 +946,7 @@ void applyMissionArray(int addednumtime, char strings[])
 		if (addednumtime % 2 == 0)
 			p_Stagedata->mission_ContentsNum[missionnum] = data;
 		else
-			p_Stagedata->mission_UseNum[missionnum] = data;
+			p_Stagedata->mission_JudgeNum[missionnum] = data;
 	}
 	if (len == 2)
 	{
@@ -954,7 +954,7 @@ void applyMissionArray(int addednumtime, char strings[])
 		if (addednumtime % 2 == 0)
 			p_Stagedata->mission_ContentsNum[missionnum] = data;
 		else
-			p_Stagedata->mission_UseNum[missionnum] = data;
+			p_Stagedata->mission_JudgeNum[missionnum] = data;
 	}
 	if (len == 3)
 	{
@@ -962,7 +962,7 @@ void applyMissionArray(int addednumtime, char strings[])
 		if (addednumtime % 2 == 0)
 			p_Stagedata->mission_ContentsNum[missionnum] = data;
 		else
-			p_Stagedata->mission_UseNum[missionnum] = data;
+			p_Stagedata->mission_JudgeNum[missionnum] = data;
 	}
 
 	return;

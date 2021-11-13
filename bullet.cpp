@@ -16,6 +16,7 @@
 #include "primitive.h"
 #include "collision.h"
 #include "camera.h"
+#include "gamedata.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -951,6 +952,10 @@ void CalculateNewVecAng(int i, float bulletposX, float bulletposY, float CornerP
 
 	g_Bullet[i].CollicionCool = COL_COOL;
 
+	// 壁に当たった回数を+1回する
+	GAMEDATA* p_Gamedata = GetGamedata();
+	p_Gamedata->hit_wall_count++;
+
 	return;
 }
 
@@ -973,6 +978,10 @@ void InversionVecAng(int i, int XorY)
 	g_Bullet[i].vector = newvec;		// 角度からベクトルを設定
 
 	g_Bullet[i].CollicionCool = COL_COOL;
+
+	// 壁に当たった回数を+1回する
+	GAMEDATA* p_Gamedata = GetGamedata();
+	p_Gamedata->hit_wall_count++;
 
 	return;
 }

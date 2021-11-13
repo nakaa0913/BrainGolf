@@ -8,6 +8,7 @@
 #include "bg.h"
 #include "stagedata.h"
 #include "FileDataManagement.h"
+#include "mission.h"
 
 static STAGEDATA g_Stagedata;
 
@@ -20,7 +21,7 @@ void InitStagedata()
 	for (int i = 0; i < MAX_MISSION; i++)
 	{
 		g_Stagedata.mission_ContentsNum[i] = 0;
-		g_Stagedata.mission_UseNum[i]	   = 0;
+		g_Stagedata.mission_JudgeNum[i]	   = 0;
 	}
 
 

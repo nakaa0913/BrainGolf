@@ -48,9 +48,9 @@ static WORLDSELECT g_WorldSelect;
 static int	g_TextureNo = 0;	// テクスチャ情報
 static int	g_BGMNo = 0;		// BGM識別子
 
-int now_select_EffectArray = -1;
-bool select_once = false;
-int select_once_time = 0;
+int now_world_select_EffectArray = -1;
+bool world_select_once = false;
+int world_select_once_time = 0;
 
 /*------------------------------------------------------------------------------
    初期化関数
@@ -73,9 +73,10 @@ void InitWorldSelect(void)
 	PlaySound(g_BGMNo, -1);
 
 	g_WorldSelect.selecttime = 0;
-	select_once = false;
-	now_select_EffectArray = -1;
-	select_once_time = 0;
+
+	world_select_once = false;
+	now_world_select_EffectArray = -1;
+	world_select_once_time = 0;
 
 	// ワールドセレクト画面の最初に描写される者たち
 	StartWorldSelectScreen();
@@ -107,46 +108,6 @@ void UpdateWorldSelect(void)
 	}
 
 
-	/////////////
-
-	//// ステージ選択の時の原点となる場所
-	//float	stage_origin_x = 240.0f;			    // xの原点(0,0を選択しているとき)
-	//float	stage_origin_y = 200.0f;			    // yの原点(0,0を選択しているとき)
-
-	//// ステージ選択の時1個離れたらこれだけ離れるよってやつ
-	//float distance_x = 240.0f;
-	//float distance_y = 240.0f;
-
-	////ステージ選択横バージョン
-	//for (int x = 0; x < SELECT_MAX_X; x++)
-	//{
-	//	for (int y = 0; y < SELECT_MAX_Y; y++)
-	//	{
-	//		// 現在の座標を求める
-	//		float now_x = stage_origin_x + distance_x * x;
-	//		float now_y = stage_origin_y + distance_y * y;
-
-	//		// 選択されてないときの表示を出す(ステージすべて)
-	//		SetEffect(6, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
-	//			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-	//			0.0f, 1.0f, 0, 1, 0, 0,
-	//			0.0f, 0.0f, 0);
-
-	//		// 検索。選択しているとこを見つけて大きいサイズで表示。
-	//		if (g_WorldSelect.select_x == x)
-	//		{
-	//			if (g_WorldSelect.select_y == y)
-	//			{
-	//				SetEffect(6, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
-	//					D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
-	//					1.0f, 1.0f, 0, 1, 0, 0,
-	//					0.0f, 0.0f, 0);
-	//			}
-	//		}
-	//	}
-	//}
-
-
 
 
 	//ミッション
@@ -161,11 +122,56 @@ void UpdateWorldSelect(void)
 		0.0f, 1.0f, 0, 1, 0, 0,
 		0.0f, 0.0f, 0);*/
 
-	//セレクト一番上
-	if (select_once == false)
+
+	// エンターキーが押された時の処理
+	if (GetKeyboardPress(DIK_RETURN))
+	{
+		SceneTransition(SCENE_STAGE_SELECT);
+	}
+
+
+	// キー入力による操作
+	if (g_WorldSelect.selectcooltime <= 0)
+	{
+		bool use_key = false;		// キー入力されたかどうか
+		// 右
+		if (GetKeyboardPress(DIK_RIGHT))
+		{
+			g_WorldSelect.select_x++;
+			use_key = true;
+		}
+		// 左
+		if (GetKeyboardPress(DIK_LEFT))
+		{
+			g_WorldSelect.select_x--;
+			use_key = true;
+		}
+
+		// 選択しているところが限界を超えないようにする処理
+		if (g_WorldSelect.select_x >= WORLD_SELECT_MAX_X)
+			g_WorldSelect.select_x = 0;
+		if (g_WorldSelect.select_x < 0)
+			g_WorldSelect.select_x = WORLD_SELECT_MAX_X - 1;
+
+		if (use_key == true)
+		{
+			// 初期化と前回使われていたものの消去
+			g_WorldSelect.selectcooltime = WORDL_SELECT_COOL;
+			EffectBreak(now_world_select_EffectArray);
+			world_select_once = false;
+			world_select_once_time = 0;
+		}
+	}
+
+
+
+
+
+	//　ワールド選択の選択しているところの処理
+	if (world_select_once == false)
 	{
 
-		select_once = true;
+		world_select_once = true;
 
 		if (g_WorldSelect.select_y == 0)
 		{
@@ -173,7 +179,7 @@ void UpdateWorldSelect(void)
 			// 選択されているときの表示
 			if (g_WorldSelect.select_x == 0)
 			{
-				now_select_EffectArray =
+				now_world_select_EffectArray =
 					SetEffect(6, D3DXVECTOR2(240.0f, 200.0f), D3DXVECTOR2(240.0f, 200.0f), 0,
 						D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
 						1.0f, 1.0f, 0, 999, 0, 60,
@@ -183,7 +189,7 @@ void UpdateWorldSelect(void)
 			// 選択されているときの表示
 			if (g_WorldSelect.select_x == 1)
 			{
-				now_select_EffectArray =
+				now_world_select_EffectArray =
 					SetEffect(7, D3DXVECTOR2(480.0f, 500.0f), D3DXVECTOR2(480.0f, 500.0f), 0,
 						D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
 						0.0f, 1.0f, 0, 999, 0, 60,
@@ -193,7 +199,7 @@ void UpdateWorldSelect(void)
 			// 選択されているときの表示
 			if (g_WorldSelect.select_x == 2)
 			{
-				now_select_EffectArray =
+				now_world_select_EffectArray =
 					SetEffect(6, D3DXVECTOR2(720.0f, 250.0f), D3DXVECTOR2(720.0f, 250.0f), 0,
 						D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
 						0.0f, 1.0f, 0, 999, 0, 60,
@@ -203,7 +209,7 @@ void UpdateWorldSelect(void)
 			// 選択されているときの表示
 			if (g_WorldSelect.select_x == 3)
 			{
-				now_select_EffectArray =
+				now_world_select_EffectArray =
 					SetEffect(6, D3DXVECTOR2(960.0f, 550.0f), D3DXVECTOR2(960.0f, 550.0f), 0,
 						D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
 						0.0f, 1.0f, 0, 999, 0, 60,
@@ -213,7 +219,7 @@ void UpdateWorldSelect(void)
 			// 選択されているときの表示
 			if (g_WorldSelect.select_x == 4)
 			{
-				now_select_EffectArray =
+				now_world_select_EffectArray =
 					SetEffect(6, D3DXVECTOR2(1200.0f, 400.0f), D3DXVECTOR2(1200.0f, 400.0f), 0,
 						D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
 						0.0f, 1.0f, 0, 999, 0, 60,
@@ -222,133 +228,22 @@ void UpdateWorldSelect(void)
 		}
 	}
 
-	if (select_once == true)
+	if (world_select_once == true)
 	{
-		if (select_once_time % 60 == 0)
+		if (world_select_once_time % 60 == 0)
 		{
-			ChangeEffectCount(now_select_EffectArray, 0);
+			ChangeEffectCount(now_world_select_EffectArray, 0);
 		}
 
 
 		// 選択されてからの時間が増えていく
-		select_once_time++;
+		world_select_once_time++;
 	}
-
-
-	// キーが押されて、クールタイム以下なら
-	// 選択しているところを変えて、
-	// 使っていたエフェクトを消す
-	if (g_WorldSelect.selectcooltime <= 0)
-	{
-		if (GetKeyboardPress(DIK_RIGHT))
-		{
-			g_WorldSelect.select_x++;
-			g_WorldSelect.selectcooltime = TIME;
-
-			EffectBreak(now_select_EffectArray);
-			select_once = false;
-			select_once_time = 0;
-		}
-
-
-		if (GetKeyboardPress(DIK_LEFT))
-		{
-			g_WorldSelect.select_x--;
-			g_WorldSelect.selectcooltime = TIME;
-			EffectBreak(now_select_EffectArray);
-			select_once = false;
-			select_once_time = 0;
-		}
-
-		// 選択しているところが限界を超えないようにする処理
-		if (g_WorldSelect.select_x >= WORLD_SELECT_MAX_X)
-		{
-			g_WorldSelect.select_x = 0;
-		}
-		if (g_WorldSelect.select_x < 0)
-		{
-			g_WorldSelect.select_x = WORLD_SELECT_MAX_X - 1;
-		}
-
-		// 選択されているときにエンターキーが押された場合の処理
-		if (g_WorldSelect.select_x == 0)
-		{
-			/*if (GetKeyboardPress(DIK_DOWN))
-			{
-				g_WorldSelect.select_y++;
-				g_WorldSelect.selectcooltime = 10;
-			}*/
-
-			if (GetKeyboardPress(DIK_RETURN))
-			{
-				SceneTransition(SCENE_STAGE_SELECT);
-			}
-		}
-		if (g_WorldSelect.select_x == 1)
-		{
-
-			//if (GetKeyboardPress(DIK_DOWN))
-			//{
-			//	g_WorldSelect.select_y++;
-			//	g_WorldSelect.selectcooltime = TIME;
-			//}
-			if (GetKeyboardPress(DIK_RETURN))
-			{
-				SceneTransition(SCENE_STAGE_SELECT);
-			}
-		}
-		if (g_WorldSelect.select_x == 2)
-		{
-			//if (GetKeyboardPress(DIK_DOWN))
-			//{
-			//	g_WorldSelect.select_y++;
-			//	g_WorldSelect.selectcooltime = TIME;
-			//}
-			if (GetKeyboardPress(DIK_RETURN))
-			{
-				SceneTransition(SCENE_STAGE_SELECT);
-			}
-		}
-		if (g_WorldSelect.select_x == 3)
-		{
-			//if (GetKeyboardPress(DIK_DOWN))
-			//{
-			//	g_WorldSelect.select_y++;
-			//	g_WorldSelect.selectcooltime = TIME;
-			//}
-			if (GetKeyboardPress(DIK_RETURN))
-			{
-				SceneTransition(SCENE_STAGE_SELECT);
-			}
-		}
-		if (g_WorldSelect.select_x == 4)
-		{
-			//if (GetKeyboardPress(DIK_DOWN))
-			//{
-			//	g_WorldSelect.select_y++;
-			//	g_WorldSelect.selectcooltime = TIME;
-			//}
-			if (GetKeyboardPress(DIK_RETURN))
-			{
-				SceneTransition(SCENE_STAGE_SELECT);
-			}
-		}
-
-
-
-	}
-
 
 
 	// クールタイムのカウントを減らす処理
-	if (g_WorldSelect.selectcooltime >= 0)
+	if (g_WorldSelect.selectcooltime > 0)
 		g_WorldSelect.selectcooltime--;
-
-
-
-
-
-
 
 	g_WorldSelect.selecttime++;
 

@@ -8,6 +8,8 @@
 #define WORLD_SELECT_MAX_X (5)       // select_xのMAX
 #define WORLD_SELECT_MAX_Y (1)       // select_yのMAX
 
+#define WORDL_SELECT_COOL (10)       // ワールドセレクトの時のクールタイム
+
 // プレイヤー構造体
 struct WORLDSELECT
 {

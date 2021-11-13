@@ -62,13 +62,22 @@ void UpdatePrediction(void)
 			BULLET* p_Bullet = GetBullet();
 			PLAYER* p_Player = GetPlayer();
 
-			int havenum = 0;
-
 			// 情報をもらう
-			g_Prediction[i].angle = p_Player[havenum].angle;
+			int havenum = returnHavePlayer();
+			g_Prediction[i].angle = 360 - p_Player[havenum].angle;
 			g_Prediction[i].pos = p_Player[havenum].pos;
-			g_Prediction[i].size.x = p_Bullet[0].w;
-			g_Prediction[i].size.y = p_Bullet[0].h;
+			g_Prediction[i].size.x = PREDICTION_SIZE;
+			g_Prediction[i].size.y = PREDICTION_SIZE;
+
+			// ベクトルの計算
+			g_Prediction[i].vector = AngleToVector2(g_Prediction[i].angle);	// 角度からベクトルを設定
+			
+			// 値の更新		iの分だけ離れて表示される
+			g_Prediction[i].pos += g_Prediction[i].vector * (i + 1) * 30;
+			g_Prediction[i].size *= 1.0f - i * 0.1f;
+
+
+
 
 			// pos を drawpos に変換		DRAW_GAP は、上から見た時の描写でのマップの描写はレフトトップで、プレイヤーはど真ん中でやってるから、そのずれ。
 			g_Prediction[i].drawpos.x = GAME_ORIGIN_POINT_X + ((g_Prediction[i].pos.x + DRAW_GAP_X) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_X / 2) - ((g_Prediction[i].pos.y - DRAW_GAP_X) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
@@ -133,4 +142,22 @@ void DrawPredictionSpecifyNum(int i)
 PREDICTION* GetPrediction(void)
 {
 	return &g_Prediction[0];
+}
+
+void PredictionUseTrue()
+{
+	for (int i = 0; i < PREDICTION_MAX; i++)
+	{
+		g_Prediction[i].isUse = true;
+	}
+	return;
+}
+
+void PredictionUseFalse()
+{
+	for (int i = 0; i < PREDICTION_MAX; i++)
+	{
+		g_Prediction[i].isUse = false;
+	}
+	return;
 }

@@ -11,6 +11,7 @@
 #include "FileDataManagement.h"
 #include "bullet.h"
 #include "camera.h"
+#include "predictionbullet.h"
 
 
 //*****************************************************************************
@@ -309,8 +310,12 @@ void DrawBG(void)
 		}
 	}
 
-	PLAYER *p_player = GetPlayer();
-	BULLET *p_bullet = GetBullet();
+
+	// ゲッターでポインタを受け取る
+	PLAYER		*p_player		 = GetPlayer();
+	BULLET		*p_bullet	 	 = GetBullet();
+	PREDICTION  * p_Prediction	 = GetPrediction();
+
 
 	// ブロックの色の設定(リセット)		順番的に(0,0)は透明度は変えられない。けど問題ない。
 	D3DXCOLOR color[10 * MAP_Y + MAP_X];
@@ -454,7 +459,24 @@ void DrawBG(void)
 					}
 				}
 			}
+			// 予測弾の表示
+			for (int i = 0; i < PREDICTION_MAX; i++)
+			{
+				if (p_Prediction[i].isUse)
+				{
+					// マップでの座標に変換する
+					D3DXVECTOR2 mappos = PosToMappos(p_Prediction[i].pos);
+					// 変換した座標の小数点を切り捨てる
+					int mappos_x = mappos.x;
+					int mappos_y = mappos.y;
 
+					// 描写するタイミングだったら描写する
+					if (x == mappos_x && y == mappos_y)
+					{
+						DrawPredictionSpecifyNum(i);			// iの予測弾が描かれるかどうか(使われてるかどうか)は、これらの関数の中で検索される。
+					}
+				}
+			}
 
 
 

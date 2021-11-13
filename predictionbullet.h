@@ -5,6 +5,8 @@
 
 #define PREDICTION_MAX		(5)		// 予測弾のMax数
 
+#define PREDICTION_SIZE		(20)	// 予測弾のベースのサイズ
+
 
 // 予測弾構造体 
 struct PREDICTION
@@ -33,3 +35,6 @@ void DrawPrediction(void);
 void DrawPredictionSpecifyNum(int i);
 
 PREDICTION* GetPrediction(void);
+
+void PredictionUseTrue();
+void PredictionUseFalse();

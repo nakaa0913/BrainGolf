@@ -85,3 +85,4 @@ void SetPlayer(D3DXVECTOR2 pos);
 PLAYER *GetPlayer(void);
 
 void SetPlayerUseFile(MAPCHIP_POS_STRUCT Receive_Mapchip_Pos_Struct, float movespeed);
+int returnHavePlayer();

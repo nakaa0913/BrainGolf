@@ -93,7 +93,7 @@ bool JudgeClearMission(int missionnum)
 	SAVEDATA* p_Savedata = GetSavedata();
 	STAGEDATA* p_Stagedata = GetStagedata();
 
-	judge = ClearorFailure(p_Stagedata->stagenum, p_Stagedata->mission_ContentsNum[missionnum]);
+	judge = ClearorFailure(p_Stagedata->mission_ContentsNum[missionnum], p_Stagedata->mission_JudgeNum[missionnum]);
 
 	return judge;
 }
@@ -117,6 +117,11 @@ void DrawMissionStageSelect()
 
 	float base_pos2_x = SCREEN_WIDTH / 2;
 	float base_pos2_y = SCREEN_HEIGHT / 2;
+
+	// 数字の設定
+	float num_size_x = 40.0f;
+	float num_size_y = 40.0f;
+
 
 	// ミッションの背景を表示	Effectでのidは25		ミッションの中身を表示が3つあってそこの真ん中に来るように配置する->iのとこを1にかえるとOK
 	int Background_EffectArray =
@@ -142,14 +147,16 @@ void DrawMissionStageSelect()
 
 		// 数字の描写		ミッションの番号ごとに数字を描く場所は決まってると思うので、それもswitch分で判別できると楽
 		int Number_EffectArray[2] = { 0,0 };
-
-
+		int* p_Number_EffectArray = Number_EffectArray;
+		SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 1,
+			D3DXVECTOR2(num_size_x, num_size_y), D3DXVECTOR2(num_size_x, num_size_y), 0,
+			0.0f, 1.0f, 0, 999, 0, 20,
+			0.0f, 0.0f, 0);
 
 		// エフェクトが生成された場所の番号の保存
 		g_Mission.mission_ContentsNum_EffectArray[i] = Content_EffectArray;
-		//g_Mission.mission_JudgeNum_EffectArray[i][0] = 0;
-		//g_Mission.mission_JudgeNum_EffectArray[i][1] = 0;
-		//g_Mission.mission_JudgeNum_EffectArray[i][2] = 0;
+		g_Mission.mission_JudgeNum_EffectArray[i][0] = Number_EffectArray[0];
+		g_Mission.mission_JudgeNum_EffectArray[i][1] = Number_EffectArray[1];		// 連番の保存
 	}
 	return;
 }
@@ -161,10 +168,7 @@ void DeleteMissionStageSelect()
 	for (int i = 0; i < MAX_MISSION; i++)
 	{
 		EffectBreak(g_Mission.mission_ContentsNum_EffectArray[i]);
-
-		//g_Mission.mission_JudgeNum_EffectArray[i][0] = 0;
-		//g_Mission.mission_JudgeNum_EffectArray[i][1] = 0;
-		//g_Mission.mission_JudgeNum_EffectArray[i][2] = 0;
+		EffectBreak(g_Mission.mission_JudgeNum_EffectArray[i][0], g_Mission.mission_JudgeNum_EffectArray[i][1]);	// 第2引数で連番の処理
 
 	}
 	return;

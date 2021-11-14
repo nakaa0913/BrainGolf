@@ -164,7 +164,7 @@ void UpdateStageSelect(void)
 	}
 
 
-	//星		これなんだ
+	//星
 	SetEffect(9, D3DXVECTOR2(280.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
 		D3DXVECTOR2(500.0f, 150.0f), D3DXVECTOR2(500.0f, 150.0f), 0,
 		0.0f, 1.0f, 0, 1, 0, 0,
@@ -231,11 +231,6 @@ void UpdateStageSelect(void)
 			DeleteMissionStageSelect();
 			stage_select_once = false;
 			stage_select_once_time = 0;
-
-			// ステージデータを受け取る,ミッションやマップの表示で使うため。
-			// xとyからマップの番号を計算する
-			int stagenum = (SELECT_MAX_X * g_StageSelect.select_y) + (g_StageSelect.select_x + 1);
-			SetStageData(stagenum);
 		}
 	}
 
@@ -252,6 +247,11 @@ void UpdateStageSelect(void)
 	if (stage_select_once == false)
 	{
 		stage_select_once = true;
+
+		// ステージデータを受け取る,ミッションやマップの表示で使うため。
+		// xとyからマップの番号を計算する
+		int stagenum = (SELECT_MAX_X * g_StageSelect.select_y) + (g_StageSelect.select_x + 1);
+		SetStageData(stagenum);
 
 		// ステージデータを受け取った(更新された)のでミッションを表示させる
 		DrawMissionStageSelect();

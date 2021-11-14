@@ -33,7 +33,7 @@ PlayerdataEnd
 MissiondataStart
 0,3,
 1,2,
-2,10,
+2,120,
 MissiondataEnd
 
 EndLoadFile

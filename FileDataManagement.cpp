@@ -876,11 +876,12 @@ int LoadMissiondata(FILE* fp)
 	char loadchar[4] = "";
 	char now_strings[256] = "";
 	char decision_strings[256] = "";
-	bool decision = false;
 
 	int addednumtime = 0;	// 読み込んで追加した回数
 
-	while (1)
+	int pattern = PATTERN_NULL;
+
+	while (pattern != PATTERN_END)
 	{
 		// ファイルを1文字ずつ読み込む	fscanfは返り値として読み込んだ数(%sとか%dの数)を返すが、今回は無視するので(void)をつける
 		(void)fscanf(fp, "%1s", loadchar);
@@ -905,7 +906,7 @@ int LoadMissiondata(FILE* fp)
 			addednumtime++;
 
 			// マップ配列分文字を読み終わったら終了とみなしてNULLを返す
-			if (addednumtime == MAX_MISSION * 2 - 1)
+			if (addednumtime == MAX_MISSION * 2)
 			{
 				return PATTERN_NULL;
 			}
@@ -1139,7 +1140,6 @@ void applyMissionArray(int addednumtime, char strings[])
 		else
 			p_Stagedata->mission_JudgeNum[missionnum] = data;
 	}
-
 	return;
 }
 

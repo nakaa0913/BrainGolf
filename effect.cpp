@@ -124,6 +124,13 @@ void InitEffect(void)
 		g_Effect[i].drawsize = g_Effect[i].size;
 
 		g_Effect[i].drawpos = g_Effect[i].pos1;
+
+		// UV値の設定。デフォだと全て表示
+		g_Effect[i].tx = 1.0f;
+		g_Effect[i].ty = 1.0f;
+		g_Effect[i].sx = 0.0f;
+		g_Effect[i].sy = 0.0f;
+
 		g_Effect[i].isUse = false;
 
 	}
@@ -225,7 +232,7 @@ void DrawEffect(void)
 		if (g_Effect[i].isUse == true)
 		{
 			D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, g_Effect[i].Clarity);
-			DrawSpriteColorRotate(g_Effect[i].id, g_Effect[i].drawpos.x, g_Effect[i].drawpos.y, g_Effect[i].size.x, g_Effect[i].size.y, 0.0f, 0.0f, 1.0f, 1.0f, col, g_Effect[i].rot);
+			DrawSpriteColorRotate(g_Effect[i].id, g_Effect[i].drawpos.x, g_Effect[i].drawpos.y, g_Effect[i].size.x, g_Effect[i].size.y, g_Effect[i].sx, g_Effect[i].sy, g_Effect[i].tx, g_Effect[i].ty, col, g_Effect[i].rot);
 		}
 	}
 	DrawScore();
@@ -272,6 +279,12 @@ int SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern
 
 		g_Effect[i].drawpos = g_Effect[i].pos1;
 		g_Effect[i].use_array_num = i;
+
+		g_Effect[i].tx = 1.0f;					// テクスチャ1マスの幅
+		g_Effect[i].ty = 1.0f;					// テクスチャ1マスの高さ
+		g_Effect[i].sx = 0.0f;					// テクスチャのスタート位置x
+		g_Effect[i].sy = 0.0f;					// テクスチャのスタート位置y
+
 		g_Effect[i].isUse = true;
 		
 		g_Effect[i].id = GetTextureData(id);
@@ -285,104 +298,134 @@ int SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern
 	 exit(1);
 }
 
-//// 正の整数のみ対応
-//int SetEffectNumber(int num, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
-//	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
-//	float rot_angle1, float rot_angle2, int rot_moving_pattern)
-//{
-//	for (int i = 0; i < MAX_EFFECT; i++)
-//	{
-//		if (g_Effect[i].isUse == false)
-//		{
-//			//g_Effect[i].id = id;	下で引数で入力した値によってテクスチャを変更している
-//			//g_Effect[i].pos = pos1;
-//			//g_Effect[i].pos1 = pos1;
-//			//g_Effect[i].pos2 = pos2;
-//			g_Effect[i].pos_moving_pattern = pos_moving_pattern;
-//			g_Effect[i].size = size1;
-//			g_Effect[i].size1 = size1;
-//			g_Effect[i].size2 = size2;
-//			g_Effect[i].size_moving_pattern = size_moving_pattern;
-//			g_Effect[i].Clarity_min = Clarity_min;
-//			g_Effect[i].Clarity_max = Clarity_max;
-//			g_Effect[i].Clarity = g_Effect[i].Clarity_min;
-//			g_Effect[i].fadeIn_count = fadeIn_count;
-//			g_Effect[i].all_count = all_count;
-//			g_Effect[i].fadeOut_count = fadeOut_count;
-//			g_Effect[i].now_count = 0;
-//			g_Effect[i].moving_count = moving_count;
-//			g_Effect[i].rot = AngleToRadian(rot_angle1);
-//			g_Effect[i].rot_angle = rot_angle1;
-//			g_Effect[i].rot_angle1 = rot_angle1;
-//			g_Effect[i].rot_angle2 = rot_angle2;
-//			g_Effect[i].rot_moving_pattern = rot_moving_pattern;
-//			g_Effect[i].rot_count = 0;
-//
-//			g_Effect[i].drawpos = g_Effect[i].pos1;
-//			g_Effect[i].use_array_num = i;
-//			g_Effect[i].isUse = true;
-//
-//			g_Effect[i].id = GetTextureData(30);		// Numberは30番に設定されてる
-//
-//
-//			// 貰った数字は実際には使わずにクローンを使って計算
-//			int Intnumber = num;
-//
-//			// もらった数字が何桁かの計算
-//			int digit = 0;
-//			while (Intnumber != 0)
-//			{
-//				Intnumber = Intnumber / 10;
-//				digit++;
-//			}
-//			// 0単体の場合上のワイル分だと桁数0になるので、あとでdigitを1にしてあげる
-//			if (num == 0)
-//				digit = 1;
-//
-//			// float型にして偶数でも真ん中を作る。
-//			float number = num;
-//			
-//			for (int i = 0; i < digit; i++)
-//			{
-//				// 今回表示する桁の数字
-//				float x = (float)(number % 10);
-//
-//				// スコアの位置やテクスチャー座標を反映
-//				g_Effect[i].pos = pos1;
-//				g_Effect[i].pos1 = pos1;
-//				g_Effect[i].pos2 = pos2;
-//
-//				float tw = 1.0f / 10;		// テクスチャの幅
-//				float th = 1.0f / 1;		// テクスチャの高さ
-//				float tx = x * tw;			// テクスチャの左上X座標
-//				float ty = 0.0f;			// テクスチャの左上Y座標
-//
-//				// １枚のポリゴンの頂点とテクスチャ座標を設定
-//				DrawSprite(g_TexNo, px, py, pw, ph, tx, ty, tw, th);
-//
-//				// 次の桁へ
-//				number /= 10;
-//			}
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//			return i;
-//		}
-//
-//	}
-//
-//	// MAX_EFFECT を超えた数エフェクトを作成しようとするとゲームが落ちる
-//	exit(1);
-//}
+// 正の整数のみ対応
+void SetEffectNumber(int num,int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
+	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
+	float rot_angle1, float rot_angle2, int rot_moving_pattern)
+{
+
+	// 貰った数字は実際には使わずにクローンを使って計算
+	int number = num;
+
+	// もらった数字が何桁かの計算
+	int digit = 0;
+	while (number != 0)
+	{
+		number = number / 10;
+		digit++;
+	}
+	// 0単体の場合上のワイル分だと桁数0になるので、あとでdigitを1にしてあげる
+	if (num == 0)
+		digit = 1;
+
+	// 桁数の真ん中を調べる。ここが座標の中心となる
+	int middle_digit = digit / 2;
+
+	int serial = 0;
+	int nextnum = -1;
+
+	int last_i = -1;
+
+	for (int i = 0; i < MAX_EFFECT; i++)
+	{
+		if (g_Effect[i].isUse == false)
+		{
+			if (i == nextnum)
+			{
+				// 連番だった場合
+				serial++;
+			}
+			else
+			{
+				// 連番でなかった場合
+				serial = 0;
+			}
+
+			nextnum = i + 1;
+
+			// serialが桁数分連続していたらbreakして抜ける。
+			if (serial == digit - 1)
+			{
+				last_i = i;
+				break;
+			}
+		}
+		// MAX_EFFECT を超えた数エフェクトを作成しようとするとゲームが落ちる
+		//exit(25);
+	}
+
+	int sn = last_i - (digit - 1);		// startnum
+	// 引数のnumを改めて入れておく
+	number = num;
+
+	// セットエフェクトする処理
+	for (int i = 0; i < digit; i++)
+	{
+		//g_Effect[i + sn].id = id;	下で引数で入力した値によってテクスチャを変更している
+		g_Effect[i + sn].pos = pos1;
+		g_Effect[i + sn].pos1 = pos1;
+		g_Effect[i + sn].pos2 = pos2;
+		g_Effect[i + sn].pos_moving_pattern = pos_moving_pattern;
+		g_Effect[i + sn].size = size1;
+		g_Effect[i + sn].size1 = size1;
+		g_Effect[i + sn].size2 = size2;
+		g_Effect[i + sn].size_moving_pattern = size_moving_pattern;
+		g_Effect[i + sn].Clarity_min = Clarity_min;
+		g_Effect[i + sn].Clarity_max = Clarity_max;
+		g_Effect[i + sn].Clarity = g_Effect[i + sn].Clarity_min;
+		g_Effect[i + sn].fadeIn_count = fadeIn_count;
+		g_Effect[i + sn].all_count = all_count;
+		g_Effect[i + sn].fadeOut_count = fadeOut_count;
+		g_Effect[i + sn].now_count = 0;
+		g_Effect[i + sn].moving_count = moving_count;
+		g_Effect[i + sn].rot = AngleToRadian(rot_angle1);
+		g_Effect[i + sn].rot_angle = rot_angle1;
+		g_Effect[i + sn].rot_angle1 = rot_angle1;
+		g_Effect[i + sn].rot_angle2 = rot_angle2;
+		g_Effect[i + sn].rot_moving_pattern = rot_moving_pattern;
+		g_Effect[i + sn].rot_count = 0;
+
+		g_Effect[i + sn].drawpos = g_Effect[i + sn].pos1;
+		g_Effect[i + sn].use_array_num = i + sn;
+		g_Effect[i + sn].isUse = true;
+
+		g_Effect[i + sn].id = GetTextureData(30);		// Numberは30番に設定されてる
+
+
+		// 桁が小さい方から描かれていく。右から左に向かって描いていく
+		// 今回表示する桁の数字
+		int nownum = number % 10;
+
+		// 桁数が奇数の場合と偶数の場合で表示方法を場合分けする
+		if (digit % 2 == 0)
+		{
+			// 偶数の場合			真ん中の桁数と次の数の間に真ん中が来る
+			// スコアの位置やテクスチャー座標を反映
+			g_Effect[i + sn].pos.x = pos1.x + (middle_digit - i) * size1.x - (size1.x / 2);
+			g_Effect[i + sn].pos1.x = pos1.x + (middle_digit - i) * size1.x - (size1.x / 2);
+			g_Effect[i + sn].pos2.x = pos2.x + (middle_digit - i) * size2.x - (size2.x / 2);
+		}
+		else
+		{
+			// 奇数の場合		指定した座標が真ん中の桁数の中心に来る
+			// スコアの位置やテクスチャー座標を反映
+			g_Effect[i + sn].pos.x = pos1.x + (middle_digit - i) * size1.x;
+			g_Effect[i + sn].pos1.x = pos1.x + (middle_digit - i) * size1.x;
+			g_Effect[i + sn].pos2.x = pos2.x + (middle_digit - i) * size2.x;
+		}
+
+		g_Effect[i + sn].tx = 1.0f / 10;						// テクスチャ1マスの幅
+		g_Effect[i + sn].ty = 1.0f / 2;						// テクスチャ1マスの高さ
+		g_Effect[i + sn].sx = g_Effect[i + sn].tx * nownum;			// テクスチャのスタート位置x
+		g_Effect[i + sn].sy = 0.0f;							// テクスチャのスタート位置y
+
+		// 次の桁へ
+		number /= 10;
+	}
+	// スタート位置と連番が何個かを返す
+	back_array[0] = sn;
+	back_array[1] = digit;
+}
 
 // ゲーム内でのエフェクトを使う場合はこっち。座標を自動的に斜めに修正してくれる。例えばゲーム内のボールに追従するとかの時便利
 // all_count == 999だったら無制限に表示

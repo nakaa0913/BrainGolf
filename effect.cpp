@@ -1,4 +1,5 @@
 
+#include<iostream>
 #include "effect.h"
 #include "Texture.h"
 #include "sprite.h"
@@ -46,6 +47,9 @@ static int stage_mission2_28;// 28
 
 static int stage_mission5_29;// 29
 
+// 数字の表示
+static int number_30;// 30
+
 
 
 
@@ -86,6 +90,8 @@ void InitEffect(void)
 	stage_mission2_28 = LoadTexture("data/TEXTURE/select/mission/mission_2.png");
 
 	stage_mission5_29 = LoadTexture("data/TEXTURE/select/selectlock.png");
+
+	number_30 = LoadTexture("data/TEXTURE/other_effect/number.png");
 
 
 	for (int i = 0; i < MAX_EFFECT; i++)
@@ -144,6 +150,7 @@ void UninitEffect(void)
 	UnloadTexture("data/TEXTURE/result/clear_star_2.png");
 	UnloadTexture("data/TEXTURE/result/clear_star_3.png");
 	UnloadTexture("data/TEXTURE/result/clear_star_black_1.png");
+	UnloadTexture("data/TEXTURE/other_effect/number.png");
 
 }
 
@@ -277,6 +284,105 @@ int SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern
 	// MAX_EFFECT を超えた数エフェクトを作成しようとするとゲームが落ちる
 	 exit(1);
 }
+
+//// 正の整数のみ対応
+//int SetEffectNumber(int num, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
+//	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
+//	float rot_angle1, float rot_angle2, int rot_moving_pattern)
+//{
+//	for (int i = 0; i < MAX_EFFECT; i++)
+//	{
+//		if (g_Effect[i].isUse == false)
+//		{
+//			//g_Effect[i].id = id;	下で引数で入力した値によってテクスチャを変更している
+//			//g_Effect[i].pos = pos1;
+//			//g_Effect[i].pos1 = pos1;
+//			//g_Effect[i].pos2 = pos2;
+//			g_Effect[i].pos_moving_pattern = pos_moving_pattern;
+//			g_Effect[i].size = size1;
+//			g_Effect[i].size1 = size1;
+//			g_Effect[i].size2 = size2;
+//			g_Effect[i].size_moving_pattern = size_moving_pattern;
+//			g_Effect[i].Clarity_min = Clarity_min;
+//			g_Effect[i].Clarity_max = Clarity_max;
+//			g_Effect[i].Clarity = g_Effect[i].Clarity_min;
+//			g_Effect[i].fadeIn_count = fadeIn_count;
+//			g_Effect[i].all_count = all_count;
+//			g_Effect[i].fadeOut_count = fadeOut_count;
+//			g_Effect[i].now_count = 0;
+//			g_Effect[i].moving_count = moving_count;
+//			g_Effect[i].rot = AngleToRadian(rot_angle1);
+//			g_Effect[i].rot_angle = rot_angle1;
+//			g_Effect[i].rot_angle1 = rot_angle1;
+//			g_Effect[i].rot_angle2 = rot_angle2;
+//			g_Effect[i].rot_moving_pattern = rot_moving_pattern;
+//			g_Effect[i].rot_count = 0;
+//
+//			g_Effect[i].drawpos = g_Effect[i].pos1;
+//			g_Effect[i].use_array_num = i;
+//			g_Effect[i].isUse = true;
+//
+//			g_Effect[i].id = GetTextureData(30);		// Numberは30番に設定されてる
+//
+//
+//			// 貰った数字は実際には使わずにクローンを使って計算
+//			int Intnumber = num;
+//
+//			// もらった数字が何桁かの計算
+//			int digit = 0;
+//			while (Intnumber != 0)
+//			{
+//				Intnumber = Intnumber / 10;
+//				digit++;
+//			}
+//			// 0単体の場合上のワイル分だと桁数0になるので、あとでdigitを1にしてあげる
+//			if (num == 0)
+//				digit = 1;
+//
+//			// float型にして偶数でも真ん中を作る。
+//			float number = num;
+//			
+//			for (int i = 0; i < digit; i++)
+//			{
+//				// 今回表示する桁の数字
+//				float x = (float)(number % 10);
+//
+//				// スコアの位置やテクスチャー座標を反映
+//				g_Effect[i].pos = pos1;
+//				g_Effect[i].pos1 = pos1;
+//				g_Effect[i].pos2 = pos2;
+//
+//				float tw = 1.0f / 10;		// テクスチャの幅
+//				float th = 1.0f / 1;		// テクスチャの高さ
+//				float tx = x * tw;			// テクスチャの左上X座標
+//				float ty = 0.0f;			// テクスチャの左上Y座標
+//
+//				// １枚のポリゴンの頂点とテクスチャ座標を設定
+//				DrawSprite(g_TexNo, px, py, pw, ph, tx, ty, tw, th);
+//
+//				// 次の桁へ
+//				number /= 10;
+//			}
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//			return i;
+//		}
+//
+//	}
+//
+//	// MAX_EFFECT を超えた数エフェクトを作成しようとするとゲームが落ちる
+//	exit(1);
+//}
 
 // ゲーム内でのエフェクトを使う場合はこっち。座標を自動的に斜めに修正してくれる。例えばゲーム内のボールに追従するとかの時便利
 // all_count == 999だったら無制限に表示
@@ -588,6 +694,9 @@ int GetTextureData(int id)
 	case 29:
 		return stage_mission5_29;
 		break;
+	case 30:
+		return number_30;
+		break;
 	}
 
 	// どこにもたどり着かなかった場合
@@ -596,12 +705,12 @@ int GetTextureData(int id)
 }
 
 
-// 最初にuse_array_numが必要だが、そのuse_array_numのエフェクトを途中でも変更できる
+// 最初にuse_array_numが必要だが、そのuse_array_numのエフェクトを途中でも変更できる,SerialNumberはデフォルト関数でデフォ=1
 void ChangeEffect(int use_array_num, int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
-	float rot_angle1, float rot_angle2, int rot_moving_pattern)
+	float rot_angle1, float rot_angle2, int rot_moving_pattern, int SerialNumber)
 {
-	if (g_Effect[use_array_num].isUse)
+	for (int i = 0; i < SerialNumber; i++)
 	{
 		//g_Effect[use_array_num].id = id;	下で引数で入力した値によってテクスチャを変更している
 		g_Effect[use_array_num].pos = pos1;
@@ -643,19 +752,24 @@ void ChangeEffect(int use_array_num, int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2,
 }
 
 
-// use_array_numのエフェクトのnow_countだけを設定できる
-void ChangeEffectCount(int use_array_num, int setcount)
+// use_array_numのエフェクトのnow_countだけを設定できる,SerialNumberはデフォルト関数でデフォ=1
+void ChangeEffectCount(int use_array_num, int setcount, int SerialNumber)
 {
-	g_Effect[use_array_num].now_count = setcount;
-
+	for (int i = 0; i < SerialNumber; i++)
+	{
+		g_Effect[use_array_num].now_count = setcount;
+	}
 	return;
 }
 
-// 配列の何番目かを指定してエフェクトを消す
-void EffectBreak(int use_array_num)
+// 配列の何番目かを指定してエフェクトを消す,SerialNumberはデフォルト関数でデフォ=1
+void EffectBreak(int use_array_num, int SerialNumber)
 {
-	g_Effect[use_array_num].isUse = false;
-	g_Effect[use_array_num].use_array_num = -1;
+	for (int i = 0; i < SerialNumber; i++)
+	{
+		g_Effect[use_array_num + i].isUse = false;
+		g_Effect[use_array_num + i].use_array_num = -1;
+	}
 
 	return;
 }

@@ -1,3 +1,4 @@
+#include<iostream>
 #include "player.h"
 #include "input.h"
 #include "texture.h"
@@ -59,7 +60,7 @@ bool ClearorFailure(int ContentsNum, int JudgeNum)
 	switch (ContentsNum)
 	{
 	case 0:		// JudgeNum回以内のパスでクリア
-		if(p_Gamedata.pass_count <= JudgeNum)
+		if (p_Gamedata.pass_count <= JudgeNum)
 			return true;
 		else
 			return false;
@@ -124,6 +125,7 @@ void DrawMissionStageSelect()
 			0.0f, 1.0f, 0, 999, 0, 20,
 			0.0f, 0.0f, 0);
 
+	// エフェクトが生成された場所の番号の保存
 	g_Mission.mission_background_EffectArray = Background_EffectArray;
 
 	// ミッションの中身を表示
@@ -132,17 +134,18 @@ void DrawMissionStageSelect()
 		// コンテンツのidを描写用に、エフェクトで設定されているidに変換
 		int Content_Texid = ContentsNumToTexid(p_Stagedata->mission_ContentsNum[i]);
 		// セットエフェクトで文字の描写
-		int Content_EffectArray = 
+		int Content_EffectArray =
 			SetEffect(Content_Texid, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 1,
 				D3DXVECTOR2(size_x, size_y), D3DXVECTOR2(size_x, size_y), 0,
 				0.0f, 1.0f, 0, 999, 0, 20,
 				0.0f, 0.0f, 0);
 
 		// 数字の描写		ミッションの番号ごとに数字を描く場所は決まってると思うので、それもswitch分で判別できると楽
+		int Number_EffectArray[2] = { 0,0 };
 
 
 
-
+		// エフェクトが生成された場所の番号の保存
 		g_Mission.mission_ContentsNum_EffectArray[i] = Content_EffectArray;
 		//g_Mission.mission_JudgeNum_EffectArray[i][0] = 0;
 		//g_Mission.mission_JudgeNum_EffectArray[i][1] = 0;

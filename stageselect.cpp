@@ -7,6 +7,7 @@
 
 ==============================================================================*/
 
+#include<iostream>
 #include "game.h"
 #include "main.h"
 #include "input.h"

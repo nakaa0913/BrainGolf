@@ -2,6 +2,7 @@
 
 #include "player.h"
 
+// セーブデータのファイル名
 #define		SAVEDATA_FILE		"data/SAVEDATA/savedata2.txt"
 
 // ファイル読み込み中に、今何のデータを読んでいるかの判別するためのパターン

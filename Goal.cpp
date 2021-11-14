@@ -18,6 +18,9 @@
 #include "scene.h"
 #include "fade.h"
 #include "effect.h"
+#include "mission.h"
+#include "savedata.h"
+#include "stagedata.h"
 
 #define GOAL_H (50)
 #define GOAL_W (50)
@@ -75,6 +78,8 @@ void UninitGoal(void)
 //=============================================================================
 void UpdateGoal(void)
 {
+	SAVEDATA* p_Savedata = GetSavedata();
+	STAGEDATA* p_Stagedata = GetStagedata();
 
 	if (g_Goal.goaltime == 10)
 	{
@@ -126,32 +131,43 @@ void UpdateGoal(void)
 
 	if (g_Goal.goaltime == 400)
 	{
-		////星
-		SetEffect(11, D3DXVECTOR2(550.0f, 68.0f), D3DXVECTOR2(550.0f, 68.0f), 0,
-			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-			0.0f, 1.0f, 120, 999, 0, 60,
-			0.0f, 0.0f, 0);
+		// ミッションをクリアしているなら表示する
+		if (p_Savedata[p_Stagedata->stagenum].mission_clear[0] == 1)
+		{
+			////星
+			SetEffect(11, D3DXVECTOR2(550.0f, 68.0f), D3DXVECTOR2(550.0f, 68.0f), 0,
+				D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+				0.0f, 1.0f, 120, 999, 0, 60,
+				0.0f, 0.0f, 0);
+		}
 		//横1440
 		//縦810
 	}
 
 	if (g_Goal.goaltime == 430)
 	{
-		//星
-		SetEffect(11, D3DXVECTOR2(550.0f, 163.0f), D3DXVECTOR2(550.0f, 163.0f), 0,
-			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-			0.0f, 1.0f, 120, 999, 0, 60,
-			0.0f, 0.0f, 0);
+		// ミッションをクリアしているなら表示する
+		if (p_Savedata[p_Stagedata->stagenum].mission_clear[1] == 1)
+		{
+			//星
+			SetEffect(11, D3DXVECTOR2(550.0f, 163.0f), D3DXVECTOR2(550.0f, 163.0f), 0,
+				D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+				0.0f, 1.0f, 120, 999, 0, 60,
+				0.0f, 0.0f, 0);
+		}
 	}
 
 	if (g_Goal.goaltime == 460)
 	{
-		//星
-		SetEffect(11, D3DXVECTOR2(550.0f, 250.0f), D3DXVECTOR2(550.0f, 250.0f), 0,
-			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-			0.0f, 1.0f, 120, 999, 0, 60,
-			0.0f, 0.0f, 0);
-
+		// ミッションをクリアしているなら表示する
+		if (p_Savedata[p_Stagedata->stagenum].mission_clear[2] == 1)
+		{
+			//星
+			SetEffect(11, D3DXVECTOR2(550.0f, 250.0f), D3DXVECTOR2(550.0f, 250.0f), 0,
+				D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+				0.0f, 1.0f, 120, 999, 0, 60,
+				0.0f, 0.0f, 0);
+		}
 	}
 
 	if (g_Goal.goaltime >= 500)

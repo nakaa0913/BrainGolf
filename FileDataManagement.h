@@ -2,6 +2,8 @@
 
 #include "player.h"
 
+#define		SAVEDATA_FILE		"data/SAVEDATA/savedata2.txt"
+
 // ファイル読み込み中に、今何のデータを読んでいるかの判別するためのパターン
 #define		PATTERN_NULL		(-1)
 #define		PATTERN_MAP			(0)
@@ -25,6 +27,7 @@ void LoadMapdataMain(char* fileName);
 int LoadMapdata(FILE* fp);
 int LoadPlayerdata(FILE* fp);
 int LoadMissiondata(FILE* fp);
+void WriteSavedata(char* fileName);
 
 int charToint(char c);
 float charTofloat(char* strings, int num);
@@ -35,5 +38,6 @@ void applyMissionArray(int addednumtime, char strings[]);
 float SetMoveSpeed(int decimal_point, char strings[]);
 int strcmpNumber(char* strings);
 int StringsToInt(char strings[]);
+char* intTostrings(int num);
 
 void LoadSavedata(char* fileName);

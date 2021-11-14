@@ -241,6 +241,57 @@ void LoadSavedata(char* fileName)
 	return;
 }
 
+
+
+
+
+
+// 一部だけ書き換える処理が存在しないので全てを上書きしなければならない
+void WriteSavedata(char* fileName)
+{
+	// 現在のセーブデータを読み込む
+	SAVEDATA* p_Savedata = GetSavedata();
+	STAGEDATA* p_Stagedata = GetStagedata();
+
+	FILE* fp; // FILE型構造体
+
+	// ファイル書き込みで開く
+	fopen_s(&fp, fileName, "w");
+
+	// 開くのに失敗した場合の処理。強制終了させている
+	if (fp == NULL)
+	{
+		printf("%s file not open!\n", fileName);
+		exit(2);		// ファイルを開いたりするときに出たエラーは(2)
+		return;
+	}
+
+	char bases[4] = "s";
+
+	char stagenum[20] = "";
+	char mission0char[20] = "";
+	char mission1char[20] = "";
+	char mission2char[20] = "";
+	char cleartimechar[20] = "";
+
+	for (int i = 0; i < MAX_STAGE; i++)
+	{
+		// 全てのデータをchar型に直す処理
+		strcpy(stagenum, intTostrings(i + 1));
+		strcpy(mission0char, intTostrings(p_Savedata[i].mission_clear[0]));
+		strcpy(mission1char, intTostrings(p_Savedata[i].mission_clear[1]));
+		strcpy(mission2char, intTostrings(p_Savedata[i].mission_clear[2]));
+		strcpy(cleartimechar, intTostrings(p_Savedata[i].clear_time));
+
+		// 書き込む処理
+		fprintf(fp, "%s%s,%s,%s,%s,%s,\n", bases, stagenum, mission0char, mission1char, mission2char, cleartimechar);
+	}
+
+	// 終了の処理
+	fclose(fp); // ファイルを閉じる
+	return;
+}
+
 // fgets(1行ずつ) + sscanf
 //void LoadMapdata(char* fileName)
 //{
@@ -1118,6 +1169,71 @@ int StringsToInt(char strings[])
 	return back_num;
 }
 
+
+// もらったint型(正の数3桁まで)を文字列(1,2,3桁の整数型の数字のみ対応)にして返す
+char* intTostrings(int num)
+{
+	int number = num;
+	int digit = 0;
+
+	int digitnum[3] = { 0,0,0 };
+
+	// もらった数字が何桁かの計算
+	while (number != 0)
+	{
+		number = number / 10;
+		digit++;
+	}
+	// 0単体の場合上のワイル分だと桁数0になるので、あとでdigitを1にしてあげる
+	if (num == 0)
+		digit = 1;
+
+	// 返す文字列
+	char data[4] = "";
+	char back_strings[20] = "";
+
+
+	// 文字列が何文字か調べ、文字数に応じて数字に変換したときの桁数を変える
+	if (digit == 1)
+	{
+		digitnum[0] = num;
+		data[0] = intTochar(digitnum[0]);
+
+		strcat(back_strings, data);
+		strcpy(data, "");
+	}
+	if (digit == 2)
+	{
+		digitnum[0] = num / 10;
+		digitnum[1] = num - digitnum[0] * 10;
+
+		data[0] = intTochar(digitnum[0]);
+		strcat(back_strings, data);
+		strcpy(data, "");
+		data[0] = intTochar(digitnum[1]);
+		strcat(back_strings, data);
+		strcpy(data, "");
+	}
+	if (digit == 3)
+	{
+		digitnum[0] = num / 100;
+		digitnum[1] = (num - digitnum[0] * 100) / 10;
+		digitnum[2] = num - digitnum[0] * 100 - digitnum[1] * 10;
+
+		data[0] = intTochar(digitnum[0]);
+		strcat(back_strings, data);
+		strcpy(data, "");
+		data[0] = intTochar(digitnum[1]);
+		strcat(back_strings, data);
+		strcpy(data, "");
+		data[0] = intTochar(digitnum[2]);
+		strcat(back_strings, data);
+		strcpy(data, "");
+	}
+
+	int dad = 0;
+	return back_strings;
+}
 
 // 読み込んだ１文字が数字であるかどうか.数字であれば0を返すそれ以外は-1を返す
 int strcmpNumber(char* strings)

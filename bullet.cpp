@@ -17,6 +17,9 @@
 #include "collision.h"
 #include "camera.h"
 #include "gamedata.h"
+#include "savedata.h"
+#include "stagedata.h"
+#include "FileDataManagement.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -90,6 +93,9 @@ void UninitBullet(void)
 void UpdateBullet(void)
 {
 	CAMERA* p_Camera = GetCamera();
+	SAVEDATA* p_Savedata = GetSavedata();
+	STAGEDATA* p_Stagedata = GetStagedata();
+	GAMEDATA* p_Gamedata = GetGamedata();
 
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
@@ -545,6 +551,35 @@ void UpdateBullet(void)
 			{
 				// ゴールに入った時の処理
 				GoalTrue();
+
+				bool updata_savedata = false;
+
+				// ミッションをクリアしているかどうかの処理。新たにクリアしていた場合のみ更新する
+				for (int missionnum = 0; missionnum < MAX_MISSION; missionnum++)
+				{
+					if (JudgeClearMission(missionnum) == true)
+					{
+						// クリアしていて更新があった場合セーブデータ構造体を変更する
+						p_Savedata[p_Stagedata->stagenum].mission_clear[missionnum] = 1;
+						updata_savedata = true;
+					}
+				}
+				// クリアタイムが更新されたら
+				if (p_Gamedata->game_time < p_Savedata[p_Stagedata->stagenum].clear_time)
+				{
+					// クリアしていて更新があった場合セーブデータ構造体を変更する
+					p_Savedata[p_Stagedata->stagenum].clear_time = p_Gamedata->game_time;
+					updata_savedata = true;
+				}
+				// セーブデータの更新があったならば、テキストも更新する
+				if (updata_savedata == true)
+				{
+					// テキストファイルを書き換える
+					WriteSavedata(SAVEDATA_FILE);
+				}
+
+
+
 				// g_Bullet[i].use = false;
 			}
 

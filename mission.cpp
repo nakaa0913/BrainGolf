@@ -11,6 +11,7 @@
 #include "gamedata.h"
 #include "mission.h"
 #include "effect.h"
+#include "savedata.h"
 
 MISSION g_Mission;
 
@@ -51,7 +52,7 @@ MISSION* GetMission()
 
 
 // ミッションが達成されてるかをbool型で返す関数trueでクリア
-bool JudgeClearMission(int ContentsNum, int JudgeNum)
+bool ClearorFailure(int ContentsNum, int JudgeNum)
 {
 	GAMEDATA p_Gamedata = *GetGamedata();
 
@@ -81,6 +82,19 @@ bool JudgeClearMission(int ContentsNum, int JudgeNum)
 	// ContentsNumがおかしい場合ここに来る
 	exit(23);
 	return false;
+}
+
+// ミッションが達成されてるかをbool型で返す関数trueでクリア, こっちは何個目のミッションかだけでいい
+bool JudgeClearMission(int missionnum)
+{
+	bool judge = false;
+
+	SAVEDATA* p_Savedata = GetSavedata();
+	STAGEDATA* p_Stagedata = GetStagedata();
+
+	judge = ClearorFailure(p_Stagedata->stagenum, p_Stagedata->mission_ContentsNum[missionnum]);
+
+	return judge;
 }
 
 

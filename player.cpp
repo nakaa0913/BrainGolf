@@ -123,7 +123,7 @@ void UninitPlayer(void)
 //=============================================================================
 void UpdatePlayer(void)
 {
-	BULLET bullet = *GetBullet();
+	BULLET* bullet = GetBullet();
 	CAMERA* p_Camera = GetCamera();
 	GAMEDATA* p_Gamedata = GetGamedata();
 

@@ -51,7 +51,62 @@ SAVEDATA* GetSavedata()
 	return &g_Savedata[0];
 }
 
-
-
+//////////// 0~2ミッション,3クリアタイム。上書きする場合のみ書き込むようにする
+//////////void WriteSaveData(int choicenum, int OverwriteNum)
+//////////{
+//////////	// 現在選択されているステージ番号を入れておく。
+//////////	STAGEDATA* p_Stagedata = GetStagedata();
+//////////
+//////////	// ステージの番号を1桁ずつchar型にして合成する
+//////////
+//////////	char digit1[2] = "";
+//////////	char digit2[2] = "";
+//////////	char digit3[2] = "";
+//////////	char stagename[128] = "data/SAVEDATA/savedata.txt";
+//////////	char stagenameend[32] = ".txt";
+//////////	char attachchar[32] = "";
+//////////	int nownum = p_Stagedata->stagenum - 1;
+//////////
+//////////	if (nownum < 10)
+//////////	{
+//////////		// 1桁の処理
+//////////		digit1[0] = intTochar(nownum);
+//////////		strcat(attachchar, digit1);
+//////////		strcat(stagename, attachchar);
+//////////	}
+//////////	else if (nownum >= 10 && nownum < 100)
+//////////	{
+//////////		// 2桁の処理
+//////////		digit1[0] = intTochar(nownum / 10);
+//////////		digit2[0] = intTochar(nownum % 10);
+//////////		strcat(attachchar, digit1);
+//////////		strcat(attachchar, digit2);
+//////////		strcat(stagename, attachchar);
+//////////
+//////////	}
+//////////	else
+//////////	{
+//////////		// 3桁の処理	100以上の場合(ステージ数は多くても3桁想定とする)
+//////////		digit3[0] = intTochar(nownum % 100);
+//////////		nownum = nownum / 10;
+//////////		digit2[0] = intTochar(nownum % 10);
+//////////		digit1[0] = intTochar(nownum / 10);
+//////////		strcat(attachchar, digit1);
+//////////		strcat(attachchar, digit2);
+//////////		strcat(attachchar, digit3);
+//////////		strcat(stagename, attachchar);
+//////////	}
+//////////
+//////////	strcat(stagename, stagenameend);
+//////////
+//////////
+//////////	// とりあえずテスト
+//////////	LoadMapdataMain("data/STAGEDATA/stagetest.txt");
+//////////
+//////////	// 本番はこっち
+//////////	//LoadMapdataMain(stagename);
+//////////
+//////////	return;
+//////////}
 
 

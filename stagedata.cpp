@@ -52,6 +52,9 @@ STAGEDATA* GetStagedata()
 
 void SetStageData(int stagenum)
 {
+	// 現在選択されているステージ番号を入れておく。
+	g_Stagedata.stagenum = stagenum - 1;
+
 	// 引数でもらったステージの番号を1桁ずつchar型にして合成する
 
 	char digit1[2] = "";
@@ -62,7 +65,7 @@ void SetStageData(int stagenum)
 	char attachchar[32] = "";
 	int nownum = stagenum;
 
-	if (stagenum < 10)
+	if (nownum < 10)
 	{
 		// 1桁の処理
 		digit1[0] = intTochar(nownum);
@@ -83,7 +86,7 @@ void SetStageData(int stagenum)
 	{
 		// 3桁の処理	100以上の場合(ステージ数は多くても3桁想定とする)
 		digit3[0] = intTochar(nownum % 100);
-		nownum = stagenum / 10;
+		nownum = nownum / 10;
 		digit2[0] = intTochar(nownum % 10);
 		digit1[0] = intTochar(nownum / 10);
 		strcat(attachchar, digit1);

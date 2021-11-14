@@ -12,6 +12,7 @@
 #include "bg.h"
 #include "FileDataManagement.h"
 #include "stagedata.h"
+#include "savedata.h"
 
 #define	length (3)
 
@@ -116,6 +117,129 @@ void LoadMapdataMain(char* fileName)
 	return;
 }
 
+
+
+
+void LoadSavedata(char* fileName)
+{
+	// セーブデータに読み込む
+	SAVEDATA* p_Savedata = GetSavedata();
+
+	FILE* fp; // FILE型構造体
+
+	// ファイル読み込むで開く
+	fopen_s(&fp, fileName, "r");
+
+	// 開くのに失敗した場合の処理。強制終了させている
+	if (fp == NULL)
+	{
+		printf("%s file not open!\n", fileName);
+		exit(2);		// ファイルを開いたりするときに出たエラーは(2)
+		return;
+	}
+
+	char loadchar[4] = "";				// 読み込まれた文字列。読み込むたびに上書きされている。今回の場合1文字(半角)しか入らない
+	char now_strings[256] = "";			// 読み込んでいった文字列を連結させている。
+	int pattern = PATTERN_SAVEDATA_NULL;			// 読み込んだ文字列から、今何を読み込んでいるかを判別するためのもの。
+
+	int load_num = 0;					// 現在読み込んでいる場所0~2:ミッション,3クリアタイム
+
+	int now_load_stage = 0;
+
+	while (pattern != PATTERN_END)
+	{
+		// ファイルを1文字ずつ読み込む	fscanfは返り値として読み込んだ数(%sとか%dの数)を返すが、今回は無視するので(void)をつける
+		(void)fscanf(fp, "%1s", loadchar);
+
+		// ステージの番号を読み込むフェーズなら
+		if (pattern == PATTERN_SAVEDATA_STAGENUM)
+		{
+			// カンマが来たら読み込むステージを確定させる
+			if (strcmp(loadchar, ",") == 0)
+			{
+				// テキストファイルにはステージ1~50で書かれているので、0~49に修正するために-1する
+				now_load_stage = StringsToInt(now_strings) - 1;
+				pattern = PATTERN_SAVEDATA_NULL;
+
+				strcpy(now_strings, "");
+				continue;
+			}
+			else
+			{
+				// カンマでなければ文字を繋げていく
+				strcat(now_strings, loadchar);
+			}
+		}
+
+		// NULLのフェーズなら(ステージ選択以外はこれ)
+		if (pattern == PATTERN_SAVEDATA_NULL)
+		{
+			// "s"がきたら、読み込むステージをそれに更新し、削除して次の文字の検索へ。
+			if (strcmp(loadchar, "s") == 0)
+			{
+				pattern = PATTERN_SAVEDATA_STAGENUM;
+				strcpy(now_strings, "");
+				continue;
+			}
+
+			// カンマが来たら文字列を確定させる
+			if (strcmp(loadchar, ",") == 0)
+			{
+				// 現在の文字列がカンマだけだった場合、削除して次の文字の検索へ。これをすることによって、(,1)とかの心配がなくなる
+				if (strcmp(now_strings, ",") == 0)
+				{
+					strcpy(now_strings, "");
+					continue;
+				}
+
+				// ミッションなのか時間なのか
+				if (load_num < 3)
+				{
+					// ミッションの読み込み	0or1で帰ってくる,1がクリア
+					p_Savedata[now_load_stage].mission_clear[load_num] = StringsToInt(now_strings);
+					strcpy(now_strings, "");
+					load_num++;					// 読み込み個所を+1する
+				}
+				else if (load_num == 3)
+				{
+					// 時間の読みこみ
+					p_Savedata[now_load_stage].clear_time = StringsToInt(now_strings);
+					strcpy(now_strings, "");
+					// すべての要素を読み込んだのでloadnumを0にする
+					load_num = 0;
+				}
+
+				continue;
+			}
+			else
+			{
+				// カンマでなければ文字を繋げていく
+				strcat(now_strings, loadchar);
+			}
+		}
+
+		// ファイル読み込み終了を読み取る終了処理
+		if (strstr(now_strings, "EndLoadFile") != NULL)
+		{
+			pattern = PATTERN_END;
+
+			// now_stringsを初期化する
+			strcpy(now_strings, "");
+		}
+
+		// 50文字以上の文字列になってしまったらエラーとみなし強制終了させる
+		if (strlen(now_strings) > 50)
+		{
+			int dad = 0;
+			fclose(fp); // ファイルを閉じる
+			exit(5);
+		}
+	}
+
+	// 終了の処理
+	fclose(fp); // ファイルを閉じる
+	return;
+}
 
 // fgets(1行ずつ) + sscanf
 //void LoadMapdata(char* fileName)
@@ -966,6 +1090,32 @@ void applyMissionArray(int addednumtime, char strings[])
 	}
 
 	return;
+}
+
+// もらった文字列(1,2,3桁の整数型の数字のみ対応)をint型にして返す
+int StringsToInt(char strings[])
+{
+	int back_num = 0;
+
+	// 文字列が何文字か調べ、文字数に応じて数字に変換したときの桁数を変える
+	int len = strlen(strings);
+	if (len == 1)
+	{
+		int data = charToint(strings[0]);
+		back_num = data;
+	}
+	if (len == 2)
+	{
+		int data = 10 * charToint(strings[0]) + charToint(strings[1]);
+		back_num = data;
+	}
+	if (len == 3)
+	{
+		int data = 100 * charToint(strings[0]) + 10 * charToint(strings[1]) + charToint(strings[2]);
+		back_num = data;
+	}
+
+	return back_num;
 }
 
 

@@ -145,6 +145,7 @@
     <ClCompile Include="primitive.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="result.cpp" />
+    <ClCompile Include="savedata.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="stageselect.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="gamedata.h" />
     <ClInclude Include="mission.h" />
     <ClInclude Include="predictionbullet.h" />
+    <ClInclude Include="savedata.h" />
     <ClInclude Include="stagedata.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="enemy.h" />

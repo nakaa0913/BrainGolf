@@ -19,6 +19,7 @@
 #include "stagedata.h"
 #include "FileDataManagement.h"
 #include "worldselect.h"
+#include "savedata.h"
 
 /*------------------------------------------------------------------------------
    íËêîíËã`
@@ -54,10 +55,11 @@ void InitScene(SCENE index)
 		break;
 
 	case SCENE_LOGO:
-			InitEffect();
-			InitLogo();
-			//InitStagedata();
-			break;
+		InitSavedata();
+		InitEffect();
+		InitLogo();
+		//InitStagedata();
+		break;
 
 	case SCENE_TITLE:
 		InitEffect();
@@ -142,36 +144,42 @@ void UpdateScene(void)
 		break;
 
 	case SCENE_LOGO:
+		UpdateSavedata();
 		UpdateEffect();
 		UpdateLogo();
 		UpdateStagedata();
 		break;
 
 	case SCENE_TITLE:
+		UpdateSavedata();
 		UpdateEffect();
 		UpdateTitle();
 		UpdateStagedata();
 		break;
 
 	case SCENE_WORLD_SELECT:
+		UpdateSavedata();
 		UpdateEffect();
 		UpdateWorldSelect();
 		UpdateStagedata();
 		break;
 
 	case SCENE_STAGE_SELECT:
+		UpdateSavedata();
 		UpdateEffect();
 		UpdateStageSelect();
 		UpdateStagedata();
 		break;
 
 	case SCENE_GAME:
+		UpdateSavedata();
 		UpdateEffect();
 		UpdateGame();
 		UpdateStagedata();
 		break;
 
 	case SCENE_RESULT:
+		UpdateSavedata();
 		UpdateEffect();
 		UpdateResult();
 		UpdateStagedata();

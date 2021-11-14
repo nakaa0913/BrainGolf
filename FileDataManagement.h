@@ -9,6 +9,10 @@
 #define		PATTERN_MISSION		(2)
 #define		PATTERN_END			(999)
 
+// セーブデータファイル読み込み中に、今何のデータを読んでいるかの判別するためのパターン
+#define		PATTERN_SAVEDATA_NULL		(-1)
+#define		PATTERN_SAVEDATA_STAGENUM	(0)
+
 // ファイル読み込み中の、プレイヤーの配置データのどこを読んでいるかの判別するためのパターン
 #define		PATTERN_PLAYER_NULL			(-1)
 #define		PATTERN_PLAYER_POS			(0)
@@ -30,3 +34,6 @@ void SetMAPCHIP_POS_STRUCT(MAPCHIP_POS_STRUCT* s_mapchip_pos, char strings[], in
 void applyMissionArray(int addednumtime, char strings[]);
 float SetMoveSpeed(int decimal_point, char strings[]);
 int strcmpNumber(char* strings);
+int StringsToInt(char strings[]);
+
+void LoadSavedata(char* fileName);

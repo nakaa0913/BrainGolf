@@ -4,7 +4,7 @@
 #include "bg.h"
 #include "mission.h"
 
-#define MAX_STAGE	(30)		//最大ステージ
+#define MAX_STAGE	(50)		//最大ステージ
 
 typedef struct {
 	int stagenum;				//ステージ番号

@@ -74,6 +74,93 @@ bool ClearorFailure(int ContentsNum, int JudgeNum)
 			return true;
 		else
 			return false;
+	case 3:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 4:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 5:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 6:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 7:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 8:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 9:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 10:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 11:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 12:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 13:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 14:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 15:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 16:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 17:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 18:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 19:		// JudgeNum秒以内でクリア
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+
+
 
 	default:
 		break;
@@ -185,6 +272,41 @@ int ContentsNumToTexid(int mission_ContentsNum)
 		return 27;
 	case 2:
 		return 28;
+	case 3:
+		return 29;
+	case 4:
+		return 30;
+	case 5:
+		return 31;
+	case 6:
+		return 32;
+	case 7:
+		return 33;
+	case 8:
+		return 34;
+	case 9:
+		return 35;
+	case 10:
+		return 36;
+	case 11:
+		return 37;
+	case 12:
+		return 38;
+	case 13:
+		return 39;
+	case 14:
+		return 40;
+	case 15:
+		return 41;
+	case 16:
+		return 42;
+	case 17:
+		return 43;
+	case 18:
+		return 44;
+	case 19:
+		return 45;
+
 	default:
 		break;
 	}

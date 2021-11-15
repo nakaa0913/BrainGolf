@@ -44,11 +44,26 @@ static int stage_mission_background_25;// 25
 static int stage_mission0_26;// 26
 static int stage_mission1_27;// 27
 static int stage_mission2_28;// 28
-
-static int stage_mission5_29;// 29
+static int stage_mission3_29;// 29
+static int stage_mission4_30;// 30
+static int stage_mission5_31;// 31
+static int stage_mission6_32;// 32
+static int stage_mission7_33;// 33
+static int stage_mission8_34;// 34
+static int stage_mission9_35;// 35
+static int stage_mission10_36;// 36
+static int stage_mission11_37;// 37
+static int stage_mission12_38;// 38
+static int stage_mission13_39;// 39
+static int stage_mission14_40;// 40 
+static int stage_mission15_41;// 41
+static int stage_mission16_42;// 42
+static int stage_mission17_43;// 43
+static int stage_mission18_44;// 44
+static int stage_mission19_45;// 45
 
 // êîéöÇÃï\é¶
-static int number_30;// 30
+static int number_46;// 46
 
 
 
@@ -88,10 +103,25 @@ void InitEffect(void)
 	stage_mission0_26 = LoadTexture("data/TEXTURE/select/mission/mission_0.png");
 	stage_mission1_27 = LoadTexture("data/TEXTURE/select/mission/mission_1.png");
 	stage_mission2_28 = LoadTexture("data/TEXTURE/select/mission/mission_2.png");
+	stage_mission3_29 = LoadTexture("data/TEXTURE/select/mission/mission_3.png");
+	stage_mission4_30 = LoadTexture("data/TEXTURE/select/mission/mission_4.png");
+	stage_mission5_31 = LoadTexture("data/TEXTURE/select/mission/mission_5.png");
+	stage_mission6_32 = LoadTexture("data/TEXTURE/select/mission/mission_6.png");
+	stage_mission7_33 = LoadTexture("data/TEXTURE/select/mission/mission_7.png");
+	stage_mission8_34 = LoadTexture("data/TEXTURE/select/mission/mission_8.png");
+	stage_mission9_35 = LoadTexture("data/TEXTURE/select/mission/mission_9.png");
+	stage_mission10_36 = LoadTexture("data/TEXTURE/select/mission/mission_10.png");
+	stage_mission11_37 = LoadTexture("data/TEXTURE/select/mission/mission_11.png");
+	stage_mission12_38 = LoadTexture("data/TEXTURE/select/mission/mission_12.png");
+	stage_mission13_39 = LoadTexture("data/TEXTURE/select/mission/mission_13.png");
+	stage_mission14_40 = LoadTexture("data/TEXTURE/select/mission/mission_14.png");
+	stage_mission15_41 = LoadTexture("data/TEXTURE/select/mission/mission_15.png");
+	stage_mission16_42 = LoadTexture("data/TEXTURE/select/mission/mission_16.png");
+	stage_mission17_43 = LoadTexture("data/TEXTURE/select/mission/mission_17.png");
+	stage_mission18_44 = LoadTexture("data/TEXTURE/select/mission/mission_18.png");
+	stage_mission19_45 = LoadTexture("data/TEXTURE/select/mission/mission_19.png");
 
-	stage_mission5_29 = LoadTexture("data/TEXTURE/select/selectlock.png");
-
-	number_30 = LoadTexture("data/TEXTURE/other_effect/number.png");
+	number_46 = LoadTexture("data/TEXTURE/other_effect/number.png");
 
 
 	for (int i = 0; i < MAX_EFFECT; i++)
@@ -389,7 +419,7 @@ void SetEffectNumber(int num,int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2
 		g_Effect[i + sn].use_array_num = i + sn;
 		g_Effect[i + sn].isUse = true;
 
-		g_Effect[i + sn].id = GetTextureData(30);		// NumberÇÕ30î‘Ç…ê›íËÇ≥ÇÍÇƒÇÈ
+		g_Effect[i + sn].id = GetTextureData(46);		// NumberÇÕ46î‘Ç…ê›íËÇ≥ÇÍÇƒÇÈ
 
 
 		// åÖÇ™è¨Ç≥Ç¢ï˚Ç©ÇÁï`Ç©ÇÍÇƒÇ¢Ç≠ÅBâEÇ©ÇÁç∂Ç…å¸Ç©Ç¡Çƒï`Ç¢ÇƒÇ¢Ç≠
@@ -737,10 +767,58 @@ int GetTextureData(int id)
 		return stage_mission2_28;
 		break;
 	case 29:
-		return stage_mission5_29;
+		return stage_mission3_29;
 		break;
 	case 30:
-		return number_30;
+		return stage_mission4_30;
+		break;
+	case 31:
+		return stage_mission5_31;
+		break;
+	case 32:
+		return stage_mission6_32;
+		break;
+	case 33:
+		return stage_mission7_33;
+		break;
+	case 34:
+		return stage_mission8_34;
+		break;
+	case 35:
+		return stage_mission9_35;
+		break;
+	case 36:
+		return stage_mission10_36;
+		break;
+	case 37:
+		return stage_mission11_37;
+		break;
+	case 38:
+		return stage_mission12_38;
+		break;
+	case 39:
+		return stage_mission13_39;
+		break;
+	case 40:
+		return stage_mission14_40;
+		break;
+	case 41:
+		return stage_mission15_41;
+		break;
+	case 42:
+		return stage_mission16_42;
+		break;
+	case 43:
+		return stage_mission17_43;
+		break;
+	case 44:
+		return stage_mission18_44;
+		break;
+	case 45:
+		return stage_mission19_45;
+		break;
+	case 46:
+		return number_46;
 		break;
 	}
 

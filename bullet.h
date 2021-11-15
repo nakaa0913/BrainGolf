@@ -37,9 +37,11 @@ struct BULLET
 	D3DXVECTOR2				vector;					// ベクトル
 	float					shotpower;				// 球の力の倍率
 	int						CollicionCool;			// 球がブロックに当たった時のクールタイム
-	int						accboardcool;			//加速のクールタイム
-	int						warpcool;				//ワープのクールタイム
-	int						shottime;				//弾が発射されてからの時間
+	int						accboardcool;			// 加速のクールタイム
+	int						warpcool;				// ワープのクールタイム
+	int						shottime;				// 弾が発射されてからの時間
+	int						collisiontime;			// 弾が当たっている時間
+
 };
 
 

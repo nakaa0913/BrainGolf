@@ -396,22 +396,24 @@ void SetEffectNumber(int num,int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2
 		// 今回表示する桁の数字
 		int nownum = number % 10;
 
+		float interval_magnification = 0.7f;		// 数字の感覚の倍率
+
 		// 桁数が奇数の場合と偶数の場合で表示方法を場合分けする
 		if (digit % 2 == 0)
 		{
 			// 偶数の場合			真ん中の桁数と次の数の間に真ん中が来る
 			// スコアの位置やテクスチャー座標を反映
-			g_Effect[i + sn].pos.x = pos1.x + (middle_digit - i) * size1.x - (size1.x / 2);
-			g_Effect[i + sn].pos1.x = pos1.x + (middle_digit - i) * size1.x - (size1.x / 2);
-			g_Effect[i + sn].pos2.x = pos2.x + (middle_digit - i) * size2.x - (size2.x / 2);
+			g_Effect[i + sn].pos.x = pos1.x + (middle_digit - i) * size1.x * interval_magnification - (size1.x * interval_magnification / 2);
+			g_Effect[i + sn].pos1.x = pos1.x + (middle_digit - i) * size1.x * interval_magnification - (size1.x * interval_magnification / 2);
+			g_Effect[i + sn].pos2.x = pos2.x + (middle_digit - i) * size2.x * interval_magnification - (size2.x * interval_magnification / 2);
 		}
 		else
 		{
 			// 奇数の場合		指定した座標が真ん中の桁数の中心に来る
 			// スコアの位置やテクスチャー座標を反映
-			g_Effect[i + sn].pos.x = pos1.x + (middle_digit - i) * size1.x;
-			g_Effect[i + sn].pos1.x = pos1.x + (middle_digit - i) * size1.x;
-			g_Effect[i + sn].pos2.x = pos2.x + (middle_digit - i) * size2.x;
+			g_Effect[i + sn].pos.x = pos1.x + (middle_digit - i) * size1.x * interval_magnification;
+			g_Effect[i + sn].pos1.x = pos1.x + (middle_digit - i) * size1.x * interval_magnification;
+			g_Effect[i + sn].pos2.x = pos2.x + (middle_digit - i) * size2.x * interval_magnification;
 		}
 
 		g_Effect[i + sn].tx = 1.0f / 10;						// テクスチャ1マスの幅

@@ -747,6 +747,7 @@ void UpdateBullet(void)
 				}
 			}
 
+
 			//ÉèÅ[Év
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 11)
 			{

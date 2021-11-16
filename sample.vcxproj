@@ -137,9 +137,12 @@
     <ClCompile Include="gamedata.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="keyboard.cpp" />
+    <ClCompile Include="Keylogger.cpp" />
     <ClCompile Include="logo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mission.cpp" />
+    <ClCompile Include="mouse.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="predictionbullet.cpp" />
     <ClCompile Include="primitive.cpp" />
@@ -163,7 +166,10 @@
     <ClInclude Include="collision.h" />
     <ClInclude Include="FileDataManagement.h" />
     <ClInclude Include="gamedata.h" />
+    <ClInclude Include="keyboard.h" />
+    <ClInclude Include="Keylogger.h" />
     <ClInclude Include="mission.h" />
+    <ClInclude Include="mouse.h" />
     <ClInclude Include="predictionbullet.h" />
     <ClInclude Include="savedata.h" />
     <ClInclude Include="stagedata.h" />

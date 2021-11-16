@@ -8,6 +8,8 @@
 
 #include "main.h"
 
+#include <XInput.h>
+
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
 //*****************************************************************************
@@ -62,6 +64,32 @@ enum {	// ƒ{ƒ^ƒ“‚É‘Î‚·‚érgbButtons[?]”z—ñ‚Ì”z—ñ”Ô†(DirectInputã‚Å‚ÌXYABƒ{ƒ^ƒ“ˆ
 };
 
 
+//XInputƒ{ƒ^ƒ“ˆê——
+/*// XINPUT_GAMEPAD_DPAD_UP			\šƒL[ã
+// XINPUT_GAMEPAD_DPAD_DOWN			\šƒL[‰º
+// XINPUT_GAMEPAD_DPAD_LEFT			\šƒL[¶
+// XINPUT_GAMEPAD_DPAD_RIGHT		\šƒL[‰E
+// XINPUT_GAMEPAD_START
+// XINPUT_GAMEPAD_BACK
+// XINPUT_GAMEPAD_LEFT_THUMB		LƒXƒeƒBƒbƒN‰Ÿ‚µ‚İ
+// XINPUT_GAMEPAD_RIGHT_THUMB		RƒXƒeƒBƒbƒN‰Ÿ‚µ‚İ
+// XINPUT_GAMEPAD_LEFT_SHOULDER		Lƒ{ƒ^ƒ“
+// XINPUT_GAMEPAD_RIGHT_SHOULDER	Rƒ{ƒ^ƒ“
+// XINPUT_GAMEPAD_A
+// XINPUT_GAMEPAD_B
+// XINPUT_GAMEPAD_X
+// XINPUT_GAMEPAD_Y
+
+//ƒXƒeƒBƒbƒN‚Ì”ÍˆÍ
+// X² ¶-32768@‰E 32767
+// Y² ã 32767@‰º-32768
+
+//ƒgƒŠƒK[‚Ì”ÍˆÍ
+// 0 ` 255
+
+// ƒoƒCƒuƒŒ[ƒVƒ‡ƒ“‚Ì”ÍˆÍ
+// 0 ` 255*/
+
 
 //*****************************************************************************
 // ƒvƒƒgƒ^ƒCƒvéŒ¾
@@ -88,6 +116,19 @@ long GetMouseY(void);               // ƒ}ƒEƒX‚ªY•ûŒü‚É“®‚¢‚½‘Š‘Î’l
 long GetMouseZ(void);               // ƒ}ƒEƒXƒzƒC[ƒ‹‚ª“®‚¢‚½‘Š‘Î’l
 
 //---------------------------- game pad
+int GetThumbLeftX(int padNo);		//yoko
+int GetThumbLeftY(int padNo);		//tate
+int GetThumbRightX(int padNo);
+int GetThumbRightY(int padNo);
+
+void SetLeftVibration(int padNo, int speed);
+void SetRightVibration(int padNo, int speed);
+void SetVibration(int padNo, int speed);
+void StopVibration(int padNo);
+
+int GetLeftTrigger(int padNo);
+int GetRightTrigger(int padNo);
+
 BOOL IsButtonPressed(int padNo,DWORD button);
 BOOL IsButtonTriggered(int padNo,DWORD button);
 

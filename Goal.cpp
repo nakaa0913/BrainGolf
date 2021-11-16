@@ -21,6 +21,7 @@
 #include "mission.h"
 #include "savedata.h"
 #include "stagedata.h"
+#include "keyboard.h"
 
 #define GOAL_H (50)
 #define GOAL_W (50)
@@ -174,7 +175,7 @@ void UpdateGoal(void)
 	{
 		if (g_Goal.goaltime <= 8000)
 		{
-			if (GetKeyboardPress(DIK_RETURN))
+			if (Keyboard_IsKeyDown(KK_ENTER))
 			{
 				g_Goal.goaltime = 9000;
 			}
@@ -237,7 +238,7 @@ void UpdateGoal(void)
 		if (g_Goal.selecttime <= 0)
 		{
 
-			if (GetKeyboardPress(DIK_DOWN))
+			if (Keyboard_IsKeyDown(KK_DOWN))
 			{
 				g_Goal.selectpush++;
 				g_Goal.selecttime = 30;
@@ -248,7 +249,7 @@ void UpdateGoal(void)
 				g_Goal.selectpush = 0;
 			}
 
-			if (GetKeyboardPress(DIK_UP))
+			if (Keyboard_IsKeyDown(KK_UP))
 			{
 				g_Goal.selectpush--;
 				g_Goal.selecttime = 30;
@@ -261,7 +262,7 @@ void UpdateGoal(void)
 
 			if (g_Goal.goaltime >= 9060)
 			{
-				if (GetKeyboardPress(DIK_RETURN))
+				if (Keyboard_IsKeyDown(KK_ENTER))
 				{
 					SceneTransition(SCENE_WORLD_SELECT);
 
@@ -270,7 +271,7 @@ void UpdateGoal(void)
 
 			if (g_Goal.selectpush == 1)
 			{
-				if (GetKeyboardPress(DIK_RETURN))
+				if (Keyboard_IsKeyDown(KK_ENTER))
 				{
 					SceneTransition(SCENE_STAGE_SELECT);
 
@@ -279,7 +280,7 @@ void UpdateGoal(void)
 
 			if (g_Goal.selectpush == 2)
 			{
-				if (GetKeyboardPress(DIK_RETURN))
+				if (Keyboard_IsKeyDown(KK_ENTER))
 				{
 					SceneTransition(SCENE_TITLE);
 

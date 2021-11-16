@@ -179,7 +179,7 @@ void UpdatePlayer(void)
 		}
 
 		//左
-		if (GetKeyboardPress(DIK_LEFT))
+		if (Keyboard_IsKeyDown(KK_LEFT))
 		{
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x - 3.0f, g_Player[i].pos.y)) != 1)
 				g_Player[i].nextpos.x -= 3.0f;
@@ -198,47 +198,10 @@ void UpdatePlayer(void)
 			}
 			g_AnimeWaitFrame++;
 		}
-		//if (Keyboard_IsKeyDown(KK_LEFT))
-		//{
-		//	if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x - 3.0f, g_Player[i].pos.y)) != 1)
-		//		g_Player[i].nextpos.x -= 3.0f;
-
-		//	g_Player[i].direction = 1;
-		//	//g_CharaUV = 0.25f;
-
-		//	//歩きアニメーション
-		//	if (g_AnimeWaitFrame > 10)
-		//	{
-		//		g_AnimePtn++;
-		//		if (g_AnimePtn > 2)
-		//			g_AnimePtn = 0;
-
-		//		g_AnimeWaitFrame = 0;
-		//	}
-		//	g_AnimeWaitFrame++;
-		//}
+		
 
 		//右
-		//if (Keyboard_IsKeyDown(KK_RIGHT))
-		//{
-		//	if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x - 3.0f, g_Player[i].pos.y)) != 1)
-		//		g_Player[i].nextpos.x -= 3.0f;
-
-		//	g_Player[i].direction = 1;
-		//	//g_CharaUV = 0.25f;
-
-		//	//歩きアニメーション
-		//	if (g_AnimeWaitFrame > 10)
-		//	{
-		//		g_AnimePtn++;
-		//		if (g_AnimePtn > 2)
-		//			g_AnimePtn = 0;
-
-		//		g_AnimeWaitFrame = 0;
-		//	}
-		//	g_AnimeWaitFrame++;
-		//}
-		if (GetKeyboardPress(DIK_RIGHT))
+		if (Keyboard_IsKeyDown(KK_RIGHT))
 		{
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x + 3.0f, g_Player[i].pos.y)) != 1)
 				g_Player[i].nextpos.x += 3.0f;
@@ -441,7 +404,7 @@ void UpdatePlayer(void)
 				if (g_Player[i].angle > 360.0f)
 					g_Player[i].angle = 0.0f;
 				g_Player[i].direction = 0;
-				if (GetKeyboardTrigger(DIK_SPACE))
+				if (Keyboard_IsKeyDown(KK_SPACE))
 				{
 					g_Player[i].ConfirmAngle = true;
 				}

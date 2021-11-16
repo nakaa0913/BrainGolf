@@ -101,11 +101,11 @@ void UninitWorldSelect()
 void UpdateWorldSelect(void)
 {
 	//スペースキーが押されていて、フェード処理中ではないとき
-	if (GetKeyboardTrigger(DIK_RETURN) && GetFadeState() == FADE_NONE)
+	if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
 	{
 		SetVolume(g_BGMNo, 0.1f);
 
-		//RESULTへ移行する
+		//STAGE_SELECTへ移行する
 		SceneTransition(SCENE_STAGE_SELECT);
 	}
 
@@ -126,10 +126,10 @@ void UpdateWorldSelect(void)
 
 
 	// エンターキーが押された時の処理
-	if (Keyboard_IsKeyDown(KK_ENTER))
+	/*if (Keyboard_IsKeyDown(KK_ENTER))
 	{
 		SceneTransition(SCENE_STAGE_SELECT);
-	}
+	}*/
 
 
 	// キー入力による操作

@@ -6,6 +6,7 @@
 #include "bullet.h"
 #include "camera.h"
 #include "input.h"
+#include "keyboard.h"
 
 CAMERA g_Camera;
 
@@ -44,25 +45,25 @@ void UpdateCamera(void)
 	bool use_movekey_x = false;
 	bool use_movekey_y = false;
 	// 右に移動
-	if (GetKeyboardPress(DIK_L))
+	if (Keyboard_IsKeyDown(KK_L))
 	{
 		g_Camera.movespeed.x += movespeed_base;
 		use_movekey_x = true;
 	}
 	// 左に移動
-	if (GetKeyboardPress(DIK_J))
+	if (Keyboard_IsKeyDown(KK_J))
 	{
 		g_Camera.movespeed.x -= movespeed_base;
 		use_movekey_x = true;
 	}
 	// 下に移動
-	if (GetKeyboardPress(DIK_K))
+	if (Keyboard_IsKeyDown(KK_K))
 	{
 		g_Camera.movespeed.y += movespeed_base;
 		use_movekey_y = true;
 	}
 	// 上に移動
-	if (GetKeyboardPress(DIK_I))
+	if (Keyboard_IsKeyDown(KK_I))
 	{
 		g_Camera.movespeed.y -= movespeed_base;
 		use_movekey_y = true;
@@ -133,12 +134,12 @@ void UpdateCamera(void)
 	// H ズームアウト
 	float zoomspeed_base = 0.05f;
 	bool use_zoomkey = false;
-	if (GetKeyboardPress(DIK_U))
+	if (Keyboard_IsKeyDown(KK_U))
 	{
 		g_Camera.zoomspeed += zoomspeed_base;
 		use_zoomkey = true;
 	}
-	if (GetKeyboardPress(DIK_H))
+	if (Keyboard_IsKeyDown(KK_H))
 	{
 		g_Camera.zoomspeed -= zoomspeed_base;
 		use_zoomkey = true;

@@ -28,6 +28,7 @@
 #include "stagedata.h"
 #include "FileDataManagement.h"
 #include "worldselect.h"
+#include "keyboard.h"
 /*------------------------------------------------------------------------------
    定数定義
 ------------------------------------------------------------------------------*/
@@ -125,7 +126,7 @@ void UpdateWorldSelect(void)
 
 
 	// エンターキーが押された時の処理
-	if (GetKeyboardPress(DIK_RETURN))
+	if (Keyboard_IsKeyDown(KK_ENTER))
 	{
 		SceneTransition(SCENE_STAGE_SELECT);
 	}
@@ -136,13 +137,13 @@ void UpdateWorldSelect(void)
 	{
 		bool use_key = false;		// キー入力されたかどうか
 		// 右
-		if (GetKeyboardPress(DIK_RIGHT))
+		if (Keyboard_IsKeyDown(KK_RIGHT))
 		{
 			g_WorldSelect.select_x++;
 			use_key = true;
 		}
 		// 左
-		if (GetKeyboardPress(DIK_LEFT))
+		if (Keyboard_IsKeyDown(KK_LEFT))
 		{
 			g_WorldSelect.select_x--;
 			use_key = true;

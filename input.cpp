@@ -14,9 +14,15 @@
 
 // game pad用設定値
 #define DEADZONE		2500			// 各軸の25%を無効ゾーンとする
-#define RANGE_MAX		1000			// 有効範囲の最大値
-#define RANGE_MIN		-1000			// 有効範囲の最小値
-
+#define RANGE_MAX		10000			// 有効範囲の最大値
+#define RANGE_MIN		-10000			// 有効範囲の最小値
+struct CONTROLER_STATE
+{
+	XINPUT_STATE		lastState;
+	XINPUT_STATE		state;
+	XINPUT_STATE		trigger;
+	XINPUT_VIBRATION	vibration;
+};
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -532,6 +538,53 @@ void UpdatePad(void)
 	}
 
 }
+int GetLeftTrigger(int padNo)
+{
+	// パッドの初期化
+	InitializePad();
+	return 0;
+}
+int GetRightTrigger(int padNo)
+{
+	// パッドの終了処理
+	UninitPad();
+	return 0;
+}
+
+int GetThumbLeftX(int padNo)
+{
+	// パッドの更新
+	UpdatePad();
+	return 0;
+}
+
+int GetThumbLeftY(int padNo)
+{
+	return 0;
+}
+int GetThumbRightX(int padNo)
+{
+	return 0;
+}
+int GetThumbRightY(int padNo)
+{
+	return 0;
+}
+
+// バイブレーションの範囲
+// 0 ～ 255
+void SetLeftVibration(int padNo, int speed)
+{
+}
+void SetRightVibration(int padNo, int speed)
+{
+}
+void SetVibration(int padNo, int speed)
+{
+}
+void StopVibration(int padNo)
+{
+}
 //----------------------------------------------- 検査
 BOOL IsButtonPressed(int padNo,DWORD button)
 {
@@ -542,5 +595,3 @@ BOOL IsButtonTriggered(int padNo,DWORD button)
 {
 	return (button & padTrigger[padNo]);
 }
-
-

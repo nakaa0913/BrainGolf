@@ -18,6 +18,7 @@
 #include "camera.h"
 #include "predictionbullet.h"
 #include "gamedata.h"
+#include "keyboard.h"
 
 #define PLAYER_H (50)
 #define PLAYER_W (50)
@@ -135,7 +136,8 @@ void UpdatePlayer(void)
 		// 前回の座標の保存
 		g_Player[i].nextpos = g_Player[i].pos;
 
-		if (GetKeyboardPress(DIK_UP))
+		//上
+		if (Keyboard_IsKeyDown(KK_UP))
 		{
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x, g_Player[i].pos.y - 3.0f)) != 1)
 				g_Player[i].nextpos.y -= 3.0f;
@@ -155,7 +157,8 @@ void UpdatePlayer(void)
 			g_AnimeWaitFrame++;
 		}
 
-		if (GetKeyboardPress(DIK_DOWN))
+		//下
+		if (Keyboard_IsKeyDown(KK_DOWN))
 		{
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x, g_Player[i].pos.y + 3.0f)) != 1)
 				g_Player[i].nextpos.y += 3.0f;
@@ -175,6 +178,7 @@ void UpdatePlayer(void)
 			g_AnimeWaitFrame++;
 		}
 
+		//左
 		if (GetKeyboardPress(DIK_LEFT))
 		{
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x - 3.0f, g_Player[i].pos.y)) != 1)
@@ -194,7 +198,46 @@ void UpdatePlayer(void)
 			}
 			g_AnimeWaitFrame++;
 		}
+		//if (Keyboard_IsKeyDown(KK_LEFT))
+		//{
+		//	if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x - 3.0f, g_Player[i].pos.y)) != 1)
+		//		g_Player[i].nextpos.x -= 3.0f;
 
+		//	g_Player[i].direction = 1;
+		//	//g_CharaUV = 0.25f;
+
+		//	//歩きアニメーション
+		//	if (g_AnimeWaitFrame > 10)
+		//	{
+		//		g_AnimePtn++;
+		//		if (g_AnimePtn > 2)
+		//			g_AnimePtn = 0;
+
+		//		g_AnimeWaitFrame = 0;
+		//	}
+		//	g_AnimeWaitFrame++;
+		//}
+
+		//右
+		//if (Keyboard_IsKeyDown(KK_RIGHT))
+		//{
+		//	if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x - 3.0f, g_Player[i].pos.y)) != 1)
+		//		g_Player[i].nextpos.x -= 3.0f;
+
+		//	g_Player[i].direction = 1;
+		//	//g_CharaUV = 0.25f;
+
+		//	//歩きアニメーション
+		//	if (g_AnimeWaitFrame > 10)
+		//	{
+		//		g_AnimePtn++;
+		//		if (g_AnimePtn > 2)
+		//			g_AnimePtn = 0;
+
+		//		g_AnimeWaitFrame = 0;
+		//	}
+		//	g_AnimeWaitFrame++;
+		//}
 		if (GetKeyboardPress(DIK_RIGHT))
 		{
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x + 3.0f, g_Player[i].pos.y)) != 1)

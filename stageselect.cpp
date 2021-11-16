@@ -28,6 +28,8 @@
 #include "stagedata.h"
 #include "FileDataManagement.h"
 #include "worldselect.h"
+#include "keyboard.h"
+#include "mouse.h"
 /*------------------------------------------------------------------------------
    定数定義
 ------------------------------------------------------------------------------*/
@@ -155,13 +157,13 @@ void UninitStageSelect()
 void UpdateStageSelect(void)
 {
 	//スペースキーが押されていて、フェード処理中ではないとき
-	if (GetKeyboardTrigger(DIK_RETURN) && GetFadeState() == FADE_NONE)
-	{
-		SetVolume(g_BGMNo, 0.1f);
+	//if (GetKeyboardTrigger(DIK_RETURN) && GetFadeState() == FADE_NONE)
+	//{
+	//	SetVolume(g_BGMNo, 0.1f);
 
-		//RESULTへ移行する
-		SceneTransition(SCENE_GAME);
-	}
+	//	//RESULTへ移行する
+	//	SceneTransition(SCENE_GAME);
+	//}
 
 
 	//星
@@ -176,38 +178,63 @@ void UpdateStageSelect(void)
 
 
 	// エンターキーを押してゲームスタートをする処理
-	if (GetKeyboardPress(DIK_RETURN))
+	/*if (GetKeyboardPress(DIK_RETURN))
+	{
+		// 移動入力のとこですでにステージデータはもらっているのでこのままいってOK
+		g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
+		SceneTransition(SCENE_GAME);
+	}*/
+	if (Keyboard_IsKeyDown(KK_ENTER))
 	{
 		// 移動入力のとこですでにステージデータはもらっているのでこのままいってOK
 		g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
 		SceneTransition(SCENE_GAME);
 	}
 
-
 	// 移動キーが押された時の処理
 	if (g_StageSelect.selectcooltime <= 0)
 	{
 		bool use_key = false;		// キー入力されたかどうか
 		// 上
-		if (GetKeyboardPress(DIK_UP))
+		/*if (GetKeyboardPress(DIK_UP))
+		{
+			g_StageSelect.select_y--;
+			use_key = true;
+		}*/
+		if (Keyboard_IsKeyDown(KK_UP))
 		{
 			g_StageSelect.select_y--;
 			use_key = true;
 		}
 		// 下
-		if (GetKeyboardPress(DIK_DOWN))
+		/*if (GetKeyboardPress(DIK_DOWN))
+		{
+			g_StageSelect.select_y++;
+			use_key = true;
+		}*/
+		if (Keyboard_IsKeyDown(KK_DOWN))
 		{
 			g_StageSelect.select_y++;
 			use_key = true;
 		}
 		// 右
-		if (GetKeyboardPress(DIK_RIGHT))
+		/*if (GetKeyboardPress(DIK_RIGHT))
+		{
+			g_StageSelect.select_x++;
+			use_key = true;
+		}*/
+		if (Keyboard_IsKeyDown(KK_RIGHT))
 		{
 			g_StageSelect.select_x++;
 			use_key = true;
 		}
 		// 左
-		if (GetKeyboardPress(DIK_LEFT))
+		/*if (GetKeyboardPress(DIK_LEFT))
+		{
+			g_StageSelect.select_x--;
+			use_key = true;
+		}*/
+		if (Keyboard_IsKeyDown(KK_LEFT))
 		{
 			g_StageSelect.select_x--;
 			use_key = true;

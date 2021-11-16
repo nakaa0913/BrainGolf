@@ -15,6 +15,9 @@
 #include "scene.h"
 #include "fade.h"
 #include "sprite.h"
+#include "keyboard.h"
+#include "Keylogger.h"
+#include "mouse.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -186,6 +189,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 //=============================================================================
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	Keyboard_ProcessMessage(message, wParam, lParam);
+	Mouse_ProcessMessage(message, wParam, lParam);
+
 	switch( message )
 	{
 	case WM_DESTROY:
@@ -233,6 +239,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	// 入力処理の初期化
 	InitInput(hInstance, hWnd);
+	Mouse_Initialize(hWnd);
+	Keyboard_Initialize();
 
 	// サウンド処理の初期化
 	InitSound(hWnd);
@@ -339,3 +347,11 @@ int GetMouseLClickNum(void)
 
 	return 0;
 }
+
+
+#ifdef _DEBUG
+char* GetDebugStr(void)
+{
+	return g_DebugStr;
+}
+#endif

@@ -20,6 +20,7 @@
 #include "savedata.h"
 #include "stagedata.h"
 #include "FileDataManagement.h"
+#include "keyboard.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -36,6 +37,7 @@
 //*****************************************************************************
 
 static BULLET g_Bullet[BULLET_MAX];					// バレット構造体
+static SHADOWBULLET g_ShadowBullet[BULLET_MAX];		// バレットの影構造体
 
 
 
@@ -50,6 +52,7 @@ static BULLET g_Bullet[BULLET_MAX];					// バレット構造体
 HRESULT InitBullet(void)
 {
 	int texNo = LoadTexture("data/TEXTURE/bullet/ao.png");
+	int tex_bullet_shadow = LoadTexture("data/TEXTURE/bullet/bullet_shadow.png");
 	// バレット構造体の初期化 でも実際はSetBulletで呼ぶときにそっちで値が代入される
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
@@ -59,6 +62,9 @@ HRESULT InitBullet(void)
 		g_Bullet[i].pos = D3DXVECTOR2(300, 300.0f);
 		g_Bullet[i].nextpos = g_Bullet[i].pos;
 		g_Bullet[i].oldpos = g_Bullet[i].pos;
+
+		g_Bullet[i].flying_height = 0.0f;
+		g_Bullet[i].on_the_ground = true;
 
 		g_Bullet[i].drawpos = g_Bullet[i].pos;
 		g_Bullet[i].drawsize = D3DXVECTOR2(g_Bullet[i].w, g_Bullet[i].h);
@@ -75,6 +81,17 @@ HRESULT InitBullet(void)
 
 		g_Bullet[i].shottime = 0;
 		g_Bullet[i].collisiontime = 0;
+
+
+		// バレットの影構造体の初期化
+		g_ShadowBullet[i].w = g_Bullet[i].w;
+		g_ShadowBullet[i].h = g_Bullet[i].h;
+		g_ShadowBullet[i].pos = g_Bullet[i].pos;
+
+		g_ShadowBullet[i].drawpos = g_Bullet[i].pos;
+		g_ShadowBullet[i].drawsize = D3DXVECTOR2(g_Bullet[i].w, g_Bullet[i].h);
+
+		g_ShadowBullet[i].tex = tex_bullet_shadow;
 	}
 
 	return S_OK;
@@ -86,6 +103,7 @@ HRESULT InitBullet(void)
 void UninitBullet(void)
 {
 	UnloadTexture("data/TEXTURE/bullet/ao.png");
+	UnloadTexture("data/TEXTURE/bullet/bullet_shadow.png");
 }
 
 //=============================================================================
@@ -123,6 +141,34 @@ void UpdateBullet(void)
 			// 移動量moveの更新
 			g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * g_Bullet[i].shotpower * g_Bullet[i].vector.x,
 				-BULLET_SPEED * g_Bullet[i].shotpower * g_Bullet[i].vector.y);	// ベクトルからmoveを設定
+
+
+			//// デバッグ用にキー入力でもボール移動できるようにした(加速版みたいな)
+			//if (Keyboard_IsKeyDown(KK_UP))
+			//{
+			//	g_Bullet[i].shotpower = 0.3f;								// ショットパワーを設定
+			//	g_Bullet[i].angle = 90.0f;									// 角度を設定
+			//	g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
+			//}
+			//if (Keyboard_IsKeyDown(KK_DOWN))
+			//{
+			//	g_Bullet[i].shotpower = 0.3f;								// ショットパワーを設定
+			//	g_Bullet[i].angle = 270.0f;									// 角度を設定
+			//	g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
+			//}
+			//if (Keyboard_IsKeyDown(KK_RIGHT))
+			//{
+			//	g_Bullet[i].shotpower = 0.3f;								// ショットパワーを設定
+			//	g_Bullet[i].angle = 0.0f;									// 角度を設定
+			//	g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
+			//}
+			//if (Keyboard_IsKeyDown(KK_LEFT))
+			//{
+			//	g_Bullet[i].shotpower = 0.3f;								// ショットパワーを設定
+			//	g_Bullet[i].angle = 180.0f;									// 角度を設定
+			//	g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
+			//}
+
 
 
 
@@ -859,11 +905,26 @@ void UpdateBullet(void)
 			// 最期にposにnextposを反映させる
 			g_Bullet[i].pos = g_Bullet[i].nextpos;
 
+			// 影にもポジションデータを渡す
+			g_ShadowBullet[i].pos = g_Bullet[i].nextpos;
+
+
+			// ボールが跳ねて見える処理.ここじゃなくて順番的にもっと上に書いた方がいいかも？とりあえず分かりやすいからここに書いてる
+			g_Bullet[i].flying_height = Bounce(DRAW_MAP_CHIP_SIZE_Y, g_Bullet[i].shottime, 65, 90, 110, 120);
+
+
+
 			// pos を drawpos に変換		DRAW_GAP は、上から見た時の描写でのマップの描写はレフトトップで、プレイヤーはど真ん中でやってるから、そのずれ。
-			g_Bullet[i].drawpos.x = GAME_ORIGIN_POINT_X + ((g_Bullet[i].pos.x + DRAW_GAP_X) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_X / 2) - ((g_Bullet[i].pos.y - DRAW_GAP_X) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
-			g_Bullet[i].drawpos.y = GAME_ORIGIN_POINT_Y + ((g_Bullet[i].pos.y - DRAW_GAP_Y) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_Y / 2) + ((g_Bullet[i].pos.x + DRAW_GAP_Y) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+			g_Bullet[i].drawpos.x = GAME_ORIGIN_POINT_X + DRAW_GAP_BALL_X + ((g_Bullet[i].pos.x + DRAW_GAP_X) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_X / 2) - ((g_Bullet[i].pos.y - DRAW_GAP_X) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+			g_Bullet[i].drawpos.y = -g_Bullet[i].flying_height + GAME_ORIGIN_POINT_Y + DRAW_GAP_BALL_Y + ((g_Bullet[i].pos.y - DRAW_GAP_Y) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_Y / 2) + ((g_Bullet[i].pos.x + DRAW_GAP_Y) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
 			g_Bullet[i].drawsize.x = g_Bullet[i].w * p_Camera->magnification;
 			g_Bullet[i].drawsize.y = g_Bullet[i].h * p_Camera->magnification;
+
+			// 影の描写座標も変換する,高さは含めずに計算する
+			g_ShadowBullet[i].drawpos.x = GAME_ORIGIN_POINT_X + DRAW_GAP_BALL_X + ((g_Bullet[i].pos.x + DRAW_GAP_X) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_X / 2) - ((g_Bullet[i].pos.y - DRAW_GAP_X) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+			g_ShadowBullet[i].drawpos.y = GAME_ORIGIN_POINT_Y + DRAW_GAP_BALL_Y + ((g_Bullet[i].pos.y - DRAW_GAP_Y) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_Y / 2) + ((g_Bullet[i].pos.x + DRAW_GAP_Y) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+			g_ShadowBullet[i].drawsize.x = g_Bullet[i].w * p_Camera->magnification;
+			g_ShadowBullet[i].drawsize.y = g_Bullet[i].h * p_Camera->magnification;
 
 		}
 
@@ -880,6 +941,10 @@ void UpdateBullet(void)
 
 		// 弾が発射されてからのカウントを増やす
 		g_Bullet[i].shottime++;
+
+
+		// パワー100で打ち出した場合(ShotPowor1.5f)球が止まるまで
+		// g_Bullet[i].shottimeは　143カウント
 
 	}
 }
@@ -918,16 +983,24 @@ void DrawBulletSpecifyNum(int i)
 		if (g_Bullet[i].use == true)	// このバレットが使われている？
 		{								// Yes
 			//バレットの位置やテクスチャー座標を反映
-			float px = g_Bullet[i].drawpos.x;	// バレットの表示位置X
-			float py = g_Bullet[i].drawpos.y;	// バレットの表示位置Y
-			float pw = g_Bullet[i].drawsize.x;		// バレットの表示幅
-			float ph = g_Bullet[i].drawsize.y;		// バレットの表示高さ
-			D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			float pxB = g_Bullet[i].drawpos.x;	// バレットの表示位置X
+			float pyB = g_Bullet[i].drawpos.y;	// バレットの表示位置Y
+			float pwB = g_Bullet[i].drawsize.x;		// バレットの表示幅
+			float phB = g_Bullet[i].drawsize.y;		// バレットの表示高さ
+			D3DXCOLOR colB = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+			//バレットの影位置やテクスチャー座標を反映
+			float pxSB = g_ShadowBullet[i].drawpos.x;	// バレットの表示位置X
+			float pySB = g_ShadowBullet[i].drawpos.y;	// バレットの表示位置Y
+			float pwSB = g_ShadowBullet[i].drawsize.x;		// バレットの表示幅
+			float phSB = g_ShadowBullet[i].drawsize.y;		// バレットの表示高さ
+			D3DXCOLOR colSB = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 
 
-			// １枚のポリゴンの頂点とテクスチャ座標を設定
-			DrawSpriteColorRotate(g_Bullet[i].texNo, px, py, pw, ph, 0.0f, 0.0f, 1.0f, 1.0f, col, g_Bullet[i].rot);
+			// １枚のポリゴンの頂点とテクスチャ座標を設定, 先に影を描写する
+			DrawSpriteColorRotate(g_ShadowBullet[i].tex, pxSB, pySB, pwSB, phSB, 0.0f, 0.0f, 1.0f, 1.0f, colSB, 0.0f);
+			DrawSpriteColorRotate(g_Bullet[i].texNo, pxB, pyB, pwB, phB, 0.0f, 0.0f, 1.0f, 1.0f, colB, g_Bullet[i].rot);
 		}
 	}
 }
@@ -958,7 +1031,8 @@ void SetBullet(D3DXVECTOR2 pos, float angle, int ShotPower)
 			g_Bullet[i].use = true;			// 使用状態へ変更する
 			g_Bullet[i].pos = pos;			// 座標をセット
 
-			g_Bullet[i].shotpower = ShotBairitu;			// shotpowerの設定
+			g_Bullet[i].shotpower = 1.5f;			// デバッグ用にパワーマックス(100の状態)で発射
+			//g_Bullet[i].shotpower = ShotBairitu;			// shotpowerの設定
 			g_Bullet[i].shottime = 0;						// 弾が発射されてからの時間の初期化
 			g_Bullet[i].angle = angle;						// 角度を設定
 			g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);	// 角度からベクトルを設定
@@ -1072,5 +1146,46 @@ void InversionVecAng(int i, int XorY)
 	p_Gamedata->hit_wall_count++;
 
 	return;
+}
+
+// ボールをはねて見せる関数、まじで見た目だけ。タイミングとかはパワーの話決まってからみんなにあわせてもらう
+float Bounce(float maxhight, int nowframe, int bounce1frame, int bounce2frame, int bounce3frame, int bounce4frame)
+{
+	float bounceframe = bounce1frame;	// 今何バウンド目かを識別
+	float now_maxhight = maxhight;		// バウンドするたびに跳ねる高さを低くするため
+	int now_count = nowframe;
+	if (nowframe >= bounce1frame)
+	{
+		bounceframe = bounce2frame - bounce1frame;
+		now_maxhight = maxhight * 0.68f;
+		now_count = nowframe - bounce1frame;
+	}
+	if (nowframe >= bounce2frame)
+	{
+		bounceframe = bounce3frame - bounce2frame;
+		now_maxhight = maxhight * 0.30f;
+		now_count = nowframe - bounce2frame;
+	}
+	if (nowframe >= bounce3frame)
+	{
+		bounceframe = bounce4frame - bounce3frame;
+		now_maxhight = maxhight * 0.12f;
+		now_count = nowframe - bounce3frame;
+	}
+	// 貰った時のフレームがすでに終わっている時間だったら0を返す
+	if (nowframe > bounce4frame)
+		return 0.0f;
+
+
+
+	// 半円を描く時間を180で割って、1フレームで何度ずつ上がっていくのかを計算する,それに今のフレームをかける
+	float now_degree = 180.0f / bounceframe * now_count;
+	// それをラジアンに変換
+	float now_radian = DegreeToRadian(now_degree);
+	// 最大高さにサインをかけてあげることで今の高さを出す
+	float sindata = sin(now_radian);
+	float nowhight = now_maxhight * sindata;
+
+	return nowhight;
 }
 

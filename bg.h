@@ -40,7 +40,8 @@
 #define DRAW_GAP_X	 (20 * p_Camera->magnification)			// 上画面をレフトトップでやってたせいで出たずれ
 #define DRAW_GAP_Y	 (20 * p_Camera->magnification)			// 上画面をレフトトップでやってたせいで出たずれ？
 									// ここいじって表示を足元に当たり判定が来るようにする。
-									// でもプレイヤーだから使わないかも
+#define DRAW_GAP_BALL_X	 (-5 * p_Camera->magnification)			// 上のDRAW_GAPにさらにプラスする
+#define DRAW_GAP_BALL_Y	 (-5 * p_Camera->magnification)			// 当確図で見た時に、ボールが綺麗に見えるためのもの
 
 
 #define DRAW_MAP_CHIP_SIZE_X (80.0f * p_Camera->magnification)

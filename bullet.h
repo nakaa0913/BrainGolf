@@ -26,6 +26,9 @@ struct BULLET
 	D3DXVECTOR2				nextpos;				// バレットの座標
 	D3DXVECTOR2				oldpos;					// バレットの座標
 
+	float					flying_height;			// 球の飛んでいる高さ。0~10000(3次元でいうとy軸の高さ)
+	bool					on_the_ground;			// 地面にボールがついている状態かどうか
+
 	D3DXVECTOR2				drawpos;				// 表示する際の座標
 	D3DXVECTOR2				drawsize;				// 表示する際のサイズ
 
@@ -42,6 +45,17 @@ struct BULLET
 	int						shottime;				// 弾が発射されてからの時間
 	int						collisiontime;			// 弾が当たっている時間
 
+};
+
+struct SHADOWBULLET
+{
+	float					w, h;					// 幅と高さ
+	D3DXVECTOR2				pos;					// バレットの座標
+
+	D3DXVECTOR2				drawpos;				// 表示する際の座標
+	D3DXVECTOR2				drawsize;				// 表示する際のサイズ
+
+	int						tex;					// 何番目のテクスチャーを使用するのか
 };
 
 
@@ -62,3 +76,4 @@ float CalculateCornerDistanceY(int CornerNum, float size_x, float size_y);
 void CalculateNewVecAng(int i, float bulletposX, float bulletposY, float CornerPosX, float CornerPosY);
 void InversionVecAng(int i, int XorY);
 void DrawBulletSpecifyNum(int i);
+float Bounce(float maxhight, int nowframe, int bounce1frame, int bounce2frame, int bounce3frame, int bounce4frame);

@@ -19,7 +19,7 @@
 #include "sound.h"
 #include "score.h"
 #include "bg.h"
-#include "Goal.h"
+#include "result.h"
 #include "camera.h"
 #include "predictionbullet.h"
 #include "gamedata.h"
@@ -59,7 +59,7 @@ void InitGame(void)
 	InitBullet();
 	InitScore();
 	InitBG();
-	InitGoal();
+	InitResult();
 	InitCamera();
 	InitPrediction();
 	InitGamedata();
@@ -83,7 +83,7 @@ void UninitGame()
 	UninitBullet();
 	UninitEnemy();
 	UninitPlayer();
-	UninitGoal();
+	UninitResult();
 	goal = false;
 }
 
@@ -119,7 +119,7 @@ void UpdateGame(void)
 
 	}
 	else {
-		UpdateGoal();
+		UpdateResult();
 	}
 
 
@@ -149,14 +149,14 @@ void DrawGame(void)
 	DrawScore();
 	if (goal == true)
 	{
-		DrawGoal();
+		DrawResult();
 	}
-	
+
 }
 
 void GoalTrue()
 {
 	goal = true;
 
-	return ;
+	return;
 }

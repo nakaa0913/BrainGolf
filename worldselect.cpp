@@ -20,7 +20,7 @@
 #include "sound.h"
 #include "score.h"
 #include "bg.h"
-#include "Goal.h"
+#include "result.h"
 #include"stageselect.h"
 #include "Texture.h"
 #include "sprite.h"

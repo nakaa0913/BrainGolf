@@ -71,7 +71,7 @@ void InitScene(SCENE index)
 		InitWorldSelect();
 		break;
 
-		
+
 	case SCENE_STAGE_SELECT:
 		InitEffect();
 		InitStageSelect();
@@ -83,10 +83,10 @@ void InitScene(SCENE index)
 		InitStagedata();
 		break;
 
-	case SCENE_RESULT:
-		InitEffect();
-		InitResult();
-		break;
+		//case SCENE_RESULT:
+		//	InitEffect();
+		//	InitResult();
+		//	break;
 	}
 }
 
@@ -95,7 +95,7 @@ void InitScene(SCENE index)
 ------------------------------------------------------------------------------*/
 void UninitScene(void)
 {
-	
+
 	switch (g_SceneIndex)
 	{
 	case SCENE_NONE:
@@ -126,10 +126,10 @@ void UninitScene(void)
 		UninitGame();
 		break;
 
-	case SCENE_RESULT:
-		UninitEffect();
-		UninitResult();
-		break;
+		//case SCENE_RESULT:
+		//	UninitEffect();
+		//	UninitResult();
+		//	break;
 	}
 }
 
@@ -138,7 +138,7 @@ void UninitScene(void)
 ------------------------------------------------------------------------------*/
 void UpdateScene(void)
 {
-	switch( g_SceneIndex ) 
+	switch (g_SceneIndex)
 	{
 	case SCENE_NONE:
 		break;
@@ -178,12 +178,12 @@ void UpdateScene(void)
 		UpdateStagedata();
 		break;
 
-	case SCENE_RESULT:
-		UpdateSavedata();
-		UpdateEffect();
-		UpdateResult();
-		UpdateStagedata();
-		break;
+		//case SCENE_RESULT:
+		//	UpdateSavedata();
+		//	UpdateEffect();
+		//	UpdateResult();
+		//	UpdateStagedata();
+		//	break;
 	}
 
 	UpdateFade();
@@ -194,7 +194,7 @@ void UpdateScene(void)
 ------------------------------------------------------------------------------*/
 void DrawScene(void)
 {
-	switch( g_SceneIndex )
+	switch (g_SceneIndex)
 	{
 	case SCENE_NONE:
 		break;
@@ -224,10 +224,10 @@ void DrawScene(void)
 		DrawEffect();
 		break;
 
-	case SCENE_RESULT:
-		DrawResult();
-		DrawEffect();
-		break;
+		//case SCENE_RESULT:
+		//	DrawResult();
+		//	DrawEffect();
+		//	break;
 	}
 
 	DrawFade();
@@ -248,11 +248,11 @@ void SetScene(SCENE index)
 void CheckScene(void)
 {
 	//現在のシーンと遷移先シーンが違っていたら
-	if( g_SceneIndex != g_SceneNextIndex )
+	if (g_SceneIndex != g_SceneNextIndex)
 	{
 		//現在のシーンを終了させる
 		UninitScene();
-		
+
 		//遷移先シーンの初期化処理を行う
 		InitScene(g_SceneNextIndex);
 	}

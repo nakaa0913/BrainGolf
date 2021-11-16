@@ -9,7 +9,7 @@ enum SCENE
 	SCENE_GAME,			//ゲーム
 	SCENE_WORLD_SELECT,	//ワールド選択画面
 	SCENE_STAGE_SELECT,	//ステージ選択画面
-	SCENE_RESULT,	    //リザルト
+	//SCENE_RESULT,	    //リザルト
 	SCENE_MAX		    //最後だとわかる奴をいれる
 };
 

@@ -65,7 +65,11 @@ static int stage_mission19_45;// 45
 // êîéöÇÃï\é¶
 static int number_46;// 46
 
-
+static int next_47;	    // 47
+static int white_48;    // 48
+static int mapback_49;  // 49
+static int maparrow_50; // 50
+static int maptext_51;  // 51
 
 
 void InitEffect(void)
@@ -122,6 +126,11 @@ void InitEffect(void)
 	stage_mission19_45 = LoadTexture("data/TEXTURE/select/mission/mission_19.png");
 
 	number_46 = LoadTexture("data/TEXTURE/other_effect/number.png");
+	next_47 = LoadTexture("data/TEXTURE/result/next.png");
+	white_48 = LoadTexture("data/TEXTURE/result/fade_white.png");
+	mapback_49 = LoadTexture("data/TEXTURE/result/map_back.png");
+	maparrow_50 = LoadTexture("data/TEXTURE/result/map_arrow.png");
+	maptext_51 = LoadTexture("data/TEXTURE/result/map_text.png");
 
 
 	for (int i = 0; i < MAX_EFFECT; i++)
@@ -819,6 +828,21 @@ int GetTextureData(int id)
 		break;
 	case 46:
 		return number_46;
+		break;
+	case 47:
+		return next_47;
+		break;
+	case 48:
+		return white_48;
+		break;
+	case 49:
+		return mapback_49;
+		break;
+	case 50:
+		return maparrow_50;
+		break;
+	case 51:
+		return maptext_51;
 		break;
 	}
 

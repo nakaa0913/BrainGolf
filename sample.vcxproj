@@ -135,7 +135,7 @@
     <ClCompile Include="FileDataManagement.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gamedata.cpp" />
-    <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="result.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="Keylogger.cpp" />
@@ -147,7 +147,7 @@
     <ClCompile Include="predictionbullet.cpp" />
     <ClCompile Include="primitive.cpp" />
     <ClCompile Include="renderer.cpp" />
-    <ClCompile Include="result.cpp" />
+    <ClCompile Include="result2.cpp" />
     <ClCompile Include="savedata.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="score.cpp" />
@@ -178,14 +178,14 @@
     <ClInclude Include="enemy_emitter.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="game.h" />
-    <ClInclude Include="Goal.h" />
+    <ClInclude Include="result.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="logo.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="primitive.h" />
     <ClInclude Include="renderer.h" />
-    <ClInclude Include="result.h" />
+    <ClInclude Include="result2.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="stageselect.h" />

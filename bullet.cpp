@@ -688,6 +688,12 @@ void UpdateBullet(void)
 				g_Bullet[i].collisiontime = 0;
 			}
 
+			//ボールが地面にいるときだけ当たり判定（2回のバウンドと3回目のバウンドからは常に当たり判定がある）
+			if (g_Bullet[i].shottime == 60.0f || g_Bullet[i].shottime == 100.0f || g_Bullet[i].shottime >= 160.0f)
+			{
+
+
+
 			//60フレーム以上で加速板の実行
 			if (g_Bullet[i].collisiontime >= 60)
 			{
@@ -793,57 +799,59 @@ void UpdateBullet(void)
 				}
 			}
 
+		
 
-			//ワープ
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 11)
-			{
-				if (g_Bullet[i].warpcool <= 0)
+				//ワープ
+				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 11)
 				{
-					for (int y = 0; y < MAP_Y; y++)
+					if (g_Bullet[i].warpcool <= 0)
 					{
-						for (int x = 0; x < MAP_X; x++)
+						for (int y = 0; y < MAP_Y; y++)
 						{
-							// そのブロックが当たり判定があるブロックかどうか調べるa
-							int BlockData = CheckBlockdata(x, y);
-							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
-							if (BlockData == 12)
+							for (int x = 0; x < MAP_X; x++)
 							{
-								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
-								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+								// そのブロックが当たり判定があるブロックかどうか調べるa
+								int BlockData = CheckBlockdata(x, y);
+								// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+								if (BlockData == 12)
+								{
+									g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+									g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
-								g_Bullet[i].warpcool = 60;
+									g_Bullet[i].warpcool = 60;
+
+								}
 
 							}
-
 						}
 					}
 				}
-			}
 
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 12)
-			{
-				if (g_Bullet[i].warpcool <= 0)
+				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 12)
 				{
-					for (int y = 0; y < MAP_Y; y++)
+					if (g_Bullet[i].warpcool <= 0)
 					{
-						for (int x = 0; x < MAP_X; x++)
+						for (int y = 0; y < MAP_Y; y++)
 						{
-							// そのブロックが当たり判定があるブロックかどうか調べるa
-							int BlockData = CheckBlockdata(x, y);
-							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
-							if (BlockData == 11)
+							for (int x = 0; x < MAP_X; x++)
 							{
-								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
-								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+								// そのブロックが当たり判定があるブロックかどうか調べるa
+								int BlockData = CheckBlockdata(x, y);
+								// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+								if (BlockData == 11)
+								{
+									g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+									g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
-								g_Bullet[i].warpcool = 60;
+									g_Bullet[i].warpcool = 60;
+								}
+
 							}
-
 						}
 					}
 				}
-			}
 
+			}
 			//砂
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 13)
 			{
@@ -887,7 +895,7 @@ void UpdateBullet(void)
 			//}
 
 
-
+		
 
 
 			//// クールタイムを減らす処理一覧

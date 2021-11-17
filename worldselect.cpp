@@ -195,7 +195,7 @@ void UpdateWorldSelect(void)
 		}
 
 		//1 240 200
-		if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f)
+		else if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f)
 		{
 			if (mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
 			{
@@ -230,7 +230,7 @@ void UpdateWorldSelect(void)
 			}
 		}
 
-		//3
+		//3 720 250
 		else if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f)
 		{
 			if (mouse_pos_Y > 175.0f && mouse_pos_Y < 325.0f)
@@ -238,6 +238,42 @@ void UpdateWorldSelect(void)
 				if (onlyOnce)
 				{
 					g_WorldSelect.select_x = 2;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_click == true)
+				{
+					SceneTransition(SCENE_STAGE_SELECT);
+				}
+			}
+		}
+
+		//4 960 550
+		else if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f)
+		{
+			if (mouse_pos_Y > 475.0f && mouse_pos_Y < 625.0f)
+			{
+				if (onlyOnce)
+				{
+					g_WorldSelect.select_x = 3;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_click == true)
+				{
+					SceneTransition(SCENE_STAGE_SELECT);
+				}
+			}
+		}
+
+		//5 1200 400
+		else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f)
+		{
+			if (mouse_pos_Y > 325.0f && mouse_pos_Y < 475.0f)
+			{
+				if (onlyOnce)
+				{
+					g_WorldSelect.select_x = 4;
 					use_key = true;
 					onlyOnce = false;
 				}

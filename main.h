@@ -56,7 +56,7 @@ float frand();
 
 long GetMousePosX(void);
 long GetMousePosY(void);
-bool GetMouseClick(void);
-int GetMouseClickNum(void);
-//bool GetMouseRClick(void);
-//int GetMouseRClickNum(void);
+bool GetMouseLClick(void);
+int GetMouseLClickNum(void);
+bool GetMouseRClick(void);
+int GetMouseRClickNum(void);

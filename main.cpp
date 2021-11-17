@@ -161,7 +161,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 				Draw();				// 描画処理
 
 #ifdef _DEBUG	// デバッグ版の時だけ表示する
-				wsprintf(&g_DebugStr[strlen(g_DebugStr)], " MX:%d MY:%d Click:%d", GetMousePosX(), GetMousePosY(), GetMouseClickNum());
+				wsprintf(&g_DebugStr[strlen(g_DebugStr)], " MX:%d MY:%d LClick:%d RClick:%d", GetMousePosX(), GetMousePosY(), GetMouseLClickNum(), GetMouseRClickNum());
 				SetWindowText(hWnd, g_DebugStr);
 #endif
 
@@ -344,16 +344,26 @@ long GetMousePosY(void)
 	return g_MouseY;
 }
 
-bool GetMouseClick(void)
+bool GetMouseLClick(void)
 {
 	return g_MouseLClick;
+}
+
+bool GetMouseRClick(void)
+{
 	return g_MouseRClick;
 }
 
-int GetMouseClickNum(void)
+int GetMouseLClickNum(void)
 {
 	if (g_MouseLClick)
 		return 1;
+
+	return 0;
+}
+
+int GetMouseRClickNum(void)
+{
 	if (g_MouseRClick)
 		return 2;
 

@@ -93,7 +93,7 @@ void InitEffect(void)
 
 	stage_select1_15 = LoadTexture("data/TEXTURE/select/stage_select.png");
 	stage_select2_16 = LoadTexture("data/TEXTURE/select/stage_select.png");
-	stage_select3_17 = LoadTexture("data/TEXTURE/select/stage_select.png");
+	stage_select3_17 = LoadTexture("data/TEXTURE/select/1.png");
 	stage_select4_18 = LoadTexture("data/TEXTURE/select/stage_select.png");
 	stage_select5_19 = LoadTexture("data/TEXTURE/select/stage_select.png");
 

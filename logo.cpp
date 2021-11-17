@@ -22,6 +22,7 @@
 #include "logo.h"
 #include "sprite.h"
 #include "effect.h"
+#include "keyboard.h"
 
 //*****************************************************************************
 // É}ÉNÉçíËã`
@@ -71,7 +72,7 @@ void UninitLogo(void)
 //=============================================================================
 void UpdateLogo(void)
 {
-	if (GetKeyboardTrigger(DIK_RETURN) && GetFadeState() == FADE_NONE)
+	if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
 	{
 		SceneTransition(SCENE_TITLE);
 	}

@@ -10,6 +10,7 @@
 #include "sprite.h"
 #include "fade.h"
 #include "sound.h"
+#include "keyboard.h"
 
 //*****************************************************************************
 // É}ÉNÉçíËã`
@@ -58,7 +59,7 @@ void UninitTitle(void)
 //=============================================================================
 void UpdateTitle(void)
 {
-	if (GetKeyboardTrigger(DIK_RETURN) && GetFadeState() == FADE_NONE)
+	if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
 	{
 		SceneTransition(SCENE_WORLD_SELECT);
 	}

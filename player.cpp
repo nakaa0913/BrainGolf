@@ -425,7 +425,7 @@ void UpdatePlayer(void)
 				// •\¦‚¾‚¯«score‚Æ“¯‚¶‚à‚Ì
 				SetShotPower(g_Player[i].ShotPower);
 
-				if (GetKeyboardTrigger(DIK_SPACE) && g_Player[i].ConfirmCooltime < 0)
+				if (Keyboard_IsKeyDown(KK_ENTER) && g_Player[i].ConfirmCooltime < 0)
 				{
 					// ƒpƒX‚µ‚½‰ñ”‚ğ‘‚â‚·
 					p_Gamedata->pass_count++;

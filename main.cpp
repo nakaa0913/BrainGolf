@@ -47,6 +47,7 @@ void Draw(void);
 long g_MouseX = 0;
 long g_MouseY = 0;
 bool g_MouseLClick = false;
+bool g_MouseRClick = false;
 
 #ifdef _DEBUG
 int		g_CountFPS;							// FPSカウンタ
@@ -160,7 +161,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 				Draw();				// 描画処理
 
 #ifdef _DEBUG	// デバッグ版の時だけ表示する
-				wsprintf(&g_DebugStr[strlen(g_DebugStr)], " MX:%d MY:%d Click:%d ", GetMousePosX(), GetMousePosY(), GetMouseLClickNum());
+				wsprintf(&g_DebugStr[strlen(g_DebugStr)], " MX:%d MY:%d Click:%d", GetMousePosX(), GetMousePosY(), GetMouseClickNum());
 				SetWindowText(hWnd, g_DebugStr);
 #endif
 
@@ -218,6 +219,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	case WM_LBUTTONUP:
 		g_MouseLClick = false;			// 左クリックしていないとfalse
+		break;
+
+	case WM_RBUTTONDOWN:
+		g_MouseRClick = true;
+		break;
+
+	case WM_RBUTTONUP:
+		g_MouseRClick = false;
 		break;
 
 	default:
@@ -335,15 +344,18 @@ long GetMousePosY(void)
 	return g_MouseY;
 }
 
-bool GetMouseLClick(void)
+bool GetMouseClick(void)
 {
 	return g_MouseLClick;
+	return g_MouseRClick;
 }
 
-int GetMouseLClickNum(void)
+int GetMouseClickNum(void)
 {
 	if (g_MouseLClick)
 		return 1;
+	if (g_MouseRClick)
+		return 2;
 
 	return 0;
 }

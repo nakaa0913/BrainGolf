@@ -33,9 +33,9 @@ HRESULT InitKeyboard(HINSTANCE hInst, HWND hWnd);
 void UninitKeyboard(void);
 HRESULT UpdateKeyboard(void);
 
-HRESULT InitializeMouse(HINSTANCE hInst, HWND hWindow); // マウスの初期化
-void UninitMouse();						// マウスの終了処理
-HRESULT UpdateMouse();					// マウスの更新処理
+//HRESULT InitializeMouse(HINSTANCE hInst, HWND hWindow); // マウスの初期化
+//void UninitMouse();						// マウスの終了処理
+//HRESULT UpdateMouse();					// マウスの更新処理
 
 HRESULT InitializePad(void);			// パッド初期化
 //BOOL CALLBACK SearchPadCallback(LPDIDEVICEINSTANCE lpddi, LPVOID);	// パッド検査コールバック
@@ -56,10 +56,10 @@ BYTE					g_keyStateRelease[NUM_KEY_MAX];		// キーボードの状態を受け取るワーク
 int						g_keyStateRepeatCnt[NUM_KEY_MAX];	// キーボードのリピートカウンタ
 
 //--------------------------------- mouse
-static LPDIRECTINPUTDEVICE8 pMouse = NULL; // mouse
-
-static DIMOUSESTATE2   mouseState;		// マウスのダイレクトな状態
-static DIMOUSESTATE2   mouseTrigger;	// 押された瞬間だけON
+//static LPDIRECTINPUTDEVICE8 pMouse = NULL; // mouse
+//
+//static DIMOUSESTATE2   mouseState;		// マウスのダイレクトな状態
+//static DIMOUSESTATE2   mouseTrigger;	// 押された瞬間だけON
 
 //--------------------------------- game pad
 
@@ -88,7 +88,7 @@ HRESULT InitInput(HINSTANCE hInst, HWND hWnd)
 	InitKeyboard(hInst, hWnd);
 
  	// マウスの初期化
-	InitializeMouse(hInst, hWnd);
+	//InitializeMouse(hInst, hWnd);
 	
 	// パッドの初期化
 	InitializePad();
@@ -105,7 +105,7 @@ void UninitInput(void)
 	UninitKeyboard();
 
 	// マウスの終了処理
-	UninitMouse();
+	//UninitMouse();
 
 	// パッドの終了処理
 	UninitPad();
@@ -126,7 +126,7 @@ void UpdateInput(void)
 	UpdateKeyboard();
 	
 	// マウスの更新
-	UpdateMouse();
+	//UpdateMouse();
 	
 	// パッドの更新
 	UpdatePad();
@@ -264,7 +264,7 @@ bool GetKeyboardRelease(int key)
 // マウス関係の処理
 //=============================================================================
 // マウスの初期化
-HRESULT InitializeMouse(HINSTANCE hInst,HWND hWindow)
+/*HRESULT InitializeMouse(HINSTANCE hInst,HWND hWindow)
 {
 	HRESULT result;
 	// デバイス作成
@@ -387,7 +387,8 @@ long GetMouseY(void)
 long GetMouseZ(void)
 {
 	return mouseState.lZ;
-}
+}*/
+
 //================================================= game pad
 //---------------------------------------- コールバック関数
 BOOL CALLBACK SearchGamePadCallback(LPDIDEVICEINSTANCE lpddi, LPVOID )

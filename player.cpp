@@ -19,6 +19,7 @@
 #include "predictionbullet.h"
 #include "gamedata.h"
 #include "keyboard.h"
+#include "placement.h"
 
 #define PLAYER_H (50)
 #define PLAYER_W (50)
@@ -61,6 +62,9 @@ HRESULT InitPlayer(void)
 	{
 		g_Player[i].texNo = LoadTexture("data/TEXTURE/game/player/majo.png");
 
+		if(i == 0)
+			g_Player[i].texNo = LoadTexture("data/TEXTURE/game/player/majo2.png");
+
 		g_Player[i].pos.x = SCREEN_WIDTH / 2;
 		g_Player[i].pos.y = 440;
 		g_Player[i].nextpos = g_Player[i].pos;
@@ -100,12 +104,17 @@ HRESULT InitPlayer(void)
 	g_Player[0].have = true;
 
 
-	//初期化
 
-	// 今は、ファイルから読み込んで設定している。SetPlayerUseFile関数
-	//////////SetPlayer(D3DXVECTOR2(SCREEN_WIDTH / 2, 100));
-	//////////SetPlayer(D3DXVECTOR2(SCREEN_WIDTH / 2, 300));
-	//////////SetPlayer(D3DXVECTOR2(SCREEN_WIDTH / 2, 500));
+	// プレイヤー配置フェーズで配置したものを読み込んで配置する
+	PLACEMENT* p_Placement = GetPlacement();
+
+	for (int i = 0; i < PLACEMENT_MAX; i++)
+	{
+		if (p_Placement[i].isUse)
+		{
+			SetPlayerUseMapPos(p_Placement[i].placement_x, p_Placement[i].placement_y);
+		}
+	}
 
 	return S_OK;
 }
@@ -552,6 +561,52 @@ void DrawPlayerSpecifyNum(int i)
 
 }
 
+// プレイヤー配置の時の描写
+void DrawPlayerForPlacement(void)
+{
+	for (int i = 0; i < PLAYER_MAX; i++)
+	{
+		if(g_Player[i].use == true)
+		{
+			float directionUV = 0.0f;		// 下向きの状態で表示
+
+			DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x + TO_CENTER, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
+				g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+		}
+	}
+}
+
+
+void DrawPlayerSpecifyNumForPlacement(int i)
+{
+	CAMERA* p_Camera = GetCamera();
+
+	float directionUV = 0.0f + 0.25f * g_Player[i].direction;
+
+	float rot = AngleToRot(g_Player[i].angle);
+
+	// pos を drawpos に変換		DRAW_GAP は、上から見た時の描写でのマップの描写はレフトトップで、プレイヤーはど真ん中でやってるから、そのずれ。
+	g_Player[i].drawpos.x = GAME_ORIGIN_POINT_X + ((g_Player[i].pos.x + DRAW_GAP_X) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_X / 2) - ((g_Player[i].pos.y - DRAW_GAP_X) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+	g_Player[i].drawpos.y = GAME_ORIGIN_POINT_Y + ((g_Player[i].pos.y - DRAW_GAP_Y) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_Y / 2) + ((g_Player[i].pos.x + DRAW_GAP_Y) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+	g_Player[i].drawsize.x = g_Player[i].w * p_Camera->magnification;
+	g_Player[i].drawsize.y = g_Player[i].h * p_Camera->magnification;
+
+	// とうかくずでのプレイヤーの表示
+	DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].drawpos.x, g_Player[i].drawpos.y, g_Player[i].drawsize.x, g_Player[i].drawsize.y,
+		g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+
+	//DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
+	//	g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+
+}
+
+
+// 引数のnum番のプレイヤーを消す
+void DeletePlayer(int num)
+{
+	g_Player[num].use = false;
+
+}
 
 //=============================================================================
 // プレイヤー構造体の先頭アドレスを取得
@@ -577,6 +632,25 @@ void SetPlayer(D3DXVECTOR2 pos)
 			return;							// 1発セットしたので終了する
 		}
 	}
+}
+
+void SetPlayerUseMapPos(int mappos_x, int mappos_y)
+{
+	// もし未使用のプレイヤーがいなかったら追加できない。主人公は除くのでi=1から
+	for (int i = 1; i < PLAYER_MAX; i++)
+	{
+		if (g_Player[i].use == false)		// 未使用状態のプレイヤーを見つける
+		{
+			// 座標をセット		マップチップでの座標からちゃんとした座標へ変換
+			g_Player[i].pos.x = mappos_x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+			g_Player[i].pos.y = mappos_y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+			g_Player[i].use = true;			// 使用状態へ変更する
+
+			return;							// 1発セットしたので終了する
+		}
+	}
+	return;
 }
 
 // 構造体をポインタではなく普通に受け取ると中身は上書きできない。参照はできる。
@@ -620,6 +694,33 @@ void SetPlayerUseFile(MAPCHIP_POS_STRUCT Receive_Mapchip_Pos_Struct, float moves
 		}
 	}
 }
+
+// プレイヤー配置フェーズでのセットプレイヤー処理,戻り値でどこにプレイヤーをセットしたかを返す
+int SetPlayerForPlacement(int mappos_x, int mappos_y)
+{
+	// もし未使用のプレイヤーがいなかったら追加できない。主人公は除くのでi=1から
+	for (int i = 1; i < PLAYER_MAX; i++)
+	{
+		if (g_Player[i].use == false)		// 未使用状態のプレイヤーを見つける
+		{
+
+			// 座標をセット		マップチップでの座標からちゃんとした座標へ変換
+			g_Player[i].pos.x = mappos_x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+			g_Player[i].pos.y = mappos_y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+
+
+			g_Player[i].h = PLAYER_H;
+			g_Player[i].w = PLAYER_W;
+
+			g_Player[i].use = true;			// 使用状態へ変更する
+
+			return i;							// 1発セットしたので終了する
+		}
+	}
+	return -1;
+}
+
 
 // 現在弾を持っているプレイヤーを返す。持っていなければ0
 int returnHavePlayer()

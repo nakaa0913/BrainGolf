@@ -20,6 +20,7 @@
 #include "FileDataManagement.h"
 #include "worldselect.h"
 #include "savedata.h"
+#include "placement.h"
 
 /*------------------------------------------------------------------------------
    íËêîíËã`
@@ -73,8 +74,15 @@ void InitScene(SCENE index)
 
 
 	case SCENE_STAGE_SELECT:
-		InitEffect();
+		InitEffect(); 
 		InitStageSelect();
+		break;
+
+	case SCENE_PLACEMENT:
+		InitEffect();
+		InitGame();
+		InitStagedata();
+		InitPlacement(); 
 		break;
 
 	case SCENE_GAME:
@@ -121,6 +129,11 @@ void UninitScene(void)
 		UninitStageSelect();
 		break;
 
+	case SCENE_PLACEMENT:
+		UninitEffect();
+		UninitPlacement();
+		break;
+
 	case SCENE_GAME:
 		UninitEffect();
 		UninitGame();
@@ -144,38 +157,33 @@ void UpdateScene(void)
 		break;
 
 	case SCENE_LOGO:
-		UpdateSavedata();
 		UpdateEffect();
 		UpdateLogo();
-		UpdateStagedata();
 		break;
 
 	case SCENE_TITLE:
-		UpdateSavedata();
 		UpdateEffect();
 		UpdateTitle();
-		UpdateStagedata();
 		break;
 
 	case SCENE_WORLD_SELECT:
-		UpdateSavedata();
 		UpdateEffect();
 		UpdateWorldSelect();
-		UpdateStagedata();
 		break;
 
 	case SCENE_STAGE_SELECT:
-		UpdateSavedata();
 		UpdateEffect();
 		UpdateStageSelect();
-		UpdateStagedata();
+		break;
+
+	case SCENE_PLACEMENT:
+		UpdateEffect();
+		UpdatePlacement();
 		break;
 
 	case SCENE_GAME:
-		UpdateSavedata();
 		UpdateEffect();
 		UpdateGame();
-		UpdateStagedata();
 		break;
 
 		//case SCENE_RESULT:
@@ -216,6 +224,11 @@ void DrawScene(void)
 
 	case SCENE_STAGE_SELECT:
 		DrawStageSelect();
+		DrawEffect();
+		break;
+
+	case SCENE_PLACEMENT:
+		DrawPlacement();
 		DrawEffect();
 		break;
 

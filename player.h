@@ -81,8 +81,13 @@ void UninitPlayer(void);
 void UpdatePlayer(void);
 void DrawPlayer(void);
 void DrawPlayerSpecifyNum(int i);
+void DrawPlayerForPlacement(void);
+void DrawPlayerSpecifyNumForPlacement(int i);
 void SetPlayer(D3DXVECTOR2 pos);
+void SetPlayerUseMapPos(int mappos_x, int mappos_y);
 PLAYER *GetPlayer(void);
 
 void SetPlayerUseFile(MAPCHIP_POS_STRUCT Receive_Mapchip_Pos_Struct, float movespeed);
+int SetPlayerForPlacement(int mappos_x, int mappos_y);
 int returnHavePlayer();
+void DeletePlayer(int num);

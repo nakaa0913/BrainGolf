@@ -57,6 +57,8 @@ HRESULT InitBG(void);
 void UninitBG(void);
 void UpdateBG(void);
 void DrawBG(void);
+void DrawBGaboveForPlacement(void);
+void DrawBGsideForPlacement(void);
 
 int GetMapEnter(D3DXVECTOR2 pos);
 void SetCurrentMap(int next);

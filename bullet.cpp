@@ -586,7 +586,15 @@ void UpdateBullet(void)
 
 			}
 
+			//ゲームオーバー処理
+			if (g_Bullet[i].shotpower <= 0)
+			{
+				if (g_Bullet[i].shottime >= 120)
+				{
+					GameoverTrue();
+				}
 
+			}
 
 
 			//ボールが地面にいるときだけ当たり判定（2回のバウンドと3回目のバウンドからは常に当たり判定がある）
@@ -629,9 +637,6 @@ void UpdateBullet(void)
 					WriteSavedata(SAVEDATA_FILE);
 				}
 
-
-
-				// g_Bullet[i].use = false;
 			}
 
 

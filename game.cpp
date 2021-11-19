@@ -23,6 +23,7 @@
 #include "camera.h"
 #include "predictionbullet.h"
 #include "gamedata.h"
+#include "gameover.h"
 
 
 /*------------------------------------------------------------------------------
@@ -43,6 +44,7 @@
 ------------------------------------------------------------------------------*/
 static int g_BGMNo = 0;
 bool goal = false;
+bool gameover = false;
 int game_frame_time = 0;
 
 /*------------------------------------------------------------------------------
@@ -51,6 +53,7 @@ int game_frame_time = 0;
 void InitGame(void)
 {
 	goal = false;
+	gameover = false;
 	game_frame_time = 0;
 
 	InitPlayer();
@@ -60,6 +63,7 @@ void InitGame(void)
 	InitScore();
 	InitBG();
 	InitResult();
+	InitGameover();
 	InitCamera();
 	InitPrediction();
 	InitGamedata();
@@ -84,7 +88,9 @@ void UninitGame()
 	UninitEnemy();
 	UninitPlayer();
 	UninitResult();
+	UninitGameover();
 	goal = false;
+	gameover = false;
 }
 
 /*------------------------------------------------------------------------------
@@ -94,27 +100,34 @@ void UpdateGame(void)
 {
 	if (goal == false)
 	{
-		UpdateCamera();
-		UpdateBG();
-		UpdatePlayer();
-		UpdateEnemy();
-		UpdateBullet();
-		UpdateScore();
-
-		UpdateEnemyEmitter();
-
-		UpdateCollision();
-		UpdatePrediction();
-		UpdateGamedata();
-
-		// ゲームスタートしてからのフレーム時間を+1する
-		game_frame_time++;
-
-		// ゲームスタートしてからの時間(秒)を+1する,60フレームごとに+1
-		if (game_frame_time % 60 == 0)
+		if (gameover == false)
 		{
-			GAMEDATA* p_Gamedata = GetGamedata();
-			p_Gamedata->game_time++;
+			UpdateCamera();
+			UpdateBG();
+			UpdatePlayer();
+			UpdateEnemy();
+			UpdateBullet();
+			UpdateScore();
+
+			UpdateEnemyEmitter();
+
+			UpdateCollision();
+			UpdatePrediction();
+			UpdateGamedata();
+
+			// ゲームスタートしてからのフレーム時間を+1する
+			game_frame_time++;
+
+			// ゲームスタートしてからの時間(秒)を+1する,60フレームごとに+1
+			if (game_frame_time % 60 == 0)
+			{
+				GAMEDATA* p_Gamedata = GetGamedata();
+				p_Gamedata->game_time++;
+			}
+		}
+		if (gameover == true)
+		{
+			UpdateGameover();
 		}
 
 	}
@@ -151,12 +164,23 @@ void DrawGame(void)
 	{
 		DrawResult();
 	}
-
+	if (gameover == true)
+	{
+		DrawGameover();
+	}
 }
 
 void GoalTrue()
 {
 	goal = true;
+
+	return;
+}
+
+
+void GameoverTrue()
+{
+	gameover = true;
 
 	return;
 }

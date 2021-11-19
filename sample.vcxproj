@@ -135,6 +135,7 @@
     <ClCompile Include="FileDataManagement.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gamedata.cpp" />
+    <ClCompile Include="placement.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="keyboard.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Keylogger.h" />
     <ClInclude Include="mission.h" />
     <ClInclude Include="mouse.h" />
+    <ClInclude Include="placement.h" />
     <ClInclude Include="predictionbullet.h" />
     <ClInclude Include="savedata.h" />
     <ClInclude Include="stagedata.h" />

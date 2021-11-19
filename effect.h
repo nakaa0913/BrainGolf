@@ -41,6 +41,8 @@ typedef struct
 
 	int				use_array_num;			// 配列の何番を使っているか
 
+	D3DXCOLOR		color;					// いろと透明度
+
 	// UV値
 	float				tx;					// 横幅
 	float				ty;					// 縦幅
@@ -78,6 +80,9 @@ void RotMovingPattern(int i);
 
 int GetTextureData(int id);
 void ChangeEffectCount(int use_array_num, int setcount, int SerialNumber = 1);
+void ChangeEffectTexture(int use_array_num, int setTexid, int SerialNumber = 1);
+void ChangeEffectColor(int use_array_num, float r, float g, float b, int SerialNumber = 1);
+void ChangeEffectClarity(int use_array_num, float clarity, int SerialNumber = 1);
 void EffectBreak(int use_array_num, int SerialNumber = 1);		// #include<iostream>でc++を使ってる。デフォルト引数。書かなくてもよい引数で、書かなかったらここで= 1 としているように1が入る。書いたら書いたやつが入る
 // SerialNumberは連番て意味
 // SerialNumber入れた理由は、数字とかが2桁以上の場合。連番で何連続化を指定すれば消しやすいから。
@@ -86,3 +91,6 @@ void EffectBreak(int use_array_num, int SerialNumber = 1);		// #include<iostream
 void SetEffectNumber(int num, int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
 	float rot_angle1, float rot_angle2, int rot_moving_pattern);
+
+D3DXVECTOR2 GetEffectPos(int use_array_num);
+D3DXVECTOR2 GetEffectSize(int use_array_num);

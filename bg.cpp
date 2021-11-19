@@ -12,6 +12,7 @@
 #include "bullet.h"
 #include "camera.h"
 #include "predictionbullet.h"
+#include "placement.h"
 
 
 //*****************************************************************************
@@ -545,3 +546,168 @@ int LimitRange(int num, int min, int max)
 
 	return num;
 }
+
+
+
+// プレイヤー配置フェーズ用上から視点
+void DrawBGaboveForPlacement(void)
+{
+	// ゲッターでポインタを受け取る
+	PLAYER* p_player = GetPlayer();
+	BULLET* p_bullet = GetBullet();
+	PREDICTION* p_Prediction = GetPrediction();
+	STAGEDATA* p_Stagedata = GetStagedata();
+	CAMERA* p_Camera = GetCamera();
+
+	// 草原の表示
+	for (int x = 0; x < MAP_X + 1; x++)
+	{
+		for (int y = 0; y < MAP_Y + 1; y++)
+		{
+			if (x < MAP_X && y < MAP_Y)
+			{
+				// 上から視点。今までの
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER, y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+			}
+		}
+	}
+
+	// 背景オブジェクトの表示
+	for (int x = 0; x < MAP_X; x++)
+	{
+		for (int y = 0; y < MAP_Y; y++)
+		{
+			MAP_DATA_T mapchip;
+			mapchip = g_MapInfo[p_Stagedata->maparray[y][x]];
+
+			// マップのデータが0の場合何も表示しないし計算もしない。
+			if (p_Stagedata->maparray[y][x] != 0)
+			{
+				// 今までの上からの視点
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER, y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
+			}
+		}
+	}
+}
+
+
+// プレイヤー配置フェーズ用横から視点
+void DrawBGsideForPlacement(void)
+{
+	STAGEDATA* p_Stagedata = GetStagedata();
+	CAMERA* p_Camera = GetCamera();
+	//レイヤー０の表示
+	for (int x = 0; x < MAP_X + 1; x++)
+	{
+		for (int y = 0; y < MAP_Y + 1; y++)
+		{
+
+			float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+			float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+
+			if (x < MAP_X && y < MAP_Y)
+			{
+				// 等角図での床の描写
+				DrawSpriteLeftTop(tex_floor_huchinasi, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
+			}
+		}
+	}
+
+
+	// ゲッターでポインタを受け取る
+	PLAYER* p_player = GetPlayer();
+	BULLET* p_bullet = GetBullet();
+	PREDICTION* p_Prediction = GetPrediction();
+
+
+	// ブロックの色の設定(リセット)		順番的に(0,0)は透明度は変えられない。けど問題ない。
+	D3DXCOLOR color[10 * MAP_Y + MAP_X];
+	for (int x = 0; x < MAP_X; x++)
+	{
+		for (int y = 0; y < MAP_Y; y++)
+		{
+			// 色データのリセット。
+			color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		}
+	}
+
+	// 背景オブジェクトの表示
+	for (int x = 0; x < MAP_X; x++)
+	{
+		for (int y = 0; y < MAP_Y; y++)
+		{
+			MAP_DATA_T mapchip;
+			mapchip = g_MapInfo[p_Stagedata->maparray[y][x]];
+
+			// マップのデータが0の場合何も表示しないし計算もしない。
+			if (p_Stagedata->maparray[y][x] != 0)
+			{
+				// 色(透明度の初期化)
+				color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+				float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+				float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+
+				float mapchip3d_size_x = 240 * p_Camera->magnification;
+				float mapchip3d_size_y = 400 * p_Camera->magnification;
+
+				float mapchip3d_gap_x = 80 * p_Camera->magnification;
+				float mapchip3d_gap_y = 360 * p_Camera->magnification;
+
+				// プレイヤー周りにいるかの検索とその時ブロックを透明にする処理
+				for (int i = 0; i < PLAYER_MAX; i++)
+				{
+					if (p_player[i].use)
+					{
+						// マップでの座標に変換する
+						D3DXVECTOR2 mappos = PosToMappos(p_player[i].pos);
+						// 変換した座標の小数点を切り捨てる
+						int mappos_x = mappos.x;
+						int mappos_y = mappos.y;
+
+						// ブロックの周りにプレイヤーがいた場合透明度を下げる
+						if (x - 1 == mappos_x && y == mappos_y - 1)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						}
+						if (x - 1 == mappos_x && y == mappos_y + 0)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						}
+						if (x - 1 == mappos_x && y == mappos_y + 1)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						}
+						if (x == mappos_x && y == mappos_y + 1)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						}
+					}
+				}
+				// ブロックの描写
+				DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - mapchip3d_gap_x, slanted_y - mapchip3d_gap_y, mapchip3d_size_x, mapchip3d_size_y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f, color[10 * y + x]);
+			}
+
+			// プレイヤーの表示、表示順が大事
+			for (int i = 0; i < PLAYER_MAX; i++)
+			{
+				if (p_player[i].use)
+				{
+					// マップでの座標に変換する
+					D3DXVECTOR2 mappos = PosToMappos(p_player[i].pos);
+					// 変換した座標の小数点を切り捨てる
+					int mappos_x = mappos.x;
+					int mappos_y = mappos.y;
+
+					// 描写するタイミングだったら描写する
+					if (x == mappos_x && y == mappos_y)
+					{
+						DrawPlayerSpecifyNumForPlacement(i);			// iのプレイヤーが描かれるかどうか(使われてるかどうか)は、これらの関数の中で検索される。
+					}
+				}
+			}
+		}
+	}
+}
+
+

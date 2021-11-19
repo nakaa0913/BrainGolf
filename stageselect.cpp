@@ -30,6 +30,8 @@
 #include "worldselect.h"
 #include "keyboard.h"
 #include "mouse.h"
+#include "placement.h"
+
 /*------------------------------------------------------------------------------
    定数定義
 ------------------------------------------------------------------------------*/
@@ -188,7 +190,9 @@ void UpdateStageSelect(void)
 	{
 		// 移動入力のとこですでにステージデータはもらっているのでこのままいってOK
 		g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
-		SceneTransition(SCENE_GAME);
+		// プレイヤー配置フェーズに行く前に前回の配置情報をリセットする
+		ResetPlacementArray();
+		SceneTransition(SCENE_PLACEMENT);
 	}
 
 	// 移動キーが押された時の処理
@@ -268,8 +272,8 @@ void UpdateStageSelect(void)
 	float	stage_origin_y = 200.0f;			    // yの原点(0,0を選択しているとき)
 
 	// ステージ選択の時1個離れたらこれだけ離れるよってやつ
-	float distance_x = 240.0f;
-	float distance_y = 240.0f;
+	float interval_x = 240.0f;
+	float interval_y = 240.0f;
 
 	if (stage_select_once == false)
 	{
@@ -289,8 +293,8 @@ void UpdateStageSelect(void)
 			for (int y = 0; y < SELECT_MAX_Y; y++)
 			{
 				// 現在の座標を求める
-				float now_x = stage_origin_x + distance_x * x;
-				float now_y = stage_origin_y + distance_y * y;
+				float now_x = stage_origin_x + interval_x * x;
+				float now_y = stage_origin_y + interval_y * y;
 
 				// 検索。選択しているとこを見つけて大きいサイズで表示。
 				if (g_StageSelect.select_x == x)
@@ -376,8 +380,8 @@ void StartStageSelectScreen()
 	float	stage_origin_y = 200.0f;			    // yの原点(0,0を選択しているとき)
 
 	// ステージ選択の時1個離れたらこれだけ離れるよってやつ
-	float distance_x = 240.0f;
-	float distance_y = 240.0f;
+	float interval_x = 240.0f;
+	float interval_y = 240.0f;
 
 	//ステージ選択
 	for (int x = 0; x < SELECT_MAX_X; x++)
@@ -385,8 +389,8 @@ void StartStageSelectScreen()
 		for (int y = 0; y < SELECT_MAX_Y; y++)
 		{
 			// 現在の座標を求める
-			float now_x = stage_origin_x + distance_x * x;
-			float now_y = stage_origin_y + distance_y * y;
+			float now_x = stage_origin_x + interval_x * x;
+			float now_y = stage_origin_y + interval_y * y;
 
 			// 選択されてないときの表示を出す(ステージすべて)
 			SetEffect(tex_NowWorld_stagechoice, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,

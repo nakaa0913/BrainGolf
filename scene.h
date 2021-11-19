@@ -6,6 +6,7 @@ enum SCENE
 	SCENE_NONE,			//シーン処理なし
 	SCENE_LOGO,		    //チームロゴ
 	SCENE_TITLE,		//タイトル
+	SCENE_PLACEMENT,	//配置
 	SCENE_GAME,			//ゲーム
 	SCENE_WORLD_SELECT,	//ワールド選択画面
 	SCENE_STAGE_SELECT,	//ステージ選択画面

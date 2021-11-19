@@ -71,6 +71,11 @@ static int mapback_49;  // 49
 static int maparrow_50; // 50
 static int maptext_51;  // 51
 
+// placementで使うやつ
+static int pickup_green_52;  // 52
+static int pickup_red_53;  // 53
+static int batten_red_54;  // 54
+
 
 void InitEffect(void)
 {
@@ -132,6 +137,9 @@ void InitEffect(void)
 	maparrow_50 = LoadTexture("data/TEXTURE/result/map_arrow.png");
 	maptext_51 = LoadTexture("data/TEXTURE/result/map_text.png");
 
+	pickup_green_52 = LoadTexture("data/TEXTURE/placement/pickup_green.png");
+	pickup_red_53 = LoadTexture("data/TEXTURE/placement/pickup_red.png");
+	batten_red_54 = LoadTexture("data/TEXTURE/placement/batten_red.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -163,6 +171,8 @@ void InitEffect(void)
 		g_Effect[i].drawsize = g_Effect[i].size;
 
 		g_Effect[i].drawpos = g_Effect[i].pos1;
+
+		g_Effect[i].color = D3DXCOLOR(1.0f, 1.0f, 1.0f, g_Effect[i].Clarity);
 
 		// UV値の設定。デフォだと全て表示
 		g_Effect[i].tx = 1.0f;
@@ -270,8 +280,8 @@ void DrawEffect(void)
 	{
 		if (g_Effect[i].isUse == true)
 		{
-			D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, g_Effect[i].Clarity);
-			DrawSpriteColorRotate(g_Effect[i].id, g_Effect[i].drawpos.x, g_Effect[i].drawpos.y, g_Effect[i].size.x, g_Effect[i].size.y, g_Effect[i].sx, g_Effect[i].sy, g_Effect[i].tx, g_Effect[i].ty, col, g_Effect[i].rot);
+			g_Effect[i].color = D3DXCOLOR(g_Effect[i].color.r, g_Effect[i].color.g, g_Effect[i].color.b, g_Effect[i].Clarity);
+			DrawSpriteColorRotate(g_Effect[i].id, g_Effect[i].drawpos.x, g_Effect[i].drawpos.y, g_Effect[i].size.x, g_Effect[i].size.y, g_Effect[i].sx, g_Effect[i].sy, g_Effect[i].tx, g_Effect[i].ty, g_Effect[i].color, g_Effect[i].rot);
 		}
 	}
 	DrawScore();
@@ -844,6 +854,15 @@ int GetTextureData(int id)
 	case 51:
 		return maptext_51;
 		break;
+	case 52:
+		return pickup_green_52;
+		break;
+	case 53:
+		return pickup_red_53;
+		break;
+	case 54:
+		return batten_red_54; 
+			break;
 	}
 
 	// どこにもたどり着かなかった場合
@@ -909,6 +928,38 @@ void ChangeEffectCount(int use_array_num, int setcount, int SerialNumber)
 	return;
 }
 
+// テクスチャだけを変えれる
+void ChangeEffectTexture(int use_array_num, int setTexid, int SerialNumber)
+{
+	for (int i = 0; i < SerialNumber; i++)
+	{
+		g_Effect[use_array_num].id = GetTextureData(setTexid);
+	}
+	return;
+}
+
+// 色だけを変えれる
+void ChangeEffectColor(int use_array_num, float r, float g, float b, int SerialNumber)
+{
+	for (int i = 0; i < SerialNumber; i++)
+	{
+		g_Effect[use_array_num].color = D3DXCOLOR(r, g, b, g_Effect[use_array_num].Clarity);
+	}
+	return;
+}
+
+// 透明度だけを変えれる,minとmaxも変わるので注意
+void ChangeEffectClarity(int use_array_num, float clarity, int SerialNumber)
+{
+	for (int i = 0; i < SerialNumber; i++)
+	{
+		g_Effect[use_array_num].Clarity = clarity;
+		g_Effect[use_array_num].Clarity_min = clarity;
+		g_Effect[use_array_num].Clarity_max = clarity;
+	}
+	return;
+}
+
 // 配列の何番目かを指定してエフェクトを消す,SerialNumberはデフォルト関数でデフォ=1
 void EffectBreak(int use_array_num, int SerialNumber)
 {
@@ -919,4 +970,16 @@ void EffectBreak(int use_array_num, int SerialNumber)
 	}
 
 	return;
+}
+
+// 配列の何番目のエフェクトの今の座標を返す
+D3DXVECTOR2 GetEffectPos(int use_array_num)
+{
+	return g_Effect[use_array_num].pos;
+}
+
+// 配列の何番目のエフェクトの今のサイズを返す
+D3DXVECTOR2 GetEffectSize(int use_array_num)
+{
+	return g_Effect[use_array_num].size;
 }

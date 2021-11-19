@@ -589,6 +589,10 @@ void UpdateBullet(void)
 
 
 
+			//ボールが地面にいるときだけ当たり判定（2回のバウンドと3回目のバウンドからは常に当たり判定がある）
+			if (g_Bullet[i].shottime == 65 || g_Bullet[i].shottime == 90 || g_Bullet[i].shottime >= 110)
+			{
+
 
 
 			// マップとの当たり判定処理
@@ -688,17 +692,9 @@ void UpdateBullet(void)
 				g_Bullet[i].collisiontime = 0;
 			}
 
-			//ボールが地面にいるときだけ当たり判定（2回のバウンドと3回目のバウンドからは常に当たり判定がある）
-			if (g_Bullet[i].shottime == 60.0f || g_Bullet[i].shottime == 100.0f || g_Bullet[i].shottime >= 160.0f)
-			{
+		
 
-
-
-			//60フレーム以上で加速板の実行
-			if (g_Bullet[i].collisiontime >= 60)
-			{
-				g_Bullet[i].collisiontime = 0;
-
+		
 				if (collision_num == 3)
 				{
 					// 加速板（上）に乗った時の処理
@@ -797,7 +793,7 @@ void UpdateBullet(void)
 
 					}
 				}
-			}
+			
 
 		
 

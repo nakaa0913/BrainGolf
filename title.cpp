@@ -59,7 +59,13 @@ void UninitTitle(void)
 //=============================================================================
 void UpdateTitle(void)
 {
+	bool mouse_Lclick = GetMouseLClick();
+
 	if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
+	{
+		SceneTransition(SCENE_WORLD_SELECT);
+	}
+	if (mouse_Lclick && GetFadeState() == FADE_NONE)
 	{
 		SceneTransition(SCENE_WORLD_SELECT);
 	}

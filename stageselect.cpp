@@ -158,6 +158,13 @@ void UninitStageSelect()
 ------------------------------------------------------------------------------*/
 void UpdateStageSelect(void)
 {
+	//マウスの座標を取得
+	float mouse_pos_X = GetMousePosX();
+	float mouse_pos_Y = GetMousePosY();
+	bool mouse_Lclick = GetMouseLClick();
+	bool onlyOnce = true;
+	bool mouseuse = false;
+
 	//スペースキーが押されていて、フェード処理中ではないとき
 	//if (GetKeyboardTrigger(DIK_RETURN) && GetFadeState() == FADE_NONE)
 	//{
@@ -180,12 +187,6 @@ void UpdateStageSelect(void)
 
 
 	// エンターキーを押してゲームスタートをする処理
-	/*if (GetKeyboardPress(DIK_RETURN))
-	{
-		// 移動入力のとこですでにステージデータはもらっているのでこのままいってOK
-		g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
-		SceneTransition(SCENE_GAME);
-	}*/
 	if (Keyboard_IsKeyDown(KK_ENTER))
 	{
 		// 移動入力のとこですでにステージデータはもらっているのでこのままいってOK
@@ -200,48 +201,213 @@ void UpdateStageSelect(void)
 	{
 		bool use_key = false;		// キー入力されたかどうか
 		// 上
-		/*if (GetKeyboardPress(DIK_UP))
-		{
-			g_StageSelect.select_y--;
-			use_key = true;
-		}*/
 		if (Keyboard_IsKeyDown(KK_UP))
 		{
 			g_StageSelect.select_y--;
 			use_key = true;
 		}
 		// 下
-		/*if (GetKeyboardPress(DIK_DOWN))
-		{
-			g_StageSelect.select_y++;
-			use_key = true;
-		}*/
 		if (Keyboard_IsKeyDown(KK_DOWN))
 		{
 			g_StageSelect.select_y++;
 			use_key = true;
 		}
 		// 右
-		/*if (GetKeyboardPress(DIK_RIGHT))
-		{
-			g_StageSelect.select_x++;
-			use_key = true;
-		}*/
 		if (Keyboard_IsKeyDown(KK_RIGHT))
 		{
 			g_StageSelect.select_x++;
 			use_key = true;
 		}
 		// 左
-		/*if (GetKeyboardPress(DIK_LEFT))
-		{
-			g_StageSelect.select_x--;
-			use_key = true;
-		}*/
 		if (Keyboard_IsKeyDown(KK_LEFT))
 		{
 			g_StageSelect.select_x--;
 			use_key = true;
+		}
+
+		if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f	||	//1
+			mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f	||	//2
+			mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f	||	//3
+			mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f	||	//4
+			mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f	||	//5
+			mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f	||	//6
+			mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f	||	//7
+			mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f	||	//8
+			mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f	||	//9
+			mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f	)	//10
+		{
+			mouseuse = true;
+		}
+
+		if (mouseuse == true)
+		{
+			//1 240 200
+			if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
+			{
+				if (onlyOnce)
+				{
+					g_StageSelect.select_x = 0;
+					g_StageSelect.select_y = 0;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_Lclick == true)
+				{
+					SceneTransition(SCENE_PLACEMENT);
+				}
+			}
+
+			//2 480 200
+			else if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
+			{
+				if (onlyOnce)
+				{
+					g_StageSelect.select_x = 1;
+					g_StageSelect.select_y = 0;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_Lclick == true)
+				{
+					SceneTransition(SCENE_PLACEMENT);
+				}
+			}
+
+			//3 720 200
+			else if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
+			{
+				if (onlyOnce)
+				{
+					g_StageSelect.select_x = 2;
+					g_StageSelect.select_y = 0;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_Lclick == true)
+				{
+					SceneTransition(SCENE_PLACEMENT);
+				}
+			}
+
+			//4 960 200
+			else if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
+			{
+				if (onlyOnce)
+				{
+					g_StageSelect.select_x = 3;
+					g_StageSelect.select_y = 0;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_Lclick == true)
+				{
+					SceneTransition(SCENE_PLACEMENT);
+				}
+			}
+
+			//5 1200 200
+			else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
+			{
+				if (onlyOnce)
+				{
+					g_StageSelect.select_x = 4;
+					g_StageSelect.select_y = 0;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_Lclick == true)
+				{
+					SceneTransition(SCENE_PLACEMENT);
+				}
+			}
+
+			//6 240 440
+			if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f)
+			{
+				if (onlyOnce)
+				{
+					g_StageSelect.select_x = 0;
+					g_StageSelect.select_y = 1;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_Lclick == true)
+				{
+					SceneTransition(SCENE_PLACEMENT);
+				}
+			}
+
+			//7 480 440
+			else if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f)
+			{
+				if (onlyOnce)
+				{
+					g_StageSelect.select_x = 1;
+					g_StageSelect.select_y = 1;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_Lclick == true)
+				{
+					SceneTransition(SCENE_PLACEMENT);
+				}
+			}
+
+			//8 720 440
+			else if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f)
+			{
+				if (onlyOnce)
+				{
+					g_StageSelect.select_x = 2;
+					g_StageSelect.select_y = 1;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_Lclick == true)
+				{
+					SceneTransition(SCENE_PLACEMENT);
+				}
+			}
+
+			//9 960 440
+			else if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f)
+			{
+				if (onlyOnce)
+				{
+					g_StageSelect.select_x = 3;
+					g_StageSelect.select_y = 1;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_Lclick == true)
+				{
+					SceneTransition(SCENE_PLACEMENT);
+				}
+			}
+
+			//10 1200 440
+			else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f)
+			{
+				if (onlyOnce)
+				{
+					g_StageSelect.select_x = 4;
+					g_StageSelect.select_y = 1;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_Lclick == true)
+				{
+					SceneTransition(SCENE_PLACEMENT);
+				}
+			}
+
+			//それ以外は消す
+			else
+			{
+				onlyOnce = true;
+				EffectBreak(now_stage_select_EffectArray);
+				DeleteMissionStageSelect();
+			}
 		}
 
 		// 限界値による修正の処理

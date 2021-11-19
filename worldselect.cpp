@@ -116,174 +116,122 @@ void UpdateWorldSelect(void)
 		SceneTransition(SCENE_STAGE_SELECT);
 	}
 
-
-	//1
-	if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f)
-	{
-		if (mouse_pos_Y > 175.0f && mouse_pos_Y < 325.0f)
-		{
-			if (mouse_click == true)
-			{
-				g_WorldSelect.select_x = 0;
-				SceneTransition(SCENE_STAGE_SELECT);
-			}
-		}
-	}
-
-	//2
-	if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f)
-	{
-		if (mouse_pos_Y > 175.0f && mouse_pos_Y < 325.0f)
-		{
-			if (mouse_click == true)
-			{
-				g_WorldSelect.select_x = 1;
-				SceneTransition(SCENE_STAGE_SELECT);
-			}
-		}
-	}
-
-	//3  720.0f, 250.0f size 150.0f
-	/*if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f)
-	{
-		if (mouse_pos_Y > 175.0f && mouse_pos_Y < 325.0f)
-		{
-			g_WorldSelect.select_x = 2;
-			if (mouse_click == true)
-			{
-				SceneTransition(SCENE_STAGE_SELECT);
-			}
-		}
-	}*/
-
-
 	//ミッション
 	/*SetEffect(8, D3DXVECTOR2(280.0f, 700.0f), D3DXVECTOR2(280.0f, 700.0f), 0,
 		D3DXVECTOR2(500.0f, 200.0f), D3DXVECTOR2(500.0f, 200.0f), 0,
 		0.0f, 1.0f, 0, 1, 0, 0,
 		0.0f, 0.0f, 0);*/
 
-	//ロック
-	/*SetEffect(10, D3DXVECTOR2(280.0f, 450.0f), D3DXVECTOR2(280.0f, 450.0f), 0,
-		D3DXVECTOR2(450.0f, 100.0f), D3DXVECTOR2(450.0f, 100.0f), 0,
-		0.0f, 1.0f, 0, 1, 0, 0,
-		0.0f, 0.0f, 0);*/
+		//ロック
+		/*SetEffect(10, D3DXVECTOR2(280.0f, 450.0f), D3DXVECTOR2(280.0f, 450.0f), 0,
+			D3DXVECTOR2(450.0f, 100.0f), D3DXVECTOR2(450.0f, 100.0f), 0,
+			0.0f, 1.0f, 0, 1, 0, 0,
+			0.0f, 0.0f, 0);*/
 
 
-	// エンターキーが押された時の処理
-	/*if (Keyboard_IsKeyDown(KK_ENTER))
-	{
-		SceneTransition(SCENE_STAGE_SELECT);
-	}*/
+			// エンターキーが押された時の処理
+			/*if (Keyboard_IsKeyDown(KK_ENTER))
+			{
+				SceneTransition(SCENE_STAGE_SELECT);
+			}*/
 
 
-	// キー入力による操作
+			// キー入力による操作
 	if (g_WorldSelect.selectcooltime <= 0)
 	{
 		bool use_key = false;		// キー入力されたかどうか
+
 		// 右
 		if (Keyboard_IsKeyDown(KK_RIGHT))
 		{
 			g_WorldSelect.select_x++;
 			use_key = true;
+			onlyOnce = false;
 		}
 		// 左
 		if (Keyboard_IsKeyDown(KK_LEFT))
 		{
 			g_WorldSelect.select_x--;
 			use_key = true;
+			onlyOnce = false;
 		}
 
 		//1 240 200
-		else if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f)
+		else if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
 		{
-			if (mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
+			if (onlyOnce)
 			{
-				if (onlyOnce)
-				{
-					g_WorldSelect.select_x = 0;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_click == true)
-				{
-					SceneTransition(SCENE_STAGE_SELECT);
-				}
+				g_WorldSelect.select_x = 0;
+				use_key = true;
+				onlyOnce = false;
+			}
+			if (mouse_click == true)
+			{
+				SceneTransition(SCENE_STAGE_SELECT);
 			}
 		}
 
 		//2 480 500
-		else if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f)
+		else if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 425.0f && mouse_pos_Y < 575.0f)
 		{
-			if (mouse_pos_Y > 425.0f && mouse_pos_Y < 575.0f)
+			if (onlyOnce)
 			{
-				if (onlyOnce)
-				{
-					g_WorldSelect.select_x = 1;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_click == true)
-				{
-					SceneTransition(SCENE_STAGE_SELECT);
-				}
+				g_WorldSelect.select_x = 1;
+				use_key = true;
+				onlyOnce = false;
+			}
+			if (mouse_click == true)
+			{
+				SceneTransition(SCENE_STAGE_SELECT);
 			}
 		}
 
 		//3 720 250
-		else if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f)
+		else if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 175.0f && mouse_pos_Y < 325.0f)
 		{
-			if (mouse_pos_Y > 175.0f && mouse_pos_Y < 325.0f)
+			if (onlyOnce)
 			{
-				if (onlyOnce)
-				{
-					g_WorldSelect.select_x = 2;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_click == true)
-				{
-					SceneTransition(SCENE_STAGE_SELECT);
-				}
+				g_WorldSelect.select_x = 2;
+				use_key = true;
+				onlyOnce = false;
+			}
+			if (mouse_click == true)
+			{
+				SceneTransition(SCENE_STAGE_SELECT);
 			}
 		}
 
 		//4 960 550
-		else if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f)
+		else if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 475.0f && mouse_pos_Y < 625.0f)
 		{
-			if (mouse_pos_Y > 475.0f && mouse_pos_Y < 625.0f)
+			if (onlyOnce)
 			{
-				if (onlyOnce)
-				{
-					g_WorldSelect.select_x = 3;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_click == true)
-				{
-					SceneTransition(SCENE_STAGE_SELECT);
-				}
+				g_WorldSelect.select_x = 3;
+				use_key = true;
+				onlyOnce = false;
+			}
+			if (mouse_click == true)
+			{
+				SceneTransition(SCENE_STAGE_SELECT);
 			}
 		}
 
 		//5 1200 400
-		else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f)
+		else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 325.0f && mouse_pos_Y < 475.0f)
 		{
-			if (mouse_pos_Y > 325.0f && mouse_pos_Y < 475.0f)
+			if (onlyOnce)
 			{
-				if (onlyOnce)
-				{
-					g_WorldSelect.select_x = 4;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_click == true)
-				{
-					SceneTransition(SCENE_STAGE_SELECT);
-				}
+				g_WorldSelect.select_x = 4;
+				use_key = true;
+				onlyOnce = false;
+			}
+			if (mouse_click == true)
+			{
+				SceneTransition(SCENE_STAGE_SELECT);
 			}
 		}
 
+		//それ以外は消す
 		else
 		{
 			onlyOnce = true;
@@ -305,7 +253,6 @@ void UpdateWorldSelect(void)
 			world_select_once_time = 0;
 		}
 	}
-
 
 
 

@@ -89,8 +89,9 @@ void UninitGame()
 	UninitPlayer();
 	UninitResult();
 	UninitGameover();
-	goal = false;
 	gameover = false;
+	goal = false;
+
 }
 
 /*------------------------------------------------------------------------------

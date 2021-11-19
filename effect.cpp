@@ -76,6 +76,9 @@ static int pickup_green_52;  // 52
 static int pickup_red_53;  // 53
 static int batten_red_54;  // 54
 
+// ゲームオーバー
+static int gameover_55;  // 55
+
 
 void InitEffect(void)
 {
@@ -140,6 +143,8 @@ void InitEffect(void)
 	pickup_green_52 = LoadTexture("data/TEXTURE/placement/pickup_green.png");
 	pickup_red_53 = LoadTexture("data/TEXTURE/placement/pickup_red.png");
 	batten_red_54 = LoadTexture("data/TEXTURE/placement/batten_red.png");
+
+	gameover_55 = LoadTexture("data/TEXTURE/result/gameover/gameover.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -863,6 +868,9 @@ int GetTextureData(int id)
 	case 54:
 		return batten_red_54; 
 			break;
+	case 55:
+		return gameover_55;
+		break;		
 	}
 
 	// どこにもたどり着かなかった場合

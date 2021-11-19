@@ -126,7 +126,7 @@ void UpdateGame(void)
 				p_Gamedata->game_time++;
 			}
 		}
-		if (gameover == true)
+		else
 		{
 			UpdateGameover();
 		}

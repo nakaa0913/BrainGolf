@@ -78,6 +78,9 @@ static int batten_red_54;  // 54
 
 // ゲームオーバー
 static int gameover_55;  // 55
+static int restart_56;  // 56
+static int stagename_57;  // 57
+static int gameover_back_58;  // 58
 
 
 void InitEffect(void)
@@ -145,6 +148,10 @@ void InitEffect(void)
 	batten_red_54 = LoadTexture("data/TEXTURE/placement/batten_red.png");
 
 	gameover_55 = LoadTexture("data/TEXTURE/result/gameover/gameover.png");
+	restart_56 = LoadTexture("data/TEXTURE/result/gameover/restart.png");
+	stagename_57 = LoadTexture("data/TEXTURE/result/gameover/stagename.png");
+	gameover_back_58 = LoadTexture("data/TEXTURE/result/gameover/gameover_back.png");
+
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -871,6 +878,16 @@ int GetTextureData(int id)
 	case 55:
 		return gameover_55;
 		break;		
+	case 56:
+		return restart_56;
+		break;
+	case 57:
+		return stagename_57;
+		break;
+	case 58:
+		return gameover_back_58;
+		break;
+		
 	}
 
 	// どこにもたどり着かなかった場合

@@ -272,11 +272,15 @@ void UpdateResult(void)
 
 			if (g_Result.goaltime >= 9060)
 			{
-				if (Keyboard_IsKeyDown(KK_ENTER))
+				if (g_Result.selectpush == 0)
 				{
-					SceneTransition(SCENE_WORLD_SELECT);
+					if (Keyboard_IsKeyDown(KK_ENTER))
+					{
+						SceneTransition(SCENE_WORLD_SELECT);
 
+					}
 				}
+
 			}
 
 			if (g_Result.selectpush == 1)

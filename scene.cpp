@@ -40,6 +40,8 @@
 static SCENE g_SceneIndex = SCENE_NONE;
 static SCENE g_SceneNextIndex = g_SceneIndex;
 
+bool	change_once = false;		// シーン変えてってお願い
+
 int gas = 0;
 
 
@@ -251,6 +253,8 @@ void DrawScene(void)
 ------------------------------------------------------------------------------*/
 void SetScene(SCENE index)
 {
+	change_once = true;
+
 	//遷移先シーンを設定する
 	g_SceneNextIndex = index;
 }
@@ -260,15 +264,29 @@ void SetScene(SCENE index)
 ------------------------------------------------------------------------------*/
 void CheckScene(void)
 {
-	//現在のシーンと遷移先シーンが違っていたら
-	if (g_SceneIndex != g_SceneNextIndex)
+	//////////現在のシーンと遷移先シーンが違っていたら
+	////////if (g_SceneIndex != g_SceneNextIndex)
+	////////{
+	////////	//現在のシーンを終了させる
+	////////	UninitScene();
+
+	////////	//遷移先シーンの初期化処理を行う
+	////////	InitScene(g_SceneNextIndex);
+	////////}
+
+
+	// シーン変えてってお願いが来てたら1回だけ変更する
+	if (change_once == true)
 	{
+		change_once = false;
+
 		//現在のシーンを終了させる
 		UninitScene();
 
 		//遷移先シーンの初期化処理を行う
 		InitScene(g_SceneNextIndex);
 	}
+
 }
 
 

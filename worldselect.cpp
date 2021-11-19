@@ -56,6 +56,7 @@ bool world_select_once = false;
 int world_select_once_time = 0;
 
 bool onlyOnce = true;
+bool mouseuse = false;
 /*------------------------------------------------------------------------------
    初期化関数
 ------------------------------------------------------------------------------*/
@@ -105,7 +106,8 @@ void UpdateWorldSelect(void)
 	//マウスの座標を取得
 	float mouse_pos_X = GetMousePosX();
 	float mouse_pos_Y = GetMousePosY();
-	bool mouse_click = GetMouseLClick();
+	bool mouse_Lclick = GetMouseLClick();
+	bool mouse_Rclick = GetMouseRClick();
 
 	//スペースキーが押されていて、フェード処理中ではないとき
 	if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
@@ -147,6 +149,7 @@ void UpdateWorldSelect(void)
 			g_WorldSelect.select_x++;
 			use_key = true;
 			onlyOnce = false;
+			mouseuse = false;
 		}
 		// 左
 		if (Keyboard_IsKeyDown(KK_LEFT))
@@ -154,88 +157,97 @@ void UpdateWorldSelect(void)
 			g_WorldSelect.select_x--;
 			use_key = true;
 			onlyOnce = false;
+			mouseuse = false;
 		}
 
-		//1 240 200
-		else if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
+		if (mouse_Rclick)
 		{
-			if (onlyOnce)
-			{
-				g_WorldSelect.select_x = 0;
-				use_key = true;
-				onlyOnce = false;
-			}
-			if (mouse_click == true)
-			{
-				SceneTransition(SCENE_STAGE_SELECT);
-			}
+			mouseuse = true;
 		}
 
-		//2 480 500
-		else if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 425.0f && mouse_pos_Y < 575.0f)
+		if (mouseuse == true)
 		{
-			if (onlyOnce)
+			//1 240 200
+			if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
 			{
-				g_WorldSelect.select_x = 1;
-				use_key = true;
-				onlyOnce = false;
+				if (onlyOnce)
+				{
+					g_WorldSelect.select_x = 0;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_Lclick == true)
+				{
+					SceneTransition(SCENE_STAGE_SELECT);
+				}
 			}
-			if (mouse_click == true)
-			{
-				SceneTransition(SCENE_STAGE_SELECT);
-			}
-		}
 
-		//3 720 250
-		else if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 175.0f && mouse_pos_Y < 325.0f)
-		{
-			if (onlyOnce)
+			//2 480 500
+			else if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 425.0f && mouse_pos_Y < 575.0f)
 			{
-				g_WorldSelect.select_x = 2;
-				use_key = true;
-				onlyOnce = false;
+				if (onlyOnce)
+				{
+					g_WorldSelect.select_x = 1;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_Lclick == true)
+				{
+					SceneTransition(SCENE_STAGE_SELECT);
+				}
 			}
-			if (mouse_click == true)
-			{
-				SceneTransition(SCENE_STAGE_SELECT);
-			}
-		}
 
-		//4 960 550
-		else if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 475.0f && mouse_pos_Y < 625.0f)
-		{
-			if (onlyOnce)
+			//3 720 250
+			else if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 175.0f && mouse_pos_Y < 325.0f)
 			{
-				g_WorldSelect.select_x = 3;
-				use_key = true;
-				onlyOnce = false;
+				if (onlyOnce)
+				{
+					g_WorldSelect.select_x = 2;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_Lclick == true)
+				{
+					SceneTransition(SCENE_STAGE_SELECT);
+				}
 			}
-			if (mouse_click == true)
-			{
-				SceneTransition(SCENE_STAGE_SELECT);
-			}
-		}
 
-		//5 1200 400
-		else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 325.0f && mouse_pos_Y < 475.0f)
-		{
-			if (onlyOnce)
+			//4 960 550
+			else if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 475.0f && mouse_pos_Y < 625.0f)
 			{
-				g_WorldSelect.select_x = 4;
-				use_key = true;
-				onlyOnce = false;
+				if (onlyOnce)
+				{
+					g_WorldSelect.select_x = 3;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_Lclick == true)
+				{
+					SceneTransition(SCENE_STAGE_SELECT);
+				}
 			}
-			if (mouse_click == true)
-			{
-				SceneTransition(SCENE_STAGE_SELECT);
-			}
-		}
 
-		//それ以外は消す
-		else
-		{
-			onlyOnce = true;
-			EffectBreak(now_world_select_EffectArray);
+			//5 1200 400
+			else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 325.0f && mouse_pos_Y < 475.0f)
+			{
+				if (onlyOnce)
+				{
+					g_WorldSelect.select_x = 4;
+					use_key = true;
+					onlyOnce = false;
+				}
+				if (mouse_Lclick == true)
+				{
+					SceneTransition(SCENE_STAGE_SELECT);
+				}
+			}
+
+			//それ以外は消す
+			else
+			{
+				onlyOnce = true;
+				EffectBreak(now_world_select_EffectArray);
+			}
 		}
 
 		// 選択しているところが限界を超えないようにする処理

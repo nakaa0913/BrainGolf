@@ -991,6 +991,11 @@ void ChangeEffectClarity(int use_array_num, float clarity, int SerialNumber)
 // 配列の何番目かを指定してエフェクトを消す,SerialNumberはデフォルト関数でデフォ=1
 void EffectBreak(int use_array_num, int SerialNumber)
 {
+	// 初期値やエラーである-1だった場合なにもしない
+	if (use_array_num == -1)
+		return;
+
+
 	for (int i = 0; i < SerialNumber; i++)
 	{
 		g_Effect[use_array_num + i].isUse = false;

@@ -55,7 +55,7 @@ int now_world_select_EffectArray = -1;
 bool world_select_once = false;
 int world_select_once_time = 0;
 
-bool onlyOnce = true;
+bool WorldDecision = false;				// エンターか左クリックでワールドを確定させたら他のとこに移動できなくする
 /*------------------------------------------------------------------------------
    初期化関数
 ------------------------------------------------------------------------------*/
@@ -81,6 +81,7 @@ void InitWorldSelect(void)
 	world_select_once = false;
 	now_world_select_EffectArray = -1;
 	world_select_once_time = 0;
+	WorldDecision = false;
 
 	// ワールドセレクト画面の最初に描写される者たち
 	StartWorldSelectScreen();
@@ -102,219 +103,231 @@ void UninitWorldSelect()
 ------------------------------------------------------------------------------*/
 void UpdateWorldSelect(void)
 {
-	//マウスの座標を取得
-	float mouse_pos_X = GetMousePosX();
-	float mouse_pos_Y = GetMousePosY();
-	bool mouse_Lclick = GetMouseLClick();
-	bool mouse_Rclick = GetMouseRClick();
+	// 確定されてない場合のみ動かせる
+	if (WorldDecision == false)
+	{
 
-	// 1フレーム前のポジションの保存。この後キー操作などで変更があった場合のみエフェクトを更新させる
-	int OldWorldSelectX = g_WorldSelect.select_x;
-	int OldWorldSelectY = g_WorldSelect.select_y;
+		//マウスの座標を取得
+		float mouse_pos_X = GetMousePosX();
+		float mouse_pos_Y = GetMousePosY();
+		bool mouse_Lclick = GetMouseLClick();
+		bool mouse_Rclick = GetMouseRClick();
 
-	//ミッション
-	/*SetEffect(8, D3DXVECTOR2(280.0f, 700.0f), D3DXVECTOR2(280.0f, 700.0f), 0,
-		D3DXVECTOR2(500.0f, 200.0f), D3DXVECTOR2(500.0f, 200.0f), 0,
-		0.0f, 1.0f, 0, 1, 0, 0,
-		0.0f, 0.0f, 0);*/
+		// 1フレーム前のポジションの保存。この後キー操作などで変更があった場合のみエフェクトを更新させる
+		int OldWorldSelectX = g_WorldSelect.select_x;
+		int OldWorldSelectY = g_WorldSelect.select_y;
 
-		//ロック
-		/*SetEffect(10, D3DXVECTOR2(280.0f, 450.0f), D3DXVECTOR2(280.0f, 450.0f), 0,
-			D3DXVECTOR2(450.0f, 100.0f), D3DXVECTOR2(450.0f, 100.0f), 0,
+		//ミッション
+		/*SetEffect(8, D3DXVECTOR2(280.0f, 700.0f), D3DXVECTOR2(280.0f, 700.0f), 0,
+			D3DXVECTOR2(500.0f, 200.0f), D3DXVECTOR2(500.0f, 200.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 0,
 			0.0f, 0.0f, 0);*/
 
+			//ロック
+			/*SetEffect(10, D3DXVECTOR2(280.0f, 450.0f), D3DXVECTOR2(280.0f, 450.0f), 0,
+				D3DXVECTOR2(450.0f, 100.0f), D3DXVECTOR2(450.0f, 100.0f), 0,
+				0.0f, 1.0f, 0, 1, 0, 0,
+				0.0f, 0.0f, 0);*/
 
-			// エンターキーが押された時の処理
-			/*if (Keyboard_IsKeyDown(KK_ENTER))
-			{
-				SceneTransition(SCENE_STAGE_SELECT);
-			}*/
+
+				// エンターキーが押された時の処理
+				/*if (Keyboard_IsKeyDown(KK_ENTER))
+				{
+					SceneTransition(SCENE_STAGE_SELECT);
+				}*/
 
 
-			// キー入力による操作
-	if (g_WorldSelect.selectcooltime <= 0)
-	{
-		// 右
-		if (Keyboard_IsKeyDown(KK_RIGHT))
-			g_WorldSelect.select_x++;
-		// 左
-		if (Keyboard_IsKeyDown(KK_LEFT))
-			g_WorldSelect.select_x--;
+				// キー入力による操作
+		if (g_WorldSelect.selectcooltime <= 0)
+		{
+			// 右
+			if (Keyboard_IsKeyDown(KK_RIGHT))
+				g_WorldSelect.select_x++;
+			// 左
+			if (Keyboard_IsKeyDown(KK_LEFT))
+				g_WorldSelect.select_x--;
 
-		// 選択しているところが限界を超えないようにする処理
-		if (g_WorldSelect.select_x >= WORLD_SELECT_MAX_X)
+			// 選択しているところが限界を超えないようにする処理
+			if (g_WorldSelect.select_x >= WORLD_SELECT_MAX_X)
+				g_WorldSelect.select_x = 0;
+			if (g_WorldSelect.select_x < 0)
+				g_WorldSelect.select_x = WORLD_SELECT_MAX_X - 1;
+		}
+
+		bool mouseuse = false;
+		// マウスの座標を使っての入力処理
+		//1 240 200
+		if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
+		{
 			g_WorldSelect.select_x = 0;
-		if (g_WorldSelect.select_x < 0)
-			g_WorldSelect.select_x = WORLD_SELECT_MAX_X - 1;
-	}
-
-	bool mouseuse = false;
-	// マウスの座標を使っての入力処理
-	//1 240 200
-	if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
-	{
-		g_WorldSelect.select_x = 0;
-		mouseuse = true;
-	}
-	//2 480 500
-	else if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 425.0f && mouse_pos_Y < 575.0f)
-	{
-		g_WorldSelect.select_x = 1;
-		mouseuse = true;
-	}
-	//3 720 250
-	else if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 175.0f && mouse_pos_Y < 325.0f)
-	{
-		g_WorldSelect.select_x = 2;
-		mouseuse = true;
-	}
-	//4 960 550
-	else if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 475.0f && mouse_pos_Y < 625.0f)
-	{
-		g_WorldSelect.select_x = 3;
-		mouseuse = true;
-	}
-	//5 1200 400
-	else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 325.0f && mouse_pos_Y < 475.0f)
-	{
-		g_WorldSelect.select_x = 4;
-		mouseuse = true;
-	}
-
-
-
-
-
-
-
-
-
-	// もし前のフレームから変化があった場合のみエフェクトなどを変化させる
-	bool Change = false;
-	if (OldWorldSelectX != g_WorldSelect.select_x ||
-		OldWorldSelectY != g_WorldSelect.select_y)
-		Change = true;
-
-
-	// 変更があった場合、初期化と新しいもののセット
-	if (Change == true)
-	{
-		// 初期化と前回使われていたものの消去
-		g_WorldSelect.selectcooltime = WORDL_SELECT_COOL;
-		EffectBreak(now_world_select_EffectArray);		// 前の描写を消す
-		world_select_once = false;						// 1回も描写してないよにする
-		world_select_once_time = 0;						// 描写してからの時間のリセット
-	}
-
-
-
-
-
-
-	// 次のSCENE_STAGE_SELECTへ行く処理
-
-//スペースキーが押されていて、フェード処理中ではないとき
-	if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
-	{
-		SetVolume(g_BGMNo, 0.1f);
-
-		//STAGE_SELECTへ移行する
-		SceneTransition(SCENE_STAGE_SELECT);
-	}
-
-	// マウスが押される位置にあって、左クリック押されていて、フェード処理中ではないとき
-	if (mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
-	{
-		SetVolume(g_BGMNo, 0.1f);
-
-		//STAGE_SELECTへ移行する
-		SceneTransition(SCENE_STAGE_SELECT);
-	}
-
-
-
-
-
-	//　ワールド選択の選択しているところの描写の処理
-	if (world_select_once == false)
-	{
-
-		world_select_once = true;
-
-		if (g_WorldSelect.select_y == 0)
-		{
-
-			// 選択されているときの表示
-			if (g_WorldSelect.select_x == 0)
-			{
-				now_world_select_EffectArray =
-					SetEffect(6, D3DXVECTOR2(240.0f, 200.0f), D3DXVECTOR2(240.0f, 200.0f), 0,
-						D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
-						1.0f, 1.0f, 0, 999, 0, 60,
-						0.0f, 0.0f, 0);
-			}
-
-			// 選択されているときの表示
-			if (g_WorldSelect.select_x == 1)
-			{
-				now_world_select_EffectArray =
-					SetEffect(7, D3DXVECTOR2(480.0f, 500.0f), D3DXVECTOR2(480.0f, 500.0f), 0,
-						D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
-						0.0f, 1.0f, 0, 999, 0, 60,
-						0.0f, 0.0f, 0);
-			}
-
-			// 選択されているときの表示
-			if (g_WorldSelect.select_x == 2)
-			{
-				now_world_select_EffectArray =
-					SetEffect(6, D3DXVECTOR2(720.0f, 250.0f), D3DXVECTOR2(720.0f, 250.0f), 0,
-						D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
-						0.0f, 1.0f, 0, 999, 0, 60,
-						0.0f, 0.0f, 0);
-			}
-
-			// 選択されているときの表示
-			if (g_WorldSelect.select_x == 3)
-			{
-				now_world_select_EffectArray =
-					SetEffect(6, D3DXVECTOR2(960.0f, 550.0f), D3DXVECTOR2(960.0f, 550.0f), 0,
-						D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
-						0.0f, 1.0f, 0, 999, 0, 60,
-						0.0f, 0.0f, 0);
-			}
-
-			// 選択されているときの表示
-			if (g_WorldSelect.select_x == 4)
-			{
-				now_world_select_EffectArray =
-					SetEffect(6, D3DXVECTOR2(1200.0f, 400.0f), D3DXVECTOR2(1200.0f, 400.0f), 0,
-						D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
-						0.0f, 1.0f, 0, 999, 0, 60,
-						0.0f, 0.0f, 0);
-			}
+			mouseuse = true;
 		}
-	}
-
-	if (world_select_once == true)
-	{
-		if (world_select_once_time % 60 == 0)
+		//2 480 500
+		else if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 425.0f && mouse_pos_Y < 575.0f)
 		{
-			ChangeEffectCount(now_world_select_EffectArray, 0);
+			g_WorldSelect.select_x = 1;
+			mouseuse = true;
+		}
+		//3 720 250
+		else if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 175.0f && mouse_pos_Y < 325.0f)
+		{
+			g_WorldSelect.select_x = 2;
+			mouseuse = true;
+		}
+		//4 960 550
+		else if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 475.0f && mouse_pos_Y < 625.0f)
+		{
+			g_WorldSelect.select_x = 3;
+			mouseuse = true;
+		}
+		//5 1200 400
+		else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 325.0f && mouse_pos_Y < 475.0f)
+		{
+			g_WorldSelect.select_x = 4;
+			mouseuse = true;
 		}
 
 
-		// 選択されてからの時間が増えていく
-		world_select_once_time++;
+
+
+
+
+
+
+
+		// もし前のフレームから変化があった場合のみエフェクトなどを変化させる
+		bool Change = false;
+		if (OldWorldSelectX != g_WorldSelect.select_x ||
+			OldWorldSelectY != g_WorldSelect.select_y)
+			Change = true;
+
+
+		// 変更があった場合、初期化と新しいもののセット
+		if (Change == true)
+		{
+			// 初期化と前回使われていたものの消去
+			g_WorldSelect.selectcooltime = WORDL_SELECT_COOL;
+			EffectBreak(now_world_select_EffectArray);		// 前の描写を消す
+			world_select_once = false;						// 1回も描写してないよにする
+			world_select_once_time = 0;						// 描写してからの時間のリセット
+		}
+
+
+
+
+
+
+		// 次のSCENE_STAGE_SELECTへ行く処理
+
+	//スペースキーが押されていて、フェード処理中ではないとき
+		if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
+		{
+			SetVolume(g_BGMNo, 0.1f);
+
+			WorldDecision = true;
+
+			//STAGE_SELECTへ移行する
+			SceneTransition(SCENE_STAGE_SELECT);
+		}
+
+		// マウスが押される位置にあって、左クリック押されていて、フェード処理中ではないとき
+		if (mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
+		{
+			SetVolume(g_BGMNo, 0.1f);
+
+			WorldDecision = true;
+
+			//STAGE_SELECTへ移行する
+			SceneTransition(SCENE_STAGE_SELECT);
+		}
+
+
+
+
+
+		//　ワールド選択の選択しているところの描写の処理
+		if (world_select_once == false)
+		{
+
+			world_select_once = true;
+
+			if (g_WorldSelect.select_y == 0)
+			{
+
+				// 選択されているときの表示
+				if (g_WorldSelect.select_x == 0)
+				{
+					now_world_select_EffectArray =
+						SetEffect(6, D3DXVECTOR2(240.0f, 200.0f), D3DXVECTOR2(240.0f, 200.0f), 0,
+							D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
+							1.0f, 1.0f, 0, 999, 0, 60,
+							0.0f, 0.0f, 0);
+				}
+
+				// 選択されているときの表示
+				if (g_WorldSelect.select_x == 1)
+				{
+					now_world_select_EffectArray =
+						SetEffect(7, D3DXVECTOR2(480.0f, 500.0f), D3DXVECTOR2(480.0f, 500.0f), 0,
+							D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
+							0.0f, 1.0f, 0, 999, 0, 60,
+							0.0f, 0.0f, 0);
+				}
+
+				// 選択されているときの表示
+				if (g_WorldSelect.select_x == 2)
+				{
+					now_world_select_EffectArray =
+						SetEffect(6, D3DXVECTOR2(720.0f, 250.0f), D3DXVECTOR2(720.0f, 250.0f), 0,
+							D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
+							0.0f, 1.0f, 0, 999, 0, 60,
+							0.0f, 0.0f, 0);
+				}
+
+				// 選択されているときの表示
+				if (g_WorldSelect.select_x == 3)
+				{
+					now_world_select_EffectArray =
+						SetEffect(6, D3DXVECTOR2(960.0f, 550.0f), D3DXVECTOR2(960.0f, 550.0f), 0,
+							D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
+							0.0f, 1.0f, 0, 999, 0, 60,
+							0.0f, 0.0f, 0);
+				}
+
+				// 選択されているときの表示
+				if (g_WorldSelect.select_x == 4)
+				{
+					now_world_select_EffectArray =
+						SetEffect(6, D3DXVECTOR2(1200.0f, 400.0f), D3DXVECTOR2(1200.0f, 400.0f), 0,
+							D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
+							0.0f, 1.0f, 0, 999, 0, 60,
+							0.0f, 0.0f, 0);
+				}
+			}
+		}
+
 	}
 
+		if (world_select_once == true)
+		{
+			if (world_select_once_time % 60 == 0)
+			{
+				ChangeEffectCount(now_world_select_EffectArray, 0);
+			}
 
-	// クールタイムのカウントを減らす処理
-	if (g_WorldSelect.selectcooltime > 0)
-		g_WorldSelect.selectcooltime--;
 
-	g_WorldSelect.selecttime++;
+			// 選択されてからの時間が増えていく
+			world_select_once_time++;
+		}
+
+
+		// クールタイムのカウントを減らす処理
+		if (g_WorldSelect.selectcooltime > 0)
+			g_WorldSelect.selectcooltime--;
+
+		g_WorldSelect.selecttime++;
+
+	
 
 }
 

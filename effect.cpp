@@ -904,6 +904,9 @@ void ChangeEffect(int use_array_num, int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2,
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
 	float rot_angle1, float rot_angle2, int rot_moving_pattern, int SerialNumber)
 {
+	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
+		exit(29);
+
 	for (int i = 0; i < SerialNumber; i++)
 	{
 		//g_Effect[use_array_num].id = id;	下で引数で入力した値によってテクスチャを変更している
@@ -949,6 +952,9 @@ void ChangeEffect(int use_array_num, int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2,
 // use_array_numのエフェクトのnow_countだけを設定できる,SerialNumberはデフォルト関数でデフォ=1
 void ChangeEffectCount(int use_array_num, int setcount, int SerialNumber)
 {
+	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
+		exit(30);
+
 	for (int i = 0; i < SerialNumber; i++)
 	{
 		g_Effect[use_array_num].now_count = setcount;
@@ -959,6 +965,9 @@ void ChangeEffectCount(int use_array_num, int setcount, int SerialNumber)
 // テクスチャだけを変えれる
 void ChangeEffectTexture(int use_array_num, int setTexid, int SerialNumber)
 {
+	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
+		exit(31);
+
 	for (int i = 0; i < SerialNumber; i++)
 	{
 		g_Effect[use_array_num].id = GetTextureData(setTexid);
@@ -969,6 +978,9 @@ void ChangeEffectTexture(int use_array_num, int setTexid, int SerialNumber)
 // 色だけを変えれる
 void ChangeEffectColor(int use_array_num, float r, float g, float b, int SerialNumber)
 {
+	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
+		exit(32);
+
 	for (int i = 0; i < SerialNumber; i++)
 	{
 		g_Effect[use_array_num].color = D3DXCOLOR(r, g, b, g_Effect[use_array_num].Clarity);
@@ -979,6 +991,9 @@ void ChangeEffectColor(int use_array_num, float r, float g, float b, int SerialN
 // 透明度だけを変えれる,minとmaxも変わるので注意
 void ChangeEffectClarity(int use_array_num, float clarity, int SerialNumber)
 {
+	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
+		exit(33);
+
 	for (int i = 0; i < SerialNumber; i++)
 	{
 		g_Effect[use_array_num].Clarity = clarity;
@@ -991,9 +1006,10 @@ void ChangeEffectClarity(int use_array_num, float clarity, int SerialNumber)
 // 配列の何番目かを指定してエフェクトを消す,SerialNumberはデフォルト関数でデフォ=1
 void EffectBreak(int use_array_num, int SerialNumber)
 {
-	// 初期値やエラーである-1だった場合なにもしない
-	if (use_array_num == -1)
+	// 初期値やエラーである-1だった場合もしくはマックスエフェクトを超えた値だった場合なにもしない。エラー
+	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
 		return;
+		//exit(34);
 
 
 	for (int i = 0; i < SerialNumber; i++)
@@ -1008,11 +1024,17 @@ void EffectBreak(int use_array_num, int SerialNumber)
 // 配列の何番目のエフェクトの今の座標を返す
 D3DXVECTOR2 GetEffectPos(int use_array_num)
 {
+	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
+		exit(35);
+
 	return g_Effect[use_array_num].pos;
 }
 
 // 配列の何番目のエフェクトの今のサイズを返す
 D3DXVECTOR2 GetEffectSize(int use_array_num)
 {
+	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
+		exit(36);
+
 	return g_Effect[use_array_num].size;
 }

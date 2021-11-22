@@ -15,10 +15,9 @@ typedef struct {
 
 }MISSION;
 
-// ‚±‚±‚à‘½•ªŽg‚í‚È‚¢‚©‚à
-//void InitMission();
-//void UninitMission();
-//void UpdateMission();
+void InitMission();
+void UninitMission();
+void UpdateMission();
 
 MISSION* GetMission();
 

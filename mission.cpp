@@ -18,13 +18,13 @@ MISSION g_Mission;
 
 void InitMission()
 {
-	g_Mission.mission_background_EffectArray = 0;
+	g_Mission.mission_background_EffectArray = -1;
 	for (int i = 0; i < MAX_MISSION; i++)
 	{
-		g_Mission.mission_ContentsNum_EffectArray[i] = 0;
+		g_Mission.mission_ContentsNum_EffectArray[i] = -1;
 		for (int j = 0; j < MAX_DIGIT; j++)
 		{
-			g_Mission.mission_JudgeNum_EffectArray[i][j] = 0;
+			g_Mission.mission_JudgeNum_EffectArray[i][j] = -1;
 		}
 	}
 
@@ -244,6 +244,7 @@ void DrawMissionStageSelect()
 		g_Mission.mission_ContentsNum_EffectArray[i] = Content_EffectArray;
 		g_Mission.mission_JudgeNum_EffectArray[i][0] = Number_EffectArray[0];
 		g_Mission.mission_JudgeNum_EffectArray[i][1] = Number_EffectArray[1];		// ˜A”Ô‚Ì•Û‘¶
+		int asd = 0;
 	}
 	return;
 }

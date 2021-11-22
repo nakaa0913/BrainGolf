@@ -21,6 +21,7 @@
 #include "worldselect.h"
 #include "savedata.h"
 #include "placement.h"
+#include "mission.h"
 
 /*------------------------------------------------------------------------------
    定数定義
@@ -59,6 +60,7 @@ void InitScene(SCENE index)
 
 	case SCENE_LOGO:
 		InitSavedata();
+		InitMission();			// ステージセレクトでミッションの情報使うから先に読んでおく
 		InitEffect();
 		InitLogo();
 		//InitStagedata();

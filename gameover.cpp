@@ -146,6 +146,11 @@ void UpdateGameover(void)
 			D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 1,
 			0.0f, 1.0f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
+		//プレイヤー配置に戻る
+		SetEffect(59, D3DXVECTOR2(600.0f, 700.0f), D3DXVECTOR2(600.0f, 700.0f), 1,
+			D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
 
 		//マップ？に戻る
 		SetEffect(58, D3DXVECTOR2(100.0f, 700.0f), D3DXVECTOR2(100.0f, 700.0f), 1,
@@ -176,6 +181,15 @@ void UpdateGameover(void)
 				0.0f, 0.0f, 0);
 		}
 
+		if (g_Gameover.selectpush == 2)
+		{
+			//プレイヤー配置に戻る
+			SetEffect(59, D3DXVECTOR2(600.0f, 700.0f), D3DXVECTOR2(600.0f, 700.0f), 1,
+				D3DXVECTOR2(500.0f, 500.0f), D3DXVECTOR2(500.0f, 500.0f), 1,
+				0.0f, 1.0f, 0, 1, 0, 1,
+				0.0f, 0.0f, 0);
+		}
+
 		/*if (g_Gameover.selectpush == 2)
 		{
 			SetEffect(3, D3DXVECTOR2(SCREEN_WIDTH / 2, 700.0f), D3DXVECTOR2(SCREEN_WIDTH / 2, 700.0f), 1,
@@ -194,7 +208,7 @@ void UpdateGameover(void)
 				g_Gameover.selecttime = 30;
 
 			}
-			if (g_Gameover.selectpush >= 2)
+			if (g_Gameover.selectpush >= 3)
 			{
 				g_Gameover.selectpush = 0;
 			}
@@ -207,7 +221,7 @@ void UpdateGameover(void)
 			}
 			if (g_Gameover.selectpush < 0)
 			{
-				g_Gameover.selectpush = 1;
+				g_Gameover.selectpush = 2;
 			}
 
 			/*if (g_Gameover.gameovertime >= 9060)
@@ -237,7 +251,14 @@ void UpdateGameover(void)
 				}
 			}
 
+			if (g_Gameover.selectpush == 2)
+			{
+				if (Keyboard_IsKeyDown(KK_ENTER))
+				{
+					SceneTransition(SCENE_PLACEMENT);
 
+				}
+			}
 
 		}
 

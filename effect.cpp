@@ -81,7 +81,7 @@ static int gameover_55;  // 55
 static int restart_56;  // 56
 static int stagename_57;  // 57
 static int gameover_back_58;  // 58
-
+static int gameover_place_59; // 59
 
 void InitEffect(void)
 {
@@ -151,7 +151,7 @@ void InitEffect(void)
 	restart_56 = LoadTexture("data/TEXTURE/result/gameover/restart.png");
 	stagename_57 = LoadTexture("data/TEXTURE/result/gameover/stagename.png");
 	gameover_back_58 = LoadTexture("data/TEXTURE/result/gameover/gameover_back.png");
-
+	gameover_place_59 = LoadTexture("data/TEXTURE/result/gameover/gameover_place.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -886,6 +886,9 @@ int GetTextureData(int id)
 		break;
 	case 58:
 		return gameover_back_58;
+		break;
+	case 59:
+		return gameover_place_59;
 		break;
 		
 	}

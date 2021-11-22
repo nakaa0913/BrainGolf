@@ -146,7 +146,7 @@ void UpdatePlayer(void)
 		g_Player[i].nextpos = g_Player[i].pos;
 
 		//上
-		if (Keyboard_IsKeyDown(KK_UP))
+		if (Keyboard_IsKeyDown(KK_W))
 		{
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x, g_Player[i].pos.y - 3.0f)) != 1)
 				g_Player[i].nextpos.y -= 3.0f;
@@ -167,7 +167,7 @@ void UpdatePlayer(void)
 		}
 
 		//下
-		if (Keyboard_IsKeyDown(KK_DOWN))
+		if (Keyboard_IsKeyDown(KK_S))
 		{
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x, g_Player[i].pos.y + 3.0f)) != 1)
 				g_Player[i].nextpos.y += 3.0f;
@@ -188,7 +188,7 @@ void UpdatePlayer(void)
 		}
 
 		//左
-		if (Keyboard_IsKeyDown(KK_LEFT))
+		if (Keyboard_IsKeyDown(KK_A))
 		{
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x - 3.0f, g_Player[i].pos.y)) != 1)
 				g_Player[i].nextpos.x -= 3.0f;
@@ -210,7 +210,7 @@ void UpdatePlayer(void)
 		
 
 		//右
-		if (Keyboard_IsKeyDown(KK_RIGHT))
+		if (Keyboard_IsKeyDown(KK_D))
 		{
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x + 3.0f, g_Player[i].pos.y)) != 1)
 				g_Player[i].nextpos.x += 3.0f;
@@ -408,37 +408,33 @@ void UpdatePlayer(void)
 			now_have = true;
 			if (g_Player[i].ConfirmAngle == false)
 			{
-				// プレイヤーの角度を変える処理,回転させる処理
-				g_Player[i].angle += 6.0f;
-				if (g_Player[i].angle > 360.0f)
-					g_Player[i].angle = 0.0f;
-				g_Player[i].direction = 0;
-				if (Keyboard_IsKeyDown(KK_SPACE))
+				// プレイヤーの角度を変える処理,回転させる処理撃つ方向を決める
+				if (Keyboard_IsKeyDown(KK_LEFT))
 				{
-					g_Player[i].ConfirmAngle = true;
+					g_Player[i].angle += 3.0f;
+
+					if (g_Player[i].angle > 360.0f)
+						g_Player[i].angle = 0.0f;
+					g_Player[i].direction = 0;
+
 				}
-			}
 
-			if (g_Player[i].ConfirmAngle == true)
-			{
-				// クールタイムの減少
-				if (g_Player[i].ConfirmCooltime >= 0)
-					g_Player[i].ConfirmCooltime--;
+				if (Keyboard_IsKeyDown(KK_RIGHT))
+				{
+					g_Player[i].angle -= 3.0f;
 
-				g_Player[i].direction = 0;
-				// ShotPowerの変動の設定
-				g_Player[i].ShotPower++;
-				if (g_Player[i].ShotPower > 100)
-					g_Player[i].ShotPower = 0;
+					if (g_Player[i].angle <= 0.0f)
+						g_Player[i].angle = 360.0f;
+					g_Player[i].direction = 0;
+					
+				}
 
-				// 表示だけ↓scoreと同じもの
-				SetShotPower(g_Player[i].ShotPower);
-
-				if (Keyboard_IsKeyDown(KK_ENTER) && g_Player[i].ConfirmCooltime < 0)
+				//ENTERで弾だす
+				if (Keyboard_IsKeyDown(KK_ENTER))
 				{
 					// パスした回数を増やす
 					p_Gamedata->pass_count++;
-					
+
 					g_Player[i].catchwait = 60;
 					g_Player[i].have = false;
 
@@ -449,8 +445,40 @@ void UpdatePlayer(void)
 					D3DXVECTOR2 pos = g_Player[i].pos;
 					SetBullet(pos, g_Player[i].angle, g_Player[i].ShotPower);
 				}
-
 			}
+
+			//if (g_Player[i].ConfirmAngle == true)
+			//{
+			//	// クールタイムの減少
+			//	if (g_Player[i].ConfirmCooltime >= 0)
+			//		g_Player[i].ConfirmCooltime--;
+
+			//	g_Player[i].direction = 0;
+			//	// ShotPowerの変動の設定
+			//	g_Player[i].ShotPower++;
+			//	if (g_Player[i].ShotPower > 100)
+			//		g_Player[i].ShotPower = 0;
+
+			//	// 表示だけ↓scoreと同じもの
+			//	SetShotPower(g_Player[i].ShotPower);
+
+			//	if (Keyboard_IsKeyDown(KK_ENTER) && g_Player[i].ConfirmCooltime < 0)
+			//	{
+			//		// パスした回数を増やす
+			//		p_Gamedata->pass_count++;
+			//		
+			//		g_Player[i].catchwait = 60;
+			//		g_Player[i].have = false;
+
+			//		PlaySound(g_ShotSENo, 0);
+
+			//		SetVolume(g_ShotSENo, 0.1f);
+
+			//		D3DXVECTOR2 pos = g_Player[i].pos;
+			//		SetBullet(pos, g_Player[i].angle, g_Player[i].ShotPower);
+			//	}
+
+			//}
 		}
 
 		if (g_Player[i].catchwait > 0)

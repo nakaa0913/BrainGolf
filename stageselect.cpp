@@ -196,26 +196,148 @@ void UpdateStageSelect(void)
 		// 移動キーが押された時の処理
 		if (g_StageSelect.selectcooltime <= 0)
 		{
-			// 上
-			if (Keyboard_IsKeyDown(KK_UP))
-			{
-				g_StageSelect.select_y--;
+
+			if (g_StageSelect.select_x == 0) {
+				
+				if (g_StageSelect.select_y == 0)
+				{
+					//(0,0)の処理
+					if (Keyboard_IsKeyDown(KK_UP))
+					{
+						g_StageSelect.select_y = 3;
+					}
+
+					if (Keyboard_IsKeyDown(KK_DOWN))
+					{
+						g_StageSelect.select_y = 1;
+					}
+				}
+				//(0,1)の処理
+				else if (g_StageSelect.select_y == 1)
+				{
+					if (Keyboard_IsKeyDown(KK_UP))
+					{
+						g_StageSelect.select_y = 0;
+					}
+					//下押したら「ワールド選択に戻るボタン」にいく
+					if (Keyboard_IsKeyDown(KK_DOWN))
+					{
+						g_StageSelect.select_y = 3;
+					}
+				}
+
+				//(0,3)の処理
+				else if (g_StageSelect.select_y == 3)
+				{
+					if (Keyboard_IsKeyDown(KK_UP))
+					{
+						g_StageSelect.select_y = 1;
+					}
+
+					if (Keyboard_IsKeyDown(KK_DOWN))
+					{
+						g_StageSelect.select_y = 0;
+					}
+					//ENTERでシーンワールド選択にいく
+					if (Keyboard_IsKeyDown(KK_ENTER))
+					{
+						SceneTransition(SCENE_WORLD_SELECT);
+					}
+				}
+				//y = 3以外の時に左右移動ができる（3は「ワールド選択に戻るボタン」）
+				if (g_StageSelect.select_y != 3)
+				{
+					// 右
+					if (Keyboard_IsKeyDown(KK_RIGHT))
+					{
+						g_StageSelect.select_x++;
+					}
+					// 左
+					if (Keyboard_IsKeyDown(KK_LEFT))
+					{
+						g_StageSelect.select_x--;
+					}
+				}
 			}
-			// 下
-			if (Keyboard_IsKeyDown(KK_DOWN))
-			{
-				g_StageSelect.select_y++;
+			//x = 0じゃないときの処理
+			else {
+				// 上
+				if (Keyboard_IsKeyDown(KK_UP))
+				{
+					g_StageSelect.select_y--;
+				}
+				// 下
+				if (Keyboard_IsKeyDown(KK_DOWN))
+				{
+					g_StageSelect.select_y++;
+				}
+				// 右
+				if (Keyboard_IsKeyDown(KK_RIGHT))
+				{
+					g_StageSelect.select_x++;
+				}
+				// 左
+				if (Keyboard_IsKeyDown(KK_LEFT))
+				{
+					g_StageSelect.select_x--;
+				}
 			}
-			// 右
-			if (Keyboard_IsKeyDown(KK_RIGHT))
-			{
-				g_StageSelect.select_x++;
-			}
-			// 左
-			if (Keyboard_IsKeyDown(KK_LEFT))
-			{
-				g_StageSelect.select_x--;
-			}
+
+			//if (g_StageSelect.select_x != -2 && g_StageSelect.select_y != 3)
+			//{
+			//	// 右
+			//	if (Keyboard_IsKeyDown(KK_RIGHT))
+			//	{
+			//		g_StageSelect.select_x++;
+			//	}
+			//	// 左
+			//	if (Keyboard_IsKeyDown(KK_LEFT))
+			//	{
+			//		g_StageSelect.select_x--;
+			//	}
+
+			//}
+			////ワールド選択に戻る処理
+			//if (g_StageSelect.select_x == 0 && g_StageSelect.select_y == 1)
+			//{
+			//	if (Keyboard_IsKeyDown(KK_DOWN))
+			//	{
+			//		g_StageSelect.select_y = 3;
+			//		g_StageSelect.select_x = -2;
+
+			//	}
+			//}
+			//else
+			//{
+			//	// 下
+			//	if (Keyboard_IsKeyDown(KK_DOWN))
+			//	{
+			//		g_StageSelect.select_y++;
+			//	}
+			//}
+
+			////ワールド選択に戻るを選択している状態
+			//if (g_StageSelect.select_x == -2 && g_StageSelect.select_y == 3)
+			//{
+			//	if (Keyboard_IsKeyDown(KK_UP))
+			//	{
+			//		g_StageSelect.select_y = 1;
+			//		g_StageSelect.select_x = 0;
+			//	}
+
+			//	if (Keyboard_IsKeyDown(KK_ENTER))
+			//	{
+			//		SceneTransition(SCENE_WORLD_SELECT);
+			//	}
+			//}
+			//else
+			//{
+			//	// 上
+			//	if (Keyboard_IsKeyDown(KK_UP))
+			//	{
+			//		g_StageSelect.select_y--;
+			//	}
+			//}
 
 			// マウスでの操作
 			//1 240 200
@@ -299,12 +421,27 @@ void UpdateStageSelect(void)
 			}
 
 			// 限界値による修正の処理
+
+			//xが5以上なら0にする（右から左）
 			if (g_StageSelect.select_x >= SELECT_MAX_X)
 				g_StageSelect.select_x = 0;
-			if (g_StageSelect.select_x < 0)
+
+			//xが-1なら4にする（左から右）
+			if (g_StageSelect.select_x < 0 && g_StageSelect.select_x >= -1)
 				g_StageSelect.select_x = SELECT_MAX_X - 1;
-			if (g_StageSelect.select_y >= SELECT_MAX_Y)
+
+			//yが2なら0にする（下から上）
+			if (g_StageSelect.select_y > 1 && g_StageSelect.select_y <= SELECT_MAX_Y)
+			{
 				g_StageSelect.select_y = 0;
+			}
+
+			//yが4なら3にする（下から上）
+			if (g_StageSelect.select_y < 5 && g_StageSelect.select_y >= 4)
+			{
+				g_StageSelect.select_y = 0;
+			}
+			//yが0未満なら1にする（上から下）
 			if (g_StageSelect.select_y < 0)
 				g_StageSelect.select_y = SELECT_MAX_Y - 1;
 
@@ -374,8 +511,11 @@ void UpdateStageSelect(void)
 		int stagenum = (SELECT_MAX_X * g_StageSelect.select_y) + (g_StageSelect.select_x + 1);
 		SetStageData(stagenum);
 
-		// ステージデータを受け取った(更新された)のでミッションを表示させる
-		DrawMissionStageSelect();
+		if (g_StageSelect.select_y != 3)
+		{
+			// ステージデータを受け取った(更新された)のでミッションを表示させる
+			DrawMissionStageSelect();
+		}
 
 		//ステージ選択
 		for (int x = 0; x < SELECT_MAX_X; x++)
@@ -396,9 +536,26 @@ void UpdateStageSelect(void)
 								D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
 								1.0f, 1.0f, 0, 999, 0, 60,
 								0.0f, 0.0f, 0);
+
+
 					}
+
+
 				}
+
+
 			}
+
+
+		}
+
+		// タイトルに戻る処理 (ワールド選択に戻るボタンの表示)
+		if (g_StageSelect.select_x == 0 && g_StageSelect.select_y == 3)
+		{
+			SetEffect(61, D3DXVECTOR2(240.0f, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
+				D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 0,
+				0.0f, 1.0f, 0, 999, 0, 60,
+				0.0f, 0.0f, 0);
 		}
 	}
 
@@ -485,6 +642,12 @@ void StartStageSelectScreen()
 			// 選択されてないときの表示を出す(ステージすべて)
 			SetEffect(tex_NowWorld_stagechoice, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
 				D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+				0.0f, 1.0f, 0, 999, 0, 0,
+				0.0f, 0.0f, 0);
+
+			// タイトルに戻る処理
+			SetEffect(61, D3DXVECTOR2(240.0f, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
+				D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
 				0.0f, 1.0f, 0, 999, 0, 0,
 				0.0f, 0.0f, 0);
 		}

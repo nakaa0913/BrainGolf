@@ -83,6 +83,10 @@ static int stagename_57;  // 57
 static int gameover_back_58;  // 58
 static int gameover_place_59; // 59
 
+static int titleback_60; //60
+static int worldback_61; //61
+
+
 void InitEffect(void)
 {
 	//テクスチャの名前
@@ -152,6 +156,9 @@ void InitEffect(void)
 	stagename_57 = LoadTexture("data/TEXTURE/result/gameover/stagename.png");
 	gameover_back_58 = LoadTexture("data/TEXTURE/result/gameover/gameover_back.png");
 	gameover_place_59 = LoadTexture("data/TEXTURE/result/gameover/gameover_place.png");
+
+	titleback_60 = LoadTexture("data/TEXTURE/select/titleback.png");
+	worldback_61 = LoadTexture("data/TEXTURE/select/worldback.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -890,7 +897,15 @@ int GetTextureData(int id)
 	case 59:
 		return gameover_place_59;
 		break;
+	case 60:
+		return titleback_60;
+		break;
+	case 61:
+		return worldback_61;
+		break;
 		
+			
+
 	}
 
 	// どこにもたどり着かなかった場合

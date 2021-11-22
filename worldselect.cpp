@@ -140,18 +140,47 @@ void UpdateWorldSelect(void)
 				// キー入力による操作
 		if (g_WorldSelect.selectcooltime <= 0)
 		{
-			// 右
-			if (Keyboard_IsKeyDown(KK_RIGHT))
-				g_WorldSelect.select_x++;
-			// 左
-			if (Keyboard_IsKeyDown(KK_LEFT))
-				g_WorldSelect.select_x--;
-
+			//-2以外は左右に移動できる
+			if (g_WorldSelect.select_x != -2)
+			{
+				// 右
+				if (Keyboard_IsKeyDown(KK_RIGHT))
+					g_WorldSelect.select_x++;
+				// 左
+				if (Keyboard_IsKeyDown(KK_LEFT))
+					g_WorldSelect.select_x--;
+			}
 			// 選択しているところが限界を超えないようにする処理
 			if (g_WorldSelect.select_x >= WORLD_SELECT_MAX_X)
 				g_WorldSelect.select_x = 0;
-			if (g_WorldSelect.select_x < 0)
+
+			//xが-1なら4にする（左から右）
+			if (g_WorldSelect.select_x < 0 && g_WorldSelect.select_x >= -1)
+			{
 				g_WorldSelect.select_x = WORLD_SELECT_MAX_X - 1;
+			}
+
+			//タイトルに戻る処理
+			if(g_WorldSelect.select_x == 0)
+			{
+				if (Keyboard_IsKeyDown(KK_DOWN))
+					g_WorldSelect.select_x = -2 ;
+			}
+			if (g_WorldSelect.select_x == -2)
+			{
+				if (Keyboard_IsKeyDown(KK_UP))
+					g_WorldSelect.select_x = 0;
+
+				if (Keyboard_IsKeyDown(KK_ENTER))
+				{
+					SetVolume(g_BGMNo, 0.1f);
+					WorldDecision = true;
+
+					//STAGE_SELECTへ移行する
+					SceneTransition(SCENE_TITLE);
+				}
+			}
+
 		}
 
 		bool mouseuse = false;
@@ -217,7 +246,7 @@ void UpdateWorldSelect(void)
 
 
 
-		// 次のSCENE_STAGE_SELECTへ行く処理
+	//	// 次のSCENE_STAGE_SELECTへ行く処理
 
 	//スペースキーが押されていて、フェード処理中ではないとき
 		if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
@@ -303,6 +332,22 @@ void UpdateWorldSelect(void)
 							0.0f, 1.0f, 0, 999, 0, 60,
 							0.0f, 0.0f, 0);
 				}
+
+				// 選択されているときの表示
+				if (g_WorldSelect.select_x == -2)
+				{
+					now_world_select_EffectArray =
+						// タイトルに戻る処理
+						SetEffect(60, D3DXVECTOR2(240.0f, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
+							D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
+							0.0f, 1.0f, 0, 999, 0, 0,
+							0.0f, 0.0f, 0);
+
+				
+				}
+	
+		
+				
 			}
 		}
 
@@ -383,6 +428,12 @@ void StartWorldSelectScreen()
 		0.0f, 0.0f, 0);
 
 	SetEffect(6, D3DXVECTOR2(1200.0f, 400.0f), D3DXVECTOR2(1200.0f, 400.0f), 0,
+		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+		0.0f, 1.0f, 0, 999, 0, 0,
+		0.0f, 0.0f, 0);
+
+	// タイトルに戻る処理
+	SetEffect(60, D3DXVECTOR2(240.0f, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
 		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 		0.0f, 1.0f, 0, 999, 0, 0,
 		0.0f, 0.0f, 0);

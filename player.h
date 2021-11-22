@@ -91,3 +91,4 @@ void SetPlayerUseFile(MAPCHIP_POS_STRUCT Receive_Mapchip_Pos_Struct, float moves
 int SetPlayerForPlacement(int mappos_x, int mappos_y);
 int returnHavePlayer();
 void DeletePlayer(int num);
+void DeletePlacementPlayer();

@@ -27,7 +27,6 @@ NumberofPeopleEnd
 
 PlayerdataStart
 pos,7,2,
-pos,12,7,
 PlayerdataEnd
 
 MissiondataStart

@@ -63,11 +63,9 @@ void InitPlacement(void)
 	//InitGamedata();
 
 	// 現在の配置情報を使ってプレイヤーを配置する	0番目は主人公がすでにいるので無視して1番目から
-	for (int i = 0; i < PLACEMENT_MAX; i++)
-	{
-		// 主人公以外のプレイヤーを消す
-		//DeletePlayer(i);
-	}
+
+	// 主人公以外のプレイヤーを消す
+	DeletePlacementPlayer();
 	// ステージによって配置できる人数が違うのでそこまで読み込む
 	for (int i = 0; i < p_Stagedata->NumberofPeople; i++)
 	{

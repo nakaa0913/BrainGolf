@@ -589,6 +589,7 @@ void DrawPlayerSpecifyNum(int i)
 
 }
 
+
 // プレイヤー配置の時の描写
 void DrawPlayerForPlacement(void)
 {
@@ -634,6 +635,15 @@ void DeletePlayer(int num)
 {
 	g_Player[num].use = false;
 
+}
+
+// 配置したプレイヤーを消す(主人公以外)
+void DeletePlacementPlayer()
+{
+	for (int i = 1; i < PLAYER_MAX; i++)
+	{
+		g_Player[i].use = false;
+	}
 }
 
 //=============================================================================

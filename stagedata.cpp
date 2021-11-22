@@ -23,6 +23,7 @@ void InitStagedata()
 		g_Stagedata.mission_ContentsNum[i] = 0;
 		g_Stagedata.mission_JudgeNum[i]	   = 0;
 	}
+	g_Stagedata.NumberofPeople = 9;
 
 
 	SetStageData(1);				// テストでこれしてるだけ。実際はセットステージはInitGameが終わった後にする。

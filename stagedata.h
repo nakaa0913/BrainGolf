@@ -11,6 +11,7 @@ typedef struct {
 	int maparray[MAP_Y][MAP_X];	// マップの配列データ
 	int mission_ContentsNum[MAX_MISSION];				//ミッションの内容	ミッションは3つ固定なので3
 	int mission_JudgeNum[MAX_MISSION];					//ミッションの内容で使われる数字
+	int NumberofPeople;									// このステージで配置できる最大人数
 
 	//bool clear1;				//ミッションをクリアしたか
 	//bool clear2;				// これはプレイヤーのセーブデータの方で管理

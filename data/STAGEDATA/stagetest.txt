@@ -21,6 +21,10 @@ MapdataStart
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 MapdataEnd
 
+NumberofPeopleStart
+5,
+NumberofPeopleEnd
+
 PlayerdataStart
 pos,7,2,
 pos,12,7,

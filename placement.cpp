@@ -51,7 +51,10 @@ bool ViewAbove = true;
 ------------------------------------------------------------------------------*/
 void InitPlacement(void)
 {
+	STAGEDATA* p_Stagedata = GetStagedata();
+
 	placement_frame_time = 0;
+
 
 	//InitPlayer();
 	//InitScore();
@@ -64,12 +67,15 @@ void InitPlacement(void)
 	{
 		// 主人公以外のプレイヤーを消す
 		//DeletePlayer(i);
-
+	}
+	// ステージによって配置できる人数が違うのでそこまで読み込む
+	for (int i = 0; i < p_Stagedata->NumberofPeople; i++)
+	{
 		// 設定されていたら新たにセットする
 		if (g_Placement[i].isUse)
 		{
 			g_Placement[i].UsePlayerArray =
-			SetPlayerForPlacement(g_Placement[i].placement_x, g_Placement[i].placement_y);
+				SetPlayerForPlacement(g_Placement[i].placement_x, g_Placement[i].placement_y);
 		}
 	}
 
@@ -200,7 +206,9 @@ void UpdatePlacement(void)
 		}
 
 		// 選択しているところが置けないところの場合テクスチャを変える
-		if (DontPlaceForCharacter(nowchoice.x, nowchoice.y) || DontPlaceForBlock(nowchoice.x, nowchoice.y))
+		if (DontPlaceForCharacter(nowchoice.x, nowchoice.y) || 
+			DontPlaceForBlock(nowchoice.x, nowchoice.y)		||
+			DontPlaceForNumberofPeople()						)
 			ChangeEffectTexture(placement_pickup_EffectArray, 53);
 		else
 			ChangeEffectTexture(placement_pickup_EffectArray, 52);
@@ -295,6 +303,8 @@ void ResetPlacementArray(void)
 // Placement構造体にでーたをいれつつセットプレイヤーも行う。その際どこに入っているかの情報も貰う,配置出来たらtrue
 bool SetPlacementAndPlayer(int x, int y)
 {
+	STAGEDATA * p_Stagedata = GetStagedata();
+
 	// 主人公がいて設置できない処理,被っていたらtrueが返ってくるのでこうかく
 	if (DontPlaceForCharacter(x, y))
 		return false;
@@ -302,7 +312,8 @@ bool SetPlacementAndPlayer(int x, int y)
 	if(DontPlaceForBlock(x, y))
 		return false;
 
-	for (int i = 0; i < PLACEMENT_MAX; i++)
+	// ステージによって配置できる人数が違うのでそこまでで探す
+	for (int i = 0; i < p_Stagedata->NumberofPeople; i++)
 	{
 		// 使われていないものから使う
 		if (g_Placement[i].isUse == false)
@@ -319,16 +330,20 @@ bool SetPlacementAndPlayer(int x, int y)
 		}
 	}
 
+	// 人数がいっぱいだった場合falseを返す
 	return false;
 }
+
+
 
 
 // 既に使われているところにもう一度配置しようとしたら逆にプレイヤーを外すことができる
 bool SamePlacement(int x, int y)
 {
-	for (int i = 0; i < PLACEMENT_MAX; i++)
+	STAGEDATA* p_Stagedata = GetStagedata();
+
+	for (int i = 0; i < p_Stagedata->NumberofPeople; i++)
 	{
-		// 使われていないものから使う
 		if (g_Placement[i].isUse == true)
 		{
 			if (x == g_Placement[i].placement_x && y == g_Placement[i].placement_y)
@@ -368,4 +383,24 @@ bool DontPlaceForBlock(int x, int y)
 		return true;
 
 	return false;
+}
+
+// プレイヤーを最大まで配置しておいて設置できない処理,できないならtrue
+bool DontPlaceForNumberofPeople()
+{
+	STAGEDATA* p_Stagedata = GetStagedata();
+
+	// もしブロックと被っているなら,0以外のブロックなら被っている判定
+	for (int i = 0; i < p_Stagedata->NumberofPeople; i++)
+	{
+		if (g_Placement[i].isUse == false)
+		{
+			// 最大配置までしていないならfalseを返す
+			return false;
+		}
+	}
+
+	// もう最大まで配置していているなら配置できないのでtrueを返す
+	return true;
+
 }

@@ -43,3 +43,4 @@ bool SetPlacementAndPlayer(int x, int y);
 bool SamePlacement(int x, int y);
 bool DontPlaceForCharacter(int x, int y);
 bool DontPlaceForBlock(int x, int y);
+bool DontPlaceForNumberofPeople();

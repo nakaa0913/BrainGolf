@@ -75,6 +75,14 @@ void LoadMapdataMain(char* fileName)
 			// now_stringsを初期化する
 			strcpy(now_strings, "");
 		}
+		// NumberofPeopleStart の場合配置できる人数に関する読み込みが開始される
+		if (strstr(now_strings, "NumberofPeopleStart") != NULL)
+		{
+			pattern = PATTERN_NUMBEROFPEOPLE;
+
+			// now_stringsを初期化する
+			strcpy(now_strings, "");
+		}
 
 
 		// ファイル読み込み終了を読み取る終了処理
@@ -100,6 +108,10 @@ void LoadMapdataMain(char* fileName)
 		if (pattern == PATTERN_MISSION)
 		{
 			pattern = LoadMissiondata(fp);
+		}
+		if (pattern == PATTERN_NUMBEROFPEOPLE)
+		{
+			pattern = LoadNumberofPeopledata(fp);
 		}
 
 
@@ -942,6 +954,74 @@ int LoadMissiondata(FILE* fp)
 }
 
 
+
+// 配置できる人数データの読み込み
+int LoadNumberofPeopledata(FILE* fp)
+{
+	// stagedataに出力していくので、ポインターで持ってきておく
+	STAGEDATA* p_Stagedata = GetStagedata();
+
+	char loadchar[4] = "";
+	char now_strings[256] = "";
+	char decision_strings[256] = "";
+
+	int pattern = PATTERN_NULL;
+
+	while (pattern != PATTERN_END)
+	{
+		// ファイルを1文字ずつ読み込む	fscanfは返り値として読み込んだ数(%sとか%dの数)を返すが、今回は無視するので(void)をつける
+		(void)fscanf(fp, "%1s", loadchar);
+
+		// カンマが来たら文字列を確定させて次の文字列へ	,もしくは数字以外が来た場合
+		if (strcmp(loadchar, ",") == 0 || strcmpNumber(loadchar) != 0)
+		{
+			// 現在の文字列がカンマだけだった場合、削除して次の文字の検索へ。これをすることによって、(,1)とかの心配がなくなる
+			if (strcmp(now_strings, ",") == 0)
+			{
+				strcpy(now_strings, "");
+				continue;
+			}
+
+			// 確定した文字列を数字に変換し配置できる人数に反映させる処理。内容なのか使う値なのかの判別も処理
+			applyNumberofPeopleArray(now_strings);
+
+			// now_stringsを初期化する
+			strcpy(now_strings, "");
+
+
+			// 読み込み完了したので終わる
+			return PATTERN_NULL;
+
+		}
+		else
+		{
+			// カンマでなければ文字を繋げていく
+			strcat(now_strings, loadchar);
+		}
+
+		// MapdataEnd を見つけた場合処理は終了とみなしてNULLを返す
+		if (strstr(now_strings, "NumberofPeopleEnd") != NULL)
+		{
+			// now_stringsを初期化する
+			strcpy(now_strings, "");
+
+			return PATTERN_NULL;
+		}
+
+		// 50文字以上の文字列になってしまったらエラーとみなし強制終了させる
+		if (strlen(now_strings) > 50)
+		{
+			//exit(5);
+		}
+
+
+	}
+
+
+
+	return PATTERN_NULL;
+}
+
 // char型の数字(1桁のみ)からint型の数字へ
 int charToint(char c) 
 {
@@ -1139,6 +1219,33 @@ void applyMissionArray(int addednumtime, char strings[])
 			p_Stagedata->mission_ContentsNum[missionnum] = data;
 		else
 			p_Stagedata->mission_JudgeNum[missionnum] = data;
+	}
+	return;
+}
+
+
+// nowstringsから配置できる人数に追加する処理
+void applyNumberofPeopleArray(char strings[])
+{
+	// stagedataに出力していくので、ポインターで持ってきておく
+	STAGEDATA* p_Stagedata = GetStagedata();
+
+	// 文字列が何文字か調べ、文字数に応じて数字に変換したときの桁数を変える
+	int len = strlen(strings);
+	if (len == 1)
+	{
+		int data = charToint(strings[0]); 
+		p_Stagedata->NumberofPeople = data;
+	}
+	if (len == 2)
+	{
+		int data = 10 * charToint(strings[0]) + charToint(strings[1]);
+		p_Stagedata->NumberofPeople = data;
+	}
+	if (len == 3)
+	{
+		int data = 100 * charToint(strings[0]) + 10 * charToint(strings[1]) + charToint(strings[2]);
+		p_Stagedata->NumberofPeople = data;
 	}
 	return;
 }

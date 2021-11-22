@@ -109,14 +109,9 @@ void UpdateWorldSelect(void)
 	bool mouse_Lclick = GetMouseLClick();
 	bool mouse_Rclick = GetMouseRClick();
 
-	//スペースキーが押されていて、フェード処理中ではないとき
-	if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
-	{
-		SetVolume(g_BGMNo, 0.1f);
-
-		//STAGE_SELECTへ移行する
-		SceneTransition(SCENE_STAGE_SELECT);
-	}
+	// 1フレーム前のポジションの保存。この後キー操作などで変更があった場合のみエフェクトを更新させる
+	int OldWorldSelectX = g_WorldSelect.select_x;
+	int OldWorldSelectY = g_WorldSelect.select_y;
 
 	//ミッション
 	/*SetEffect(8, D3DXVECTOR2(280.0f, 700.0f), D3DXVECTOR2(280.0f, 700.0f), 0,
@@ -141,139 +136,105 @@ void UpdateWorldSelect(void)
 			// キー入力による操作
 	if (g_WorldSelect.selectcooltime <= 0)
 	{
-		bool use_key = false;		// キー入力されたかどうか
-
 		// 右
 		if (Keyboard_IsKeyDown(KK_RIGHT))
-		{
 			g_WorldSelect.select_x++;
-			use_key = true;
-			onlyOnce = false;
-			mouseuse = false;
-		}
 		// 左
 		if (Keyboard_IsKeyDown(KK_LEFT))
-		{
 			g_WorldSelect.select_x--;
-			use_key = true;
-			onlyOnce = false;
-			mouseuse = false;
-		}
-
-		if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f||
-			mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 425.0f && mouse_pos_Y < 575.0f||
-			mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 175.0f && mouse_pos_Y < 325.0f||
-			mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 475.0f && mouse_pos_Y < 625.0f||
-			mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 325.0f && mouse_pos_Y < 475.0f)
-		{
-			mouseuse = true;
-		}
-
-		if (mouseuse == true)
-		{
-			//1 240 200
-			if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
-			{
-				if (onlyOnce)
-				{
-					g_WorldSelect.select_x = 0;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_Lclick == true)
-				{
-					SceneTransition(SCENE_STAGE_SELECT);
-				}
-			}
-
-			//2 480 500
-			else if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 425.0f && mouse_pos_Y < 575.0f)
-			{
-				if (onlyOnce)
-				{
-					g_WorldSelect.select_x = 1;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_Lclick == true)
-				{
-					SceneTransition(SCENE_STAGE_SELECT);
-				}
-			}
-
-			//3 720 250
-			else if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 175.0f && mouse_pos_Y < 325.0f)
-			{
-				if (onlyOnce)
-				{
-					g_WorldSelect.select_x = 2;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_Lclick == true)
-				{
-					SceneTransition(SCENE_STAGE_SELECT);
-				}
-			}
-
-			//4 960 550
-			else if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 475.0f && mouse_pos_Y < 625.0f)
-			{
-				if (onlyOnce)
-				{
-					g_WorldSelect.select_x = 3;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_Lclick == true)
-				{
-					SceneTransition(SCENE_STAGE_SELECT);
-				}
-			}
-
-			//5 1200 400
-			else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 325.0f && mouse_pos_Y < 475.0f)
-			{
-				if (onlyOnce)
-				{
-					g_WorldSelect.select_x = 4;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_Lclick == true)
-				{
-					SceneTransition(SCENE_STAGE_SELECT);
-				}
-			}
-
-			//それ以外は消す
-			else
-			{
-				onlyOnce = true;
-				EffectBreak(now_world_select_EffectArray);
-			}
-		}
 
 		// 選択しているところが限界を超えないようにする処理
 		if (g_WorldSelect.select_x >= WORLD_SELECT_MAX_X)
 			g_WorldSelect.select_x = 0;
 		if (g_WorldSelect.select_x < 0)
 			g_WorldSelect.select_x = WORLD_SELECT_MAX_X - 1;
+	}
 
-		if (use_key == true)
-		{
-			// 初期化と前回使われていたものの消去
-			g_WorldSelect.selectcooltime = WORDL_SELECT_COOL;
-			EffectBreak(now_world_select_EffectArray);
-			world_select_once = false;
-			world_select_once_time = 0;
-		}
+	// マウスの座標を使っての入力処理
+	//1 240 200
+	if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
+	{
+		g_WorldSelect.select_x = 0;
+		mouseuse = true;
+	}
+	//2 480 500
+	else if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 425.0f && mouse_pos_Y < 575.0f)
+	{
+		g_WorldSelect.select_x = 1;
+		mouseuse = true;
+	}
+	//3 720 250
+	else if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 175.0f && mouse_pos_Y < 325.0f)
+	{
+		g_WorldSelect.select_x = 2;
+		mouseuse = true;
+	}
+	//4 960 550
+	else if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 475.0f && mouse_pos_Y < 625.0f)
+	{
+		g_WorldSelect.select_x = 3;
+		mouseuse = true;
+	}
+	//5 1200 400
+	else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 325.0f && mouse_pos_Y < 475.0f)
+	{
+		g_WorldSelect.select_x = 4;
+		mouseuse = true;
+	}
+
+
+
+	// 次のSCENE_STAGE_SELECTへ行く処理
+
+	//スペースキーが押されていて、フェード処理中ではないとき
+	if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
+	{
+		SetVolume(g_BGMNo, 0.1f);
+
+		//STAGE_SELECTへ移行する
+		SceneTransition(SCENE_STAGE_SELECT);
+	}
+
+	// マウスが押される位置にあって、左クリック押されていて、フェード処理中ではないとき
+	if (mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
+	{
+		SetVolume(g_BGMNo, 0.1f);
+
+		//STAGE_SELECTへ移行する
+		SceneTransition(SCENE_STAGE_SELECT);
 	}
 
 
 
 
-	//　ワールド選択の選択しているところの処理
+
+
+
+
+
+	// もし前のフレームから変化があった場合のみエフェクトなどを変化させる
+	bool Change = false;
+	if (OldWorldSelectX != g_WorldSelect.select_x ||
+		OldWorldSelectY != g_WorldSelect.select_y)
+		Change = true;
+
+
+	// 変更があった場合、初期化と新しいもののセット
+	if (Change == true)
+	{
+		// 初期化と前回使われていたものの消去
+		g_WorldSelect.selectcooltime = WORDL_SELECT_COOL;
+		EffectBreak(now_world_select_EffectArray);		// 前の描写を消す
+		world_select_once = false;						// 1回も描写してないよにする
+		world_select_once_time = 0;						// 描写してからの時間のリセット
+	}
+
+
+
+
+
+
+	//　ワールド選択の選択しているところの描写の処理
 	if (world_select_once == false)
 	{
 

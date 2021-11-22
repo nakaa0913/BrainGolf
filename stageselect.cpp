@@ -77,6 +77,8 @@ int now_stage_select_EffectArray = -1;
 bool stage_select_once = false;
 int stage_select_once_time = 0;
 
+bool StageDecision = false;				// エンターか左クリックでステージを確定させたら他のとこに移動できなくする
+
 /*------------------------------------------------------------------------------
    初期化関数
 ------------------------------------------------------------------------------*/
@@ -85,6 +87,8 @@ void InitStageSelect(void)
 
 	g_StageSelect.select_x = 0;
 	g_StageSelect.select_y = 0;
+
+	StageDecision = false;
 
 
 
@@ -158,277 +162,197 @@ void UninitStageSelect()
 ------------------------------------------------------------------------------*/
 void UpdateStageSelect(void)
 {
-	//マウスの座標を取得
-	float mouse_pos_X = GetMousePosX();
-	float mouse_pos_Y = GetMousePosY();
-	bool mouse_Lclick = GetMouseLClick();
-	bool onlyOnce = true;
-	bool mouseuse = false;
-
-	//スペースキーが押されていて、フェード処理中ではないとき
-	//if (GetKeyboardTrigger(DIK_RETURN) && GetFadeState() == FADE_NONE)
-	//{
-	//	SetVolume(g_BGMNo, 0.1f);
-
-	//	//RESULTへ移行する
-	//	SceneTransition(SCENE_GAME);
-	//}
-
-
-	//星
-	SetEffect(9, D3DXVECTOR2(280.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
-		D3DXVECTOR2(500.0f, 150.0f), D3DXVECTOR2(500.0f, 150.0f), 0,
-		0.0f, 1.0f, 0, 1, 0, 0,
-		0.0f, 0.0f, 0);
-
-
-
-
-
-
-	// エンターキーを押してゲームスタートをする処理
-	if (Keyboard_IsKeyDown(KK_ENTER))
+	if (StageDecision == false)
 	{
-		// 移動入力のとこですでにステージデータはもらっているのでこのままいってOK
-		g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
-		// プレイヤー配置フェーズに行く前に前回の配置情報をリセットする
-		ResetPlacementArray();
-		SceneTransition(SCENE_PLACEMENT);
-	}
+		//マウスの座標を取得
+		float mouse_pos_X = GetMousePosX();
+		float mouse_pos_Y = GetMousePosY();
+		bool mouse_Lclick = GetMouseLClick();
+		bool mouseuse = false;
 
-	// 移動キーが押された時の処理
-	if (g_StageSelect.selectcooltime <= 0)
-	{
-		bool use_key = false;		// キー入力されたかどうか
-		// 上
-		if (Keyboard_IsKeyDown(KK_UP))
-		{
-			g_StageSelect.select_y--;
-			use_key = true;
-		}
-		// 下
-		if (Keyboard_IsKeyDown(KK_DOWN))
-		{
-			g_StageSelect.select_y++;
-			use_key = true;
-		}
-		// 右
-		if (Keyboard_IsKeyDown(KK_RIGHT))
-		{
-			g_StageSelect.select_x++;
-			use_key = true;
-		}
-		// 左
-		if (Keyboard_IsKeyDown(KK_LEFT))
-		{
-			g_StageSelect.select_x--;
-			use_key = true;
-		}
+		// 1フレーム前のポジションの保存。この後キー操作などで変更があった場合のみエフェクトを更新させる
+		int OldStageSelectX = g_StageSelect.select_x;
+		int OldStageSelectY = g_StageSelect.select_y;
 
-		if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f	||	//1
-			mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f	||	//2
-			mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f	||	//3
-			mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f	||	//4
-			mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f	||	//5
-			mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f	||	//6
-			mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f	||	//7
-			mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f	||	//8
-			mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f	||	//9
-			mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f	)	//10
-		{
-			mouseuse = true;
-		}
+		//スペースキーが押されていて、フェード処理中ではないとき
+		//if (GetKeyboardTrigger(DIK_RETURN) && GetFadeState() == FADE_NONE)
+		//{
+		//	SetVolume(g_BGMNo, 0.1f);
 
-		if (mouseuse == true)
+		//	//RESULTへ移行する
+		//	SceneTransition(SCENE_GAME);
+		//}
+
+
+		//星
+		SetEffect(9, D3DXVECTOR2(280.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+			D3DXVECTOR2(500.0f, 150.0f), D3DXVECTOR2(500.0f, 150.0f), 0,
+			0.0f, 1.0f, 0, 1, 0, 0,
+			0.0f, 0.0f, 0);
+
+
+
+
+		// 移動キーが押された時の処理
+		if (g_StageSelect.selectcooltime <= 0)
 		{
+			// 上
+			if (Keyboard_IsKeyDown(KK_UP))
+			{
+				g_StageSelect.select_y--;
+			}
+			// 下
+			if (Keyboard_IsKeyDown(KK_DOWN))
+			{
+				g_StageSelect.select_y++;
+			}
+			// 右
+			if (Keyboard_IsKeyDown(KK_RIGHT))
+			{
+				g_StageSelect.select_x++;
+			}
+			// 左
+			if (Keyboard_IsKeyDown(KK_LEFT))
+			{
+				g_StageSelect.select_x--;
+			}
+
+			// マウスでの操作
 			//1 240 200
 			if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
 			{
-				if (onlyOnce)
-				{
-					g_StageSelect.select_x = 0;
-					g_StageSelect.select_y = 0;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_Lclick == true)
-				{
-					SceneTransition(SCENE_PLACEMENT);
-				}
+				g_StageSelect.select_x = 0;
+				g_StageSelect.select_y = 0;
+				mouseuse = true;
 			}
 
 			//2 480 200
 			else if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
 			{
-				if (onlyOnce)
-				{
-					g_StageSelect.select_x = 1;
-					g_StageSelect.select_y = 0;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_Lclick == true)
-				{
-					SceneTransition(SCENE_PLACEMENT);
-				}
+				g_StageSelect.select_x = 1;
+				g_StageSelect.select_y = 0;
+				mouseuse = true;
 			}
 
 			//3 720 200
 			else if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
 			{
-				if (onlyOnce)
-				{
-					g_StageSelect.select_x = 2;
-					g_StageSelect.select_y = 0;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_Lclick == true)
-				{
-					SceneTransition(SCENE_PLACEMENT);
-				}
+				g_StageSelect.select_x = 2;
+				g_StageSelect.select_y = 0;
+				mouseuse = true;
 			}
 
 			//4 960 200
 			else if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
 			{
-				if (onlyOnce)
-				{
-					g_StageSelect.select_x = 3;
-					g_StageSelect.select_y = 0;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_Lclick == true)
-				{
-					SceneTransition(SCENE_PLACEMENT);
-				}
+				g_StageSelect.select_x = 3;
+				g_StageSelect.select_y = 0;
+				mouseuse = true;
 			}
 
 			//5 1200 200
 			else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
 			{
-				if (onlyOnce)
-				{
-					g_StageSelect.select_x = 4;
-					g_StageSelect.select_y = 0;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_Lclick == true)
-				{
-					SceneTransition(SCENE_PLACEMENT);
-				}
+				g_StageSelect.select_x = 4;
+				g_StageSelect.select_y = 0;
+				mouseuse = true;
 			}
 
 			//6 240 440
 			if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f)
 			{
-				if (onlyOnce)
-				{
-					g_StageSelect.select_x = 0;
-					g_StageSelect.select_y = 1;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_Lclick == true)
-				{
-					SceneTransition(SCENE_PLACEMENT);
-				}
+				g_StageSelect.select_x = 0;
+				g_StageSelect.select_y = 1;
+				mouseuse = true;
 			}
 
 			//7 480 440
 			else if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f)
 			{
-				if (onlyOnce)
-				{
-					g_StageSelect.select_x = 1;
-					g_StageSelect.select_y = 1;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_Lclick == true)
-				{
-					SceneTransition(SCENE_PLACEMENT);
-				}
+				g_StageSelect.select_x = 1;
+				g_StageSelect.select_y = 1;
+				mouseuse = true;
 			}
 
 			//8 720 440
 			else if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f)
 			{
-				if (onlyOnce)
-				{
-					g_StageSelect.select_x = 2;
-					g_StageSelect.select_y = 1;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_Lclick == true)
-				{
-					SceneTransition(SCENE_PLACEMENT);
-				}
+				g_StageSelect.select_x = 2;
+				g_StageSelect.select_y = 1;
+				mouseuse = true;
 			}
 
 			//9 960 440
 			else if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f)
 			{
-				if (onlyOnce)
-				{
-					g_StageSelect.select_x = 3;
-					g_StageSelect.select_y = 1;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_Lclick == true)
-				{
-					SceneTransition(SCENE_PLACEMENT);
-				}
+				g_StageSelect.select_x = 3;
+				g_StageSelect.select_y = 1;
+				mouseuse = true;
 			}
 
 			//10 1200 440
 			else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f)
 			{
-				if (onlyOnce)
-				{
-					g_StageSelect.select_x = 4;
-					g_StageSelect.select_y = 1;
-					use_key = true;
-					onlyOnce = false;
-				}
-				if (mouse_Lclick == true)
-				{
-					SceneTransition(SCENE_PLACEMENT);
-				}
+				g_StageSelect.select_x = 4;
+				g_StageSelect.select_y = 1;
+				mouseuse = true;
 			}
 
-			//それ以外は消す
-			else
-			{
-				onlyOnce = true;
-				EffectBreak(now_stage_select_EffectArray);
-				DeleteMissionStageSelect();
-			}
+			// 限界値による修正の処理
+			if (g_StageSelect.select_x >= SELECT_MAX_X)
+				g_StageSelect.select_x = 0;
+			if (g_StageSelect.select_x < 0)
+				g_StageSelect.select_x = SELECT_MAX_X - 1;
+			if (g_StageSelect.select_y >= SELECT_MAX_Y)
+				g_StageSelect.select_y = 0;
+			if (g_StageSelect.select_y < 0)
+				g_StageSelect.select_y = SELECT_MAX_Y - 1;
+
 		}
 
-		// 限界値による修正の処理
-		if (g_StageSelect.select_x >= SELECT_MAX_X)
-			g_StageSelect.select_x = 0;
-		if (g_StageSelect.select_x < 0)
-			g_StageSelect.select_x = SELECT_MAX_X - 1;
-		if (g_StageSelect.select_y >= SELECT_MAX_Y)
-			g_StageSelect.select_y = 0;
-		if (g_StageSelect.select_y < 0)
-			g_StageSelect.select_y = SELECT_MAX_Y - 1;
+		// 変更を確認する処理
 
-		if (use_key == true)
+		// もし前のフレームから変化があった場合のみエフェクトなどを変化させる
+		bool Change = false;
+		if (OldStageSelectX != g_StageSelect.select_x ||
+			OldStageSelectY != g_StageSelect.select_y)
+			Change = true;
+
+		// 変更があった場合、初期化と新しいもののセット
+		if (Change == true)
 		{
-			// 初期化と前回使われていたものの消去
 			g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
 			EffectBreak(now_stage_select_EffectArray);
 			DeleteMissionStageSelect();
 			stage_select_once = false;
 			stage_select_once_time = 0;
 		}
+
+
+		// 決定してシーンが変わる処理
+
+		// エンターキーを押してゲームスタートをする処理
+		if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
+		{
+			StageDecision = true;
+			// 移動入力のとこですでにステージデータはもらっているのでこのままいってOK
+			g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
+			// プレイヤー配置フェーズに行く前に前回の配置情報をリセットする
+			ResetPlacementArray();
+			SceneTransition(SCENE_PLACEMENT);
+		}
+
+		// マウスが表示にあっている状態で左クリックをしたら
+		if (mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
+		{
+			StageDecision = true;
+			// 移動入力のとこですでにステージデータはもらっているのでこのままいってOK
+			g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
+			// プレイヤー配置フェーズに行く前に前回の配置情報をリセットする
+			ResetPlacementArray();
+			SceneTransition(SCENE_PLACEMENT);
+		}
+
 	}
 
 

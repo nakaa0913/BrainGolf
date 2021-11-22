@@ -22,6 +22,8 @@
 #include "savedata.h"
 #include "stagedata.h"
 #include "keyboard.h"
+#include "sound.h"
+#include "mouse.h"
 
 #define GOAL_H (50)
 #define GOAL_W (50)
@@ -40,6 +42,12 @@
 //*****************************************************************************
 static RESULT g_Result;
 
+int now_result_select_EffectArray = -1;
+bool result_select_once = false;
+int result_select_once_time = 0;
+//bool onlyOnce = true;
+bool resultmouseuse = false;
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -53,7 +61,9 @@ HRESULT InitResult(void)
 
 
 	//初期化
-
+	result_select_once = false;
+	now_result_select_EffectArray = -1;
+	result_select_once_time = 0;
 
 	return S_OK;
 }
@@ -73,6 +83,15 @@ void UpdateResult(void)
 {
 	SAVEDATA* p_Savedata = GetSavedata();
 	STAGEDATA* p_Stagedata = GetStagedata();
+
+	//マウスの座標を取得
+	float mouse_pos_X = GetMousePosX();
+	float mouse_pos_Y = GetMousePosY();
+	bool mouse_Lclick = GetMouseLClick();
+	bool mouse_Rclick = GetMouseRClick();
+
+	// 1フレーム前のポジションの保存。この後キー操作などで変更があった場合のみエフェクトを更新させる
+	int OldResultSelect = g_Result.selectpush;
 
 	if (g_Result.goaltime == 10)
 	{
@@ -187,17 +206,7 @@ void UpdateResult(void)
 			D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 1,
 			0.0f, 1.0f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
-		//next?の文字
-		SetEffect(51, D3DXVECTOR2(1220.0f, 700.0f), D3DXVECTOR2(1220.0f, 700.0f), 1,
-			D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 1,
-			0.0f, 1.0f, 0, 1, 0, 1,
-			0.0f, 0.0f, 0);
-		//next?の矢印
-		SetEffect(50, D3DXVECTOR2(1100.0f, 700.0f), D3DXVECTOR2(1100.0f, 700.0f), 1,
-			D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
-			0.0f, 1.0f, 0, 1, 0, 1,
-			0.0f, 0.0f, 0);
-
+		
 		//ワールド選択に戻る
 		SetEffect(49, D3DXVECTOR2(100.0f, 700.0f), D3DXVECTOR2(100.0f, 700.0f), 1,
 			D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
@@ -214,17 +223,7 @@ void UpdateResult(void)
 				D3DXVECTOR2(400.0f, 400.0f), D3DXVECTOR2(400.0f, 400.0f), 1,
 				0.0f, 1.0f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);
-			//next?の文字
-			SetEffect(51, D3DXVECTOR2(1220.0f, 700.0f), D3DXVECTOR2(1220.0f, 700.0f), 1,
-				D3DXVECTOR2(400.0f, 400.0f), D3DXVECTOR2(400.0f, 400.0f), 1,
-				0.0f, 1.0f, 0, 1, 0, 1,
-				0.0f, 0.0f, 0);
-			//next?の矢印
-			SetEffect(50, D3DXVECTOR2(1080.0f, 700.0f), D3DXVECTOR2(1080.0f, 700.0f), 1,
-				D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 1,
-				0.0f, 1.0f, 0, 1, 0, 1,
-				0.0f, 0.0f, 0);
-			
+
 		}
 
 		if (g_Result.selectpush == 1)
@@ -244,7 +243,7 @@ void UpdateResult(void)
 				0.0f, 0.0f, 0);
 		}*/
 
-
+		//キー入力
 		if (g_Result.selecttime <= 0)
 		{
 
@@ -283,6 +282,7 @@ void UpdateResult(void)
 
 			}
 
+
 			if (g_Result.selectpush == 1)
 			{
 				if (Keyboard_IsKeyDown(KK_ENTER))
@@ -291,11 +291,46 @@ void UpdateResult(void)
 
 				}
 			}
-
-	
-
 		}
 
+		// マウスの座標を使っての入力処理
+		//1 1200 700	300 300
+		if (mouse_pos_X > 1050.0f && mouse_pos_X < 1350.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
+		{
+			g_Result.selectpush = 0;
+			resultmouseuse = true;
+		}
+		//2 100 700		200 200
+		else if (mouse_pos_X > 60.0f && mouse_pos_X < 140.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
+		{
+			g_Result.selectpush = 1;
+			resultmouseuse = true;
+		}
+
+		// マウスが押される位置にあって、左クリック押されていて、フェード処理中ではないとき
+		if (resultmouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
+		{
+			//SetVolume(g_BGMNo, 0.1f);
+
+			//STAGE_SELECTへ移行する
+			SceneTransition(SCENE_STAGE_SELECT);
+		}
+
+
+		// もし前のフレームから変化があった場合のみエフェクトなどを変化させる
+		bool Change = false;
+		if (OldResultSelect != g_Result.selectpush)
+			Change = true;
+
+		// 変更があった場合、初期化と新しいもののセット
+		if (Change == true)
+		{
+			// 初期化と前回使われていたものの消去
+			g_Result.selecttime = 30;
+			//EffectBreak(now_result_select_EffectArray);		// 前の描写を消す
+			result_select_once = false;						// 1回も描写してないよにする
+			result_select_once_time = 0;						// 描写してからの時間のリセット
+		}
 
 
 		if (g_Result.selecttime >= 0)

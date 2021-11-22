@@ -206,17 +206,7 @@ void UpdateResult(void)
 			D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 1,
 			0.0f, 1.0f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
-		//next?の文字
-		SetEffect(51, D3DXVECTOR2(1220.0f, 700.0f), D3DXVECTOR2(1220.0f, 700.0f), 1,
-			D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 1,
-			0.0f, 1.0f, 0, 1, 0, 1,
-			0.0f, 0.0f, 0);
-		//next?の矢印
-		SetEffect(50, D3DXVECTOR2(1100.0f, 700.0f), D3DXVECTOR2(1100.0f, 700.0f), 1,
-			D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
-			0.0f, 1.0f, 0, 1, 0, 1,
-			0.0f, 0.0f, 0);
-
+		
 		//ワールド選択に戻る
 		SetEffect(49, D3DXVECTOR2(100.0f, 700.0f), D3DXVECTOR2(100.0f, 700.0f), 1,
 			D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
@@ -231,16 +221,6 @@ void UpdateResult(void)
 			//next?次のステージへ的な
 			SetEffect(47, D3DXVECTOR2(1200.0f, 700.0f), D3DXVECTOR2(1200.0f, 700.0f), 1,
 				D3DXVECTOR2(400.0f, 400.0f), D3DXVECTOR2(400.0f, 400.0f), 1,
-				0.0f, 1.0f, 0, 1, 0, 1,
-				0.0f, 0.0f, 0);
-			//next?の文字
-			SetEffect(51, D3DXVECTOR2(1220.0f, 700.0f), D3DXVECTOR2(1220.0f, 700.0f), 1,
-				D3DXVECTOR2(400.0f, 400.0f), D3DXVECTOR2(400.0f, 400.0f), 1,
-				0.0f, 1.0f, 0, 1, 0, 1,
-				0.0f, 0.0f, 0);
-			//next?の矢印
-			SetEffect(50, D3DXVECTOR2(1080.0f, 700.0f), D3DXVECTOR2(1080.0f, 700.0f), 1,
-				D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 1,
 				0.0f, 1.0f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);
 

@@ -68,8 +68,8 @@ static int number_46;// 46
 static int next_47;	    // 47
 static int white_48;    // 48
 static int mapback_49;  // 49
-static int maparrow_50; // 50
-static int maptext_51;  // 51
+//static int maparrow_50; // 50 Žg‚í‚È‚¢
+//static int maptext_51;  // 51 Žg‚í‚È‚¢
 
 // placement‚ÅŽg‚¤‚â‚Â
 static int pickup_green_52;  // 52
@@ -137,11 +137,11 @@ void InitEffect(void)
 	stage_mission19_45 = LoadTexture("data/TEXTURE/select/mission/mission_19.png");
 
 	number_46 = LoadTexture("data/TEXTURE/other_effect/number.png");
-	next_47 = LoadTexture("data/TEXTURE/result/next.png");
+	next_47 = LoadTexture("data/TEXTURE/result/allnext.png");
 	white_48 = LoadTexture("data/TEXTURE/result/fade_white.png");
 	mapback_49 = LoadTexture("data/TEXTURE/result/map_back.png");
-	maparrow_50 = LoadTexture("data/TEXTURE/result/map_arrow.png");
-	maptext_51 = LoadTexture("data/TEXTURE/result/map_text.png");
+	//maparrow_50 = LoadTexture("data/TEXTURE/result/map_arrow.png");
+	//maptext_51 = LoadTexture("data/TEXTURE/result/map_text.png");
 
 	pickup_green_52 = LoadTexture("data/TEXTURE/placement/pickup_green.png");
 	pickup_red_53 = LoadTexture("data/TEXTURE/placement/pickup_red.png");
@@ -860,12 +860,12 @@ int GetTextureData(int id)
 	case 49:
 		return mapback_49;
 		break;
-	case 50:
-		return maparrow_50;
-		break;
-	case 51:
-		return maptext_51;
-		break;
+	//case 50:
+	//	return maparrow_50;
+	//	break;
+	//case 51:
+	//	return maptext_51;
+	//	break;
 	case 52:
 		return pickup_green_52;
 		break;

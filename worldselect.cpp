@@ -56,7 +56,6 @@ bool world_select_once = false;
 int world_select_once_time = 0;
 
 bool onlyOnce = true;
-bool mouseuse = false;
 /*------------------------------------------------------------------------------
    初期化関数
 ------------------------------------------------------------------------------*/
@@ -150,6 +149,7 @@ void UpdateWorldSelect(void)
 			g_WorldSelect.select_x = WORLD_SELECT_MAX_X - 1;
 	}
 
+	bool mouseuse = false;
 	// マウスの座標を使っての入力処理
 	//1 240 200
 	if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)

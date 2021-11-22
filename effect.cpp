@@ -102,11 +102,11 @@ void InitEffect(void)
 	clear_star3_13 = LoadTexture("data/TEXTURE/result/clear_star_3.png");
 	clear_star4_14 = LoadTexture("data/TEXTURE/result/clear_star_black_1.png");
 
-	stage_select1_15 = LoadTexture("data/TEXTURE/select/stage_select.png");
-	stage_select2_16 = LoadTexture("data/TEXTURE/select/stage_select.png");
-	stage_select3_17 = LoadTexture("data/TEXTURE/select/1.png");
-	stage_select4_18 = LoadTexture("data/TEXTURE/select/stage_select.png");
-	stage_select5_19 = LoadTexture("data/TEXTURE/select/stage_select.png");
+	stage_select1_15 = LoadTexture("data/TEXTURE/select/1aka.png");
+	stage_select2_16 = LoadTexture("data/TEXTURE/select/2yellow.png");
+	stage_select3_17 = LoadTexture("data/TEXTURE/select/3green.png");
+	stage_select4_18 = LoadTexture("data/TEXTURE/select/4orange.png");
+	stage_select5_19 = LoadTexture("data/TEXTURE/select/5blue.png");
 
 	stage_choice1_20 = LoadTexture("data/TEXTURE/select/1.png");
 	stage_choice2_21 = LoadTexture("data/TEXTURE/select/1.png");

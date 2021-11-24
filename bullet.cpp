@@ -600,7 +600,7 @@ void UpdateBullet(void)
 			//ボールが地面にいるときだけ当たり判定（2回のバウンドと3回目のバウンドからは常に当たり判定がある）
 			bool ground = false;	// ボールが地面についているかどうか
 			if (g_Bullet[i].club_pattern == 0 || 
-				g_Bullet[i].shottime == 65 || g_Bullet[i].shottime == 90 || g_Bullet[i].shottime >= 110)
+				g_Bullet[i].shottime == 28 || g_Bullet[i].shottime == 57 || g_Bullet[i].shottime >= 81)
 				ground = true;
 
 			// 地面に当たっているときにしか続行されない者たち
@@ -926,7 +926,7 @@ void UpdateBullet(void)
 
 			// ボールが跳ねて見える処理,クラブが1(とぶやつ)の時のみ飛んでるように見せる
 			if (g_Bullet[i].club_pattern == 1)
-				g_Bullet[i].flying_height = Bounce(DRAW_MAP_CHIP_SIZE_Y, g_Bullet[i].shottime, 65, 90, 110, 120);
+				g_Bullet[i].flying_height = Bounce(DRAW_MAP_CHIP_SIZE_Y, g_Bullet[i].shottime, 28, 57, 81, 120);
 
 
 
@@ -1047,7 +1047,7 @@ void SetBullet(D3DXVECTOR2 pos, float angle, int ShotPower, int club_pattern)
 			g_Bullet[i].use = true;			// 使用状態へ変更する
 			g_Bullet[i].pos = pos;			// 座標をセット
 
-			g_Bullet[i].shotpower = 1.5f;			// デバッグ用にパワーマックス(100の状態)で発射
+			g_Bullet[i].shotpower = 1.12f;			// デバッグ用にパワーマックス(100の状態)で発射
 			//g_Bullet[i].shotpower = ShotBairitu;			// shotpowerの設定
 			g_Bullet[i].shottime = 0;						// 弾が発射されてからの時間の初期化
 			g_Bullet[i].angle = angle;						// 角度を設定

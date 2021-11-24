@@ -72,6 +72,9 @@ void UninitGameover(void)
 //=============================================================================
 void UpdateGameover(void)
 {
+
+
+
 	if (g_Gameover.gameovertime == 10)
 	{
 		//ˆÃˆÅ4 –¾‚©‚è‚È‚ç48

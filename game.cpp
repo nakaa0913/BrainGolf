@@ -24,7 +24,7 @@
 #include "predictionbullet.h"
 #include "gamedata.h"
 #include "gameover.h"
-
+#include "pause.h"
 
 /*------------------------------------------------------------------------------
    定数定義
@@ -45,6 +45,7 @@
 static int g_BGMNo = 0;
 bool goal = false;
 bool gameover = false;
+//bool pause = false;
 int game_frame_time = 0;
 
 /*------------------------------------------------------------------------------
@@ -54,6 +55,7 @@ void InitGame(void)
 {
 	goal = false;
 	gameover = false;
+	//pause = false;
 	game_frame_time = 0;
 
 	InitPlayer();
@@ -67,6 +69,7 @@ void InitGame(void)
 	InitCamera();
 	InitPrediction();
 	InitGamedata();
+	InitPause();
 	g_BGMNo = LoadSound("data/BGM/sample001.wav");
 
 	SetVolume(g_BGMNo, 1.0f);
@@ -89,6 +92,8 @@ void UninitGame()
 	UninitPlayer();
 	UninitResult();
 	UninitGameover();
+	UninitPause();
+	//pause = false;
 	gameover = false;
 	goal = false;
 
@@ -116,6 +121,7 @@ void UpdateGame(void)
 			UpdatePrediction();
 			UpdateGamedata();
 
+			UpdatePause();
 			// ゲームスタートしてからのフレーム時間を+1する
 			game_frame_time++;
 
@@ -169,6 +175,10 @@ void DrawGame(void)
 	{
 		DrawGameover();
 	}
+	//if (pause = true)
+	//{
+		DrawPause();
+	//}
 }
 
 void GoalTrue()
@@ -185,3 +195,10 @@ void GameoverTrue()
 
 	return;
 }
+
+//void PauseTrue()
+//{
+//	pause = true;
+//
+//	return;
+//}

@@ -86,6 +86,11 @@ static int gameover_place_59; // 59
 static int titleback_60; //60
 static int worldback_61; //61
 
+//　ポーズ画面
+static int pause_62; //62
+static int commentary_63; //62
+
+
 
 void InitEffect(void)
 {
@@ -159,6 +164,10 @@ void InitEffect(void)
 
 	titleback_60 = LoadTexture("data/TEXTURE/select/titleback.png");
 	worldback_61 = LoadTexture("data/TEXTURE/select/worldback.png");
+
+	pause_62 = LoadTexture("data/TEXTURE/other_effect/pause.png");
+	commentary_63 = LoadTexture("data/TEXTURE/other_effect/commentary.png");
+
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -903,9 +912,13 @@ int GetTextureData(int id)
 	case 61:
 		return worldback_61;
 		break;
-		
-			
-
+	case 62:
+		return pause_62;
+		break;
+	case 63:
+		return commentary_63;
+		break;
+	
 	}
 
 	// どこにもたどり着かなかった場合

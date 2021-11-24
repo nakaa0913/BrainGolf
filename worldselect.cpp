@@ -112,6 +112,7 @@ void UpdateWorldSelect(void)
 		float mouse_pos_Y = GetMousePosY();
 		bool mouse_Lclick = GetMouseLClick();
 		bool mouse_Rclick = GetMouseRClick();
+		bool mouseuse = false;
 
 		// 1フレーム前のポジションの保存。この後キー操作などで変更があった場合のみエフェクトを更新させる
 		int OldWorldSelectX = g_WorldSelect.select_x;
@@ -179,11 +180,19 @@ void UpdateWorldSelect(void)
 					//STAGE_SELECTへ移行する
 					SceneTransition(SCENE_TITLE);
 				}
+
+				if(mouseuse && mouse_Lclick)
+				{
+					SetVolume(g_BGMNo, 0.1f);
+					WorldDecision = true;
+
+					//STAGE_SELECTへ移行する
+					SceneTransition(SCENE_TITLE);
+				}
 			}
 
 		}
 
-		bool mouseuse = false;
 		// マウスの座標を使っての入力処理
 		//1 240 200
 		if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
@@ -213,6 +222,12 @@ void UpdateWorldSelect(void)
 		else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 325.0f && mouse_pos_Y < 475.0f)
 		{
 			g_WorldSelect.select_x = 4;
+			mouseuse = true;
+		}
+		//タイトル 240 700
+		else if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 625.0f && mouse_pos_Y < 775.0f)
+		{
+			g_WorldSelect.select_x = -2;
 			mouseuse = true;
 		}
 

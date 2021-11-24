@@ -243,6 +243,10 @@ void UpdateStageSelect(void)
 					{
 						SceneTransition(SCENE_WORLD_SELECT);
 					}
+					if (mouse_Lclick)
+					{
+						SceneTransition(SCENE_WORLD_SELECT);
+					}
 				}
 				//y = 3以外の時に左右移動ができる（3は「ワールド選択に戻るボタン」）
 				if (g_StageSelect.select_y != 3)
@@ -340,15 +344,43 @@ void UpdateStageSelect(void)
 			//}
 
 			// マウスでの操作
-			//1 240 200
-			if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
+			// ステージ選択の時の原点となる場所
+			float	effectpos_x = 240.0f;			    // xの原点(0,0を選択しているとき)
+			float	effectpos_y = 200.0f;			    // yの原点(0,0を選択しているとき)
+
+			// ステージ選択の時1個離れたらこれだけ離れるよってやつ
+			float while_x = 240.0f;
+			float while_y = 240.0f;
+
+			//ステージ選択
+			for (int x = 0; x < SELECT_MAX_X; x++)
+			{
+				for (int y = 0; y < SELECT_MAX_Y; y++)
+				{
+					// 現在の座標を求める
+					float effectnow_x = effectpos_x + while_x * x;
+					float effectnow_y = effectpos_y + while_y * y;
+
+					if (mouse_pos_X > effectnow_x - 50.0f && mouse_pos_X < effectnow_x + 50.0f && mouse_pos_Y > effectnow_y - 50.0f && mouse_pos_Y < effectnow_y + 50.0f)
+					{
+						g_StageSelect.select_x = x;
+						g_StageSelect.select_y = y;
+						mouseuse = true;
+					}
+
+				}
+			}
+
+
+			//ワールド選択へ戻る 240 700
+			if (mouse_pos_X > 150.0f && mouse_pos_X < 430.0f && mouse_pos_Y > 610.0f && mouse_pos_Y < 890.0f)
 			{
 				g_StageSelect.select_x = 0;
-				g_StageSelect.select_y = 0;
+				g_StageSelect.select_y = 3;
 				mouseuse = true;
 			}
 
-			//2 480 200
+			/*//2 480 200
 			else if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
 			{
 				g_StageSelect.select_x = 1;
@@ -418,7 +450,7 @@ void UpdateStageSelect(void)
 				g_StageSelect.select_x = 4;
 				g_StageSelect.select_y = 1;
 				mouseuse = true;
-			}
+			}*/
 
 			// 限界値による修正の処理
 

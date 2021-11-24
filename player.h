@@ -23,6 +23,8 @@
 
 #define PLAYER_MOVE_SPEED	 (3.0f)
 
+#define CLUB_CHANGECOOL	(12)			// クラブを持ち替えのクールタイム
+
 
 // ファイル読み込みからマップチップでの座標と往復する順番を取りやすくするためだけの構造体
 // PLAYER構造体で使用しているので、それより上に書かないとダメ。ネスト構造
@@ -86,6 +88,7 @@ void DrawPlayerSpecifyNumForPlacement(int i);
 void SetPlayer(D3DXVECTOR2 pos);
 void SetPlayerUseMapPos(int mappos_x, int mappos_y);
 PLAYER *GetPlayer(void);
+int GetClubPattern(void);
 
 void SetPlayerUseFile(MAPCHIP_POS_STRUCT Receive_Mapchip_Pos_Struct, float movespeed);
 int SetPlayerForPlacement(int mappos_x, int mappos_y);

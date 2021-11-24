@@ -16,10 +16,14 @@
 
 static PREDICTION g_Prediction[PREDICTION_MAX];					// 予測弾構造体
 
+static int predictionbullet_ao;
+static int predictionbullet_aka;
+
 
 HRESULT InitPrediction(void)
 {
-	int texNo = LoadTexture("data/TEXTURE/bullet/ao.png");
+	predictionbullet_ao = LoadTexture("data/TEXTURE/bullet/predictionbullet/ao.png");
+	predictionbullet_aka = LoadTexture("data/TEXTURE/bullet/predictionbullet/aka.png");
 
 	for (int i = 0; i < PREDICTION_MAX; i++)
 	{
@@ -30,7 +34,7 @@ HRESULT InitPrediction(void)
 		g_Prediction[i].angle = 0.0f;
 		g_Prediction[i].vector = D3DXVECTOR2(100.0f, 100.0f);
 		g_Prediction[i].shotpower = 1.0f;
-		g_Prediction[i].texNo = texNo;
+		g_Prediction[i].tex = predictionbullet_ao;
 		g_Prediction[i].isUse = false;
 
 
@@ -69,12 +73,30 @@ void UpdatePrediction(void)
 			g_Prediction[i].size.x = PREDICTION_SIZE;
 			g_Prediction[i].size.y = PREDICTION_SIZE;
 
+			int ClubPattern = GetClubPattern();
+
 			// ベクトルの計算
 			g_Prediction[i].vector = AngleToVector2(g_Prediction[i].angle);	// 角度からベクトルを設定
 			
 			// 値の更新		iの分だけ離れて表示される
-			g_Prediction[i].pos += g_Prediction[i].vector * (i + 1) * 30;
-			g_Prediction[i].size *= 1.0f - i * 0.1f;
+			if (ClubPattern == 0)		// 地面を転がる場合の予測
+			{
+				g_Prediction[i].pos += g_Prediction[i].vector * (i + 1) * 30;
+				g_Prediction[i].size *= 1.0f - i * 0.1f;
+
+				g_Prediction[i].tex = predictionbullet_ao;			// テクスチャの設定、転がる場合全部青
+			}
+			if (ClubPattern == 1)		// とぶ場合の予測
+			{
+				g_Prediction[i].pos += g_Prediction[i].vector * (i + 1) * 30;
+				g_Prediction[i].size *= 1.0f - i * 0.1f;
+				
+				if(i == 2 || i == 4)
+					g_Prediction[i].tex = predictionbullet_aka;		// テクスチャの設定、飛ぶやつの場合着地する場所は赤くする
+				else
+					g_Prediction[i].tex = predictionbullet_ao;
+			}
+
 
 
 
@@ -111,7 +133,7 @@ void DrawPrediction(void)
 
 
 			// １枚のポリゴンの頂点とテクスチャ座標を設定
-			DrawSpriteColorRotate(g_Prediction[i].texNo, px, py, pw, ph, 0.0f, 0.0f, 1.0f, 1.0f, col, 0.0f);
+			DrawSpriteColorRotate(g_Prediction[i].tex, px, py, pw, ph, 0.0f, 0.0f, 1.0f, 1.0f, col, 0.0f);
 		}
 	}
 }
@@ -133,7 +155,7 @@ void DrawPredictionSpecifyNum(int i)
 
 
 			// １枚のポリゴンの頂点とテクスチャ座標を設定
-			DrawSpriteColorRotate(g_Prediction[i].texNo, px, py, pw, ph, 0.0f, 0.0f, 1.0f, 1.0f, col, 0.0f);
+			DrawSpriteColorRotate(g_Prediction[i].tex, px, py, pw, ph, 0.0f, 0.0f, 1.0f, 1.0f, col, 0.0f);
 		}
 	}
 }

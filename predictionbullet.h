@@ -22,7 +22,7 @@ struct PREDICTION
 	D3DXVECTOR2				vector;					// ベクトル
 	float					shotpower;				// 球の力の倍率
 
-	int						texNo;					// 何番目のテクスチャーを使用するのか
+	int						tex;					// 何番目のテクスチャーを使用するのか
 	bool					isUse;					// true:使っている  false:未使用
 
 };

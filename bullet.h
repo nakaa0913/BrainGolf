@@ -26,7 +26,7 @@ struct BULLET
 	D3DXVECTOR2				nextpos;				// バレットの座標
 	D3DXVECTOR2				oldpos;					// バレットの座標
 
-	float					flying_height;			// 球の飛んでいる高さ。0~10000(3次元でいうとy軸の高さ)
+	float					flying_height;			// 球の飛んでいる高さ。(3次元でいうとy軸の高さ)
 	bool					on_the_ground;			// 地面にボールがついている状態かどうか
 
 	D3DXVECTOR2				drawpos;				// 表示する際の座標
@@ -44,6 +44,8 @@ struct BULLET
 	int						warpcool;				// ワープのクールタイム
 	int						shottime;				// 弾が発射されてからの時間
 	int						collisiontime;			// 弾が当たっている時間
+
+	int						club_pattern;			// 球の飛び方
 
 };
 
@@ -70,7 +72,7 @@ void DrawBullet(void);
 BULLET* GetBullet(void);
 
 D3DXVECTOR2 AngleToVector2(float angle);
-void SetBullet(D3DXVECTOR2 pos, float angle, int ShotPower);
+void SetBullet(D3DXVECTOR2 pos, float angle, int ShotPower, int club_pattern);
 float CalculateCornerDistanceX(int CornerNum, float size_x, float size_y);
 float CalculateCornerDistanceY(int CornerNum, float size_x, float size_y);
 void CalculateNewVecAng(int i, float bulletposX, float bulletposY, float CornerPosX, float CornerPosY);

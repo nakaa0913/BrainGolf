@@ -598,7 +598,13 @@ void UpdateBullet(void)
 
 
 			//ボールが地面にいるときだけ当たり判定（2回のバウンドと3回目のバウンドからは常に当たり判定がある）
-			if (g_Bullet[i].shottime == 65 || g_Bullet[i].shottime == 90 || g_Bullet[i].shottime >= 110)
+			bool ground = false;	// ボールが地面についているかどうか
+			if (g_Bullet[i].club_pattern)
+				ground = true;
+			else if (g_Bullet[i].shottime == 65 || g_Bullet[i].shottime == 90 || g_Bullet[i].shottime >= 110)
+				ground = true;
+
+			if (ground == true)
 			{
 
 
@@ -918,8 +924,10 @@ void UpdateBullet(void)
 			g_ShadowBullet[i].pos = g_Bullet[i].nextpos;
 
 
-			// ボールが跳ねて見える処理.ここじゃなくて順番的にもっと上に書いた方がいいかも？とりあえず分かりやすいからここに書いてる
-			g_Bullet[i].flying_height = Bounce(DRAW_MAP_CHIP_SIZE_Y, g_Bullet[i].shottime, 65, 90, 110, 120);
+
+			// ボールが跳ねて見える処理,クラブが1(とぶやつ)の時のみ飛んでるように見せる
+			if(g_Bullet[i].club_pattern == 1)
+				g_Bullet[i].flying_height = Bounce(DRAW_MAP_CHIP_SIZE_Y, g_Bullet[i].shottime, 65, 90, 110, 120);
 
 
 
@@ -1026,7 +1034,7 @@ BULLET* GetBullet(void)
 //=============================================================================
 // バレットの発射設定
 //=============================================================================
-void SetBullet(D3DXVECTOR2 pos, float angle, int ShotPower)
+void SetBullet(D3DXVECTOR2 pos, float angle, int ShotPower, int club_pattern)
 {
 	// ShotPowerによる倍率
 	float ShotBairitu = 0.5f + (ShotPower / 100.0f);
@@ -1047,6 +1055,9 @@ void SetBullet(D3DXVECTOR2 pos, float angle, int ShotPower)
 			g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);	// 角度からベクトルを設定
 			g_Bullet[i].move = D3DXVECTOR2(BULLET_SPEED * g_Bullet[i].shotpower * g_Bullet[i].vector.x,
 				-BULLET_SPEED * g_Bullet[i].shotpower * g_Bullet[i].vector.y);	// ベクトルからmoveを設定
+
+			g_Bullet[i].flying_height = 0.0f;
+			g_Bullet[i].club_pattern = club_pattern;
 
 			return;							// 1発セットしたので終了する
 		}

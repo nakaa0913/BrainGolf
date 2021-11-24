@@ -46,6 +46,9 @@ static int g_AnimePtn = 0;
 static int g_AnimeSpd = 0;
 static int g_AnimeWaitFrame = 0;
 
+int	club_pattern;			// 使うクラブ(打ち方)0が転がる、1がとぶ
+int club_ChangeCool;		// クラブを持ち替えた時のクールタイム
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -102,6 +105,8 @@ HRESULT InitPlayer(void)
 	}
 
 	g_Player[0].have = true;
+
+	club_pattern = 1;		// 使うクラブの初期設定(初期はとぶやつをもっておくことにする)
 
 
 
@@ -429,6 +434,26 @@ void UpdatePlayer(void)
 					
 				}
 
+				// クラブを持ち変える処理
+				if (club_ChangeCool <= 0)
+				{
+					if (Keyboard_IsKeyDown(KK_UP))
+					{
+						club_pattern--;
+						club_ChangeCool = CLUB_CHANGECOOL;
+					}
+					if (Keyboard_IsKeyDown(KK_DOWN))
+					{
+						club_pattern++;
+						club_ChangeCool = CLUB_CHANGECOOL;
+					}
+				}
+				// クラブ持ち替えの限界処理
+				if (club_pattern < 0)
+					club_pattern = 1;
+				if (club_pattern > 1)
+					club_pattern = 0;
+
 				//ENTERで弾だす
 				if (Keyboard_IsKeyDown(KK_ENTER))
 				{
@@ -443,7 +468,7 @@ void UpdatePlayer(void)
 					SetVolume(g_ShotSENo, 0.1f);
 
 					D3DXVECTOR2 pos = g_Player[i].pos;
-					SetBullet(pos, g_Player[i].angle, g_Player[i].ShotPower);
+					SetBullet(pos, g_Player[i].angle, g_Player[i].ShotPower, club_pattern);
 				}
 			}
 
@@ -481,8 +506,10 @@ void UpdatePlayer(void)
 			//}
 		}
 
+		// クールタイムを減らす処理
 		if (g_Player[i].catchwait > 0)
 			g_Player[i].catchwait--;
+
 	}
 
 	if (now_have == true)
@@ -493,6 +520,10 @@ void UpdatePlayer(void)
 	{
 		PredictionUseFalse();
 	}
+
+	// クールタイムを減らす処理(それぞれのぷれいやーじゃないやつ(for文の外に書かないといけないやつ)
+	if (club_ChangeCool > 0)
+		club_ChangeCool--;
 
 
 }
@@ -652,6 +683,11 @@ void DeletePlacementPlayer()
 PLAYER* GetPlayer(void)
 {
 	return &g_Player[0];
+}
+
+int GetClubPattern(void)
+{
+	return club_pattern;
 }
 
 

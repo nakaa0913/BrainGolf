@@ -121,6 +121,25 @@ void UninitPlacement()
 ------------------------------------------------------------------------------*/
 void UpdatePlacement(void)
 {
+
+	//マウスの座標を取得
+	float mouse_pos_X = GetMousePosX();
+	float mouse_pos_Y = GetMousePosY();
+	bool mouse_Lclick = GetMouseLClick();
+	bool mouseuse = false;
+
+	// 1フレーム前のポジションの保存。この後キー操作などで変更があった場合のみエフェクトを更新させる
+	int OldnowchoiceX = nowchoice.x;
+	int OldnowchoiceY = nowchoice.y;
+
+
+	// 選択している場所の表示の時の原点となる場所
+	float	origin_x = TO_CENTER + (MAP_CHIP_SIZE_X / 2);			    // xの原点(0,0を選択しているとき)
+	float	origin_y = MAP_CHIP_SIZE_Y / 2;								 // yの原点(0,0を選択しているとき)
+	// 選択している場所の表示の時の1個離れたらこれだけ離れるよってやつ
+	float interval_x = MAP_CHIP_SIZE_X;
+	float interval_y = MAP_CHIP_SIZE_Y;
+
 	// エンターキーでゲームスタート
 	if ((Keyboard_IsKeyDown(KK_ENTER)) && GetFadeState() == FADE_NONE)
 	{
@@ -146,30 +165,52 @@ void UpdatePlacement(void)
 	{
 
 		// キー入力による移動
-		bool use_key = false;
 		if (MoveKeyCool <= 0)
 		{
 			if (Keyboard_IsKeyDown(KK_RIGHT))
 			{
 				nowchoice.x++;
-				use_key = true;
 			}
 			if (Keyboard_IsKeyDown(KK_LEFT))
 			{
 				nowchoice.x--;
-				use_key = true;
 			}
 			if (Keyboard_IsKeyDown(KK_UP))
 			{
 				nowchoice.y--;
-				use_key = true;
 			}
 			if (Keyboard_IsKeyDown(KK_DOWN))
 			{
 				nowchoice.y++;
-				use_key = true;
 			}
 		}
+
+		// マウスの座標からどのブロックに触れているかを調べる処理
+		for (int x = 0; x < MAP_X + 1; x++)
+		{
+			for (int y = 0; y < MAP_Y + 1; y++)
+			{
+				if (x < MAP_X && y < MAP_Y)
+				{
+					float block_left  = 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER;
+					float block_right = MAP_CHIP_SIZE_X + x * MAP_CHIP_SIZE_X + TO_CENTER;
+					float block_up    = 0.0f + y * MAP_CHIP_SIZE_Y;
+					float block_down  = MAP_CHIP_SIZE_Y + y * MAP_CHIP_SIZE_Y;
+
+					// マウスの座標がそこにあるなら
+					if (mouse_pos_X > block_left && mouse_pos_X < block_right && mouse_pos_Y > block_up && mouse_pos_Y < block_down)
+					{
+						nowchoice.x = x;
+						nowchoice.y = y;
+
+						break;
+					}
+				}
+			}
+		}
+
+
+
 
 		// 限界値の処理
 		if (nowchoice.x < 0)
@@ -182,16 +223,12 @@ void UpdatePlacement(void)
 			nowchoice.y = 0;
 
 
-		// 移動キーが入力されていた場合の処理
-		if (use_key == true)
-		{
-			// 選択している場所の表示の時の原点となる場所
-			float	origin_x = TO_CENTER + (MAP_CHIP_SIZE_X / 2);			    // xの原点(0,0を選択しているとき)
-			float	origin_y = MAP_CHIP_SIZE_Y / 2;								 // yの原点(0,0を選択しているとき)
-			// 選択している場所の表示の時の1個離れたらこれだけ離れるよってやつ
-			float interval_x = MAP_CHIP_SIZE_X;
-			float interval_y = MAP_CHIP_SIZE_Y;
 
+
+
+		// 前回より変更があった場合の処理
+		if (OldnowchoiceX != nowchoice.x || OldnowchoiceY != nowchoice.y)
+		{
 			// 前の座標を保存(もらって)して次の座標をセットしてチェンジエフェクトで更新する
 			D3DXVECTOR2 oldpos = GetEffectPos(placement_pickup_EffectArray);
 			D3DXVECTOR2 nextpos = D3DXVECTOR2(origin_x + interval_x * nowchoice.x, origin_y + interval_y * nowchoice.y);

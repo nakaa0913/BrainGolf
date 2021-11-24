@@ -252,7 +252,7 @@ void UpdatePlacement(void)
 		// スペースキーが押されたらプレイヤーを配置する
 		if (PushKeyCool <= 0)
 		{
-			if (Keyboard_IsKeyDown(KK_SPACE))
+			if (Keyboard_IsKeyDown(KK_SPACE) || mouse_Lclick)
 			{
 				PushKeyCool = PUSHKEY_COOLTIME;
 				// プレイヤーの配置するときに被っていなければそのまま配置、被っていたら取り除く処理

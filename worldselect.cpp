@@ -181,14 +181,14 @@ void UpdateWorldSelect(void)
 					SceneTransition(SCENE_TITLE);
 				}
 
-				if(mouseuse && mouse_Lclick)
-				{
-					SetVolume(g_BGMNo, 0.1f);
-					WorldDecision = true;
+				//if(mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
+				//{
+				//	SetVolume(g_BGMNo, 0.1f);
+				//	WorldDecision = true;
 
-					//STAGE_SELECTÇ÷à⁄çsÇ∑ÇÈ
-					SceneTransition(SCENE_TITLE);
-				}
+				//	//STAGE_SELECTÇ÷à⁄çsÇ∑ÇÈ
+				//	SceneTransition(SCENE_TITLE);
+				//}
 			}
 
 		}
@@ -282,7 +282,14 @@ void UpdateWorldSelect(void)
 			WorldDecision = true;
 
 			//STAGE_SELECTÇ÷à⁄çsÇ∑ÇÈ
-			SceneTransition(SCENE_STAGE_SELECT);
+			if (g_WorldSelect.select_x == -2)
+			{
+				SceneTransition(SCENE_TITLE);
+			}
+			else
+			{
+				SceneTransition(SCENE_STAGE_SELECT);
+			}
 		}
 
 

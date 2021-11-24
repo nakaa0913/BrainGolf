@@ -243,10 +243,6 @@ void UpdateStageSelect(void)
 					{
 						SceneTransition(SCENE_WORLD_SELECT);
 					}
-					if (mouse_Lclick)
-					{
-						SceneTransition(SCENE_WORLD_SELECT);
-					}
 				}
 				//y = 3以外の時に左右移動ができる（3は「ワールド選択に戻るボタン」）
 				if (g_StageSelect.select_y != 3)
@@ -519,7 +515,14 @@ void UpdateStageSelect(void)
 			g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
 			// プレイヤー配置フェーズに行く前に前回の配置情報をリセットする
 			ResetPlacementArray();
-			SceneTransition(SCENE_PLACEMENT);
+			if (g_StageSelect.select_x == 0 && g_StageSelect.select_y == 3)
+			{
+				SceneTransition(SCENE_WORLD_SELECT);
+			}
+			else
+			{
+				SceneTransition(SCENE_PLACEMENT);
+			}
 		}
 
 	}

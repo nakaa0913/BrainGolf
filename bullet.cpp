@@ -599,9 +599,8 @@ void UpdateBullet(void)
 
 			//ボールが地面にいるときだけ当たり判定（2回のバウンドと3回目のバウンドからは常に当たり判定がある）
 			bool ground = false;	// ボールが地面についているかどうか
-			if (g_Bullet[i].club_pattern == 0)
-				ground = true;
-			else if (g_Bullet[i].shottime == 65 || g_Bullet[i].shottime == 90 || g_Bullet[i].shottime >= 110)
+			if (g_Bullet[i].club_pattern == 0 || 
+				g_Bullet[i].shottime == 65 || g_Bullet[i].shottime == 90 || g_Bullet[i].shottime >= 110)
 				ground = true;
 
 			// 地面に当たっているときにしか続行されない者たち
@@ -640,15 +639,14 @@ void UpdateBullet(void)
 						// テキストファイルを書き換える
 						WriteSavedata(SAVEDATA_FILE);
 					}
+				}
 
-					//砂
-					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 13)
-					{
-						// パワーを減衰させる
-						if (g_Bullet[i].shotpower > 0.3f)
-							g_Bullet[i].shotpower = 0.3f;
-
-					}
+				//砂
+				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 13)
+				{
+					// パワーを減衰させる
+					if (g_Bullet[i].shotpower > 0.3f)
+						g_Bullet[i].shotpower = 0.3f;
 
 				}
 
@@ -841,32 +839,33 @@ void UpdateBullet(void)
 						}
 					}
 				}
+			}
 
-				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 12)
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 12)
+			{
+				if (g_Bullet[i].warpcool <= 0)
 				{
-					if (g_Bullet[i].warpcool <= 0)
+					for (int y = 0; y < MAP_Y; y++)
 					{
-						for (int y = 0; y < MAP_Y; y++)
+						for (int x = 0; x < MAP_X; x++)
 						{
-							for (int x = 0; x < MAP_X; x++)
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 11)
 							{
-								// そのブロックが当たり判定があるブロックかどうか調べるa
-								int BlockData = CheckBlockdata(x, y);
-								// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
-								if (BlockData == 11)
-								{
-									g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
-									g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
-									g_Bullet[i].warpcool = 60;
-								}
-
+								g_Bullet[i].warpcool = 60;
 							}
+
 						}
 					}
 				}
-
 			}
+
+
 
 			//反射板
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 15)

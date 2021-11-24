@@ -126,7 +126,7 @@ void UpdateBullet(void)
 
 			// 摩擦とか抵抗力の計算
 			// 最初の15フレームは摩擦なし
-			if(g_Bullet[i].shottime < 15)
+			if (g_Bullet[i].shottime < 15)
 				g_Bullet[i].friction = 1.0f;
 			else
 				g_Bullet[i].friction = 0.9815f;
@@ -176,7 +176,7 @@ void UpdateBullet(void)
 			g_Bullet[i].nextpos = g_Bullet[i].oldpos + g_Bullet[i].move;
 
 
-			
+
 
 			// マップとの当たり判定の計算の下準備
 			int hitcount = 0;			// 四角形で当たり判定を計算したときに当たっているブロックの数
@@ -599,113 +599,121 @@ void UpdateBullet(void)
 
 			//ボールが地面にいるときだけ当たり判定（2回のバウンドと3回目のバウンドからは常に当たり判定がある）
 			bool ground = false;	// ボールが地面についているかどうか
-			if (g_Bullet[i].club_pattern)
+			if (g_Bullet[i].club_pattern == 0)
 				ground = true;
 			else if (g_Bullet[i].shottime == 65 || g_Bullet[i].shottime == 90 || g_Bullet[i].shottime >= 110)
 				ground = true;
 
+			// 地面に当たっているときにしか続行されない者たち
 			if (ground == true)
 			{
+				// マップとの当たり判定処理
 
-
-
-			// マップとの当たり判定処理
-
-			// ゴールに入った時の処理
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y)) == 2)
-			{
 				// ゴールに入った時の処理
-				GoalTrue();
-
-				bool updata_savedata = false;
-
-				// ミッションをクリアしているかどうかの処理。新たにクリアしていた場合のみ更新する
-				for (int missionnum = 0; missionnum < MAX_MISSION; missionnum++)
+				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y)) == 2)
 				{
-					if (JudgeClearMission(missionnum) == true)
+					// ゴールに入った時の処理
+					GoalTrue();
+
+					bool updata_savedata = false;
+
+					// ミッションをクリアしているかどうかの処理。新たにクリアしていた場合のみ更新する
+					for (int missionnum = 0; missionnum < MAX_MISSION; missionnum++)
+					{
+						if (JudgeClearMission(missionnum) == true)
+						{
+							// クリアしていて更新があった場合セーブデータ構造体を変更する
+							p_Savedata[p_Stagedata->stagenum].mission_clear[missionnum] = 1;
+							updata_savedata = true;
+						}
+					}
+					// クリアタイムが更新されたら
+					if (p_Gamedata->game_time < p_Savedata[p_Stagedata->stagenum].clear_time)
 					{
 						// クリアしていて更新があった場合セーブデータ構造体を変更する
-						p_Savedata[p_Stagedata->stagenum].mission_clear[missionnum] = 1;
+						p_Savedata[p_Stagedata->stagenum].clear_time = p_Gamedata->game_time;
 						updata_savedata = true;
 					}
+					// セーブデータの更新があったならば、テキストも更新する
+					if (updata_savedata == true)
+					{
+						// テキストファイルを書き換える
+						WriteSavedata(SAVEDATA_FILE);
+					}
+
+					//砂
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 13)
+					{
+						// パワーを減衰させる
+						if (g_Bullet[i].shotpower > 0.3f)
+							g_Bullet[i].shotpower = 0.3f;
+
+					}
+
 				}
-				// クリアタイムが更新されたら
-				if (p_Gamedata->game_time < p_Savedata[p_Stagedata->stagenum].clear_time)
+
+
+
+				//当たってる間trueになる
+				bool collision_accboard = false;
+				//どの番号に当たっているか
+				int collision_num = -1;
+
+				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 3)
 				{
-					// クリアしていて更新があった場合セーブデータ構造体を変更する
-					p_Savedata[p_Stagedata->stagenum].clear_time = p_Gamedata->game_time;
-					updata_savedata = true;
+					collision_accboard = true;
+					collision_num = 3;
 				}
-				// セーブデータの更新があったならば、テキストも更新する
-				if (updata_savedata == true)
+				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 4)
 				{
-					// テキストファイルを書き換える
-					WriteSavedata(SAVEDATA_FILE);
+					collision_accboard = true;
+					collision_num = 4;
+				}
+				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 5)
+				{
+					collision_accboard = true;
+					collision_num = 5;
+				}
+				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 6)
+				{
+					collision_accboard = true;
+					collision_num = 6;
+				}
+				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 7)
+				{
+					collision_accboard = true;
+					collision_num = 7;
+				}
+				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 8)
+				{
+					collision_accboard = true;
+					collision_num = 8;
+				}
+				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 9)
+				{
+					collision_accboard = true;
+					collision_num = 9;
+				}
+				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 10)
+				{
+					collision_accboard = true;
+					collision_num = 10;
 				}
 
-			}
+				//連続して当たってたらtrueになる
+				if (collision_accboard == true)
+				{
+					g_Bullet[i].collisiontime++;
+				}
+				else
+				{
+					//当たってなかったら0にする
+					g_Bullet[i].collisiontime = 0;
+				}
 
 
-			//当たってる間trueになる
-			bool collision_accboard = false;
-			//どの番号に当たっているか
-			int collision_num = -1;
 
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 3)
-			{
-				collision_accboard = true;
-				collision_num = 3;
-			}
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 4)
-			{
-				collision_accboard = true;
-				collision_num = 4;	
-			}
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 5)
-			{
-				collision_accboard = true;
-				collision_num = 5;
-			}
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 6)
-			{
-				collision_accboard = true;
-				collision_num = 6;
-			}
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 7)
-			{
-				collision_accboard = true;
-				collision_num = 7;
-			}
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 8)
-			{
-				collision_accboard = true;
-				collision_num = 8;
-			}
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 9)
-			{
-				collision_accboard = true;
-				collision_num = 9;
-			}
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 10)
-			{
-				collision_accboard = true;
-				collision_num = 10;	
-			}
-		
-			//連続して当たってたらtrueになる
-			if(collision_accboard == true)
-			{
-				g_Bullet[i].collisiontime++;
-			}
-			else
-			{
-				//当たってなかったら0にする
-				g_Bullet[i].collisiontime = 0;
-			}
 
-		
-
-		
 				if (collision_num == 3)
 				{
 					// 加速板（上）に乗った時の処理
@@ -804,9 +812,9 @@ void UpdateBullet(void)
 
 					}
 				}
-			
 
-		
+
+
 
 				//ワープ
 				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 11)
@@ -859,21 +867,13 @@ void UpdateBullet(void)
 				}
 
 			}
-			//砂
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 13)
-			{
-				// パワーを減衰させる
-				if (g_Bullet[i].shotpower > 0.3f)
-					g_Bullet[i].shotpower = 0.3f;
-
-			}
 
 			//反射板
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 15)
 			{
 				// 反射板（右に行く）に乗った時の処理
-					g_Bullet[i].angle = 0.0f;									// 角度を設定
-					g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
+				g_Bullet[i].angle = 0.0f;									// 角度を設定
+				g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
 			}
 
@@ -902,7 +902,7 @@ void UpdateBullet(void)
 			//}
 
 
-		
+
 
 
 			//// クールタイムを減らす処理一覧
@@ -926,7 +926,7 @@ void UpdateBullet(void)
 
 
 			// ボールが跳ねて見える処理,クラブが1(とぶやつ)の時のみ飛んでるように見せる
-			if(g_Bullet[i].club_pattern == 1)
+			if (g_Bullet[i].club_pattern == 1)
 				g_Bullet[i].flying_height = Bounce(DRAW_MAP_CHIP_SIZE_Y, g_Bullet[i].shottime, 65, 90, 110, 120);
 
 

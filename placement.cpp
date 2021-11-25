@@ -98,9 +98,7 @@ void InitPlacement(void)
 		SetEffect(52, D3DXVECTOR2(origin_x + nowchoice.x * interval_x, origin_y + nowchoice.y * interval_y), D3DXVECTOR2(0, 0), 0,
 			D3DXVECTOR2(MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y), D3DXVECTOR2(200.0f, 200.0f), 0,
 			1.0f, 1.0f, 0, 999, 0, 0,
-			0.0f, 0.0f, 0);
-
-
+			0.0f, 0.0f, 0); 
 }
 
 /*------------------------------------------------------------------------------
@@ -158,6 +156,27 @@ void UpdatePlacement(void)
 				ChangeEffectClarity(placement_pickup_EffectArray, 0.0f);
 			PushKeyCool = PUSHKEY_COOLTIME;
 		}
+	}
+
+	//next•\Ž¦‚Æ“ü—Í
+	if (mouse_pos_X > 1070.0f && mouse_pos_X < 1310.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 720.0f)
+	{
+		SetEffect(47, D3DXVECTOR2(1200.0f, 700.0f), D3DXVECTOR2(1200.0f, 700.0f), 1,
+			D3DXVECTOR2(400.0f, 400.0f), D3DXVECTOR2(400.0f, 400.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+		mouseuse = true;
+		if (mouseuse && mouse_Lclick)
+		{
+			SceneTransition(SCENE_GAME);
+		}
+	}
+	else
+	{
+		SetEffect(47, D3DXVECTOR2(1200.0f, 700.0f), D3DXVECTOR2(1200.0f, 700.0f), 1,
+			D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
 	}
 
 

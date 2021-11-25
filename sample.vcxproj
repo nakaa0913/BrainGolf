@@ -136,6 +136,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gamedata.cpp" />
     <ClCompile Include="gameover.cpp" />
+    <ClCompile Include="pause.cpp" />
     <ClCompile Include="placement.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="input.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="Keylogger.h" />
     <ClInclude Include="mission.h" />
     <ClInclude Include="mouse.h" />
+    <ClInclude Include="pause.h" />
     <ClInclude Include="placement.h" />
     <ClInclude Include="predictionbullet.h" />
     <ClInclude Include="savedata.h" />

@@ -926,7 +926,7 @@ void UpdateBullet(void)
 
 			// ボールが跳ねて見える処理,クラブが1(とぶやつ)の時のみ飛んでるように見せる
 			if (g_Bullet[i].club_pattern == 1)
-				g_Bullet[i].flying_height = Bounce(DRAW_MAP_CHIP_SIZE_Y, g_Bullet[i].shottime, 28, 57, 81, 120);
+				g_Bullet[i].flying_height = Bounce(30.0f, g_Bullet[i].shottime, 28, 57, 81, 120);
 
 
 

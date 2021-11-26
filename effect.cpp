@@ -165,8 +165,8 @@ void InitEffect(void)
 	titleback_60 = LoadTexture("data/TEXTURE/select/titleback.png");
 	worldback_61 = LoadTexture("data/TEXTURE/select/worldback.png");
 
-	pause_62 = LoadTexture("data/TEXTURE/other_effect/pause.png");
-	commentary_63 = LoadTexture("data/TEXTURE/other_effect/commentary.png");
+	pause_62 = LoadTexture("data/TEXTURE/pause/pause.png");
+	commentary_63 = LoadTexture("data/TEXTURE/pause/commentary.png");
 
 
 	for (int i = 0; i < MAX_EFFECT; i++)

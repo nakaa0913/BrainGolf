@@ -190,6 +190,10 @@ void UpdateResult(void)
 			{
 				g_Result.goaltime = 9000;
 			}
+			if (mouse_Lclick)
+			{
+				g_Result.goaltime = 9000;
+			}
 		}
 	}
 

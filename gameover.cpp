@@ -23,6 +23,7 @@
 #include "stagedata.h"
 #include "keyboard.h"
 #include "gameover.h"
+#include "mouse.h"
 
 #define GOAL_H (50)
 #define GOAL_W (50)
@@ -72,7 +73,15 @@ void UninitGameover(void)
 //=============================================================================
 void UpdateGameover(void)
 {
+	//マウスの座標を取得
+	float mouse_pos_X = GetMousePosX();
+	float mouse_pos_Y = GetMousePosY();
+	bool mouse_Lclick = GetMouseLClick();
+	bool mouseuse = false;
 
+	// 1フレーム前のポジションの保存。この後キー操作などで変更があった場合のみエフェクトを更新させる
+	//int OldnowchoiceX = nowchoice.x;
+	//int OldnowchoiceY = nowchoice.y;
 
 
 	if (g_Gameover.gameovertime == 10)
@@ -93,43 +102,6 @@ void UpdateGameover(void)
 	}
 
 
-
-	//if (g_Gameover.gameovertime == 240)
-	//{
-	//	
-	//}
-
-	//if (g_Gameover.gameovertime == 300)
-	//{
-	//	
-	//}
-
-	//if (g_Gameover.gameovertime == 400)
-	//{
-	//	
-	//}
-
-	//if (g_Gameover.gameovertime == 430)
-	//{
-	//	
-	//}
-
-	//if (g_Gameover.gameovertime == 460)
-	//{
-	//	
-	//}
-
-	//if (g_Gameover.gameovertime >= 560)
-	//{
-	//	if (g_Gameover.gameovertime <= 8000)
-	//	{
-	//		if (GetKeyboardPress(DIK_RETURN))
-	//		{
-	//			g_Gameover.gameovertime = 9000;
-	//		}
-	//	}
-	//}
-
 	if (g_Gameover.gameovertime >= 240)
 	{
 		////明るくする暗くするなら4
@@ -139,7 +111,7 @@ void UpdateGameover(void)
 		//	0.0f, 0.0f, 0);
 
 		//ステージ名
-		SetEffect(57, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT), 0,
+		SetEffect(57, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
 			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 1,
 			0.0f, 1.0f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
@@ -265,7 +237,43 @@ void UpdateGameover(void)
 
 		}
 
+		//マウス操作
+		//next				1200, 700
+		if (mouse_pos_X > 1100.0f && mouse_pos_X < 1300.0f && mouse_pos_Y > 670.0f && mouse_pos_Y < 710.0f)
+		{
+			g_Gameover.selectpush = 0;
+			mouseuse = true;
+		}
+		//ワールド選択		100, 700
+		if (mouse_pos_X > 70.0f && mouse_pos_X < 130.0f && mouse_pos_Y > 670.0f && mouse_pos_Y < 710.0f)
+		{
+			g_Gameover.selectpush = 1;
+			mouseuse = true;
+		}
+		//プレイヤー配置	600, 700
+		if (mouse_pos_X > 500.0f && mouse_pos_X < 700.0f && mouse_pos_Y > 670.0f && mouse_pos_Y < 710.0f)
+		{
+			g_Gameover.selectpush = 2;
+			mouseuse = true;
+		}
 
+		if (mouseuse && mouse_Lclick)
+		{
+			if (g_Gameover.selectpush == 0)
+			{
+				SceneTransition(SCENE_GAME);
+			}
+
+			if (g_Gameover.selectpush == 1)
+			{
+				SceneTransition(SCENE_STAGE_SELECT);
+			}
+
+			if (g_Gameover.selectpush == 2)
+			{
+				SceneTransition(SCENE_PLACEMENT);
+			}
+		}
 
 		if (g_Gameover.selecttime >= 0)
 			g_Gameover.selecttime--;

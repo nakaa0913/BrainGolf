@@ -389,3 +389,77 @@ void DeleteMissionResult()
 	}
 	return;
 }
+
+void DrawMissionPause()
+{
+	// ステージデータからミッション内容などを読み取る
+	STAGEDATA* p_Stagedata = GetStagedata();
+
+	float size_x = 768.0f;
+	float size_y = 128.0f;
+
+	float background_size_y = size_y * 3;
+
+	float interval_y = size_y;
+
+	float base_pos1_x = SCREEN_WIDTH / 2;
+	float base_pos1_y = SCREEN_HEIGHT + background_size_y;
+
+	float base_pos2_x = SCREEN_WIDTH / 2;
+	float base_pos2_y = SCREEN_HEIGHT / 2;
+
+	// 数字の設定
+	float num_size_x = 40.0f;
+	float num_size_y = 40.0f;
+
+
+	// ミッションの背景を表示	Effectでのidは25		ミッションの中身を表示が3つあってそこの真ん中に来るように配置する->iのとこを1にかえるとOK
+	int Background_EffectArray =
+		SetEffect(25, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * 1), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * 1), 1,
+			D3DXVECTOR2(size_x, background_size_y), D3DXVECTOR2(size_x, background_size_y), 0,
+			0.0f, 1.0f, 0, 999, 0, 20,
+			0.0f, 0.0f, 0);
+
+	// エフェクトが生成された場所の番号の保存
+	g_Mission.mission_background_EffectArray = Background_EffectArray;
+
+	// ミッションの中身を表示
+	for (int i = 0; i < MAX_MISSION; i++)
+	{
+		// コンテンツのidを描写用に、エフェクトで設定されているidに変換
+		int Content_Texid = ContentsNumToTexid(p_Stagedata->mission_ContentsNum[i]);
+		// セットエフェクトで文字の描写
+		int Content_EffectArray =
+			SetEffect(Content_Texid, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 1,
+				D3DXVECTOR2(size_x, size_y), D3DXVECTOR2(size_x, size_y), 0,
+				0.0f, 1.0f, 0, 999, 0, 20,
+				0.0f, 0.0f, 0);
+
+		// 数字の描写		ミッションの番号ごとに数字を描く場所は決まってると思うので、それもswitch分で判別できると楽
+		int Number_EffectArray[2] = { 0,0 };
+		int* p_Number_EffectArray = Number_EffectArray;
+		SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 1,
+			D3DXVECTOR2(num_size_x, num_size_y), D3DXVECTOR2(num_size_x, num_size_y), 0,
+			0.0f, 1.0f, 0, 999, 0, 20,
+			0.0f, 0.0f, 0);
+
+		// エフェクトが生成された場所の番号の保存
+		g_Mission.mission_ContentsNum_EffectArray[i] = Content_EffectArray;
+		g_Mission.mission_JudgeNum_EffectArray[i][0] = Number_EffectArray[0];
+		g_Mission.mission_JudgeNum_EffectArray[i][1] = Number_EffectArray[1];		// 連番の保存
+	}
+	return;
+}
+
+void DeleteMissionPause()
+{
+	EffectBreak(g_Mission.mission_background_EffectArray);
+
+	for (int i = 0; i < MAX_MISSION; i++)
+	{
+		EffectBreak(g_Mission.mission_ContentsNum_EffectArray[i]);
+		EffectBreak(g_Mission.mission_JudgeNum_EffectArray[i][0], g_Mission.mission_JudgeNum_EffectArray[i][1]);	// 第2引数で連番の処理
+
+	}
+	return;
+}

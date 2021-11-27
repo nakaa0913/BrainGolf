@@ -63,34 +63,36 @@ static int stage_mission18_44;// 44
 static int stage_mission19_45;// 45
 
 // 数字の表示
-static int number_46;// 46
+static int number_46;		// 46
 
-static int next_47;	    // 47
-static int white_48;    // 48
-static int mapback_49;  // 49
-//static int maparrow_50; // 50 使わない
-//static int maptext_51;  // 51 使わない
+static int next_47;			// 47
+static int white_48;		// 48
+static int mapback_49;		// 49
+//static int maparrow_50;	// 50 使わない
+//static int maptext_51;	// 51 使わない
 
 // placementで使うやつ
-static int pickup_green_52;  // 52
-static int pickup_red_53;  // 53
-static int batten_red_54;  // 54
+static int pickup_green_52; // 52
+static int pickup_red_53;	// 53
+static int batten_red_54;	// 54
 
 // ゲームオーバー
-static int gameover_55;  // 55
-static int restart_56;  // 56
-static int stagename_57;  // 57
-static int gameover_back_58;  // 58
-static int gameover_place_59; // 59
+static int gameover_55;		 // 55
+static int restart_56;		 // 56
+static int stagename_57;	 // 57
+static int gameover_back_58; // 58
+static int gameover_place_59;// 59
 
-static int titleback_60; //60
-static int worldback_61; //61
+static int titleback_60;	// 60
+static int worldback_61;	// 61
 
 //　ポーズ画面
-static int pause_62; //62
-static int commentary_63; //62
-
-
+static int pause_62;			// 62
+static int commentary_63;		// 62
+static int above_64;			// 64
+static int retry_65;			// 65
+static int pause_mission_66;	// 66
+static int pause_stageselect_67;// 67
 
 void InitEffect(void)
 {
@@ -167,7 +169,11 @@ void InitEffect(void)
 
 	pause_62 = LoadTexture("data/TEXTURE/pause/pause.png");
 	commentary_63 = LoadTexture("data/TEXTURE/pause/commentary.png");
-
+	above_64 = LoadTexture("data/TEXTURE/pause/above.png");
+	retry_65 = LoadTexture("data/TEXTURE/pause/retry.png");
+	pause_mission_66 = LoadTexture("data/TEXTURE/pause/mission.png");
+	pause_stageselect_67 = LoadTexture("data/TEXTURE/pause/stageselect.png");
+	
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -918,7 +924,20 @@ int GetTextureData(int id)
 	case 63:
 		return commentary_63;
 		break;
-	
+	case 64:
+		return above_64;
+		break;
+	case 65:
+		return retry_65;
+		break;
+	case 66:
+		return pause_mission_66;
+		break;
+	case 67:
+		return pause_stageselect_67;
+		break;
+		
+		
 	}
 
 	// どこにもたどり着かなかった場合

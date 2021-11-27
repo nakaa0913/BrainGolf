@@ -27,6 +27,9 @@ void DeleteMissionStageSelect();
 void DrawMissionResult();
 void DeleteMissionResult();
 
+void DrawMissionPause();
+void DeleteMissionPause();
+
 bool ClearorFailure(int ContentsNum, int JudgeNum);
 int ContentsNumToTexid(int mission_ContentsNum);
 bool JudgeClearMission(int missionnum);

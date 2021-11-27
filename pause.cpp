@@ -30,6 +30,7 @@
 
 //#define GOAL_H (50)
 //#define GOAL_W (50)
+#define CLICK_COOLTIME	(20)			// クリックのクールタイム
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -53,6 +54,13 @@ int pause_select_once_time = 0;
 //bool onlyOnce = true;
 bool pausemouseuse = false;
 
+bool pauseclickuse = false;
+bool pauseopen = false;
+bool Above = false;
+int ClickCool = CLICK_COOLTIME;
+
+
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -60,7 +68,7 @@ HRESULT InitPause(void)
 {
 	//テクスチャ読み込み
 
-
+	STAGEDATA* p_Stagedata = GetStagedata();
 	pause = false;
 
 
@@ -106,121 +114,202 @@ void UpdatePause(void)
 
 
 
-	// 今がポーズ状態なら
-	if (pause == true)
+	//// 今がポーズ状態なら
+	//if (pause == true)
+	//{
+
+	//	// とりあえずはったりだけ
+	//	SetEffect(62, D3DXVECTOR2(400, 400), D3DXVECTOR2(400, 400), 0,
+	//		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(150.0f, 150.0f), 1,
+	//		0.0f, 1.0f, 0, 1, 0, 30,
+	//		0.0f, 0.0f, 0);
+
+
+
+	//}
+
+
+
+	////　Pキーが押されてポーズ状態を切り替える処理
+	//if (pause_cool <= 0)
+	//{
+	//	if (Keyboard_IsKeyDown(KK_P))
+	//	{
+	//		pause = !pause;
+
+	//		pause_cool = PUSHKEY_COOLTIME;
+
+	//	}
+	//}
+
+
+
+	// マウスの座標を使っての入力処理
+
+		//1 1200 700	300 300
+	if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 15.0f && mouse_pos_Y < 85.0f)
+	{
+		//g_Pause.selectpush = 0;
+		pausemouseuse = true;
+
+		// マウスが表示にあっている状態で左クリックをしたら
+		if (pausemouseuse && mouse_Lclick)
+		{
+			//ポーズ画面を開く
+			pauseclickuse = true;
+		}
+	}
+	//ポーズ画面を開いている状態
+	if (pauseclickuse)
 	{
 
-		// とりあえずはったりだけ
-		SetEffect(62, D3DXVECTOR2(400, 400), D3DXVECTOR2(400, 400), 0,
+
+		//明るくするなら48暗くするなら4
+		SetEffect(4, D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(0.0f, 0.0f), 1,
+			D3DXVECTOR2(0, SCREEN_HEIGHT * 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), 1,
+			0.0f, 0.5f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+
+		// 上からのマップ
+		SetEffect(64, D3DXVECTOR2(50, 150), D3DXVECTOR2(50, 150), 0,
 			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(150.0f, 150.0f), 1,
 			0.0f, 1.0f, 0, 1, 0, 30,
 			0.0f, 0.0f, 0);
 
+		// 配置からやり直す
+		SetEffect(65, D3DXVECTOR2(50, 250), D3DXVECTOR2(50, 250), 0,
+			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(150.0f, 150.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 30,
+			0.0f, 0.0f, 0);
 
+		// ミッション
+		SetEffect(66, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,
+			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(150.0f, 150.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 30,
+			0.0f, 0.0f, 0);
 
-	}
+		// ステージ選択
+		SetEffect(67, D3DXVECTOR2(50, 450), D3DXVECTOR2(50, 450), 0,
+			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(150.0f, 150.0f), 1,
+			0.0f, 1.0f, 0, 1, 0, 30,
+			0.0f, 0.0f, 0);
 
-
-
-	//　Pキーが押されてポーズ状態を切り替える処理
-	if (pause_cool <= 0)
-	{
-		if (Keyboard_IsKeyDown(KK_P))
+		if (ClickCool <= 0)
 		{
-			pause = !pause;
+			//ポーズ画面のボタンを押していなかったら（ポーズ画面は開いている状態）
+			if (pauseopen == false)
+			{
+				///////上からのマップ/////////////
+				if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 112.0f && mouse_pos_Y < 180.0f)
+				{
+					pausemouseuse = true;
+					if (Above == false)
+					{
+						if (pausemouseuse && mouse_Lclick)
+						{
+							Above = true;
+							ClickCool = CLICK_COOLTIME;
+							pauseopen = true;
+						}
+					}
+					if (ClickCool <= 0)
+					{
+						if (Above == true && pauseopen == true)
+						{
+							if (mouse_Lclick)
+							{
+								Above = false;
+								ClickCool = CLICK_COOLTIME;
+								pauseclickuse = false;
 
-			pause_cool = PUSHKEY_COOLTIME;
+							}
+						}
+					}
+				}
 
+				/////////////配置からやり直す//////////////////
+				if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 212.0f && mouse_pos_Y < 280.0f)
+				{
+					pausemouseuse = true;
+					if (pausemouseuse && mouse_Lclick)
+					{
+						SceneTransition(SCENE_PLACEMENT);
+						pauseclickuse = false;
+						//pauseopen = true;
+					}
+
+				}
+
+				////////ミッション/////////
+				if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 312.0f && mouse_pos_Y < 380.0f)
+				{
+					pausemouseuse = true;
+					if (pauseopen == false)
+					{
+						if (pausemouseuse && mouse_Lclick)
+						{
+							pauseopen = true;
+							DrawMissionPause();
+							ClickCool = CLICK_COOLTIME;
+						}
+					}
+					if (pauseopen == true)
+					{
+						if (pausemouseuse && mouse_Lclick)
+						{
+							pauseopen = false;
+							//DeleteMissionPause();
+							ClickCool = CLICK_COOLTIME;
+						}
+					}
+				}
+
+				////////ステージ選択/////////
+				if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 412.0f && mouse_pos_Y < 480.0f)
+				{
+					pausemouseuse = true;
+					if (pausemouseuse && mouse_Lclick)
+					{
+						SceneTransition(SCENE_STAGE_SELECT);
+						pauseclickuse = false;
+						//pauseopen = true;
+					}
+				}
+
+			}
+		}/////////////////
+
+
+		if (mouse_pos_X > 360.0f)
+		{
+			if (mouse_Lclick)
+			{
+				pauseclickuse = false;
+			}
 		}
+		//}
 	}
 
-
-	////キー入力
-	//if (g_Pause.selecttime <= 0)
-	//{
-	//	//ポーズボタンの表示
-	//	if (Keyboard_IsKeyDown(KK_P))
-	//	{
-	//		//横1440
-	//		//縦810
-	//		g_Pause.selectpush++;
-
-	//		//PauseTrue();
-	//	}
-
-
-	//	//ポーズボタンの表示
-	//	if (g_Pause.selectpush == 1)
-	//	{
-	//		//ゲームクリア
-	//		SetEffect(62, D3DXVECTOR2(50, 50), D3DXVECTOR2(50, 50), 0,
-	//			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(150.0f, 150.0f), 1,
-	//			0.0f, 1.0f, 30, 999, 60, 30,
-	//			0.0f, 0.0f, 0);
-	//	}
-
-
-	//	if (g_Pause.selectpush >= 2)
-	//	{
-	//		g_Pause.selectpush = 1;
-	//	}
-
-
-	//	if (g_Pause.selectpush < 0)
-	//	{
-	//		g_Pause.selectpush = 1;
-	//	}
-
-	//}
-
-	//// マウスの座標を使っての入力処理
-	////1 1200 700	300 300
-	//if (mouse_pos_X > 1050.0f && mouse_pos_X < 1350.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
-	//{
-	//	g_Pause.selectpush = 0;
-	//	pausemouseuse = true;
-	//}
-	////2 100 700		200 200
-	//else if (mouse_pos_X > 60.0f && mouse_pos_X < 140.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
-	//{
-	//	g_Pause.selectpush = 1;
-	//	pausemouseuse = true;
-	//}
-
-	//// マウスが押される位置にあって、左クリック押されていて、フェード処理中ではないとき
-	//if (pausemouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
-	//{
-	//	//SetVolume(g_BGMNo, 0.1f);
-
-	//	//STAGE_SELECTへ移行する
-	//	SceneTransition(SCENE_STAGE_SELECT);
-	//}
-
-
-	//// もし前のフレームから変化があった場合のみエフェクトなどを変化させる
 	//bool Change = false;
-	//if (OldPauseSelect != g_Pause.selectpush)
+	//if (pauseopen && pauseclickuse && mouse_Lclick)
 	//	Change = true;
-
 	//// 変更があった場合、初期化と新しいもののセット
 	//if (Change == true)
 	//{
-	//	// 初期化と前回使われていたものの消去
-	//	g_Pause.selecttime = 30;
-	//	//EffectBreak(now_pause_select_EffectArray);		// 前の描写を消す
-	//	pause_select_once = false;						// 1回も描写してないよにする
-	//	pause_select_once_time = 0;						// 描写してからの時間のリセット
-	//}
+	//	ClickCool = CLICK_COOLTIME;
+	//	EffectBreak(now_pause_select_EffectArray);
+	//	DeleteMissionPause();
+	//	pause_select_once = false;
+	//	pause_select_once_time = 0;
 
-	//
-	//if (g_Pause.selecttime >= 0)
-	//	g_Pause.selecttime--;
+
+	//}
 
 	if (pause_cool > 0)
 		pause_cool--;
 
-
-
+	if (ClickCool > 0)
+		ClickCool--;
 	//// 毎フレームカウントを増やす
 	//g_Pause.goaltime++;
 }
@@ -230,7 +319,12 @@ void UpdatePause(void)
 //=============================================================================
 void DrawPause(void)
 {
-
+	 //上から視点の表示
+	if (Above)
+	{
+		DrawBGaboveForPlacement();
+		DrawPlayerForPlacement();
+	}
 }
 
 //=============================================================================

@@ -340,13 +340,15 @@ float frand(void)
 // É}ÉEÉXÇÃèàóù
 long GetMousePosX(void)
 {
-	return g_MouseX;
+
+
+	return g_MouseX * SCREEN_WIDTH_MOUSEGAP;
 }
 
 
 long GetMousePosY(void)
 {
-	return g_MouseY;
+	return g_MouseY * SCREEN_HEIGHT_MOUSEGAP;
 }
 
 bool GetMouseLClick(void)

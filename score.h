@@ -28,6 +28,8 @@ void DrawScore(void);
 
 void AddScore(int add);
 void SetScore(int score);
+void SetScore2(int score);
+void SetScore3(int score);
 
 void SetShotPower(int ShotPower);
 

@@ -25,6 +25,7 @@
 #include "gamedata.h"
 #include "gameover.h"
 #include "pause.h"
+#include "gimmick_description.h"
 
 /*------------------------------------------------------------------------------
    定数定義
@@ -70,6 +71,8 @@ void InitGame(void)
 	InitPrediction();
 	InitGamedata();
 	InitPause();
+	InitGimmickDescription();
+
 	g_BGMNo = LoadSound("data/BGM/sample001.wav");
 
 	SetVolume(g_BGMNo, 1.0f);
@@ -82,6 +85,7 @@ void InitGame(void)
 void UninitGame()
 {
 	//初期化とは逆順に終了処理を行う
+	UninitGimmickDescription();
 	UninitGamedata();
 	UninitPrediction();
 	UninitCamera();
@@ -122,6 +126,7 @@ void UpdateGame(void)
 			UpdateGamedata();
 
 			UpdatePause();
+			UpdateGimmickDescription_Game();
 			// ゲームスタートしてからのフレーム時間を+1する
 			game_frame_time++;
 

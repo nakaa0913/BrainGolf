@@ -48,6 +48,9 @@
 #define SCREEN_WIDTH	(1440)				// ウインドウの幅
 #define SCREEN_HEIGHT	(810)				// ウインドウの高さ
 
+#define SCREEN_WIDTH_MOUSEGAP	(SCREEN_WIDTH / (SCREEN_WIDTH - 10.0f))				    // ウインドウの幅のマウスでのずれの倍率
+#define SCREEN_HEIGHT_MOUSEGAP	(SCREEN_HEIGHT / (SCREEN_HEIGHT - 10.0f))				// ウインドウの高さのマウスでのずれの倍率
+
 
 //*****************************************************************************
 // プロトタイプ宣言

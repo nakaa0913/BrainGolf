@@ -136,6 +136,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gamedata.cpp" />
     <ClCompile Include="gameover.cpp" />
+    <ClCompile Include="gimmick_description.cpp" />
     <ClCompile Include="pause.cpp" />
     <ClCompile Include="placement.cpp" />
     <ClCompile Include="result.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="FileDataManagement.h" />
     <ClInclude Include="gamedata.h" />
     <ClInclude Include="gameover.h" />
+    <ClInclude Include="gimmick_description.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="Keylogger.h" />
     <ClInclude Include="mission.h" />

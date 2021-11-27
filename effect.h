@@ -61,7 +61,7 @@ EFFECT* GetEffect(void);
 
 int SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
-	float rot_angle1, float rot_angle2, int rot_moving_pattern);
+	float rot_angle1, float rot_angle2, int rot_moving_pattern, float tx = 1.0f, float ty = 1.0f, float sx = 0.0f, float sy = 0.0f);
 
 int SetGameEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
@@ -80,6 +80,7 @@ void RotMovingPattern(int i);
 
 int GetTextureData(int id);
 void ChangeEffectCount(int use_array_num, int setcount, int SerialNumber = 1);
+void ChangeEffectPos(int use_array_num, float setpos_x, float setpos_y, int SerialNumber = 1);
 void ChangeEffectTexture(int use_array_num, int setTexid, int SerialNumber = 1);
 void ChangeEffectColor(int use_array_num, float r, float g, float b, int SerialNumber = 1);
 void ChangeEffectClarity(int use_array_num, float clarity, int SerialNumber = 1);
@@ -94,3 +95,5 @@ void SetEffectNumber(int num, int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos
 
 D3DXVECTOR2 GetEffectPos(int use_array_num);
 D3DXVECTOR2 GetEffectSize(int use_array_num);
+float GetEffectClarity(int use_array_num);
+int GetEffectnow_count(int use_array_num);

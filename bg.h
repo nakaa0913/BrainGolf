@@ -44,8 +44,16 @@
 #define DRAW_GAP_BALL_Y	 (-5 * p_Camera->magnification)			// 当確図で見た時に、ボールが綺麗に見えるためのもの
 
 
-#define DRAW_MAP_CHIP_SIZE_X (80.0f * p_Camera->magnification)
-#define DRAW_MAP_CHIP_SIZE_Y (40.0f * p_Camera->magnification)
+#define DRAW_MAP_CHIP_SIZE_X (80.0f)
+#define DRAW_MAP_CHIP_SIZE_Y (40.0f)
+//#define DRAW_MAP_CHIP_SIZE_X (80.0f * p_Camera->magnification)	// カメラのズーム倍率使わなくなったので。
+//#define DRAW_MAP_CHIP_SIZE_Y (40.0f * p_Camera->magnification)
+
+#define MAP_CHIP3D_SIZE_X (240.0f)
+#define MAP_CHIP3D_SIZE_Y (400.0f)
+
+#define MAP_CHIP3D_GAP_X (80.0f)
+#define MAP_CHIP3D_GAP_Y (360.0f)
 
 #define GAME_ORIGIN_POINT_X		(SCREEN_WIDTH / 2 + 120.0f)					// ゲーム内の原点をこれとする。
 #define GAME_ORIGIN_POINT_Y		(0.0f + 40.0f)							// ゲーム内の原点をこれとする。

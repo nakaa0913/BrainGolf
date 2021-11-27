@@ -13,6 +13,7 @@
 #include "camera.h"
 #include "predictionbullet.h"
 #include "placement.h"
+#include "gimmick_description.h"
 
 
 //*****************************************************************************
@@ -316,6 +317,7 @@ void DrawBG(void)
 	PLAYER		*p_player		 = GetPlayer();
 	BULLET		*p_bullet	 	 = GetBullet();
 	PREDICTION  * p_Prediction	 = GetPrediction();
+	GIMMICKDESCRIPTION* p_GimmickDescription = GetGimmickDescription();
 
 
 	// ブロックの色の設定(リセット)		順番的に(0,0)は透明度は変えられない。けど問題ない。
@@ -345,12 +347,6 @@ void DrawBG(void)
 
 				float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
 				float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
-
-				float mapchip3d_size_x = 240 * p_Camera->magnification;
-				float mapchip3d_size_y = 400 * p_Camera->magnification;
-
-				float mapchip3d_gap_x = 80 * p_Camera->magnification;
-				float mapchip3d_gap_y = 360 * p_Camera->magnification;
 
 				// プレイヤー周りにいるかの検索とその時ブロックを透明にする処理
 				for (int i = 0; i < PLAYER_MAX; i++)
@@ -411,14 +407,39 @@ void DrawBG(void)
 							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 						}
 					}
+				}
+				// 強調表示が周りにいるかの検索とその時ブロックを透明にする処理
+				for (int i = 0; i < MAX_GIMMICKDESCRIPTION; i++)
+				{
+					if (p_GimmickDescription[i].isUse)
+					{
+						// マップでの座標に変換する
+						int mappos_x = p_GimmickDescription[i].x;
+						int mappos_y = p_GimmickDescription[i].y;
 
+						// ブロックの周りに強調表示がいた場合透明度を下げる
+						if (x - 1 == mappos_x && y == mappos_y - 1)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						}
+						if (x - 1 == mappos_x && y == mappos_y + 0)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						}
+						if (x - 1 == mappos_x && y == mappos_y + 1)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						}
+						if (x == mappos_x && y == mappos_y + 1)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+						}
+					}
 				}
 
-
-				
-
-				// ブロックの描写
-				DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - mapchip3d_gap_x, slanted_y - mapchip3d_gap_y, mapchip3d_size_x, mapchip3d_size_y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f, color[10 * y + x]);
+				// 床以外のブロックの描写
+				// とうかくず視点
+				DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f, color[10 * y + x]);
 
 				// 今までの上からの視点
 				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
@@ -648,12 +669,6 @@ void DrawBGsideForPlacement(void)
 				float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
 				float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
 
-				float mapchip3d_size_x = 240 * p_Camera->magnification;
-				float mapchip3d_size_y = 400 * p_Camera->magnification;
-
-				float mapchip3d_gap_x = 80 * p_Camera->magnification;
-				float mapchip3d_gap_y = 360 * p_Camera->magnification;
-
 				// プレイヤー周りにいるかの検索とその時ブロックを透明にする処理
 				for (int i = 0; i < PLAYER_MAX; i++)
 				{
@@ -685,7 +700,7 @@ void DrawBGsideForPlacement(void)
 					}
 				}
 				// ブロックの描写
-				DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - mapchip3d_gap_x, slanted_y - mapchip3d_gap_y, mapchip3d_size_x, mapchip3d_size_y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f, color[10 * y + x]);
+				DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f, color[10 * y + x]);
 			}
 
 			// プレイヤーの表示、表示順が大事

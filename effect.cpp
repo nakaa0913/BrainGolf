@@ -94,6 +94,11 @@ static int retry_65;			// 65
 static int pause_mission_66;	// 66
 static int pause_stageselect_67;// 67
 
+// ギミック説明チップ
+static int GimmickDescriptionChip_68;// 68
+static int pickup_GimmickDescription_69;// 69
+
+
 void InitEffect(void)
 {
 	//テクスチャの名前
@@ -173,6 +178,9 @@ void InitEffect(void)
 	retry_65 = LoadTexture("data/TEXTURE/pause/retry.png");
 	pause_mission_66 = LoadTexture("data/TEXTURE/pause/mission.png");
 	pause_stageselect_67 = LoadTexture("data/TEXTURE/pause/stageselect.png");
+
+	GimmickDescriptionChip_68 = LoadTexture("data/TEXTURE/game/GimmickDescription/GimmickDescriptionChip.png");
+	pickup_GimmickDescription_69 = LoadTexture("data/TEXTURE/game/GimmickDescription/pickup_GimmickDescription.png");
 	
 
 	for (int i = 0; i < MAX_EFFECT; i++)
@@ -330,7 +338,7 @@ EFFECT* GetEffect(void)
 // all_count == 999だったら無制限に表示
 int SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
 			   float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
-			   float rot_angle1, float rot_angle2, int rot_moving_pattern)
+			   float rot_angle1, float rot_angle2, int rot_moving_pattern, float tx, float ty, float sx, float sy)
 {
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -363,10 +371,10 @@ int SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern
 		g_Effect[i].drawpos = g_Effect[i].pos1;
 		g_Effect[i].use_array_num = i;
 
-		g_Effect[i].tx = 1.0f;					// テクスチャ1マスの幅
-		g_Effect[i].ty = 1.0f;					// テクスチャ1マスの高さ
-		g_Effect[i].sx = 0.0f;					// テクスチャのスタート位置x
-		g_Effect[i].sy = 0.0f;					// テクスチャのスタート位置y
+		g_Effect[i].tx = tx;					// テクスチャ1マスの幅
+		g_Effect[i].ty = ty;					// テクスチャ1マスの高さ
+		g_Effect[i].sx = sx;					// テクスチャのスタート位置x
+		g_Effect[i].sy = sy;					// テクスチャのスタート位置y
 
 		g_Effect[i].isUse = true;
 		
@@ -936,6 +944,12 @@ int GetTextureData(int id)
 	case 67:
 		return pause_stageselect_67;
 		break;
+	case 68:
+		return GimmickDescriptionChip_68;
+		break;
+	case 69:
+		return pickup_GimmickDescription_69;
+		break;
 		
 		
 	}
@@ -1009,11 +1023,27 @@ void ChangeEffectCount(int use_array_num, int setcount, int SerialNumber)
 	return;
 }
 
+
+// 座標だけを変えれる(ただしpos1,pos2ともに固定されてしまう)
+void ChangeEffectPos(int use_array_num, float setpos_x, float setpos_y, int SerialNumber)
+{
+	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
+		exit(31);
+
+	for (int i = 0; i < SerialNumber; i++)
+	{
+		g_Effect[use_array_num].pos = D3DXVECTOR2(setpos_x, setpos_y);
+		g_Effect[use_array_num].pos1 = D3DXVECTOR2(setpos_x, setpos_y);
+		g_Effect[use_array_num].pos2 = D3DXVECTOR2(setpos_x, setpos_y);
+	}
+	return;
+}
+
 // テクスチャだけを変えれる
 void ChangeEffectTexture(int use_array_num, int setTexid, int SerialNumber)
 {
 	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
-		exit(31);
+		exit(32);
 
 	for (int i = 0; i < SerialNumber; i++)
 	{
@@ -1026,7 +1056,7 @@ void ChangeEffectTexture(int use_array_num, int setTexid, int SerialNumber)
 void ChangeEffectColor(int use_array_num, float r, float g, float b, int SerialNumber)
 {
 	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
-		exit(32);
+		exit(33);
 
 	for (int i = 0; i < SerialNumber; i++)
 	{
@@ -1039,7 +1069,7 @@ void ChangeEffectColor(int use_array_num, float r, float g, float b, int SerialN
 void ChangeEffectClarity(int use_array_num, float clarity, int SerialNumber)
 {
 	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
-		exit(33);
+		exit(34);
 
 	for (int i = 0; i < SerialNumber; i++)
 	{
@@ -1056,7 +1086,7 @@ void EffectBreak(int use_array_num, int SerialNumber)
 	// 初期値やエラーである-1だった場合もしくはマックスエフェクトを超えた値だった場合なにもしない。エラー
 	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
 		return;
-		//exit(34);
+		//exit(35);
 
 
 	for (int i = 0; i < SerialNumber; i++)
@@ -1072,7 +1102,7 @@ void EffectBreak(int use_array_num, int SerialNumber)
 D3DXVECTOR2 GetEffectPos(int use_array_num)
 {
 	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
-		exit(35);
+		exit(36);
 
 	return g_Effect[use_array_num].pos;
 }
@@ -1081,7 +1111,25 @@ D3DXVECTOR2 GetEffectPos(int use_array_num)
 D3DXVECTOR2 GetEffectSize(int use_array_num)
 {
 	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
-		exit(36);
+		exit(37);
 
 	return g_Effect[use_array_num].size;
+}
+
+// 配列の何番目のエフェクトの今の透明度を返す
+float GetEffectClarity(int use_array_num)
+{
+	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
+		exit(38);
+
+	return g_Effect[use_array_num].Clarity;
+}
+
+// 配列の何番目のエフェクトの今のnow_countを返す
+int GetEffectnow_count(int use_array_num)
+{
+	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
+		exit(39);
+
+	return g_Effect[use_array_num].now_count;
 }

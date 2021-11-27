@@ -13,6 +13,7 @@ CAMERA g_Camera;
 void InitCamera(void)
 {
 	g_Camera.pos = D3DXVECTOR2(0.0f, 0.0f);
+	g_Camera.oldpos = g_Camera.pos;
 	g_Camera.move = D3DXVECTOR2(0.0f, 0.0f);
 	g_Camera.movespeed = D3DXVECTOR2(0.0f, 0.0f);
 	g_Camera.magnification = 1.0f;
@@ -32,7 +33,7 @@ void UninitCamera(void)
 
 void UpdateCamera(void)
 {
-
+	g_Camera.oldpos = g_Camera.pos;
 
 
 
@@ -194,7 +195,6 @@ void UpdateCamera(void)
 	// ステージを動かすイメージなのか、ゲームをプレイしている人がカメラを持っていてそのカメラを動かすイメージなのかどっち？
 	// それでカメラの移動方向のプラスマイナスが決まる
 
-
 }
 
 
@@ -203,4 +203,11 @@ CAMERA* GetCamera(void)
 	return &g_Camera;
 }
 
+// 前回から変更があるかどうか,あったらtrue
+bool CameraPosChanged()
+{
+	if (g_Camera.oldpos.x != g_Camera.pos.x || g_Camera.oldpos.y != g_Camera.pos.y)
+		return true;
 
+	return false;
+}

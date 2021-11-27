@@ -20,6 +20,7 @@
 #include "gamedata.h"
 #include "keyboard.h"
 #include "placement.h"
+#include "primitive.h"
 
 #define PLAYER_H (50)
 #define PLAYER_W (50)
@@ -138,6 +139,17 @@ void UninitPlayer(void)
 //=============================================================================
 void UpdatePlayer(void)
 {
+	//マウスの座標を取得
+	float mouse_pos_X = GetMousePosX();
+	float mouse_pos_Y = GetMousePosY();
+	bool mouse_Lclick = GetMouseLClick();
+	bool mouse_Rclick = GetMouseRClick();
+	bool mouseuse = true;
+
+	// 1フレーム前のポジションの保存。この後キー操作などで変更があった場合のみエフェクトを更新させる
+	//int OldStageSelectX = g_StageSelect.select_x;
+	//int OldStageSelectY = g_StageSelect.select_y;
+
 	BULLET* bullet = GetBullet();
 	CAMERA* p_Camera = GetCamera();
 	GAMEDATA* p_Gamedata = GetGamedata();
@@ -213,7 +225,6 @@ void UpdatePlayer(void)
 			g_AnimeWaitFrame++;
 		}
 		
-
 		//右
 		if (Keyboard_IsKeyDown(KK_D))
 		{
@@ -329,82 +340,15 @@ void UpdatePlayer(void)
 		// pos を drawpos に変換		DRAW_GAP は、上から見た時の描写でのマップの描写はレフトトップで、プレイヤーはど真ん中でやってるから、そのずれ。
 		g_Player[i].drawpos.x = GAME_ORIGIN_POINT_X + ((g_Player[i].pos.x + DRAW_GAP_X) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_X / 2) - ((g_Player[i].pos.y - DRAW_GAP_X) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
 		g_Player[i].drawpos.y = GAME_ORIGIN_POINT_Y + ((g_Player[i].pos.y - DRAW_GAP_Y) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_Y / 2) + ((g_Player[i].pos.x + DRAW_GAP_Y) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+
 		g_Player[i].drawsize.x = g_Player[i].w * p_Camera->magnification;
 		g_Player[i].drawsize.y = g_Player[i].h * p_Camera->magnification;
 
+		//float drawmosuepos_x = GAME_ORIGIN_POINT_X + ((mouse_pos_X + DRAW_GAP_X) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_X / 2) - ((mouse_pos_X - DRAW_GAP_X) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+		//float drawmosuepos_y = GAME_ORIGIN_POINT_Y + ((mouse_pos_Y - DRAW_GAP_Y) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_Y / 2) + ((mouse_pos_Y + DRAW_GAP_Y) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+
 
 		int dffs = 5;
-
-
-
-		//if (g_Player[i].have == false && g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[1] != -1) {
-
-		//	//歩きアニメーション
-		//	if (g_Player[i].animewaitframe2 > 10)
-		//	{
-		//		if (g_Player[i].animeptn2 > 2)
-		//			g_Player[i].animeptn2 = 0;
-
-		//		g_Player[i].animewaitframe2 = 0;
-		//	}
-		//	g_Player[i].animewaitframe2++;
-
-		//	if (g_Player[i].roundtrip_x == 0) {
-		//		if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[1] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2) < g_Player[i].pos.x) {
-		//			g_Player[i].pos.x -= 1.0f;
-		//			g_Player[i].direction = 1;
-
-		//			if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[1] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2) >= g_Player[i].pos.x) {
-		//				g_Player[i].roundtrip_x = 1;
-		//			}
-		//		}
-		//	}
-
-		//	if (g_Player[i].roundtrip_y == 0) {
-		//		if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[1] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2) < g_Player[i].pos.y) {
-		//			g_Player[i].pos.y -= 1.0f;
-		//			g_Player[i].direction = 1;
-
-		//			if (g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[1] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2) >= g_Player[i].pos.y) {
-		//				g_Player[i].roundtrip_y = 1;
-		//			}
-		//		}
-		//	}
-
-		//	if (g_Player[i].roundtrip_x == 1) {
-		//		if (g_Player[i].pos.x < g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[0] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2)) {
-		//			g_Player[i].pos.x += 1.0f;
-		//			g_Player[i].direction = 2;
-
-		//			if (g_Player[i].pos.x >= g_Player[i].Mapchip_Pos_Struct.mapchip_pos_x[0] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2)) {
-		//				g_Player[i].roundtrip_x = 0;
-		//			}
-		//		}
-		//	}
-
-		//	if (g_Player[i].roundtrip_y == 1) {
-		//		if (g_Player[i].pos.y < g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[0] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2)) {
-		//			g_Player[i].pos.y += 1.0f;
-		//			g_Player[i].direction = 2;
-
-		//			if (g_Player[i].pos.y >= g_Player[i].Mapchip_Pos_Struct.mapchip_pos_y[0] * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2)) {
-		//				g_Player[i].roundtrip_y = 0;
-		//			}
-		//		}
-		//	}
-		//}
-
-
-			////マップ1へ切り替える
-			//if (GetKeyboardTrigger(DIK_L))
-			//{
-			//	SetCurrentMap(1);
-			//}
-			////マップ0へ切り替える
-			//if (GetKeyboardTrigger(DIK_K))
-			//{
-			//	SetCurrentMap(0);
-			//}
 
 
 		// 弾発射
@@ -421,7 +365,6 @@ void UpdatePlayer(void)
 					if (g_Player[i].angle > 360.0f)
 						g_Player[i].angle = 0.0f;
 					g_Player[i].direction = 0;
-
 				}
 
 				if (Keyboard_IsKeyDown(KK_RIGHT))
@@ -431,7 +374,20 @@ void UpdatePlayer(void)
 					if (g_Player[i].angle <= 0.0f)
 						g_Player[i].angle = 360.0f;
 					g_Player[i].direction = 0;
-					
+				}
+
+				if (mouseuse)
+				{
+					// ①の点から②を見た時のラジアンを計算する
+					float mouse_rad = CalculateRadianFrom2Points(g_Player[i].drawpos.x, g_Player[i].drawpos.y, mouse_pos_X, mouse_pos_Y);
+					mouse_rad = InversionYRadian(mouse_rad);
+					float mouse_angle = RadianToDegree(mouse_rad);
+
+					g_Player[i].angle = mouse_angle + 45.0f;
+
+					if (g_Player[i].angle <= 0.0f)
+						g_Player[i].angle = 360.0f;
+					g_Player[i].direction = 0;
 				}
 
 				// クラブを持ち変える処理
@@ -448,6 +404,7 @@ void UpdatePlayer(void)
 						club_ChangeCool = CLUB_CHANGECOOL;
 					}
 				}
+
 				// クラブ持ち替えの限界処理
 				if (club_pattern < 0)
 					club_pattern = 1;
@@ -455,7 +412,7 @@ void UpdatePlayer(void)
 					club_pattern = 0;
 
 				//ENTERで弾だす
-				if (Keyboard_IsKeyDown(KK_ENTER))
+				if (Keyboard_IsKeyDown(KK_ENTER) || mouse_Lclick)
 				{
 					// パスした回数を増やす
 					p_Gamedata->pass_count++;
@@ -471,39 +428,6 @@ void UpdatePlayer(void)
 					SetBullet(pos, g_Player[i].angle, g_Player[i].ShotPower, club_pattern);
 				}
 			}
-
-			//if (g_Player[i].ConfirmAngle == true)
-			//{
-			//	// クールタイムの減少
-			//	if (g_Player[i].ConfirmCooltime >= 0)
-			//		g_Player[i].ConfirmCooltime--;
-
-			//	g_Player[i].direction = 0;
-			//	// ShotPowerの変動の設定
-			//	g_Player[i].ShotPower++;
-			//	if (g_Player[i].ShotPower > 100)
-			//		g_Player[i].ShotPower = 0;
-
-			//	// 表示だけ↓scoreと同じもの
-			//	SetShotPower(g_Player[i].ShotPower);
-
-			//	if (Keyboard_IsKeyDown(KK_ENTER) && g_Player[i].ConfirmCooltime < 0)
-			//	{
-			//		// パスした回数を増やす
-			//		p_Gamedata->pass_count++;
-			//		
-			//		g_Player[i].catchwait = 60;
-			//		g_Player[i].have = false;
-
-			//		PlaySound(g_ShotSENo, 0);
-
-			//		SetVolume(g_ShotSENo, 0.1f);
-
-			//		D3DXVECTOR2 pos = g_Player[i].pos;
-			//		SetBullet(pos, g_Player[i].angle, g_Player[i].ShotPower);
-			//	}
-
-			//}
 		}
 
 		// クールタイムを減らす処理
@@ -535,46 +459,7 @@ void DrawPlayer(void)
 {
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
-		//if (g_Player[i].use == true)
-		//{
-		//	float directionUV = 0.0f + 0.25f * g_Player[i].direction;
-
-		//	float rot = AngleToRot(g_Player[i].angle);
-
-
-		//	// 矢印の描写
-		//	if (g_Player[i].have == true)
-		//	{
-		//		// ShotPowerによる倍率
-		//		float ShotBairitu = 0.5f + (g_Player[i].ShotPower / 100.0f);
-
-		//		DrawSpriteColorRotate(tex_yazirushi, g_Player[i].drawpos.x, g_Player[i].drawpos.y, 500.0f * ShotBairitu, 500.0f * ShotBairitu,
-		//			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), -rot);
-		//	}
-
-		//	//DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].drawpos.x, g_Player[i].drawpos.y, g_Player[i].w, g_Player[i].h,
-		//	//	g_Player[i].animeptn2 * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-
-		//	DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].drawpos.x, g_Player[i].drawpos.y, g_Player[i].w, g_Player[i].h,
-		//		g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-
-		//	// 上から見た時の表示
-		//	// 矢印の描写
-		//	if (g_Player[i].have == true)
-		//	{
-		//		// ShotPowerによる倍率
-		//		float ShotBairitu = 0.5f + (g_Player[i].ShotPower / 100.0f);
-
-		//		DrawSpriteColorRotate(tex_yazirushi, g_Player[i].pos.x, g_Player[i].pos.y, 500.0f * ShotBairitu, 500.0f * ShotBairitu,
-		//			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), -rot);
-		//	}
-
-		//	//DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
-		//	//	g_Player[i].animeptn2 * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-
-		//	DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
-		//		g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-		//}
+		
 	}
 }
 

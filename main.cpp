@@ -48,6 +48,7 @@ long g_MouseX = 0;
 long g_MouseY = 0;
 bool g_MouseLClick = false;
 bool g_MouseRClick = false;
+bool g_MouseScroll = false;
 
 #ifdef _DEBUG
 int		g_CountFPS;							// FPSカウンタ
@@ -161,7 +162,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 				Draw();				// 描画処理
 
 #ifdef _DEBUG	// デバッグ版の時だけ表示する
-				wsprintf(&g_DebugStr[strlen(g_DebugStr)], " MX:%d MY:%d LClick:%d RClick:%d", GetMousePosX(), GetMousePosY(), GetMouseLClickNum(), GetMouseRClickNum());
+				wsprintf(&g_DebugStr[strlen(g_DebugStr)], " MX:%d MY:%d LClick:%d RClick:%d Scroll:%d", GetMousePosX(), GetMousePosY(), GetMouseLClickNum(), GetMouseRClickNum(), GetMouseScrollNum());
 				SetWindowText(hWnd, g_DebugStr);
 #endif
 
@@ -227,6 +228,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	case WM_RBUTTONUP:
 		g_MouseRClick = false;
+		break;
+
+	case WM_MOUSEWHEEL:
+		g_MouseScroll = true;
 		break;
 
 	default:
@@ -370,6 +375,18 @@ int GetMouseRClickNum(void)
 	return 0;
 }
 
+bool GetMouseScroll(void)
+{
+	return g_MouseScroll;
+}
+
+int GetMouseScrollNum(void)
+{
+	if (g_MouseScroll)
+		return 2;
+
+	return 0;
+}
 
 #ifdef _DEBUG
 char* GetDebugStr(void)

@@ -81,18 +81,50 @@ void UpdatePrediction(void)
 			// 値の更新		iの分だけ離れて表示される
 			if (ClubPattern == 0)		// 地面を転がる場合の予測
 			{
-				g_Prediction[i].pos += g_Prediction[i].vector * (i + 1) * 30;
+				g_Prediction[i].pos += g_Prediction[i].vector * (i + 1) * 40;
 				g_Prediction[i].size *= 1.0f - i * 0.1f;
 
 				g_Prediction[i].tex = predictionbullet_ao;			// テクスチャの設定、転がる場合全部青
 			}
 			if (ClubPattern == 1)		// とぶ場合の予測
 			{
-				g_Prediction[i].pos += g_Prediction[i].vector * (i + 1) * 30;
-				g_Prediction[i].size *= 1.0f - i * 0.1f;
+				//g_Prediction[i].pos += g_Prediction[i].vector * (i + 1) * 40;
+				//g_Prediction[i].size *= 1.0f - i * 0.1f;
 				
-				if(i == 2 || i == 4)
+				switch (i)
+				{
+				case 0:
+					g_Prediction[i].pos += g_Prediction[i].vector * 61;
+					g_Prediction[i].size *= 1.0f - i * 0.1f;
+					break;
+				case 1:		// わんばん
+					g_Prediction[i].pos += g_Prediction[i].vector * 122;
+					g_Prediction[i].size *= 1.0f - i * 0.1f;
+					break;
+				case 2:
+					g_Prediction[i].pos += g_Prediction[i].vector * 161;
+					g_Prediction[i].size *= 1.0f - i * 0.1f;
+					break;
+				case 3:		// つーばん
+					g_Prediction[i].pos += g_Prediction[i].vector * 200;
+					g_Prediction[i].size *= 1.0f - i * 0.1f;
+					break;
+				case 4:
+					g_Prediction[i].pos += g_Prediction[i].vector * 220;
+					g_Prediction[i].size *= 1.0f - i * 0.1f;
+					break;
+				case 5:		// すりーばん
+					g_Prediction[i].pos += g_Prediction[i].vector * 240;
+					g_Prediction[i].size *= 1.0f - i * 0.1f;
+					break;
+				default:
+					break;
+				}
+				// バウンドするところだけテクスチャを変える
+				if (i == 1 || i == 3 || i == 5)
+				{
 					g_Prediction[i].tex = predictionbullet_aka;		// テクスチャの設定、飛ぶやつの場合着地する場所は赤くする
+				}
 				else
 					g_Prediction[i].tex = predictionbullet_ao;
 			}

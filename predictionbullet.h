@@ -3,7 +3,7 @@
 #include "main.h"
 #include "renderer.h"
 
-#define PREDICTION_MAX		(5)		// 予測弾のMax数
+#define PREDICTION_MAX		(6)		// 予測弾のMax数
 
 #define PREDICTION_SIZE		(20)	// 予測弾のベースのサイズ
 

@@ -97,7 +97,7 @@ void UpdatePrediction(void)
 					g_Prediction[i].pos += g_Prediction[i].vector * 61;
 					g_Prediction[i].size *= 1.0f - i * 0.1f;
 					break;
-				case 1:		// ‚í‚ñ‚Î‚ñ
+				case 1:		// ‚í‚ñ‚Î‚ña
 					g_Prediction[i].pos += g_Prediction[i].vector * 122;
 					g_Prediction[i].size *= 1.0f - i * 0.1f;
 					break;

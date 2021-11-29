@@ -98,6 +98,7 @@ static int pause_stageselect_67;// 67
 static int GimmickDescriptionChip_68;// 68
 static int pickup_GimmickDescription_69;// 69
 
+static int batu_70;	// 70
 
 void InitEffect(void)
 {
@@ -182,6 +183,8 @@ void InitEffect(void)
 	GimmickDescriptionChip_68 = LoadTexture("data/TEXTURE/game/GimmickDescription/GimmickDescriptionChip.png");
 	pickup_GimmickDescription_69 = LoadTexture("data/TEXTURE/game/GimmickDescription/pickup_GimmickDescription.png");
 	
+	batu_70 = LoadTexture("data/TEXTURE/pause/batu.png");
+
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -949,6 +952,9 @@ int GetTextureData(int id)
 		break;
 	case 69:
 		return pickup_GimmickDescription_69;
+		break;
+	case 70:
+		return batu_70;
 		break;
 		
 		

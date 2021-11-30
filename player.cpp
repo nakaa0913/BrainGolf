@@ -21,6 +21,7 @@
 #include "keyboard.h"
 #include "placement.h"
 #include "primitive.h"
+#include "effect.h"
 
 #define PLAYER_H (50)
 #define PLAYER_W (50)
@@ -49,6 +50,8 @@ static int g_AnimeWaitFrame = 0;
 
 int	club_pattern;			// 使うクラブ(打ち方)0が転がる、1がとぶ
 int club_ChangeCool;		// クラブを持ち替えた時のクールタイム
+
+bool mouseuse = false;
 
 //=============================================================================
 // 初期化処理
@@ -144,7 +147,6 @@ void UpdatePlayer(void)
 	float mouse_pos_Y = GetMousePosY();
 	bool mouse_Lclick = GetMouseLClick();
 	bool mouse_Rclick = GetMouseRClick();
-	bool mouseuse = true;
 
 	// 1フレーム前のポジションの保存。この後キー操作などで変更があった場合のみエフェクトを更新させる
 	//int OldStageSelectX = g_StageSelect.select_x;
@@ -365,6 +367,7 @@ void UpdatePlayer(void)
 					if (g_Player[i].angle > 360.0f)
 						g_Player[i].angle = 0.0f;
 					g_Player[i].direction = 0;
+					mouseuse = false;
 				}
 
 				if (Keyboard_IsKeyDown(KK_RIGHT))
@@ -374,6 +377,12 @@ void UpdatePlayer(void)
 					if (g_Player[i].angle <= 0.0f)
 						g_Player[i].angle = 360.0f;
 					g_Player[i].direction = 0;
+					mouseuse = false;
+				}
+
+				if (mouse_Rclick)
+				{
+					mouseuse = true;
 				}
 
 				if (mouseuse)
@@ -411,8 +420,24 @@ void UpdatePlayer(void)
 				if (club_pattern > 1)
 					club_pattern = 0;
 
+				//クラブの種類の表示
+				if (club_pattern == 0)
+				{
+					SetEffect(71, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 0,
+						D3DXVECTOR2(200.0f, 150.0f), D3DXVECTOR2(200.0f, 150.0f), 0,
+						0.0f, 1.0f, 0, 1, 0, 0,
+						0.0f, 0.0f, 0);
+				}
+				if (club_pattern == 1)
+				{
+					SetEffect(72, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 0,
+						D3DXVECTOR2(200.0f, 150.0f), D3DXVECTOR2(200.0f, 150.0f), 0,
+						0.0f, 1.0f, 0, 1, 0, 0,
+						0.0f, 0.0f, 0);
+				}
+
 				//ENTERで弾だす
-				if (Keyboard_IsKeyDown(KK_ENTER) || mouse_Lclick)
+				if (Keyboard_IsKeyDown(KK_ENTER) || mouse_Lclick && mouseuse)
 				{
 					// パスした回数を増やす
 					p_Gamedata->pass_count++;

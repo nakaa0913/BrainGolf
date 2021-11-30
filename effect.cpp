@@ -100,6 +100,10 @@ static int pickup_GimmickDescription_69;// 69
 
 static int batu_70;	// 70
 
+//クラブの種類
+static int rollball_71;
+static int flyball_72;
+
 void InitEffect(void)
 {
 	//テクスチャの名前
@@ -184,6 +188,9 @@ void InitEffect(void)
 	pickup_GimmickDescription_69 = LoadTexture("data/TEXTURE/game/GimmickDescription/pickup_GimmickDescription.png");
 	
 	batu_70 = LoadTexture("data/TEXTURE/pause/batu.png");
+
+	rollball_71 = LoadTexture("data/TEXTURE/select/2.png");
+	flyball_72= LoadTexture("data/TEXTURE/select/1.png");
 
 
 	for (int i = 0; i < MAX_EFFECT; i++)
@@ -956,8 +963,12 @@ int GetTextureData(int id)
 	case 70:
 		return batu_70;
 		break;
-		
-		
+	case 71:
+		return rollball_71;
+		break;
+	case 72:
+		return flyball_72;
+		break;
 	}
 
 	// どこにもたどり着かなかった場合

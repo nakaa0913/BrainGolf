@@ -31,7 +31,7 @@ struct MAP_DATA_T
 
 };
 
-MAP_DATA_T g_MapInfo[16] =
+MAP_DATA_T g_MapInfo[17] =
 {
 	{ {0.25f , 0.0f}, 0},//なにもなし		0
 	{ {0.125f, 0.125f}, 1},//block			1
@@ -49,6 +49,7 @@ MAP_DATA_T g_MapInfo[16] =
 	{ {0.75f , 0.0f}, 1},//bunker			13
 	{ {0.75f , 0.125f}, 1},//switch			14
 	{ {0.5f  , 0.125f}, 1},//hansya			15
+	{ {0.75f  , 0.125f}, 1}//針（スイッチ)  16 すみません画像じきに作ります
 };
 
 
@@ -501,7 +502,7 @@ void DrawBG(void)
 			}
 
 
-
+		
 
 		}
 	}
@@ -535,6 +536,8 @@ int CheckBlockdata(int BlockX, int BlockY)
 
 	int BlockData = 0;
 	BlockData = p_Stagedata->maparray[BlockY][BlockX];
+
+
 
 	return BlockData;
 }

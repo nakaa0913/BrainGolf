@@ -39,7 +39,7 @@
 static BULLET g_Bullet[BULLET_MAX];					// バレット構造体
 static SHADOWBULLET g_ShadowBullet[BULLET_MAX];		// バレットの影構造体
 
-
+int needletime = 0;									//針の当たり判定の時間
 
 //double angle = 00.0;								//向かせたい角度
 //
@@ -53,6 +53,7 @@ HRESULT InitBullet(void)
 {
 	int texNo = LoadTexture("data/TEXTURE/bullet/ao.png");
 	int tex_bullet_shadow = LoadTexture("data/TEXTURE/bullet/bullet_shadow.png");
+
 	// バレット構造体の初期化 でも実際はSetBulletで呼ぶときにそっちで値が代入される
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
@@ -118,6 +119,44 @@ void UpdateBullet(void)
 
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
+
+		////////針の処理////////
+	
+		//960以上になったらneedletimeを0にしてループさせる
+		
+
+		for (int y = 0; y < MAP_Y; y++)
+		{
+			for (int x = 0; x < MAP_X; x++)
+			{
+				// そのブロックが当たり判定があるブロックかどうか調べるa
+				int BlockData = CheckBlockdata(x, y);
+
+				if (p_Stagedata->maparray[y][x] == 1)
+				{
+					//480以下の時に当たるとボールを止める
+					if (needletime <= 480)
+					{
+						p_Stagedata->maparray[y][x] = 2;
+					}
+				
+				}
+				if (p_Stagedata->maparray[y][x] == 2)
+				{
+					//480以下の時に当たるとボールを止める
+					if (needletime > 480)
+					{
+						p_Stagedata->maparray[y][x] = 1;
+					}
+
+				}
+			}
+
+		}
+		if (needletime >= 960)
+		{
+			needletime = 0;
+		}
 		if (g_Bullet[i].use == true)	// このバレットが使われている？
 		{
 			// 前回の座標の保存
@@ -207,6 +246,7 @@ void UpdateBullet(void)
 					{
 						// そのブロックが当たり判定があるブロックかどうか調べるa
 						int BlockData = CheckBlockdata(x, y);
+
 						// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 						if (BlockData == 1)
 						{
@@ -599,7 +639,7 @@ void UpdateBullet(void)
 
 			//ボールが地面にいるときだけ当たり判定（2回のバウンドと3回目のバウンドからは常に当たり判定がある）
 			bool ground = false;	// ボールが地面についているかどうか
-			if (g_Bullet[i].club_pattern == 0 || 
+			if (g_Bullet[i].club_pattern == 0 ||
 				g_Bullet[i].shottime == 28 || g_Bullet[i].shottime == 57 || g_Bullet[i].shottime >= 81)
 				ground = true;
 
@@ -834,12 +874,12 @@ void UpdateBullet(void)
 									g_Bullet[i].warpcool = 60;
 
 								}
-
+							
 							}
 						}
 					}
 				}
-			}
+			}//地面にある時だけの処理の終わり
 
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 12)
 			{
@@ -865,6 +905,26 @@ void UpdateBullet(void)
 				}
 			}
 
+
+
+
+			//bool changeblock;
+
+
+		//////////針の処理////////
+		//	//480以下の時に当たるとボールを止める
+		//	if (needletime <= 480)
+		//	{
+		//		if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 16)
+		//		{
+		//			g_Bullet[i].shotpower = 0.0f;
+		//		}
+		//	}
+		//	//960以上になったらneedletimeを0にしてループさせる
+		//	if (needletime >= 960)
+		//	{
+		//		needletime = 0;
+		//	}
 
 
 			//反射板
@@ -944,6 +1004,7 @@ void UpdateBullet(void)
 
 		}
 
+
 		// クールタイムを減らす処理一覧
 		// 球がブロックに当たった時の判定のクールタイムを減らしていく
 		if (g_Bullet[i].CollicionCool > 0)
@@ -958,11 +1019,14 @@ void UpdateBullet(void)
 		// 弾が発射されてからのカウントを増やす
 		g_Bullet[i].shottime++;
 
-
+		// 針の時間を増やす（ずっとループする）
+		needletime++;
 		// パワー100で打ち出した場合(ShotPowor1.5f)球が止まるまで
 		// g_Bullet[i].shottimeは　143カウント
 
 	}
+
+
 }
 
 //=============================================================================

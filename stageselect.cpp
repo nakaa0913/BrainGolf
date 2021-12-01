@@ -191,8 +191,6 @@ void UpdateStageSelect(void)
 			0.0f, 0.0f, 0);
 
 
-
-
 		// 移動キーが押された時の処理
 		if (g_StageSelect.selectcooltime <= 0)
 		{
@@ -283,170 +281,46 @@ void UpdateStageSelect(void)
 				}
 			}
 
-			//if (g_StageSelect.select_x != -2 && g_StageSelect.select_y != 3)
-			//{
-			//	// 右
-			//	if (Keyboard_IsKeyDown(KK_RIGHT))
-			//	{
-			//		g_StageSelect.select_x++;
-			//	}
-			//	// 左
-			//	if (Keyboard_IsKeyDown(KK_LEFT))
-			//	{
-			//		g_StageSelect.select_x--;
-			//	}
-
-			//}
-			////ワールド選択に戻る処理
-			//if (g_StageSelect.select_x == 0 && g_StageSelect.select_y == 1)
-			//{
-			//	if (Keyboard_IsKeyDown(KK_DOWN))
-			//	{
-			//		g_StageSelect.select_y = 3;
-			//		g_StageSelect.select_x = -2;
-
-			//	}
-			//}
-			//else
-			//{
-			//	// 下
-			//	if (Keyboard_IsKeyDown(KK_DOWN))
-			//	{
-			//		g_StageSelect.select_y++;
-			//	}
-			//}
-
-			////ワールド選択に戻るを選択している状態
-			//if (g_StageSelect.select_x == -2 && g_StageSelect.select_y == 3)
-			//{
-			//	if (Keyboard_IsKeyDown(KK_UP))
-			//	{
-			//		g_StageSelect.select_y = 1;
-			//		g_StageSelect.select_x = 0;
-			//	}
-
-			//	if (Keyboard_IsKeyDown(KK_ENTER))
-			//	{
-			//		SceneTransition(SCENE_WORLD_SELECT);
-			//	}
-			//}
-			//else
-			//{
-			//	// 上
-			//	if (Keyboard_IsKeyDown(KK_UP))
-			//	{
-			//		g_StageSelect.select_y--;
-			//	}
-			//}
-
-			// マウスでの操作
-			// ステージ選択の時の原点となる場所
-			float	effectpos_x = 240.0f;			    // xの原点(0,0を選択しているとき)
-			float	effectpos_y = 200.0f;			    // yの原点(0,0を選択しているとき)
-
-			// ステージ選択の時1個離れたらこれだけ離れるよってやつ
-			float while_x = 240.0f;
-			float while_y = 240.0f;
-
-			//ステージ選択
-			for (int x = 0; x < SELECT_MAX_X; x++)
+			if (g_StageSelect.selecttime >= 1)
 			{
-				for (int y = 0; y < SELECT_MAX_Y; y++)
+				// マウスでの操作
+				// ステージ選択の時の原点となる場所
+				float	effectpos_x = 240.0f;			    // xの原点(0,0を選択しているとき)
+				float	effectpos_y = 200.0f;			    // yの原点(0,0を選択しているとき)
+
+				// ステージ選択の時1個離れたらこれだけ離れるよってやつ
+				float while_x = 240.0f;
+				float while_y = 240.0f;
+
+				//ステージ選択
+				for (int x = 0; x < SELECT_MAX_X; x++)
 				{
-					// 現在の座標を求める
-					float effectnow_x = effectpos_x + while_x * x;
-					float effectnow_y = effectpos_y + while_y * y;
-
-					if (mouse_pos_X > effectnow_x - 50.0f && mouse_pos_X < effectnow_x + 50.0f && mouse_pos_Y > effectnow_y - 50.0f && mouse_pos_Y < effectnow_y + 50.0f)
+					for (int y = 0; y < SELECT_MAX_Y; y++)
 					{
-						g_StageSelect.select_x = x;
-						g_StageSelect.select_y = y;
-						mouseuse = true;
-					}
+						// 現在の座標を求める
+						float effectnow_x = effectpos_x + while_x * x;
+						float effectnow_y = effectpos_y + while_y * y;
 
+						if (mouse_pos_X > effectnow_x - 50.0f && mouse_pos_X < effectnow_x + 50.0f && mouse_pos_Y > effectnow_y - 50.0f && mouse_pos_Y < effectnow_y + 50.0f)
+						{
+							g_StageSelect.select_x = x;
+							g_StageSelect.select_y = y;
+							mouseuse = true;
+						}
+
+					}
+				}
+
+
+				//ワールド選択へ戻る 240 700
+				if (mouse_pos_X > 150.0f && mouse_pos_X < 430.0f && mouse_pos_Y > 610.0f && mouse_pos_Y < 890.0f)
+				{
+					g_StageSelect.select_x = 0;
+					g_StageSelect.select_y = 3;
+					mouseuse = true;
 				}
 			}
 
-
-			//ワールド選択へ戻る 240 700
-			if (mouse_pos_X > 150.0f && mouse_pos_X < 430.0f && mouse_pos_Y > 610.0f && mouse_pos_Y < 890.0f)
-			{
-				g_StageSelect.select_x = 0;
-				g_StageSelect.select_y = 3;
-				mouseuse = true;
-			}
-
-			/*//2 480 200
-			else if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
-			{
-				g_StageSelect.select_x = 1;
-				g_StageSelect.select_y = 0;
-				mouseuse = true;
-			}
-
-			//3 720 200
-			else if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
-			{
-				g_StageSelect.select_x = 2;
-				g_StageSelect.select_y = 0;
-				mouseuse = true;
-			}
-
-			//4 960 200
-			else if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
-			{
-				g_StageSelect.select_x = 3;
-				g_StageSelect.select_y = 0;
-				mouseuse = true;
-			}
-
-			//5 1200 200
-			else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 125.0f && mouse_pos_Y < 275.0f)
-			{
-				g_StageSelect.select_x = 4;
-				g_StageSelect.select_y = 0;
-				mouseuse = true;
-			}
-
-			//6 240 440
-			if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f)
-			{
-				g_StageSelect.select_x = 0;
-				g_StageSelect.select_y = 1;
-				mouseuse = true;
-			}
-
-			//7 480 440
-			else if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f)
-			{
-				g_StageSelect.select_x = 1;
-				g_StageSelect.select_y = 1;
-				mouseuse = true;
-			}
-
-			//8 720 440
-			else if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f)
-			{
-				g_StageSelect.select_x = 2;
-				g_StageSelect.select_y = 1;
-				mouseuse = true;
-			}
-
-			//9 960 440
-			else if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f)
-			{
-				g_StageSelect.select_x = 3;
-				g_StageSelect.select_y = 1;
-				mouseuse = true;
-			}
-
-			//10 1200 440
-			else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 365.0f && mouse_pos_Y < 515.0f)
-			{
-				g_StageSelect.select_x = 4;
-				g_StageSelect.select_y = 1;
-				mouseuse = true;
-			}*/
 
 			// 限界値による修正の処理
 

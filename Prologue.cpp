@@ -1,9 +1,10 @@
 //=============================================================================
 //
-// タイトル画面処理 [title.cpp]
+// タイトル画面処理 [Prologue.cpp]
 // Author : 
 //
 //=============================================================================
+#include "Prologue.h"
 #include "game.h"
 #include "main.h"
 #include "input.h"
@@ -19,7 +20,6 @@
 #include "result.h"
 #include"stageselect.h"
 #include "Texture.h"
-#include "logo.h"
 #include "sprite.h"
 #include "effect.h"
 #include "keyboard.h"
@@ -44,7 +44,7 @@ static int	g_BGMNo = 0;		// BGM識別子
 //=============================================================================
 // 初期化処理
 //=============================================================================
-void InitLogo(void)
+void InitPrologue(void)
 {
 	//テクスチャ生成
 	g_TextureNo = LoadTexture("data/TEXTURE/logo/HEW2.png");
@@ -54,43 +54,40 @@ void InitLogo(void)
 	//255(-1)をループ指定すると無限ループ
 	PlaySound(g_BGMNo, -1);
 
-	return ;
+	return;
 }
 
 //=============================================================================
 // 終了処理
 //=============================================================================
-void UninitLogo(void)
+void UninitPrologue(void)
 {
 	StopSoundAll();
 	UnloadTexture("data/TEXTURE/logo/HEW2.png");
-
 }
 
 //=============================================================================
 // 更新処理
 //=============================================================================
-void UpdateLogo(void)
+void UpdatePrologue(void)
 {
 	bool mouse_Lclick = GetMouseLClick();
 
 	if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
 	{
-		SceneTransition(SCENE_Prologue);
+		SceneTransition(SCENE_TITLE);
 	}
 	if (mouse_Lclick && GetFadeState() == FADE_NONE)
 	{
-		SceneTransition(SCENE_Prologue);
+		SceneTransition(SCENE_TITLE);
 	}
 }
 
 //=============================================================================
 // 描画処理
 //=============================================================================
-void DrawLogo(void)
+void DrawPrologue(void)
 {
 	// １枚のポリゴンの頂点とテクスチャ座標を設定
 	DrawSpriteLeftTop(g_TextureNo, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
-
 }
-

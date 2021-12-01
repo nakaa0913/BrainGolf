@@ -5,6 +5,7 @@ enum SCENE
 {
 	SCENE_NONE,			//シーン処理なし
 	SCENE_LOGO,		    //チームロゴ
+	SCENE_Prologue,		//あらすじ
 	SCENE_TITLE,		//タイトル
 	SCENE_PLACEMENT,	//配置
 	SCENE_GAME,			//ゲーム

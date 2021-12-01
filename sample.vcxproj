@@ -139,6 +139,7 @@
     <ClCompile Include="gimmick_description.cpp" />
     <ClCompile Include="pause.cpp" />
     <ClCompile Include="placement.cpp" />
+    <ClCompile Include="Prologue.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="keyboard.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="pause.h" />
     <ClInclude Include="placement.h" />
     <ClInclude Include="predictionbullet.h" />
+    <ClInclude Include="Prologue.h" />
     <ClInclude Include="savedata.h" />
     <ClInclude Include="stagedata.h" />
     <ClInclude Include="effect.h" />

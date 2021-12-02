@@ -46,7 +46,9 @@ struct BULLET
 	int						collisiontime;			// 弾が当たっている時間
 
 	int						club_pattern;			// 球の飛び方
-
+	bool                    onswitch;				// スイッチを押したかどうか
+	int                     switchcool;				// スイッチのクールタイム
+	int						switchcool2;			// スイッチのクールタイム
 };
 
 struct SHADOWBULLET

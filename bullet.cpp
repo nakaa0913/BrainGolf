@@ -83,6 +83,9 @@ HRESULT InitBullet(void)
 		g_Bullet[i].shottime = 0;
 		g_Bullet[i].collisiontime = 0;
 
+		g_Bullet[i].onswitch = false;
+		g_Bullet[i].switchcool = 0;
+		g_Bullet[i].switchcool2 = 0;
 
 		// バレットの影構造体の初期化
 		g_ShadowBullet[i].w = g_Bullet[i].w;
@@ -119,12 +122,7 @@ void UpdateBullet(void)
 
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
-
-		////////針の処理////////
-	
-		//960以上になったらneedletimeを0にしてループさせる
-		
-
+		//画像入れ替え処理
 		for (int y = 0; y < MAP_Y; y++)
 		{
 			for (int x = 0; x < MAP_X; x++)
@@ -132,31 +130,58 @@ void UpdateBullet(void)
 				// そのブロックが当たり判定があるブロックかどうか調べるa
 				int BlockData = CheckBlockdata(x, y);
 
-				if (p_Stagedata->maparray[y][x] == 1)
+				if (g_Bullet[i].switchcool2 <= 0)
 				{
-					//480以下の時に当たるとボールを止める
-					if (needletime <= 480)
+					if (p_Stagedata->maparray[y][x] == 14)
 					{
-						p_Stagedata->maparray[y][x] = 2;
-					}
-				
-				}
-				if (p_Stagedata->maparray[y][x] == 2)
-				{
-					//480以下の時に当たるとボールを止める
-					if (needletime > 480)
-					{
-						p_Stagedata->maparray[y][x] = 1;
+						if (g_Bullet[i].onswitch == true)
+						{
+							p_Stagedata->maparray[y][x] = 18;
+						//	g_Bullet[i].switchcool2 = 30;
+						}
+						
 					}
 
+
+					if (p_Stagedata->maparray[y][x] == 18)
+					{
+						if (g_Bullet[i].onswitch == false)
+						{
+							p_Stagedata->maparray[y][x] = 14;
+						//	g_Bullet[i].switchcool2 = 30;
+						}
+
+					}
 				}
+
+				////////針の画像入れ替え処理////////
+				if (p_Stagedata->maparray[y][x] == 16)
+				{
+					//240以下の時に当たるとボールを止める
+					if (needletime <= 240)
+					{
+						p_Stagedata->maparray[y][x] = 17;
+					}		
+				}
+				if (p_Stagedata->maparray[y][x] == 17)
+				{
+					//241以上の時に当たるとボールを止める
+					if (needletime > 240)
+					{
+						p_Stagedata->maparray[y][x] = 16;
+					}
+				}
+
+
 			}
-
 		}
-		if (needletime >= 960)
+
+		//480以上になったらneedletimeを0にしてループさせる
+		if (needletime >= 480)
 		{
 			needletime = 0;
 		}
+
 		if (g_Bullet[i].use == true)	// このバレットが使われている？
 		{
 			// 前回の座標の保存
@@ -246,7 +271,7 @@ void UpdateBullet(void)
 					{
 						// そのブロックが当たり判定があるブロックかどうか調べるa
 						int BlockData = CheckBlockdata(x, y);
-
+						
 						// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 						if (BlockData == 1)
 						{
@@ -879,6 +904,29 @@ void UpdateBullet(void)
 						}
 					}
 				}
+				
+				if (g_Bullet[i].switchcool <= 0)
+				{
+					//スイッチ押すだけの処理
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 14)
+					{
+						g_Bullet[i].onswitch = !g_Bullet[i].onswitch;
+
+						g_Bullet[i].switchcool = 120;
+					}
+
+					//スイッチ押すだけの処理
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 18)
+					{
+						g_Bullet[i].onswitch = !g_Bullet[i].onswitch;
+
+						g_Bullet[i].switchcool = 120;
+					}
+
+				}
+				
+				
+				
 			}//地面にある時だけの処理の終わり
 
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 12)
@@ -911,20 +959,12 @@ void UpdateBullet(void)
 			//bool changeblock;
 
 
-		//////////針の処理////////
-		//	//480以下の時に当たるとボールを止める
-		//	if (needletime <= 480)
-		//	{
-		//		if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 16)
-		//		{
-		//			g_Bullet[i].shotpower = 0.0f;
-		//		}
-		//	}
-		//	//960以上になったらneedletimeを0にしてループさせる
-		//	if (needletime >= 960)
-		//	{
-		//		needletime = 0;
-		//	}
+		    //////////針の処理////////
+				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 16)
+				{
+					g_Bullet[i].shotpower = 0.0f;
+				}
+
 
 
 			//反射板
@@ -1021,6 +1061,16 @@ void UpdateBullet(void)
 
 		// 針の時間を増やす（ずっとループする）
 		needletime++;
+
+		// スイッチのクールタイムを減らしていく
+		if (g_Bullet[i].switchcool > 0)
+		{
+			g_Bullet[i].switchcool--;
+		}
+		if (g_Bullet[i].switchcool2 > 0)
+		{
+			g_Bullet[i].switchcool2--;
+		}
 		// パワー100で打ち出した場合(ShotPowor1.5f)球が止まるまで
 		// g_Bullet[i].shottimeは　143カウント
 

@@ -130,28 +130,27 @@ void UpdateBullet(void)
 				// そのブロックが当たり判定があるブロックかどうか調べるa
 				int BlockData = CheckBlockdata(x, y);
 
-				if (g_Bullet[i].switchcool2 <= 0)
+				/*if (g_Bullet[i].switchcool2 <= 0)
 				{
-					if (p_Stagedata->maparray[y][x] == 14)
+					if (p_Stagedata->maparray[y][x] == 14 && GetMapEnter(D3DXVECTOR2(g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y)) == 14)
 					{
 						if (g_Bullet[i].onswitch == true)
 						{
 							p_Stagedata->maparray[y][x] = 18;
-							//g_Bullet[i].switchcool2 = 300;
+							g_Bullet[i].switchcool2 = 60.0f;
 						}
 					}
 
 
-					if (p_Stagedata->maparray[y][x] == 18)
+					if (p_Stagedata->maparray[y][x] == 18 && GetMapEnter(D3DXVECTOR2(g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y)) == 18)
 					{
 						if (g_Bullet[i].onswitch == false)
 						{
 							p_Stagedata->maparray[y][x] = 14;
-							g_Bullet[i].switchcool2 = 10;
+							g_Bullet[i].switchcool2 = 60.0f;
 						}
-			
 					}
-				}
+				}*/
 
 				////////針の画像入れ替え処理////////
 				if (p_Stagedata->maparray[y][x] == 16)
@@ -874,8 +873,6 @@ void UpdateBullet(void)
 				}
 
 
-
-
 				//ワープ
 				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 11)
 				{
@@ -901,24 +898,39 @@ void UpdateBullet(void)
 					}
 				}
 				
-				if (g_Bullet[i].switchcool <= 0)
+				//スイッチ
+				for (int y = 0; y < MAP_Y; y++)
 				{
-					//スイッチ押すだけの処理
-					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 14)
+					for (int x = 0; x < MAP_X; x++)
 					{
-						g_Bullet[i].onswitch = !g_Bullet[i].onswitch;
+						if (p_Stagedata->maparray[y][x] == 14)
+						{
+							//スイッチ押すだけの処理
+							if (p_Stagedata->maparray[y][x] == 14 && GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 14)
+							{
+								if (g_Bullet[i].switchcool <= 0)
+								{
+									//g_Bullet[i].onswitch = !g_Bullet[i].onswitch;
+									p_Stagedata->maparray[y][x] = 18;
+									g_Bullet[i].switchcool = 120.0f;
+								}
+							}
+						}
 
-						g_Bullet[i].switchcool = 120;
+						if (p_Stagedata->maparray[y][x] == 18)
+						{
+							//スイッチ押すだけの処理
+							if (p_Stagedata->maparray[y][x] == 18 && GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 18)
+							{
+								if (g_Bullet[i].switchcool <= 0)
+								{
+									//g_Bullet[i].onswitch = !g_Bullet[i].onswitch;
+									p_Stagedata->maparray[y][x] = 14;
+									g_Bullet[i].switchcool = 120.0f;
+								}
+							}
+						}
 					}
-
-					//スイッチ押すだけの処理
-					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 18)
-					{
-						g_Bullet[i].onswitch = !g_Bullet[i].onswitch;
-
-						g_Bullet[i].switchcool = 120;
-					}
-
 				}
 				
 				

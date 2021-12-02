@@ -137,9 +137,8 @@ void UpdateBullet(void)
 						if (g_Bullet[i].onswitch == true)
 						{
 							p_Stagedata->maparray[y][x] = 18;
-						//	g_Bullet[i].switchcool2 = 30;
+							//g_Bullet[i].switchcool2 = 300;
 						}
-						
 					}
 
 
@@ -148,9 +147,9 @@ void UpdateBullet(void)
 						if (g_Bullet[i].onswitch == false)
 						{
 							p_Stagedata->maparray[y][x] = 14;
-						//	g_Bullet[i].switchcool2 = 30;
+							g_Bullet[i].switchcool2 = 10;
 						}
-
+			
 					}
 				}
 
@@ -171,8 +170,6 @@ void UpdateBullet(void)
 						p_Stagedata->maparray[y][x] = 16;
 					}
 				}
-
-
 			}
 		}
 

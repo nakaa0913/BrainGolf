@@ -22,6 +22,7 @@
 #include "savedata.h"
 #include "placement.h"
 #include "mission.h"
+#include "Prologue.h"
 
 /*------------------------------------------------------------------------------
    íËêîíËã`
@@ -64,6 +65,11 @@ void InitScene(SCENE index)
 		InitEffect();
 		InitLogo();
 		//InitStagedata();
+		break;
+
+	case SCENE_Prologue:
+		InitEffect();
+		InitPrologue();
 		break;
 
 	case SCENE_TITLE:
@@ -118,6 +124,11 @@ void UninitScene(void)
 		UninitLogo();
 		break;
 
+	case SCENE_Prologue:
+		UninitEffect();
+		UninitPrologue();
+		break;
+
 	case SCENE_TITLE:
 		UninitEffect();
 		UninitTitle();
@@ -163,6 +174,11 @@ void UpdateScene(void)
 	case SCENE_LOGO:
 		UpdateEffect();
 		UpdateLogo();
+		break;
+
+	case SCENE_Prologue:
+		UpdateEffect();
+		UpdatePrologue();
 		break;
 
 	case SCENE_TITLE:
@@ -214,6 +230,11 @@ void DrawScene(void)
 	case SCENE_LOGO:
 		DrawLogo();
 		DrawEffect();
+		break;
+
+	case SCENE_Prologue:
+		DrawEffect();
+		DrawPrologue();
 		break;
 
 	case SCENE_TITLE:

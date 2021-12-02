@@ -897,7 +897,6 @@ void UpdateBullet(void)
 									g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
 									g_Bullet[i].warpcool = 60;
-
 								}
 							
 							}

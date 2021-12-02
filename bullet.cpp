@@ -85,7 +85,6 @@ HRESULT InitBullet(void)
 
 		g_Bullet[i].onswitch = false;
 		g_Bullet[i].switchcool = 0;
-		g_Bullet[i].switchcool2 = 0;
 
 		// バレットの影構造体の初期化
 		g_ShadowBullet[i].w = g_Bullet[i].w;
@@ -130,27 +129,7 @@ void UpdateBullet(void)
 				// そのブロックが当たり判定があるブロックかどうか調べるa
 				int BlockData = CheckBlockdata(x, y);
 
-				/*if (g_Bullet[i].switchcool2 <= 0)
-				{
-					if (p_Stagedata->maparray[y][x] == 14 && GetMapEnter(D3DXVECTOR2(g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y)) == 14)
-					{
-						if (g_Bullet[i].onswitch == true)
-						{
-							p_Stagedata->maparray[y][x] = 18;
-							g_Bullet[i].switchcool2 = 60.0f;
-						}
-					}
-
-
-					if (p_Stagedata->maparray[y][x] == 18 && GetMapEnter(D3DXVECTOR2(g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y)) == 18)
-					{
-						if (g_Bullet[i].onswitch == false)
-						{
-							p_Stagedata->maparray[y][x] = 14;
-							g_Bullet[i].switchcool2 = 60.0f;
-						}
-					}
-				}*/
+				
 
 				////////針の画像入れ替え処理////////
 				if (p_Stagedata->maparray[y][x] == 16)
@@ -910,10 +889,13 @@ void UpdateBullet(void)
 							{
 								if (g_Bullet[i].switchcool <= 0)
 								{
-									//g_Bullet[i].onswitch = !g_Bullet[i].onswitch;
-									p_Stagedata->maparray[y][x] = 18;
-									g_Bullet[i].switchcool = 120.0f;
+									g_Bullet[i].onswitch = !g_Bullet[i].onswitch;
 								}
+							}
+							if (g_Bullet[i].onswitch == true)
+							{
+								p_Stagedata->maparray[y][x] = 18;
+								g_Bullet[i].switchcool = 120.0f;
 							}
 						}
 
@@ -924,10 +906,13 @@ void UpdateBullet(void)
 							{
 								if (g_Bullet[i].switchcool <= 0)
 								{
-									//g_Bullet[i].onswitch = !g_Bullet[i].onswitch;
-									p_Stagedata->maparray[y][x] = 14;
-									g_Bullet[i].switchcool = 120.0f;
+									g_Bullet[i].onswitch = !g_Bullet[i].onswitch;
 								}
+							}
+							if (g_Bullet[i].onswitch == false)
+							{
+								p_Stagedata->maparray[y][x] = 14;
+								g_Bullet[i].switchcool = 120.0f;
 							}
 						}
 					}
@@ -1075,10 +1060,7 @@ void UpdateBullet(void)
 		{
 			g_Bullet[i].switchcool--;
 		}
-		if (g_Bullet[i].switchcool2 > 0)
-		{
-			g_Bullet[i].switchcool2--;
-		}
+
 		// パワー100で打ち出した場合(ShotPowor1.5f)球が止まるまで
 		// g_Bullet[i].shottimeは　143カウント
 

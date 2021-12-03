@@ -93,8 +93,8 @@ void UpdateGimmickDescription_Game()
 			float a = 0.5f;								// sin30°のこと y = ax + b のa
 			float camera_gap_x = a * p_Camera->pos.x;
 			float camera_gap_y = p_Camera->pos.y;
-			float b_up = 460.0f + draw_gap_up + camera_gap_y + camera_gap_x;			// 右上がりの線のy軸でのy				 y = ax + b のb
-			float b_down = -380.0f + draw_gap_down + camera_gap_y - camera_gap_x;		// 左下がりの線のy軸でのy				 y = ax + b のb
+			float b_up = 480.0f + draw_gap_up + camera_gap_y + camera_gap_x;			// 右上がりの線のy軸でのy				 y = ax + b のb
+			float b_down = -320.0f + draw_gap_down + camera_gap_y - camera_gap_x;		// 左下がりの線のy軸でのy				 y = ax + b のb
 
 			// 右上がりの二つの線の間ならば、xが決まる
 			if (mouse_pos_Y > -a * mouse_pos_X + b_up + interval_y * (x + 0) &&
@@ -111,8 +111,6 @@ void UpdateGimmickDescription_Game()
 
 					break;
 				}
-
-
 			}
 		}
 	}

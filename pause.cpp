@@ -56,8 +56,10 @@ int pause_select_once_time = 0;
 bool pausemouseuse = false;
 
 bool pauseclickuse = false;	//ポーズ画面を開いたかどうか
-bool Above = false;			//上から視点のボタン
+bool Abovemap = false;			//上から視点のボタン
 bool pausemission = false;	//ミッションのボタン
+
+bool pauseonce = false;
 
 
 
@@ -87,7 +89,7 @@ HRESULT InitPause(void)
 
 
 	pauseclickuse = false;	//ポーズ画面を開いたかどうか
-	Above = false;			//上から視点のボタン
+	Abovemap = false;			//上から視点のボタン
 	pausemission = false;	//ミッションのボタン
 	pause_cool = CLICK_COOLTIME;
 
@@ -107,15 +109,11 @@ void UninitPause(void)
 //=============================================================================
 void UpdatePause(void)
 {
-
 	//マウスの座標を取得
 	float mouse_pos_X = GetMousePosX();
 	float mouse_pos_Y = GetMousePosY();
 	bool mouse_Lclick = GetMouseLClick();
 	bool mouse_Rclick = GetMouseRClick();
-
-
-
 
 	// マウスの座標を使っての入力処理
 
@@ -132,11 +130,13 @@ void UpdatePause(void)
 			pauseclickuse = true;
 		}
 	}
+
 	//ポーズ画面を開いている状態
 	if (pauseclickuse)
 	{
 		//明るくするなら48暗くするなら4
-		SetEffect(4, D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(0.0f, 0.0f), 0,
+			now_pause_select_EffectArray =
+			SetEffect(4, D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(0.0f, 0.0f), 0,
 			D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), 0,
 			0.0f, 0.5f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
@@ -176,17 +176,19 @@ void UpdatePause(void)
 
 				if (pausemouseuse && mouse_Lclick)
 				{
-					Above = !Above;
+					Abovemap = !Abovemap;
 					pause_cool = CLICK_COOLTIME;
-					if (Above)
+					if (Abovemap)
 					{
-						//missionを開いてたら閉じる
 						pausemission = false;
 						DeleteMissionPause();
-						
-						
+						/*DrawBGaboveForPlacement();
+						DrawPlayerForPlacement();*/
 					}
-				
+					else
+					{
+						Abovemap = false;
+					}
 				}
 			}
 
@@ -200,7 +202,7 @@ void UpdatePause(void)
 					SceneTransition(SCENE_PLACEMENT);
 					pauseclickuse = false;
 					//上から視点かミッションを開いていたら閉じる
-					Above = false;
+					Abovemap = false;
 					pausemission = false;
 					DeleteMissionPause();
 				}
@@ -216,27 +218,23 @@ void UpdatePause(void)
 				if (pausemouseuse && mouse_Lclick)
 				{
 					//aboveを開いてたら閉じる
-					Above = false;
+					Abovemap = false;
 
 					pausemission = !pausemission;
 					pause_cool = CLICK_COOLTIME;
 					
 					if (pausemission)
 					{
-						//明るくするなら48暗くするなら4
-						/*SetEffect(4, D3DXVECTOR2(SCREEN_WIDTH / 2, 0.0f), D3DXVECTOR2(SCREEN_WIDTH / 2, 0.0f), 0,
-							D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), 0,
-							0.0f, 0.5f, 0, 1, 0, 1,
-							0.0f, 0.0f, 0);*/
-
-						/*SetEffect(70, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,
+						Abovemap = false;
+						SetEffect(70, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,
 							D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 							0.0f, 1.0f, 0, 1, 0, 1,
-							0.0f, 0.0f, 0);*/
+							0.0f, 0.0f, 0);
 						DrawMissionPause();
 					}
 					else
 					{
+						pausemission = false;
 						DeleteMissionPause();
 					}
 					
@@ -248,11 +246,11 @@ void UpdatePause(void)
 			if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 412.0f && mouse_pos_Y < 480.0f)
 			{
 				pausemouseuse = true;
-				if (pausemouseuse && mouse_Lclick && (Above || pausemission))
+				if (pausemouseuse && mouse_Lclick && (Abovemap || pausemission))
 				{
 					SceneTransition(SCENE_STAGE_SELECT);
 					pauseclickuse = false;
-					Above = false;
+					Abovemap = false;
 					pausemission = false;
 					DeleteMissionPause();
 				
@@ -274,7 +272,7 @@ void UpdatePause(void)
 			{
 				pauseclickuse = false;
 				pausemission = false;
-				Above = false;
+				Abovemap = false;
 				DeleteMissionPause();
 			}
 		}
@@ -298,34 +296,30 @@ void UpdatePause(void)
 void DrawPause(void)
 {
 	//上から視点の表示
-	if (Above)
+	if (Abovemap)
 	{
-		/*void ChangeEffect(int use_array_num, int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
-			float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
-			float rot_angle1, float rot_angle2, int rot_moving_pattern, int SerialNumber);*/
-
 		//明るくするなら48暗くするなら4
-		SetEffect(4, D3DXVECTOR2(SCREEN_WIDTH / 2, 0.0f), D3DXVECTOR2(SCREEN_WIDTH / 2, 0.0f), 0,
-			D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), 0,
+		ChangeEffect(now_pause_select_EffectArray, 4, D3DXVECTOR2(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2), 0,
+			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
 			0.0f, 0.5f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
-		
-			DrawBGaboveForPlacement();
-			DrawPlayerForPlacement();
 
 			//バツ印の表示
 			SetEffect(70, D3DXVECTOR2(50, 150), D3DXVECTOR2(50, 150), 0,
 				D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 				0.0f, 1.0f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);
+
+			DrawBGaboveForPlacement();
+			DrawPlayerForPlacement();
 	}
 
 	//ミッション
 	if (pausemission)
 	{
 		//明るくするなら48暗くするなら4
-		SetEffect(4, D3DXVECTOR2(SCREEN_WIDTH / 2, 0.0f), D3DXVECTOR2(SCREEN_WIDTH / 2, 0.0f), 0,
-			D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), 0,
+		ChangeEffect(now_pause_select_EffectArray, 4, D3DXVECTOR2(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2), 0,
+			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
 			0.0f, 0.5f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
 

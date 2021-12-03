@@ -55,8 +55,8 @@
 #define MAP_CHIP3D_GAP_X (80.0f)
 #define MAP_CHIP3D_GAP_Y (360.0f)
 
-#define GAME_ORIGIN_POINT_X		(SCREEN_WIDTH / 2 + 120.0f)					// ゲーム内の原点をこれとする。
-#define GAME_ORIGIN_POINT_Y		(0.0f + 40.0f)							// ゲーム内の原点をこれとする。
+#define GAME_ORIGIN_POINT_X		(720.0f + 40.0f * 2 + 0.0f)					// ゲーム内の原点をこれとする。
+#define GAME_ORIGIN_POINT_Y		(0.0f	+ 40.0f * 2 + 0.0f)					// ゲーム内の原点をこれとする。
 
 //*****************************************************************************
 // プロトタイプ宣言

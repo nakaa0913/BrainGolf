@@ -220,6 +220,12 @@ void DrawBG(void)
 	STAGEDATA* p_Stagedata = GetStagedata();
 	CAMERA* p_Camera = GetCamera();
 
+	//マウスの座標を取得
+	float mouse_pos_X = GetMousePosX();
+	float mouse_pos_Y = GetMousePosY();
+	bool mouse_Lclick = GetMouseLClick();
+	bool mouse_Rclick = GetMouseRClick();
+
 	float offset_y;
 
 	if (g_CurrentPos == 0)
@@ -350,6 +356,8 @@ void DrawBG(void)
 
 				float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
 				float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+
+
 
 				// プレイヤー周りにいるかの検索とその時ブロックを透明にする処理
 				for (int i = 0; i < PLAYER_MAX; i++)

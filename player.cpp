@@ -380,6 +380,20 @@ void UpdatePlayer(void)
 					mouseuse = false;
 				}
 
+				// マウスカーソルの場所でとばす方向を決める処理
+				// mouse_pos_X  mouse_pos_Y
+				// マウスの座標から上から見た時の座標を出す
+				// その座標とボールを持ってるプレイヤーの座標の2点間から角度を出す
+
+				// 2分探索で徐々に検索していく
+
+
+
+
+
+
+
+
 				if (mouse_Rclick)
 				{
 					mouseuse = true;

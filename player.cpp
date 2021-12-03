@@ -22,6 +22,7 @@
 #include "placement.h"
 #include "primitive.h"
 #include "effect.h"
+#include "gimmick_description.h"
 
 #define PLAYER_H (50)
 #define PLAYER_W (50)
@@ -350,9 +351,6 @@ void UpdatePlayer(void)
 		//float drawmosuepos_y = GAME_ORIGIN_POINT_Y + ((mouse_pos_Y - DRAW_GAP_Y) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_Y / 2) + ((mouse_pos_Y + DRAW_GAP_Y) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
 
 
-		int dffs = 5;
-
-
 		// ’e”­ŽË
 		if (g_Player[i].have == true)
 		{
@@ -401,12 +399,14 @@ void UpdatePlayer(void)
 
 				if (mouseuse)
 				{
+					Float2 more_mousepos = Getmoremousepos();
+
 					// ‡@‚Ì“_‚©‚ç‡A‚ðŒ©‚½Žž‚Ìƒ‰ƒWƒAƒ“‚ðŒvŽZ‚·‚é
-					float mouse_rad = CalculateRadianFrom2Points(g_Player[i].drawpos.x, g_Player[i].drawpos.y, mouse_pos_X, mouse_pos_Y);
+					float mouse_rad = CalculateRadianFrom2Points(g_Player[i].pos.x / MAP_CHIP_SIZE_X, g_Player[i].pos.y / MAP_CHIP_SIZE_Y, more_mousepos.x, more_mousepos.y);
 					mouse_rad = InversionYRadian(mouse_rad);
 					float mouse_angle = RadianToDegree(mouse_rad);
 
-					g_Player[i].angle = mouse_angle + 45.0f;
+					g_Player[i].angle = mouse_angle;
 
 					if (g_Player[i].angle <= 0.0f)
 						g_Player[i].angle = 360.0f;

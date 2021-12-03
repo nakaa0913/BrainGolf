@@ -1,5 +1,7 @@
 #pragma once
 
+#include "primitive.h"
+
 // まずカーソルがどこのマスをさしているかを調べる
 // 左クリックした床のブロックを強調表示+説明を出す
 // 説明をクリックで消す
@@ -40,3 +42,5 @@ void GenerateGimmickDescription(int block_data, int x, int y);
 void DeleteGimmickDescription();
 
 void GimmickDescriptionPickupUpdata(int i);
+Float2 MoreMousePos(float basex, float basey, int divnum);
+Float2 Getmoremousepos();

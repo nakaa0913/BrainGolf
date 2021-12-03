@@ -17,6 +17,7 @@
 #include "savedata.h"
 #include "gimmick_description.h"
 #include "camera.h"
+#include "primitive.h"
 
 
 
@@ -27,6 +28,8 @@ int GimmickDescription_x = -1;		// 現在マウスカーソルがあるところの座標
 int GimmickDescription_y = -1;
 
 int GimmickDescriptionCool = 30;
+
+Float2 moremousepos = { -1.0f, -1.0f };		// より正確な　とうかくず->上から視点　でのマウスのポジション
 
 void InitGimmickDescription()
 {
@@ -83,9 +86,9 @@ void UpdateGimmickDescription_Game()
 
 
 	// マウスの座標から今どのブロックの上にカーソルがあるのかの計算
-	for (int x = 0; x < MAP_X; x++)
+	for (int x = -15; x < MAP_X + 15; x++)
 	{
-		for (int y = 0; y < MAP_Y; y++)
+		for (int y = -15; y < MAP_Y + 15; y++)
 		{
 			float draw_gap_up = 20.0f;					// テクスチャとのずれ,細かい調整に使ってもよし
 			float draw_gap_down = -20.0f;
@@ -97,11 +100,11 @@ void UpdateGimmickDescription_Game()
 			float b_down = -320.0f + draw_gap_down + camera_gap_y - camera_gap_x;		// 左下がりの線のy軸でのy				 y = ax + b のb
 
 			// 右上がりの二つの線の間ならば、xが決まる
-			if (mouse_pos_Y > -a * mouse_pos_X + b_up + interval_y * (x + 0) &&
+			if (mouse_pos_Y >= -a * mouse_pos_X + b_up + interval_y * (x + 0) &&
 				mouse_pos_Y < -a * mouse_pos_X + b_up + interval_y * (x + 1))
 			{
 				// 右下がりの二つの線の間ならば、yが決まる
-				if (mouse_pos_Y > a * mouse_pos_X + b_down + interval_y * (y + 0) &&
+				if (mouse_pos_Y >= a * mouse_pos_X + b_down + interval_y * (y + 0) &&
 					mouse_pos_Y < a * mouse_pos_X + b_down + interval_y * (y + 1))
 				{
 					mouseuse = true;
@@ -113,6 +116,9 @@ void UpdateGimmickDescription_Game()
 				}
 			}
 		}
+		// xとyが求められたのでもっと細かく求める
+		moremousepos = MoreMousePos(GimmickDescription_x, GimmickDescription_y, 40);
+
 	}
 
 	// マウスカーソルがブロックにあってない場合
@@ -405,4 +411,107 @@ void GimmickDescriptionPickupUpdata(int i)
 
 		ChangeEffectPos(g_GimmickDescription[i].pickupBlock_EffectArray, newpos_x, newpos_y);
 	}
+}
+
+
+
+// より正確なマウスのポジションを返す
+Float2 MoreMousePos(float basex, float basey, int divnum)
+{
+
+	CAMERA* p_Camera = GetCamera();
+
+	//マウスの座標を取得
+	float mouse_pos_X = GetMousePosX();
+	float mouse_pos_Y = GetMousePosY();
+	bool mouse_Lclick = GetMouseLClick();
+	bool mouse_Rclick = GetMouseRClick();
+
+	float interval_x = 80.0f / divnum;
+	float interval_y = 40.0f / divnum;
+
+	float draw_gap_up = 20.0f;					// テクスチャとのずれ,細かい調整に使ってもよし
+	float draw_gap_down = -20.0f;
+
+	float a = 0.5f;								// sin30°のこと y = ax + b のa
+	float camera_gap_x = a * p_Camera->pos.x;
+	float camera_gap_y = p_Camera->pos.y;
+	float b_up = 480.0f + draw_gap_up + camera_gap_y + camera_gap_x;			// 右上がりの線のy軸でのy				 y = ax + b のb
+	float b_down = -320.0f + draw_gap_down + camera_gap_y - camera_gap_x;		// 左下がりの線のy軸でのy
+
+	float b_up_plus = basex * 40.0f;
+	float b_down_plus = basey * 40.0f;
+
+
+	Float2 BestPos = { basex, basey };
+
+	int min = 0;
+	int max = divnum;
+	int middle;
+
+	float onemove = 1.0f / divnum;
+
+	int asd = 0;
+
+	// xを決める処理
+	while (min <= max)
+	{
+		middle = (min + max) / 2;
+
+		// 右上がりの線より大きければ
+		if (mouse_pos_Y >= -a * mouse_pos_X + b_up + b_up_plus + interval_y * middle)
+		{
+			// 右上がりの二つの線の間ならば、xが決まる
+			if (mouse_pos_Y >= -a * mouse_pos_X + b_up + b_up_plus + interval_y * (middle + 0) &&
+				mouse_pos_Y < -a * mouse_pos_X + b_up + b_up_plus + interval_y * (middle + 1))
+			{
+				BestPos.x = BestPos.x + onemove * middle;
+				break;
+			}
+
+			min = middle + 1;
+		}
+		else
+		{
+			max = middle - 1;
+		}
+	}
+
+	// 初期化
+	min = 0;
+	max = divnum;
+	middle = (min + max) / 2;
+
+	// yを決める処理
+	while (min <= max)
+	{
+		middle = (min + max) / 2;
+
+		// 右下がりの線より大きければ
+		if (mouse_pos_Y >= a * mouse_pos_X + b_down + b_down_plus + interval_y * middle)
+		{
+			// 右上がりの二つの線の間ならば、xが決まる
+			if (mouse_pos_Y >= a * mouse_pos_X + b_down + b_down_plus + interval_y * (middle + 0) &&
+				mouse_pos_Y < a * mouse_pos_X + b_down + b_down_plus + interval_y * (middle + 1))
+			{
+				BestPos.y = BestPos.y + onemove * middle;
+				break;
+			}
+
+			min = middle + 1;
+		}
+		else
+		{
+			max = middle - 1;
+		}
+	}
+
+	// Float2 BudPos = { -1.0f, -1.0f };
+
+	return BestPos;
+}
+
+Float2 Getmoremousepos()
+{
+	return moremousepos;
 }

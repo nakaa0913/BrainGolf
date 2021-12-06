@@ -953,32 +953,7 @@ void UpdateBullet(void)
 				}
 
 
-				//ワープ
-				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 11)
-				{
-					if (g_Bullet[i].warpcool <= 0)
-					{
-						for (int y = 0; y < MAP_Y; y++)
-						{
-							for (int x = 0; x < MAP_X; x++)
-							{
-								// そのブロックが当たり判定があるブロックかどうか調べるa
-								int BlockData = CheckBlockdata(x, y);
-								// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
-								if (BlockData == 12)
-								{
-									g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
-									g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
-
-									g_Bullet[i].warpcool = 60;
-								}
-							
-							}
-						}
-					}
-				}
-
-
+				
 				//スイッチ
 				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 14)
 				{
@@ -1066,16 +1041,45 @@ void UpdateBullet(void)
 						g_Bullet[i].shotpower = 0.0f;
 					}
 				}
-				
-			}//地面にある時だけの処理の終わり
 
-			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 12)
-			{
-				if (g_Bullet[i].warpcool <= 0)
+				//池
+				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 34)
 				{
-					for (int y = 0; y < MAP_Y; y++)
+					// パワーを減衰させる
+					if (g_Bullet[i].shotpower > 0.0f)
+						g_Bullet[i].shotpower = 0.0f;
+
+				}
+				
+			}////////地面にある時だけの処理の終わり///////////
+			/////////////////////////////////////////////////
+			//////////////////////////////////////////////////
+
+			for (int y = 0; y < MAP_Y; y++)
+			{
+				for (int x = 0; x < MAP_X; x++)
+				{
+					//ワープ1
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 11)
 					{
-						for (int x = 0; x < MAP_X; x++)
+						if (g_Bullet[i].warpcool <= 0)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 12)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 60;
+							}
+
+						}
+					}
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 12)
+					{
+						if (g_Bullet[i].warpcool <= 0)
 						{
 							// そのブロックが当たり判定があるブロックかどうか調べるa
 							int BlockData = CheckBlockdata(x, y);
@@ -1090,8 +1094,188 @@ void UpdateBullet(void)
 
 						}
 					}
+					//ワープ2
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 24)
+					{
+						if (g_Bullet[i].warpcool <= 0)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 25)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 60;
+							}
+
+						}
+					}
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 25)
+					{
+						if (g_Bullet[i].warpcool <= 0)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 24)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 60;
+							}
+
+						}
+					}
+
+					//ワープ3
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 26)
+					{
+						if (g_Bullet[i].warpcool <= 0)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 27)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 60;
+							}
+
+						}
+					}
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 27)
+					{
+						if (g_Bullet[i].warpcool <= 0)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 26)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 60;
+							}
+
+						}
+					}
+
+					//ワープ4
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 28)
+					{
+						if (g_Bullet[i].warpcool <= 0)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 29)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 60;
+							}
+
+						}
+					}
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 29)
+					{
+						if (g_Bullet[i].warpcool <= 0)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 28)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 60;
+							}
+
+						}
+					}
+
+					//ワープ5
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 30)
+					{
+						if (g_Bullet[i].warpcool <= 0)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 31)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 60;
+							}
+
+						}
+					}
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 31)
+					{
+						if (g_Bullet[i].warpcool <= 0)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 30)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 60;
+							}
+
+						}
+					}
+
+					//ワープ6
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 32)
+					{
+						if (g_Bullet[i].warpcool <= 0)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 33)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 60;
+							}
+
+						}
+					}
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 33)
+					{
+						if (g_Bullet[i].warpcool <= 0)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 32)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 60;
+							}
+
+						}
+					}
 				}
 			}
+
 
 
 
@@ -1116,45 +1300,7 @@ void UpdateBullet(void)
 
 			}
 
-			//if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 15)
-			//{
-			//	// 反射板（左に行く）に乗った時の処理
-			//	g_Bullet[i].angle = 180.0f;									// 角度を設定
-			//	g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
-
-			//}
-
-			//if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 15)
-			//{
-			//	// 反射板（上に行く）に乗った時の処理
-			//	g_Bullet[i].angle = 90.0f;									// 角度を設定
-			//	g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
-
-			//}
-
-			//if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 15)
-			//{
-			//	// 反射板（下に行く）に乗った時の処理
-			//	g_Bullet[i].angle = 270.0f;									// 角度を設定
-			//	g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
-
-			//}
-
-
-
-
-
-			//// クールタイムを減らす処理一覧
-			//// 球がブロックに当たった時の判定のクールタイムを減らしていく
-			//if (g_Bullet[i].CollicionCool > 0)
-			//	g_Bullet[i].CollicionCool--;
-			//// ワープのクールタイムを減らしていく
-			//if (g_Bullet[i].warpcool > 0)
-			//	g_Bullet[i].warpcool--;
-			//// 加速版のクールタイムを減らしていく
-			//if (g_Bullet[i].accboardcool > 0)
-			//	g_Bullet[i].accboardcool--;
-
+		
 
 			// 最期にposにnextposを反映させる
 			g_Bullet[i].pos = g_Bullet[i].nextpos;

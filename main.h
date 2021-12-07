@@ -65,3 +65,4 @@ bool GetMouseRClick(void);
 int GetMouseRClickNum(void);
 bool GetMouseScroll(void);
 int  GetMouseScrollNum(void);
+bool GetMouseScrollFalse(void);

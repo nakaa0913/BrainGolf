@@ -388,6 +388,11 @@ bool GetMouseScroll(void)
 	return g_MouseScroll;
 }
 
+bool GetMouseScrollFalse(void)
+{
+	return g_MouseScroll = false;
+}
+
 int GetMouseScrollNum(void)
 {
 	if (g_MouseScroll)

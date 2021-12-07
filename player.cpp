@@ -154,6 +154,9 @@ void UpdatePlayer(void)
 	bool mouse_Lclick = GetMouseLClick();
 	bool mouse_Rclick = GetMouseRClick();
 
+	bool mouse_Wheel = GetMouseScroll();
+	bool mouse_Wheelfalse = GetMouseScrollFalse();
+
 	// 1フレーム前のポジションの保存。この後キー操作などで変更があった場合のみエフェクトを更新させる
 	//int OldStageSelectX = g_StageSelect.select_x;
 	//int OldStageSelectY = g_StageSelect.select_y;
@@ -461,6 +464,12 @@ void UpdatePlayer(void)
 							{
 								club_pattern++;
 								club_ChangeCool = CLUB_CHANGECOOL;
+							}
+							if (mouse_Wheel)
+							{
+								club_pattern++;
+								club_ChangeCool = CLUB_CHANGECOOL;
+								mouse_Wheelfalse;
 							}
 						}
 

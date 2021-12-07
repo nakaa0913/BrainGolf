@@ -352,7 +352,110 @@ void UpdateBullet(void)
 							}
 
 						}
+						//赤いブロック
 						if (BlockData == 19)
+						{
+							// ブロックの4隅の座標の保存
+							D3DXVECTOR2 LU_block = D3DXVECTOR2(x * MAP_CHIP_SIZE_X - (MAP_CHIP_SIZE_X / 2) + (MAP_CHIP_SIZE_X / 2), y * MAP_CHIP_SIZE_Y - (MAP_CHIP_SIZE_Y / 2) + (MAP_CHIP_SIZE_Y / 2));
+							D3DXVECTOR2 RU_block = D3DXVECTOR2(x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2) + (MAP_CHIP_SIZE_X / 2), y * MAP_CHIP_SIZE_Y - (MAP_CHIP_SIZE_Y / 2) + (MAP_CHIP_SIZE_Y / 2));
+							D3DXVECTOR2 LD_block = D3DXVECTOR2(x * MAP_CHIP_SIZE_X - (MAP_CHIP_SIZE_X / 2) + (MAP_CHIP_SIZE_X / 2), y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2) + (MAP_CHIP_SIZE_Y / 2));
+							D3DXVECTOR2 RD_block = D3DXVECTOR2(x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2) + (MAP_CHIP_SIZE_X / 2), y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2) + (MAP_CHIP_SIZE_Y / 2));
+
+							// 最初は四角で当たり判定を調べる、必須。そこから当たってるであろうことを調べる。
+							if (CheckHit(D3DXVECTOR2(g_Bullet[i].nextpos.x - (g_Bullet[i].w / 2), g_Bullet[i].nextpos.y - (g_Bullet[i].h / 2)), D3DXVECTOR2(g_Bullet[i].w, g_Bullet[i].h),
+								D3DXVECTOR2(x * MAP_CHIP_SIZE_X, y * MAP_CHIP_SIZE_Y), D3DXVECTOR2(MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y)) == true
+								)
+							{
+								// ヒットカウントを増やし、当たっているブロックの最大値と最低値を保存する
+								hitcount++;
+								block_last.x = x;
+								block_last.y = y;
+
+								if (x > block_max.x) block_max.x = x;
+								if (x < block_min.x) block_min.x = x;
+								if (y > block_max.y) block_max.y = y;
+								if (y < block_min.y) block_min.y = y;
+
+								// 四隅はまだわからないけど当たっているので入れておく
+								for (int k = 0; k < HitBlockData2DMax; k++)			// 使われていないものにいれていく
+								{
+									if (HitBlockDatas2D[k].isUse == false)
+									{
+										HitBlockDatas2D[k].BlockPosX = x;
+										HitBlockDatas2D[k].BlockPosY = y;
+										// HitBlockDatas2D[k].CornerNum = corner;
+										// HitBlockDatas2D[k].isUse = true;		// 使われてる状態にはまだしない。
+										break;									// 登録したので抜ける
+									}
+								}
+
+								// 円の当たり判定と、四つ角のどこに当たっているかを調べる
+								for (int corner = 0; corner < 4; corner++)
+								{
+									D3DXVECTOR2 point_pos = D3DXVECTOR2(0.0f, 0.0f);
+									if (corner == 0)
+									{
+										point_pos = LU_block;
+									}
+									if (corner == 1)
+									{
+										point_pos = RU_block;
+									}
+									if (corner == 2)
+									{
+										point_pos = LD_block;
+									}
+									if (corner == 3)
+									{
+										point_pos = RD_block;
+									}
+
+									// 円の情報の整理(Bullet)
+									Circle2D BulletCircle = {
+										g_Bullet[i].nextpos.x,
+										g_Bullet[i].nextpos.y,
+										g_Bullet[i].w / 2,		// 半径だから横幅の半分
+									};
+									// 点の情報の整理(ブロックの角)
+									Float2 CornerPoint = {
+										point_pos.x,
+										point_pos.y,
+									};
+									// 円と４つ角のどこが当たっているか調べる
+									if (OnCollisionPointAndCircle(CornerPoint, BulletCircle) == true)
+									{
+										// ChangeMapdata(2, x, y);
+
+										// 円の当たり判定で当たっている場合
+										// 当たっているブロックの保存
+										hitcountCorner++;
+
+										for (int k = 0; k < HitBlockData2DMax; k++)			// 使われていないものにいれていく
+										{
+											if (HitBlockDatas2D[k].isUse == false)
+											{
+												HitBlockDatas2D[k].BlockPosX = x;
+												HitBlockDatas2D[k].BlockPosY = y;
+												HitBlockDatas2D[k].CornerNum = corner;
+												HitBlockDatas2D[k].isUse = true;			// 使われてる状態にする
+												break;									// 登録したので抜ける
+											}
+										}
+
+
+
+
+
+
+
+									}
+								}
+
+							}
+
+						}
+						//青いブロック
+						if (BlockData == 35)
 						{
 							// ブロックの4隅の座標の保存
 							D3DXVECTOR2 LU_block = D3DXVECTOR2(x * MAP_CHIP_SIZE_X - (MAP_CHIP_SIZE_X / 2) + (MAP_CHIP_SIZE_X / 2), y * MAP_CHIP_SIZE_Y - (MAP_CHIP_SIZE_Y / 2) + (MAP_CHIP_SIZE_Y / 2));
@@ -998,7 +1101,7 @@ void UpdateBullet(void)
 							}
 						}
 
-						// スイッチ押したら消えるブロック
+						// スイッチ押したら現れる赤ブロック
 						if (p_Stagedata->maparray[y][x] == 19)
 						{
 							if (g_Bullet[i].onswitch == true)
@@ -1008,32 +1111,32 @@ void UpdateBullet(void)
 							}
 						}
 
-						// 消えるブロックの消えた後の床
+						// 赤ブロックの消えた後の床
 						if (p_Stagedata->maparray[y][x] == 20)
 						{
 							if (g_Bullet[i].onswitch == false)
 							{
 								p_Stagedata->maparray[y][x] = 19;
+								//g_Bullet[i].switchcool = 120.0f;
+							}
+						}
+
+						//スイッチ押したら消える青ブロック
+						if (p_Stagedata->maparray[y][x] == 36)
+						{
+							if (g_Bullet[i].onswitch == true)
+							{
+								p_Stagedata->maparray[y][x] = 35;
 								//g_Bullet[i].switchcool = 120.0f;
 							}
 						}
 
 						//消えるブロックの消えた後の床
-						if (p_Stagedata->maparray[y][x] == 19)
-						{
-							if (g_Bullet[i].onswitch == true)
-							{
-								p_Stagedata->maparray[y][x] = 20;
-								//g_Bullet[i].switchcool = 120.0f;
-							}
-						}
-
-						// スイッチ押したら現れるブロック
-						if (p_Stagedata->maparray[y][x] == 20)
+						if (p_Stagedata->maparray[y][x] == 35)
 						{
 							if (g_Bullet[i].onswitch == false)
 							{
-								p_Stagedata->maparray[y][x] = 19;
+								p_Stagedata->maparray[y][x] = 36;
 								//g_Bullet[i].switchcool = 120.0f;
 							}
 						}

@@ -1017,6 +1017,26 @@ void UpdateBullet(void)
 								//g_Bullet[i].switchcool = 120.0f;
 							}
 						}
+
+						//消えるブロックの消えた後の床
+						if (p_Stagedata->maparray[y][x] == 19)
+						{
+							if (g_Bullet[i].onswitch == true)
+							{
+								p_Stagedata->maparray[y][x] = 20;
+								//g_Bullet[i].switchcool = 120.0f;
+							}
+						}
+
+						// スイッチ押したら現れるブロック
+						if (p_Stagedata->maparray[y][x] == 20)
+						{
+							if (g_Bullet[i].onswitch == false)
+							{
+								p_Stagedata->maparray[y][x] = 19;
+								//g_Bullet[i].switchcool = 120.0f;
+							}
+						}
 					}
 				}
 

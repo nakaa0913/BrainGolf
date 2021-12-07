@@ -342,7 +342,7 @@ long GetMousePosX(void)
 {
 
 
-	return g_MouseX * 3 / 4;						// フルスクリーン(1920 * 1080)ならこっち
+	//return g_MouseX * 3 / 4;						// フルスクリーン(1920 * 1080)ならこっち
 	return g_MouseX * SCREEN_WIDTH_MOUSEGAP;		// ウィンドウモード(1440 * 810)ならこっち
 
 	// 1440x810
@@ -353,7 +353,7 @@ long GetMousePosX(void)
 
 long GetMousePosY(void)
 {
-	return g_MouseY * 3 / 4;						// フルスクリーン(1920 * 1080)ならこっち
+	//return g_MouseY * 3 / 4;						// フルスクリーン(1920 * 1080)ならこっち
 	return g_MouseY * SCREEN_HEIGHT_MOUSEGAP;		// ウィンドウモード(1440 * 810)ならこっち
 }
 

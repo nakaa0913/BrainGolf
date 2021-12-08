@@ -31,6 +31,7 @@
 #include "keyboard.h"
 #include "mouse.h"
 #include "placement.h"
+#include "savedata.h"
 
 /*------------------------------------------------------------------------------
    定数定義
@@ -174,22 +175,28 @@ void UpdateStageSelect(void)
 		int OldStageSelectX = g_StageSelect.select_x;
 		int OldStageSelectY = g_StageSelect.select_y;
 
-		//スペースキーが押されていて、フェード処理中ではないとき
-		//if (GetKeyboardTrigger(DIK_RETURN) && GetFadeState() == FADE_NONE)
-		//{
-		//	SetVolume(g_BGMNo, 0.1f);
-
-		//	//RESULTへ移行する
-		//	SceneTransition(SCENE_GAME);
-		//}
-
-
 		//星
 		SetEffect(9, D3DXVECTOR2(280.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
 			D3DXVECTOR2(500.0f, 150.0f), D3DXVECTOR2(500.0f, 150.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 0,
 			0.0f, 0.0f, 0);
 
+		// セーブデータからゲットしてる星の数を読み込む
+		int StageStar = GetStar(NowWorld);
+
+		int Number_EffectArray[2] = { 0,0 };
+		int* p_Number_EffectArray = Number_EffectArray;
+		// セーブデータから読み込んだ全ての星の数の表示
+		SetEffectNumber(StageStar, p_Number_EffectArray, D3DXVECTOR2(250.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+			D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
+			0.0f, 1.0f, 0, 999, 0, 0,
+			0.0f, 0.0f, 0);
+
+		// 全ての星の数(30)の表示
+		SetEffectNumber(30, p_Number_EffectArray, D3DXVECTOR2(400.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+			D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
+			0.0f, 1.0f, 0, 999, 0, 0,
+			0.0f, 0.0f, 0);
 
 		// 移動キーが押された時の処理
 		if (g_StageSelect.selectcooltime <= 0)
@@ -523,13 +530,6 @@ void StartStageSelectScreen()
 		D3DXVECTOR2(590, 1000), D3DXVECTOR2(590, 1000), 1,
 		0.0f, 1.0f, 100, 999, 0, 180,
 		0.0f, 0.0f, 0);
-
-	////ミッション
-	//SetEffect(tex_NowWorld_mission, D3DXVECTOR2(SCREEN_WIDTH / 2, 405), D3DXVECTOR2(SCREEN_WIDTH / 2, 405), 0,
-	//	D3DXVECTOR2(590, 1000), D3DXVECTOR2(590, 1000), 1,
-	//	0.0f, 1.0f, 100, 999, 0, 180,
-	//	0.0f, 0.0f, 0);
-
 
 	// ステージ選択の時の原点となる場所
 	float	stage_origin_x = 240.0f;			    // xの原点(0,0を選択しているとき)

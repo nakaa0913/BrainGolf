@@ -430,12 +430,12 @@ void StartWorldSelectScreen()
 		0.0f, 0.0f, 0);
 
 	// セーブデータからゲットしてる星の数を読み込む
-	int HaveStar = GetStar(0);
+	int WorldStar = GetStar(0);
 
 	int Number_EffectArray[2] = { 0,0 };
 	int* p_Number_EffectArray = Number_EffectArray;
 	// セーブデータから読み込んだ全ての星の数の表示
-	SetEffectNumber(HaveStar, p_Number_EffectArray, D3DXVECTOR2(250.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+	SetEffectNumber(WorldStar, p_Number_EffectArray, D3DXVECTOR2(250.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
 		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
 		0.0f, 1.0f, 0, 999, 0, 0,
 		0.0f, 0.0f, 0);

@@ -109,4 +109,28 @@ SAVEDATA* GetSavedata()
 //////////	return;
 //////////}
 
+// 引数でワールドの番号をもらって(0だと1~5の全てのワールド)、戻り値でそのワールドの星の数を返す
+int GetStar(int worldnum)
+{
+	int NumberofStars = 0;
 
+	int stagenum_min = worldnum * 10 - 10;
+	int stagenum_max = stagenum_min + 10;
+
+	if (worldnum == 0)
+	{
+		stagenum_min = 0;
+		stagenum_max = 50;
+	}
+
+	for (int i = stagenum_min; i < stagenum_max; i++)
+	{
+		for (int j = 0; j < MAX_MISSION; j++)
+		{
+			NumberofStars += g_Savedata[i].mission_clear[j];
+		}
+	}
+
+	return NumberofStars;
+
+}

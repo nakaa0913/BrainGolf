@@ -30,6 +30,7 @@
 #include "worldselect.h"
 #include "keyboard.h"
 #include "mouse.h"
+#include "savedata.h"
 /*------------------------------------------------------------------------------
    íËêîíËã`
 ------------------------------------------------------------------------------*/
@@ -427,6 +428,8 @@ void StartWorldSelectScreen()
 		D3DXVECTOR2(500.0f, 150.0f), D3DXVECTOR2(500.0f, 150.0f), 0,
 		0.0f, 1.0f, 0, 999, 0, 0,
 		0.0f, 0.0f, 0);
+
+	int aaaaaaaa = GetStar(0);
 
 	// ëIÇŒÇÍÇƒÇ»Ç¢Ç∆Ç´ÇÃï\é¶
 	SetEffect(6, D3DXVECTOR2(240.0f, 200.0f), D3DXVECTOR2(240.0f, 200.0f), 0,

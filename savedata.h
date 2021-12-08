@@ -17,3 +17,4 @@ void UninitSavedata();
 void UpdateSavedata();
 
 SAVEDATA* GetSavedata();
+int GetStar(int worldnum);

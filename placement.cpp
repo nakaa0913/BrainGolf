@@ -179,6 +179,28 @@ void UpdatePlacement(void)
 			0.0f, 0.0f, 0);
 	}
 
+	//ステージ選択にいく
+	if (mouse_pos_X > 110.0f && mouse_pos_X < 185.0f && mouse_pos_Y > 412.0f && mouse_pos_Y < 480.0f)
+	{
+		// ステージ選択
+		SetEffect(67, D3DXVECTOR2(150, 450), D3DXVECTOR2(150, 450), 0,
+			D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(150.0f, 150.0f), 0,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+		mouseuse = true;
+		if (mouseuse && mouse_Lclick)
+		{
+			SceneTransition(SCENE_STAGE_SELECT);
+		}
+	}
+	else
+	{
+		// ステージ選択
+		SetEffect(67, D3DXVECTOR2(150, 450), D3DXVECTOR2(150, 450), 0,
+			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
+	}
 
 	if (ViewAbove == true)
 	{

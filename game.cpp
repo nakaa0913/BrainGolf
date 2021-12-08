@@ -46,7 +46,7 @@
 static int g_BGMNo = 0;
 bool goal = false;
 bool gameover = false;
-//bool pause = false;
+
 int game_frame_time = 0;
 
 /*------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ void InitGame(void)
 {
 	goal = false;
 	gameover = false;
-	//pause = false;
+
 	game_frame_time = 0;
 
 	InitPlayer();
@@ -70,7 +70,7 @@ void InitGame(void)
 	InitCamera();
 	InitPrediction();
 	InitGamedata();
-	InitPause();
+
 	InitGimmickDescription();
 
 	g_BGMNo = LoadSound("data/BGM/sample001.wav");
@@ -96,8 +96,7 @@ void UninitGame()
 	UninitPlayer();
 	UninitResult();
 	UninitGameover();
-	UninitPause();
-	//pause = false;
+
 	gameover = false;
 	goal = false;
 
@@ -125,7 +124,6 @@ void UpdateGame(void)
 			UpdatePrediction();
 			UpdateGamedata();
 
-			UpdatePause();
 			UpdateGimmickDescription_Game();
 			// ゲームスタートしてからのフレーム時間を+1する
 			game_frame_time++;
@@ -182,7 +180,7 @@ void DrawGame(void)
 	}
 	//if (pause = true)
 	//{
-		DrawPause();
+		//DrawPause();
 	//}
 }
 

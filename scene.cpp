@@ -23,6 +23,7 @@
 #include "placement.h"
 #include "mission.h"
 #include "Prologue.h"
+#include "pause.h"
 
 /*------------------------------------------------------------------------------
    íËêîíËã`
@@ -99,6 +100,7 @@ void InitScene(SCENE index)
 		InitEffect();
 		InitGame();
 		InitStagedata();
+		InitPause();
 		break;
 
 		//case SCENE_RESULT:
@@ -152,6 +154,7 @@ void UninitScene(void)
 	case SCENE_GAME:
 		UninitEffect();
 		UninitGame();
+		UninitPause();
 		break;
 
 		//case SCENE_RESULT:
@@ -204,6 +207,7 @@ void UpdateScene(void)
 	case SCENE_GAME:
 		UpdateEffect();
 		UpdateGame();
+		UpdatePause();
 		break;
 
 		//case SCENE_RESULT:
@@ -260,6 +264,7 @@ void DrawScene(void)
 	case SCENE_GAME:
 		DrawGame();
 		DrawEffect();
+		DrawPause();
 		break;
 
 		//case SCENE_RESULT:

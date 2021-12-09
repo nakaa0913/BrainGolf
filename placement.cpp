@@ -180,10 +180,10 @@ void UpdatePlacement(void)
 	}
 
 	//ステージ選択にいく
-	if (mouse_pos_X > 110.0f && mouse_pos_X < 185.0f && mouse_pos_Y > 412.0f && mouse_pos_Y < 480.0f)
+	if (mouse_pos_X > 110.0f && mouse_pos_X < 185.0f && mouse_pos_Y > 662.0f && mouse_pos_Y < 730.0f)
 	{
 		// ステージ選択
-		SetEffect(67, D3DXVECTOR2(150, 450), D3DXVECTOR2(150, 450), 0,
+		SetEffect(67, D3DXVECTOR2(150.0f, 700.0f), D3DXVECTOR2(150.0f, 700.0f), 0,
 			D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(150.0f, 150.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
@@ -196,7 +196,7 @@ void UpdatePlacement(void)
 	else
 	{
 		// ステージ選択
-		SetEffect(67, D3DXVECTOR2(150, 450), D3DXVECTOR2(150, 450), 0,
+		SetEffect(67, D3DXVECTOR2(150.0f, 700.0f), D3DXVECTOR2(150.0f, 700.0f), 0,
 			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);

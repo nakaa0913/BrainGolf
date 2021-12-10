@@ -49,6 +49,7 @@ struct BULLET
 	bool                    onswitch;				// スイッチを押したかどうか
 	int                     switchcool;				// スイッチのクールタイム
 	int						holecool;			    // 崩れる穴のクールタイム
+	int						hole_changetime;		// 穴があく時間
 };
 
 struct SHADOWBULLET

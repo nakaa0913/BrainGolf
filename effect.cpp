@@ -104,6 +104,9 @@ static int batu_70;	// 70
 static int rollball_71;
 static int flyball_72;
 
+//ポーズ画面の外枠
+static int around_73;
+
 void InitEffect(void)
 {
 	//テクスチャの名前
@@ -190,7 +193,9 @@ void InitEffect(void)
 	batu_70 = LoadTexture("data/TEXTURE/pause/batu.png");
 
 	rollball_71 = LoadTexture("data/TEXTURE/select/2.png");
-	flyball_72= LoadTexture("data/TEXTURE/select/1.png");
+	flyball_72 = LoadTexture("data/TEXTURE/select/1.png");
+
+	around_73 = LoadTexture("data/TEXTURE/pause/around.png");
 
 
 	for (int i = 0; i < MAX_EFFECT; i++)
@@ -969,6 +974,10 @@ int GetTextureData(int id)
 	case 72:
 		return flyball_72;
 		break;
+	case 73:
+		return around_73;
+		break;
+		
 	}
 
 	// どこにもたどり着かなかった場合

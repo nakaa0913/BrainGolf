@@ -174,6 +174,12 @@ void UpdatePause(void)
 			{
 				pausemouseuse = true;
 
+				// 選択しましたマーク
+				SetEffect(73, D3DXVECTOR2(50, 150), D3DXVECTOR2(50, 150), 0,
+					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+					0.0f, 1.0f, 0, 1, 0, 1,
+					0.0f, 0.0f, 0);
+
 				if (pausemouseuse && mouse_Lclick)
 				{
 					Abovemap = !Abovemap;
@@ -182,6 +188,7 @@ void UpdatePause(void)
 					{
 						pausemission = false;
 						DeleteMissionPause();
+
 						/*DrawBGaboveForPlacement();
 						DrawPlayerForPlacement();*/
 					}
@@ -197,6 +204,13 @@ void UpdatePause(void)
 			{
 				
 				pausemouseuse = true;
+				
+				// 選択しましたマーク
+				SetEffect(73, D3DXVECTOR2(50, 250), D3DXVECTOR2(50, 250), 0,
+					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+					0.0f, 1.0f, 0, 1, 0, 1,
+					0.0f, 0.0f, 0);
+
 				if (pausemouseuse && mouse_Lclick)
 				{
 					SceneTransition(SCENE_PLACEMENT);
@@ -214,6 +228,13 @@ void UpdatePause(void)
 			if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 312.0f && mouse_pos_Y < 380.0f)
 			{
 				pausemouseuse = true;
+
+				// 選択しましたマーク
+				SetEffect(73, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,
+					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+					0.0f, 1.0f, 0, 1, 0, 1,
+					0.0f, 0.0f, 0);
+
 				//ミッションを表示する
 				if (pausemouseuse && mouse_Lclick)
 				{
@@ -246,6 +267,13 @@ void UpdatePause(void)
 			if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 412.0f && mouse_pos_Y < 480.0f)
 			{
 				pausemouseuse = true;
+
+				// 選択しましたマーク
+				SetEffect(73, D3DXVECTOR2(50, 450), D3DXVECTOR2(50, 450), 0,
+					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+					0.0f, 1.0f, 0, 1, 0, 1,
+					0.0f, 0.0f, 0);
+
 				if (pausemouseuse && mouse_Lclick && (Abovemap || pausemission))
 				{
 					SceneTransition(SCENE_STAGE_SELECT);

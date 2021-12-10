@@ -55,7 +55,7 @@ HRESULT InitBullet(void)
 	int tex_bullet_shadow = LoadTexture("data/TEXTURE/bullet/bullet_shadow.png");
 
 
-	
+
 	// バレット構造体の初期化 でも実際はSetBulletで呼ぶときにそっちで値が代入される
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
@@ -88,6 +88,7 @@ HRESULT InitBullet(void)
 		g_Bullet[i].onswitch = false;
 		g_Bullet[i].switchcool = 0;
 		g_Bullet[i].holecool = 0;
+		g_Bullet[i].hole_changetime = 0;
 		// バレットの影構造体の初期化
 		g_ShadowBullet[i].w = g_Bullet[i].w;
 		g_ShadowBullet[i].h = g_Bullet[i].h;
@@ -120,7 +121,7 @@ void UpdateBullet(void)
 	SAVEDATA* p_Savedata = GetSavedata();
 	STAGEDATA* p_Stagedata = GetStagedata();
 	GAMEDATA* p_Gamedata = GetGamedata();
-	
+
 	int axis_x;
 	int axis_y;
 
@@ -141,7 +142,7 @@ void UpdateBullet(void)
 					if (needletime <= 240)
 					{
 						p_Stagedata->maparray[y][x] = 17;
-					}		
+					}
 				}
 				if (p_Stagedata->maparray[y][x] == 17)
 				{
@@ -151,6 +152,8 @@ void UpdateBullet(void)
 						p_Stagedata->maparray[y][x] = 16;
 					}
 				}
+
+
 			}
 		}
 
@@ -249,7 +252,7 @@ void UpdateBullet(void)
 					{
 						// そのブロックが当たり判定があるブロックかどうか調べるa
 						int BlockData = CheckBlockdata(x, y);
-						
+
 						// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 						if (BlockData == 1)
 						{
@@ -1056,7 +1059,7 @@ void UpdateBullet(void)
 				}
 
 
-				
+
 				//スイッチ
 				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 14)
 				{
@@ -1143,7 +1146,7 @@ void UpdateBullet(void)
 					}
 				}
 
-				
+
 				axis_x = (int)(g_Bullet[i].pos.x / MAP_CHIP_SIZE_X);//座標をマップチップ一つの大きさで割る
 				axis_y = (int)(g_Bullet[i].pos.y / MAP_CHIP_SIZE_Y);
 				// 踏んだら消えるブロック
@@ -1151,18 +1154,32 @@ void UpdateBullet(void)
 				{
 					if (p_Stagedata->maparray[axis_y][axis_x] == 21)
 					{
-						p_Stagedata->maparray[axis_y][axis_x] = 22;
-						g_Bullet[i].holecool = 60;
+						p_Stagedata->maparray[axis_y][axis_x] = 37;
+						g_Bullet[i].hole_changetime = 0;
 					}
+
+				}
+
+				//ひびが入る
+				if (p_Stagedata->maparray[axis_y][axis_x] == 37)
+				{
+					//240以下の時に当たるとボールを止める
+					if (g_Bullet[i].hole_changetime > 60)
+					{
+						p_Stagedata->maparray[axis_y][axis_x] = 22;
+
+						//g_Bullet[i].holecool = 60;
+					}
+				
 				}
 
 				//崩れた穴の処理
 				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 22)
 				{
-					if (g_Bullet[i].holecool <= 0)
+					/*if (g_Bullet[i].holecool <= 0)
 					{
 						g_Bullet[i].shotpower = 0.0f;
-					}
+					}*/
 				}
 
 				//池
@@ -1173,10 +1190,12 @@ void UpdateBullet(void)
 						g_Bullet[i].shotpower = 0.0f;
 
 				}
-				
+
 			}////////地面にある時だけの処理の終わり///////////
 			/////////////////////////////////////////////////
 			//////////////////////////////////////////////////
+
+			
 
 			for (int y = 0; y < MAP_Y; y++)
 			{
@@ -1406,11 +1425,11 @@ void UpdateBullet(void)
 			//bool changeblock;
 
 
-		    //////////針の処理////////
-				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 16)
-				{
-					g_Bullet[i].shotpower = 0.0f;
-				}
+			//////////針の処理////////
+			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 16)
+			{
+				g_Bullet[i].shotpower = 0.0f;
+			}
 
 
 
@@ -1423,7 +1442,7 @@ void UpdateBullet(void)
 
 			}
 
-		
+
 
 			// 最期にposにnextposを反映させる
 			g_Bullet[i].pos = g_Bullet[i].nextpos;
@@ -1452,8 +1471,7 @@ void UpdateBullet(void)
 			g_ShadowBullet[i].drawsize.y = g_Bullet[i].h * p_Camera->magnification;
 
 		}
-
-
+		
 		// クールタイムを減らす処理一覧
 		// 球がブロックに当たった時の判定のクールタイムを減らしていく
 		if (g_Bullet[i].CollicionCool > 0)
@@ -1482,7 +1500,10 @@ void UpdateBullet(void)
 		{
 			g_Bullet[i].holecool--;
 		}
-		
+
+		// 崩れる穴の変わるタイム
+			g_Bullet[i].hole_changetime++;
+
 		// パワー100で打ち出した場合(ShotPowor1.5f)球が止まるまで
 		// g_Bullet[i].shottimeは　143カウント
 

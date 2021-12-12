@@ -40,7 +40,7 @@ static BULLET g_Bullet[BULLET_MAX];					// バレット構造体
 static SHADOWBULLET g_ShadowBullet[BULLET_MAX];		// バレットの影構造体
 
 int needletime = 0;									//針の当たり判定の時間
-
+int hole_changetime = 0;							//踏んだら消える床の画像の変わる時間時間
 //double angle = 00.0;								//向かせたい角度
 //
 //#define BULLET_ANGLE		(angle*D3DX_PI/180)		//バレットの角度(向かせたい角度*π/180)
@@ -152,7 +152,14 @@ void UpdateBullet(void)
 						p_Stagedata->maparray[y][x] = 16;
 					}
 				}
-
+				if (p_Stagedata->maparray[y][x] == 37)
+				{
+					//241以上の時に当たるとボールを止める
+					if (hole_changetime > 120)
+					{
+						p_Stagedata->maparray[y][x] = 22;
+					}
+				}
 
 			}
 		}
@@ -1110,7 +1117,6 @@ void UpdateBullet(void)
 							if (g_Bullet[i].onswitch == true)
 							{
 								p_Stagedata->maparray[y][x] = 20;
-								//g_Bullet[i].switchcool = 120.0f;
 							}
 						}
 
@@ -1120,7 +1126,6 @@ void UpdateBullet(void)
 							if (g_Bullet[i].onswitch == false)
 							{
 								p_Stagedata->maparray[y][x] = 19;
-								//g_Bullet[i].switchcool = 120.0f;
 							}
 						}
 
@@ -1130,7 +1135,6 @@ void UpdateBullet(void)
 							if (g_Bullet[i].onswitch == true)
 							{
 								p_Stagedata->maparray[y][x] = 35;
-								//g_Bullet[i].switchcool = 120.0f;
 							}
 						}
 
@@ -1140,7 +1144,6 @@ void UpdateBullet(void)
 							if (g_Bullet[i].onswitch == false)
 							{
 								p_Stagedata->maparray[y][x] = 36;
-								//g_Bullet[i].switchcool = 120.0f;
 							}
 						}
 					}
@@ -1155,31 +1158,19 @@ void UpdateBullet(void)
 					if (p_Stagedata->maparray[axis_y][axis_x] == 21)
 					{
 						p_Stagedata->maparray[axis_y][axis_x] = 37;
-						g_Bullet[i].hole_changetime = 0;
+						hole_changetime = 0;
 					}
 
 				}
 
-				//ひびが入る
-				if (p_Stagedata->maparray[axis_y][axis_x] == 37)
-				{
-					//240以下の時に当たるとボールを止める
-					if (g_Bullet[i].hole_changetime > 60)
-					{
-						p_Stagedata->maparray[axis_y][axis_x] = 22;
-
-						//g_Bullet[i].holecool = 60;
-					}
-				
-				}
 
 				//崩れた穴の処理
 				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 22)
 				{
-					/*if (g_Bullet[i].holecool <= 0)
+					if (g_Bullet[i].holecool <= 0)
 					{
 						g_Bullet[i].shotpower = 0.0f;
-					}*/
+					}
 				}
 
 				//池
@@ -1502,7 +1493,7 @@ void UpdateBullet(void)
 		}
 
 		// 崩れる穴の変わるタイム
-			g_Bullet[i].hole_changetime++;
+			hole_changetime++;
 
 		// パワー100で打ち出した場合(ShotPowor1.5f)球が止まるまで
 		// g_Bullet[i].shottimeは　143カウント

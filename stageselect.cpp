@@ -320,7 +320,7 @@ void UpdateStageSelect(void)
 
 
 				//ワールド選択へ戻る 240 700
-				if (mouse_pos_X > 150.0f && mouse_pos_X < 430.0f && mouse_pos_Y > 610.0f && mouse_pos_Y < 890.0f)
+				if (mouse_pos_X > 180.0f && mouse_pos_X < 280.0f && mouse_pos_Y > 650.0f && mouse_pos_Y < 750.0f)
 				{
 					g_StageSelect.select_x = 0;
 					g_StageSelect.select_y = 3;
@@ -469,7 +469,7 @@ void UpdateStageSelect(void)
 		if (g_StageSelect.select_x == 0 && g_StageSelect.select_y == 3)
 		{
 			SetEffect(61, D3DXVECTOR2(240.0f, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
-				D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 0,
+				D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
 				0.0f, 1.0f, 0, 999, 0, 60,
 				0.0f, 0.0f, 0);
 		}
@@ -556,7 +556,7 @@ void StartStageSelectScreen()
 
 			// タイトルに戻る処理
 			SetEffect(61, D3DXVECTOR2(240.0f, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
-				D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
+				D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 				0.0f, 1.0f, 0, 999, 0, 0,
 				0.0f, 0.0f, 0);
 		}

@@ -216,8 +216,8 @@ void UpdateResult(void)
 			0.0f, 0.0f, 0);
 		
 		//ワールド選択に戻る
-		SetEffect(75, D3DXVECTOR2(100.0f, 700.0f), D3DXVECTOR2(100.0f, 700.0f), 1,
-			D3DXVECTOR2(150.0f, 200.0f), D3DXVECTOR2(150.0f, 200.0f), 1,
+		SetEffect(75, D3DXVECTOR2(400.0f, 700.0f), D3DXVECTOR2(400.0f, 700.0f), 1,
+			D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(150.0f, 150.0f), 1,
 			0.0f, 1.0f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
 
@@ -237,7 +237,7 @@ void UpdateResult(void)
 		if (g_Result.selectpush == 1)
 		{
 			//ワールド選択に戻る
-			SetEffect(76, D3DXVECTOR2(100.0f, 700.0f), D3DXVECTOR2(100.0f, 700.0f), 1,
+			SetEffect(76, D3DXVECTOR2(393.0f, 702.0f), D3DXVECTOR2(393.0f, 702.0f), 1,
 				D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(150.0f, 150.0f), 1,
 				0.0f, 1.0f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);
@@ -303,13 +303,13 @@ void UpdateResult(void)
 
 		// マウスの座標を使っての入力処理
 		//1 1200 700	300 300
-		if (mouse_pos_X > 1050.0f && mouse_pos_X < 1350.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
+		if (mouse_pos_X > 930.0f && mouse_pos_X < 1230.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
 		{
 			g_Result.selectpush = 0;
 			resultmouseuse = true;
 		}
 		//2 100 700		200 200
-		else if (mouse_pos_X > 60.0f && mouse_pos_X < 140.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
+		else if (mouse_pos_X > 340.0f && mouse_pos_X < 460.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
 		{
 			g_Result.selectpush = 1;
 			resultmouseuse = true;

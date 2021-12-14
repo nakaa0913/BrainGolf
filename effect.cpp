@@ -107,6 +107,21 @@ static int flyball_72;
 //ポーズ画面の外枠
 static int around_73;
 
+//リザルト画面追加
+static int note_74;
+static int MAPButton1_75;
+static int MAPButton2_76;
+static int NEXTSTAGE1_77;
+static int NEXTSTAGE2_78;
+static int RETRY1_79;
+static int RETRY2_80;
+static int Ribon_81;
+static int NoJewlry_82;
+static int RedJewlry_83;
+static int BlueJewlry_84;
+static int YellowJewlry_85;
+
+
 void InitEffect(void)
 {
 	//テクスチャの名前
@@ -197,6 +212,18 @@ void InitEffect(void)
 
 	around_73 = LoadTexture("data/TEXTURE/pause/around.png");
 
+	note_74 = LoadTexture("data/TEXTURE/result/note.png");
+	MAPButton1_75 = LoadTexture("data/TEXTURE/result/1MAP_button.png");
+	MAPButton2_76 = LoadTexture("data/TEXTURE/result/2MAP_button.png");
+	NEXTSTAGE1_77 = LoadTexture("data/TEXTURE/result/1NEXTSTAGE_button.png");
+	NEXTSTAGE2_78 = LoadTexture("data/TEXTURE/result/2NEXTSTAGE_button.png");
+	RETRY1_79 = LoadTexture("data/TEXTURE/result/1RETRY_button.png");
+	RETRY2_80 = LoadTexture("data/TEXTURE/result/2RETRY_button.png");
+	Ribon_81 = LoadTexture("data/TEXTURE/result/ribon.png");
+	NoJewlry_82 = LoadTexture("data/TEXTURE/result/jewelry_nasi.png");
+	RedJewlry_83 = LoadTexture("data/TEXTURE/result/jewelry_Red.png");
+	BlueJewlry_84 = LoadTexture("data/TEXTURE/result/jewelry_Blue.png");
+	YellowJewlry_85 = LoadTexture("data/TEXTURE/result/jewelry_Yellow.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -976,6 +1003,42 @@ int GetTextureData(int id)
 		break;
 	case 73:
 		return around_73;
+		break;
+	case 74:
+		return note_74;
+		break;
+	case 75:
+		return MAPButton1_75;
+		break;
+	case 76:
+		return MAPButton2_76;
+		break;
+	case 77:
+		return NEXTSTAGE1_77;
+		break;
+	case 78:
+		return NEXTSTAGE2_78;
+		break;
+	case 79:
+		return RETRY1_79;
+		break;
+	case 80:
+		return RETRY2_80;
+		break;
+	case 81:
+		return Ribon_81;
+		break;
+	case 82:
+		return NoJewlry_82;
+		break;
+	case 83:
+		return RedJewlry_83;
+		break;
+	case 84:
+		return BlueJewlry_84;
+		break;
+	case 85:
+		return YellowJewlry_85;
 		break;
 		
 	}

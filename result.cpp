@@ -103,10 +103,10 @@ void UpdateResult(void)
 		//横1440
 		//縦810
 		//ゲームクリア
-		SetEffect(5, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+		/*SetEffect(5, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
 			D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT / 2), 1,
 			0.0f, 1.0f, 30, 120, 60, 90,
-			0.0f, 0.0f, 0);
+			0.0f, 0.0f, 0);*/
 
 	}
 
@@ -115,27 +115,31 @@ void UpdateResult(void)
 	if (g_Result.goaltime == 240)
 	{
 		//（アドバイス？）
-		SetEffect(1, D3DXVECTOR2(SCREEN_WIDTH / 2, 405), D3DXVECTOR2(SCREEN_WIDTH / 2, 405), 0,
+		/*SetEffect(1, D3DXVECTOR2(SCREEN_WIDTH / 2, 405), D3DXVECTOR2(SCREEN_WIDTH / 2, 405), 0,
 			D3DXVECTOR2(590, 1000), D3DXVECTOR2(590, 1000), 1,
 			0.0f, 1.0f, 100, 999, 0, 180,
+			0.0f, 0.0f, 0);*/
+		SetEffect(74, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+			D3DXVECTOR2(1400, 800), D3DXVECTOR2(1400, 800), 1,
+			0.0f, 1.0f, 100, 999, 0, 180,
 			0.0f, 0.0f, 0);
-		DrawMissionResult();
+		//DrawMissionResult();
 	}
 
 	if (g_Result.goaltime == 300)
 	{
 		//星(影)
-		SetEffect(14, D3DXVECTOR2(550.0f, 68.0f), D3DXVECTOR2(550.0f, 68.0f), 0,
+		SetEffect(82, D3DXVECTOR2(800.0f, 280.0f), D3DXVECTOR2(800.0f, 280.0f), 0,
 			D3DXVECTOR2(90.0f, 90.0f), D3DXVECTOR2(90.0f, 90.0f), 1,
 			0.0f, 1.0f, 60, 999, 0, 60,
 			0.0f, 0.0f, 0);
 		//星(影)
-		SetEffect(14, D3DXVECTOR2(550.0f, 163.0f), D3DXVECTOR2(550.0f, 163.0f), 0,
+		SetEffect(82, D3DXVECTOR2(800.0f, 360.0f), D3DXVECTOR2(800.0f, 360.0f), 0,
 			D3DXVECTOR2(90.0f, 90.0f), D3DXVECTOR2(90.0f, 90.0f), 1,
 			0.0f, 1.0f, 60, 999, 0, 60,
 			0.0f, 0.0f, 0);
 		//星(影)
-		SetEffect(14, D3DXVECTOR2(550.0f, 250.0f), D3DXVECTOR2(550.0f, 250.0f), 0,
+		SetEffect(82, D3DXVECTOR2(800.0f, 440.0f), D3DXVECTOR2(800.0f, 440.0f), 0,
 			D3DXVECTOR2(90.0f, 90.0f), D3DXVECTOR2(90.0f, 90.0f), 1,
 			0.0f, 1.0f, 60, 999, 0, 60,
 			0.0f, 0.0f, 0);
@@ -147,7 +151,7 @@ void UpdateResult(void)
 		if (p_Savedata[p_Stagedata->stagenum].mission_clear[0] == 1)
 		{
 			////星
-			SetEffect(11, D3DXVECTOR2(550.0f, 68.0f), D3DXVECTOR2(550.0f, 68.0f), 0,
+			SetEffect(83, D3DXVECTOR2(800.0f, 280.0f), D3DXVECTOR2(800.0f, 280.0f), 0,
 				D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
 				0.0f, 1.0f, 120, 999, 0, 60,
 				0.0f, 0.0f, 0);
@@ -162,7 +166,7 @@ void UpdateResult(void)
 		if (p_Savedata[p_Stagedata->stagenum].mission_clear[1] == 1)
 		{
 			//星
-			SetEffect(11, D3DXVECTOR2(550.0f, 163.0f), D3DXVECTOR2(550.0f, 163.0f), 0,
+			SetEffect(84, D3DXVECTOR2(800.0f, 360.0f), D3DXVECTOR2(800.0f, 360.0f), 0,
 				D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
 				0.0f, 1.0f, 120, 999, 0, 60,
 				0.0f, 0.0f, 0);
@@ -175,7 +179,7 @@ void UpdateResult(void)
 		if (p_Savedata[p_Stagedata->stagenum].mission_clear[2] == 1)
 		{
 			//星
-			SetEffect(11, D3DXVECTOR2(550.0f, 250.0f), D3DXVECTOR2(550.0f, 250.0f), 0,
+			SetEffect(85, D3DXVECTOR2(800.0f, 440.0f), D3DXVECTOR2(800.0f, 440.0f), 0,
 				D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
 				0.0f, 1.0f, 120, 999, 0, 60,
 				0.0f, 0.0f, 0);
@@ -200,20 +204,20 @@ void UpdateResult(void)
 	if (g_Result.goaltime >= 9000)
 	{
 		//明るくする暗くするなら4
-		SetEffect(48, D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(0.0f, 0.0f), 0,
+		/*SetEffect(48, D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(0.0f, 0.0f), 0,
 			D3DXVECTOR2(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2), D3DXVECTOR2(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2), 1,
 			0.0f, 0.5f, 0, 1, 0, 1,
-			0.0f, 0.0f, 0);
+			0.0f, 0.0f, 0);*/
 
 		//next?次のステージへ的な
-		SetEffect(47, D3DXVECTOR2(1200.0f, 700.0f), D3DXVECTOR2(1200.0f, 700.0f), 1,
-			D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 1,
+		SetEffect(77, D3DXVECTOR2(1080.0f, 700.0f), D3DXVECTOR2(1080.0f, 700.0f), 1,
+			D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 1,
 			0.0f, 1.0f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
 		
 		//ワールド選択に戻る
-		SetEffect(49, D3DXVECTOR2(100.0f, 700.0f), D3DXVECTOR2(100.0f, 700.0f), 1,
-			D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
+		SetEffect(75, D3DXVECTOR2(100.0f, 700.0f), D3DXVECTOR2(100.0f, 700.0f), 1,
+			D3DXVECTOR2(150.0f, 200.0f), D3DXVECTOR2(150.0f, 200.0f), 1,
 			0.0f, 1.0f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
 
@@ -223,8 +227,8 @@ void UpdateResult(void)
 		if (g_Result.selectpush == 0)
 		{
 			//next?次のステージへ的な
-			SetEffect(47, D3DXVECTOR2(1200.0f, 700.0f), D3DXVECTOR2(1200.0f, 700.0f), 1,
-				D3DXVECTOR2(400.0f, 400.0f), D3DXVECTOR2(400.0f, 400.0f), 1,
+			SetEffect(78, D3DXVECTOR2(1080.0f, 700.0f), D3DXVECTOR2(1080.0f, 700.0f), 1,
+				D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 1,
 				0.0f, 1.0f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);
 
@@ -233,8 +237,8 @@ void UpdateResult(void)
 		if (g_Result.selectpush == 1)
 		{
 			//ワールド選択に戻る
-			SetEffect(49, D3DXVECTOR2(100.0f, 700.0f), D3DXVECTOR2(100.0f, 700.0f), 1,
-				D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 1,
+			SetEffect(76, D3DXVECTOR2(100.0f, 700.0f), D3DXVECTOR2(100.0f, 700.0f), 1,
+				D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(150.0f, 150.0f), 1,
 				0.0f, 1.0f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);
 		}

@@ -163,6 +163,7 @@ void UninitStageSelect()
 ------------------------------------------------------------------------------*/
 void UpdateStageSelect(void)
 {
+	
 	if (StageDecision == false)
 	{
 		//マウスの座標を取得
@@ -409,7 +410,6 @@ void UpdateStageSelect(void)
 	}
 
 
-
 	// ステージ選択の時の原点となる場所
 	float	stage_origin_x = 240.0f;			    // xの原点(0,0を選択しているとき)
 	float	stage_origin_y = 200.0f;			    // yの原点(0,0を選択しているとき)
@@ -433,6 +433,9 @@ void UpdateStageSelect(void)
 			DrawMissionStageSelect();
 		}
 
+
+		
+
 		//ステージ選択
 		for (int x = 0; x < SELECT_MAX_X; x++)
 		{
@@ -452,14 +455,10 @@ void UpdateStageSelect(void)
 								D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
 								1.0f, 1.0f, 0, 999, 0, 60,
 								0.0f, 0.0f, 0);
-
-
 					}
-
-
 				}
 
-
+				
 			}
 
 
@@ -566,7 +565,7 @@ void StartStageSelectScreen()
 			{
 				//星
 				SetEffect(83, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
-					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
 					0.0f, 1.0f, 120, 999, 0, 60,
 					0.0f, 0.0f, 0);
 			}
@@ -575,8 +574,8 @@ void StartStageSelectScreen()
 			if (p_Savedata[NowWorld_stagenum].mission_clear[1] == 1)
 			{
 				//星
-				SetEffect(84, D3DXVECTOR2(now_x - 50, now_y - 50), D3DXVECTOR2(now_x - 50, now_y - 50), 0,
-					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+				SetEffect(84, D3DXVECTOR2(now_x - 50, now_y), D3DXVECTOR2(now_x - 50, now_y), 0,
+					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
 					0.0f, 1.0f, 120, 999, 0, 60,
 					0.0f, 0.0f, 0);
 			}
@@ -585,8 +584,8 @@ void StartStageSelectScreen()
 			if (p_Savedata[NowWorld_stagenum].mission_clear[2] == 1)
 			{
 				//星
-				SetEffect(85, D3DXVECTOR2(now_x + 50, now_y+50), D3DXVECTOR2(now_x + 50, now_y + 50), 0,
-					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+				SetEffect(85, D3DXVECTOR2(now_x + 50, now_y), D3DXVECTOR2(now_x + 50, now_y), 0,
+					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
 					0.0f, 1.0f, 120, 999, 0, 60,
 					0.0f, 0.0f, 0);
 			}

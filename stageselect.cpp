@@ -549,7 +549,7 @@ void StartStageSelectScreen()
 	{
 		for (int y = 0; y < SELECT_MAX_Y; y++)
 		{
-			int NowWorld_stagenum = NowWorld * 10 - 10 + x + 1 + y * SELECT_MAX_X;
+			int NowWorld_stagenum = NowWorld * 10 - 10 + x + y * SELECT_MAX_X;
 
 			// 現在の座標を求める
 			float now_x = stage_origin_x + interval_x * x;
@@ -562,7 +562,7 @@ void StartStageSelectScreen()
 				0.0f, 0.0f, 0);
 
 			// ミッションをクリアしているなら表示する
-			if (p_Savedata[p_Stagedata->stagenum].mission_clear[0] == 1)
+			if (p_Savedata[NowWorld_stagenum].mission_clear[0] == 1)
 			{
 				//星
 				SetEffect(83, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
@@ -572,7 +572,7 @@ void StartStageSelectScreen()
 			}
 
 			// ミッションをクリアしているなら表示する
-			if (p_Savedata[p_Stagedata->stagenum].mission_clear[1] == 1)
+			if (p_Savedata[NowWorld_stagenum].mission_clear[1] == 1)
 			{
 				//星
 				SetEffect(84, D3DXVECTOR2(now_x - 50, now_y - 50), D3DXVECTOR2(now_x - 50, now_y - 50), 0,
@@ -582,7 +582,7 @@ void StartStageSelectScreen()
 			}
 
 			// ミッションをクリアしているなら表示する
-			if (p_Savedata[p_Stagedata->stagenum].mission_clear[2] == 1)
+			if (p_Savedata[NowWorld_stagenum].mission_clear[2] == 1)
 			{
 				//星
 				SetEffect(85, D3DXVECTOR2(now_x + 50, now_y+50), D3DXVECTOR2(now_x + 50, now_y + 50), 0,

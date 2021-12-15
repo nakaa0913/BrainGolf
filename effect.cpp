@@ -175,7 +175,7 @@ void InitEffect(void)
 	stage_mission18_44 = LoadTexture("data/TEXTURE/select/mission/mission_18.png");
 	stage_mission19_45 = LoadTexture("data/TEXTURE/select/mission/mission_19.png");
 
-	number_46 = LoadTexture("data/TEXTURE/other_effect/number.png");
+	number_46 = LoadTexture("data/TEXTURE/result/number_02.png");
 	next_47 = LoadTexture("data/TEXTURE/result/allnext.png");
 	white_48 = LoadTexture("data/TEXTURE/result/fade_white.png");
 	mapback_49 = LoadTexture("data/TEXTURE/result/map_back.png");

@@ -149,25 +149,25 @@ void UpdatePrediction(void)
 //=============================================================================
 void DrawPrediction(void)
 {
-	CAMERA* p_Camera = GetCamera();
+	//CAMERA* p_Camera = GetCamera();
 
-	for (int i = 0; i < PREDICTION_MAX; i++)
-	{
-		if (g_Prediction[i].isUse == true)	// この予測弾が使われている？
-		{									// Yes
-			// 予測弾の位置やテクスチャー座標を反映
-			float px = g_Prediction[i].pos.x;		// バレットの表示位置X
-			float py = g_Prediction[i].pos.y;		// バレットの表示位置Y
-			float pw = g_Prediction[i].size.x;		// バレットの表示幅
-			float ph = g_Prediction[i].size.y;		// バレットの表示高さ
-			D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	//for (int i = 0; i < PREDICTION_MAX; i++)
+	//{
+	//	if (g_Prediction[i].isUse == true)	// この予測弾が使われている？
+	//	{									// Yes
+	//		// 予測弾の位置やテクスチャー座標を反映
+	//		float px = g_Prediction[i].pos.x;		// バレットの表示位置X
+	//		float py = g_Prediction[i].pos.y;		// バレットの表示位置Y
+	//		float pw = g_Prediction[i].size.x;		// バレットの表示幅
+	//		float ph = g_Prediction[i].size.y;		// バレットの表示高さ
+	//		D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 
 
-			// １枚のポリゴンの頂点とテクスチャ座標を設定
-			DrawSpriteColorRotate(g_Prediction[i].tex, px, py, pw, ph, 0.0f, 0.0f, 1.0f, 1.0f, col, 0.0f);
-		}
-	}
+	//		// １枚のポリゴンの頂点とテクスチャ座標を設定
+	//		DrawSpriteColorRotate(g_Prediction[i].tex, px, py, pw, ph, 0.0f, 0.0f, 1.0f, 1.0f, col, 0.0f);
+	//	}
+	//}
 }
 
 

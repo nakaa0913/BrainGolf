@@ -88,8 +88,8 @@ void InitPlacement(void)
 
 	// placementでは1個の選択中のエフェクトを動かして使う
 	// 選択している場所の表示の時の原点となる場所
-	float	origin_x = TO_CENTER + (MAP_CHIP_SIZE_X / 2);			    // xの原点(0,0を選択しているとき)
-	float	origin_y = MAP_CHIP_SIZE_Y / 2;			    // yの原点(0,0を選択しているとき)
+	float	origin_x = TO_CENTER_X + (MAP_CHIP_SIZE_X / 2);			    // xの原点(0,0を選択しているとき)
+	float	origin_y = MAP_CHIP_SIZE_Y / 2 + TO_CENTER_Y;			    // yの原点(0,0を選択しているとき)
 	// 選択している場所の表示の時の1個離れたらこれだけ離れるよってやつ
 	float interval_x = MAP_CHIP_SIZE_X;
 	float interval_y = MAP_CHIP_SIZE_Y;
@@ -132,8 +132,8 @@ void UpdatePlacement(void)
 
 
 	// 選択している場所の表示の時の原点となる場所
-	float	origin_x = TO_CENTER + (MAP_CHIP_SIZE_X / 2);			    // xの原点(0,0を選択しているとき)
-	float	origin_y = MAP_CHIP_SIZE_Y / 2;								 // yの原点(0,0を選択しているとき)
+	float	origin_x = TO_CENTER_X + (MAP_CHIP_SIZE_X / 2);			    // xの原点(0,0を選択しているとき)
+	float	origin_y = MAP_CHIP_SIZE_Y / 2 + TO_CENTER_Y;				// yの原点(0,0を選択しているとき)
 	// 選択している場所の表示の時の1個離れたらこれだけ離れるよってやつ
 	float interval_x = MAP_CHIP_SIZE_X;
 	float interval_y = MAP_CHIP_SIZE_Y;
@@ -233,13 +233,13 @@ void UpdatePlacement(void)
 			{
 				if (x < MAP_X && y < MAP_Y)
 				{
-					float block_left  = 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER;
-					float block_right = MAP_CHIP_SIZE_X + x * MAP_CHIP_SIZE_X + TO_CENTER;
+					float block_left  = 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER_X;
+					float block_right = MAP_CHIP_SIZE_X + x * MAP_CHIP_SIZE_X + TO_CENTER_X;
 					float block_up    = 0.0f + y * MAP_CHIP_SIZE_Y;
 					float block_down  = MAP_CHIP_SIZE_Y + y * MAP_CHIP_SIZE_Y;
 
 					// マウスの座標がそこにあるなら
-					if (mouse_pos_X > block_left && mouse_pos_X < block_right && mouse_pos_Y > block_up && mouse_pos_Y < block_down)
+					if (mouse_pos_X > block_left && mouse_pos_X < block_right && mouse_pos_Y - TO_CENTER_Y > block_up && mouse_pos_Y - TO_CENTER_Y < block_down)
 					{
 						nowchoice.x = x;
 						nowchoice.y = y;
@@ -305,7 +305,7 @@ void UpdatePlacement(void)
 
 
 		//// 選択している場所の表示の時の原点となる場所
-		//float	origin_x = TO_CENTER + (MAP_CHIP_SIZE_X / 2);			    // xの原点(0,0を選択しているとき)
+		//float	origin_x = TO_CENTER_X + (MAP_CHIP_SIZE_X / 2);			    // xの原点(0,0を選択しているとき)
 		//float	origin_y = MAP_CHIP_SIZE_Y / 2;			    // yの原点(0,0を選択しているとき)
 		//// 選択している場所の表示の時の1個離れたらこれだけ離れるよってやつ
 		//float interval_x = MAP_CHIP_SIZE_X;
@@ -336,7 +336,7 @@ void UpdatePlacement(void)
 void DrawPlacement(void)
 {
 	// とうかくず視点
-	DrawBGsideForPlacement();
+	//DrawBGsideForPlacement();
 
 	// 上から視点
 	if (ViewAbove)

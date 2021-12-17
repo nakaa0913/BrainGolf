@@ -584,19 +584,19 @@ void DrawPlayerSpecifyNum(int i)
 	DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].drawpos.x, g_Player[i].drawpos.y, g_Player[i].drawsize.x, g_Player[i].drawsize.y,
 		g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 
-	// è„Ç©ÇÁå©ÇΩéûÇÃï\é¶
-	// ñÓàÛÇÃï`é 
-	if (g_Player[i].have == true)
-	{
-		// ShotPowerÇ…ÇÊÇÈî{ó¶
-		float ShotBairitu = 0.5f + (g_Player[i].ShotPower / 100.0f);
+	//// è„Ç©ÇÁå©ÇΩéûÇÃï\é¶
+	//// ñÓàÛÇÃï`é 
+	//if (g_Player[i].have == true)
+	//{
+	//	// ShotPowerÇ…ÇÊÇÈî{ó¶
+	//	float ShotBairitu = 0.5f + (g_Player[i].ShotPower / 100.0f);
 
-		DrawSpriteColorRotate(tex_yazirushi, g_Player[i].pos.x, g_Player[i].pos.y, 500.0f * ShotBairitu, 500.0f * ShotBairitu,
-			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), -rot);
-	}
+	//	DrawSpriteColorRotate(tex_yazirushi, g_Player[i].pos.x, g_Player[i].pos.y, 500.0f * ShotBairitu, 500.0f * ShotBairitu,
+	//		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), -rot);
+	//}
 
-	DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
-		g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+	//DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
+	//	g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 
 }
 
@@ -610,7 +610,7 @@ void DrawPlayerForPlacement(void)
 		{
 			float directionUV = 0.0f;		// â∫å¸Ç´ÇÃèÛë‘Ç≈ï\é¶
 
-			DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x + TO_CENTER, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
+			DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x + TO_CENTER_X, g_Player[i].pos.y + TO_CENTER_Y, g_Player[i].w, g_Player[i].h,
 				g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 		}
 	}

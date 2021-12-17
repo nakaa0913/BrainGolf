@@ -253,12 +253,21 @@ void UpdateBullet(void)
 
 
 				// マップとの当たり判定処理
-				for (int y = 0; y < MAP_Y; y++)
+				for (int y = 0 - 1; y < MAP_Y + 1; y++)
 				{
-					for (int x = 0; x < MAP_X; x++)
+					for (int x = 0 - 1; x < MAP_X + 1; x++)
 					{
-						// そのブロックが当たり判定があるブロックかどうか調べるa
-						int BlockData = CheckBlockdata(x, y);
+						// そのブロックが当たり判定があるブロックかどうか調べる
+						int BlockData;
+						// 外周のブロックの場合は壁ブロックを設定する。-1の部分はここで描写、+1の部分は透明の設定もあるので後で描写
+						if (x == -1 || y == -1 || x == MAP_X || y == MAP_Y)
+						{
+							BlockData = 1;
+						}
+						else
+						{
+							BlockData = CheckBlockdata(x, y);
+						}
 
 						// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 						if (BlockData == 1)
@@ -1508,25 +1517,25 @@ void UpdateBullet(void)
 //=============================================================================
 void DrawBullet(void)
 {
-	CAMERA* p_Camera = GetCamera();
+	//CAMERA* p_Camera = GetCamera();
 
-	for (int i = 0; i < BULLET_MAX; i++)
-	{
-		if (g_Bullet[i].use == true)	// このバレットが使われている？
-		{								// Yes
-			//バレットの位置やテクスチャー座標を反映
-			float px = g_Bullet[i].pos.x;	// バレットの表示位置X
-			float py = g_Bullet[i].pos.y;	// バレットの表示位置Y
-			float pw = g_Bullet[i].w;		// バレットの表示幅
-			float ph = g_Bullet[i].h;		// バレットの表示高さ
-			D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	//for (int i = 0; i < BULLET_MAX; i++)
+	//{
+	//	if (g_Bullet[i].use == true)	// このバレットが使われている？
+	//	{								// Yes
+	//		//バレットの位置やテクスチャー座標を反映
+	//		float px = g_Bullet[i].pos.x;	// バレットの表示位置X
+	//		float py = g_Bullet[i].pos.y;	// バレットの表示位置Y
+	//		float pw = g_Bullet[i].w;		// バレットの表示幅
+	//		float ph = g_Bullet[i].h;		// バレットの表示高さ
+	//		D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 
 
-			// １枚のポリゴンの頂点とテクスチャ座標を設定
-			DrawSpriteColorRotate(g_Bullet[i].texNo, px, py, pw, ph, 0.0f, 0.0f, 1.0f, 1.0f, col, g_Bullet[i].rot);
-		}
-	}
+	//		// １枚のポリゴンの頂点とテクスチャ座標を設定
+	//		DrawSpriteColorRotate(g_Bullet[i].texNo, px, py, pw, ph, 0.0f, 0.0f, 1.0f, 1.0f, col, g_Bullet[i].rot);
+	//	}
+	//}
 }
 
 

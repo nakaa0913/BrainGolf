@@ -5,7 +5,8 @@
 
 
 // 左に寄っているマップ達を中心に持ってくるためのマクロ
-#define TO_CENTER	((SCREEN_WIDTH / 2) - (MAP_X * MAP_CHIP_SIZE_X / 2))
+#define TO_CENTER_X	((SCREEN_WIDTH / 2) - (MAP_X * MAP_CHIP_SIZE_X / 2))
+#define TO_CENTER_Y	(50.0f)
 
 // キー入力のクールタイム
 #define MOVEKEY_COOLTIME	(6)			// 移動キーのクールタイム

@@ -252,8 +252,6 @@ void DrawBG(void)
 	else
 		offset_y = -560.0f;
 
-	int asdddddd = 0;
-
 	//レイヤー０の表示
 	for (int x = 0; x < MAP_X + 1; x++)
 	{
@@ -269,6 +267,7 @@ void DrawBG(void)
 			// tex_floor_huchinasi
 			// tex_base_wall
 
+			// 床の描写
 			if (x < MAP_X && y < MAP_Y)
 			{
 				// 等角図での床の描写
@@ -276,67 +275,10 @@ void DrawBG(void)
 				// DrawSpriteColorRotate(tex_floor_huchinasi, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 
 
-				// 上から視点。今までの
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+				// 上から視点での床の描写
+				//DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
 
 			}
-
-
-			//// 手前(見えてる側面)の壁の描写
-			//if (x == MAP_X || y == MAP_Y)
-			//{
-			//	// tex_base_wall
-			//	// tex_base_wall_center
-			//	// tex_base_wall_left
-			//	// tex_base_wall_right
-
-			//	// 真ん中	(x == MAP_X && y == MAP_Y)		// 左端	(x == 0 && y == MAP_Y)		// 右端	(x == MAP_X && y == 0)		// 他全て
-			//	if (x == MAP_X && y == MAP_Y)
-			//		DrawSpriteLeftTop(tex_base_wall_center, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
-			//	else if (x == 0 && y == MAP_Y)
-			//		DrawSpriteLeftTop(tex_base_wall_left, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
-			//	else if (x == MAP_X && y == 0)
-			//		DrawSpriteLeftTop(tex_base_wall_right, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
-			//	else
-			//		DrawSpriteLeftTop(tex_base_wall, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
-			//}
-
-		
-
-			//switch (p_Stagedata->maparray[y][x])
-			//{
-			//case 0://草原
-			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-			//	break;
-			//case 1://道
-			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-			//	break;
-			//case 2://ゴール
-			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-			//	break;
-			//case 3://加速
-			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-			//	break;
-			//case 4://ワープ
-			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-			//	break;
-			//case 5://ワープ
-			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-			//	break;
-			//case 6://砂
-			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-			//	break;
-			//case 7://switch
-			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-			//	break;
-			//case 8://hansya
-			//	DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
-			//	break;
-			//default:
-			//	exit(4);			// ふつうここに来ることはないのでエラーとして強制しておく
-			//						// 下の背景オブジェクトの設定をしていないと、case10とか11とかを設定しても反映されない。
-			//	break;
-			//}
 		}
 	}
 
@@ -349,7 +291,7 @@ void DrawBG(void)
 
 
 	// ブロックの色の設定(リセット)		順番的に(0,0)は透明度は変えられない。けど問題ない。
-	D3DXCOLOR color[10 * MAP_Y + MAP_X];
+	D3DXCOLOR color[10 * (MAP_Y + 1) + (MAP_X + 1)];
 	for (int x = 0; x < MAP_X; x++)
 	{
 		for (int y = 0; y < MAP_Y; y++)
@@ -359,17 +301,45 @@ void DrawBG(void)
 		}
 	}
 
-	// 背景オブジェクトの表示
-	for (int x = 0; x < MAP_X; x++)
+	// 背景オブジェクトの表示	外周ブロックのために-1と+1
+	for (int x = 0 - 1; x < MAP_X + 1; x++)
 	{
-		for (int y = 0; y < MAP_Y; y++)
+		for (int y = 0 - 1; y < MAP_Y + 1; y++)
 		{
 			MAP_DATA_T mapchip;
-			mapchip = g_MapInfo[p_Stagedata->maparray[y][x]];
+			// そこに何のブロックがあるかを調べるための箱を用意
+			int mapchipdata;
+
+			// 外周のブロックの場合は壁ブロックを設定する。-1の部分はここで描写、+1の部分は透明の設定もあるので後で描写
+			if (x == -1 || y == -1 || x == MAP_X || y == MAP_Y)
+			{
+				mapchipdata = 1;
+				mapchip = g_MapInfo[1];
+
+				if (x == -1 || y == -1)
+				{
+					float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+					float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+
+					// とうかくず視点
+					DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+					// 今までの上からの視点
+					//DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
+
+					continue;
+				}
+			}
+			else
+			{
+				mapchipdata = p_Stagedata->maparray[y][x];
+				mapchip = g_MapInfo[mapchipdata];
+			}
 
 			// マップのデータが0の場合何も表示しないし計算もしない。
-			if (p_Stagedata->maparray[y][x] != 0)
+			if (mapchipdata != 0)
 			{
+
 				// 色(透明度の初期化)
 				color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -472,7 +442,7 @@ void DrawBG(void)
 				DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f, color[10 * y + x]);
 
 				// 今までの上からの視点
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
+				//DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
 			}
 
 			// プレイヤーの表示、表示順が大事
@@ -620,24 +590,36 @@ void DrawBGaboveForPlacement(void)
 			if (x < MAP_X && y < MAP_Y)
 			{
 				// 上から視点。今までの
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER, y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER_X, y * MAP_CHIP_SIZE_Y + TO_CENTER_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
 			}
 		}
 	}
 
 	// 背景オブジェクトの表示
-	for (int x = 0; x < MAP_X; x++)
+	for (int x = 0 - 1; x < MAP_X + 1; x++)
 	{
-		for (int y = 0; y < MAP_Y; y++)
+		for (int y = 0 - 1; y < MAP_Y  + 1; y++)
 		{
 			MAP_DATA_T mapchip;
-			mapchip = g_MapInfo[p_Stagedata->maparray[y][x]];
+			int mapchipdata;
 
+			// 外周のブロックの場合は壁ブロックを設定する。-1の部分はここで描写、+1の部分は透明の設定もあるので後で描写
+			if (x == -1 || y == -1 || x == MAP_X || y == MAP_Y)
+			{
+				mapchipdata = 1;
+				mapchip = g_MapInfo[1];
+			}
+			else
+			{
+				mapchipdata = p_Stagedata->maparray[y][x];
+				mapchip = g_MapInfo[mapchipdata];
+
+			}
 			// マップのデータが0の場合何も表示しないし計算もしない。
-			if (p_Stagedata->maparray[y][x] != 0)
+			if (mapchipdata != 0)
 			{
 				// 今までの上からの視点
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER, y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
+				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER_X, y * MAP_CHIP_SIZE_Y + TO_CENTER_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
 			}
 		}
 	}

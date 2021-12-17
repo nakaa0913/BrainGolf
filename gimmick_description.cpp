@@ -80,8 +80,8 @@ void UpdateGimmickDescription_Game()
 
 	//float interval_x = DRAW_MAP_CHIP_SIZE_X;
 	//float interval_y = DRAW_MAP_CHIP_SIZE_Y;
-	float interval_x = 80.0f;
-	float interval_y = 40.0f;
+	float interval_x = 80.0f * CAMERA_MAGNIFICATION;
+	float interval_y = 40.0f * CAMERA_MAGNIFICATION;
 
 
 
@@ -90,8 +90,8 @@ void UpdateGimmickDescription_Game()
 	{
 		for (int y = -15; y < MAP_Y + 15; y++)
 		{
-			float draw_gap_up = 20.0f;					// テクスチャとのずれ,細かい調整に使ってもよし
-			float draw_gap_down = -20.0f;
+			float draw_gap_up = 20.0f * CAMERA_MAGNIFICATION;					// テクスチャとのずれ,細かい調整に使ってもよし
+			float draw_gap_down = -20.0f * CAMERA_MAGNIFICATION;
 
 			float a = 0.5f;								// sin30°のこと y = ax + b のa
 			float camera_gap_x = a * p_Camera->pos.x;
@@ -427,11 +427,11 @@ Float2 MoreMousePos(float basex, float basey, int divnum)
 	bool mouse_Lclick = GetMouseLClick();
 	bool mouse_Rclick = GetMouseRClick();
 
-	float interval_x = 80.0f / divnum;
-	float interval_y = 40.0f / divnum;
+	float interval_x = 80.0f * CAMERA_MAGNIFICATION / divnum;
+	float interval_y = 40.0f * CAMERA_MAGNIFICATION / divnum;
 
-	float draw_gap_up = 20.0f;					// テクスチャとのずれ,細かい調整に使ってもよし
-	float draw_gap_down = -20.0f;
+	float draw_gap_up = 20.0f * CAMERA_MAGNIFICATION;					// テクスチャとのずれ,細かい調整に使ってもよし
+	float draw_gap_down = -20.0f * CAMERA_MAGNIFICATION;
 
 	float a = 0.5f;								// sin30°のこと y = ax + b のa
 	float camera_gap_x = a * p_Camera->pos.x;
@@ -439,8 +439,8 @@ Float2 MoreMousePos(float basex, float basey, int divnum)
 	float b_up = 480.0f + draw_gap_up + camera_gap_y + camera_gap_x;			// 右上がりの線のy軸でのy				 y = ax + b のb
 	float b_down = -320.0f + draw_gap_down + camera_gap_y - camera_gap_x;		// 左下がりの線のy軸でのy
 
-	float b_up_plus = basex * 40.0f;
-	float b_down_plus = basey * 40.0f;
+	float b_up_plus = basex * 40.0f * CAMERA_MAGNIFICATION;
+	float b_down_plus = basey * 40.0f * CAMERA_MAGNIFICATION;
 
 
 	Float2 BestPos = { basex, basey };

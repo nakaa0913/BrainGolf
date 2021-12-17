@@ -16,7 +16,7 @@ void InitCamera(void)
 	g_Camera.oldpos = g_Camera.pos;
 	g_Camera.move = D3DXVECTOR2(0.0f, 0.0f);
 	g_Camera.movespeed = D3DXVECTOR2(0.0f, 0.0f);
-	g_Camera.magnification = 1.0f;
+	g_Camera.magnification = CAMERA_MAGNIFICATION;
 	g_Camera.zoomspeed = 0.0f;
 
 }

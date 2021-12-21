@@ -49,10 +49,10 @@ void InitLogo(void)
 	//テクスチャ生成
 	g_TextureNo = LoadTexture("data/TEXTURE/logo/HEW2.png");
 
-	g_BGMNo = LoadSound("data/BGM/sample000.wav");
+	g_BGMNo = LoadSound("data/SE/catvoice01.wav");
 
 	//255(-1)をループ指定すると無限ループ
-	PlaySound(g_BGMNo, -1);
+	PlaySound(g_BGMNo, 0);
 
 	return ;
 }

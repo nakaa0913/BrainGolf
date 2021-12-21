@@ -48,6 +48,9 @@ bool goal = false;
 bool gameover = false;
 
 int game_frame_time = 0;
+int sound_once = 0;
+
+RESULT* p_GetResult = GetResult();
 
 /*------------------------------------------------------------------------------
    ‰Šú‰»ŠÖ”
@@ -73,10 +76,11 @@ void InitGame(void)
 
 	InitGimmickDescription();
 
-	g_BGMNo = LoadSound("data/BGM/sample001.wav");
+	g_BGMNo = LoadSound("data/BGM/morningroutine(title).wav");
 
 	SetVolume(g_BGMNo, 1.0f);
 	PlaySound(g_BGMNo, -1);
+	sound_once = 0;
 }
 
 /*------------------------------------------------------------------------------
@@ -84,6 +88,7 @@ void InitGame(void)
 ------------------------------------------------------------------------------*/
 void UninitGame()
 {
+	StopSoundAll();
 	//‰Šú‰»‚Æ‚Í‹t‡‚ÉI—¹ˆ—‚ðs‚¤
 	UninitGimmickDescription();
 	UninitGamedata();
@@ -99,7 +104,6 @@ void UninitGame()
 
 	gameover = false;
 	goal = false;
-
 }
 
 /*------------------------------------------------------------------------------
@@ -143,6 +147,23 @@ void UpdateGame(void)
 	}
 	else {
 		UpdateResult();
+		if (sound_once == 0)
+		{
+			StopSoundAll();
+			g_BGMNo = LoadSound("data/SE/funnyelectrosingle.wav");
+			PlaySound(g_BGMNo, 0);
+			sound_once = 1;
+		}
+		if (sound_once == 1)
+		{
+			if (p_GetResult->goaltime == 240)
+			{
+				StopSoundAll();
+				g_BGMNo = LoadSound("data/BGM/wish_m329.wav");
+				PlaySound(g_BGMNo, -1);
+				sound_once = 2;
+			}
+		}
 	}
 
 

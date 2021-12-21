@@ -35,7 +35,7 @@ static int	g_BGMNo = 0;		// BGM識別子
 HRESULT InitTitle(void)
 {
 	//テクスチャ生成
-	g_TextureNo = LoadTexture("data/TEXTURE/title/titlerogo_3.png");
+	g_TextureNo = LoadTexture("data/TEXTURE/title/titlerogo_32.png");
 
 	g_BGMNo = LoadSound("data/BGM/morningroutine(title).wav");
 

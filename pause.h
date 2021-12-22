@@ -25,6 +25,8 @@ void UninitPause(void);
 void UpdatePause(void);
 void DrawPause(void);
 void SetPause(D3DXVECTOR2 pos);
+void GameoverTrue_Pause();
+void GoalTrue_Pause();
 //PAUSE* GetPause(void);
 
 //#define MAX_RESULT (3)			// ƒ~ƒbƒVƒ‡ƒ“”‚ÌÅ‘å(ÅŒã”ö)3‚ÂŒÅ’è

@@ -119,6 +119,9 @@ void UpdateWorldSelect(void)
 		int OldWorldSelectX = g_WorldSelect.select_x;
 		int OldWorldSelectY = g_WorldSelect.select_y;
 
+		//星の数の取得（ワールドロック用）
+		int AllLockWorldStar = GetStar(0);//すべてのステージの現在獲得している星の数
+
 		//ミッション
 		/*SetEffect(8, D3DXVECTOR2(280.0f, 700.0f), D3DXVECTOR2(280.0f, 700.0f), 0,
 			D3DXVECTOR2(500.0f, 200.0f), D3DXVECTOR2(500.0f, 200.0f), 0,
@@ -201,8 +204,12 @@ void UpdateWorldSelect(void)
 			g_WorldSelect.select_x = 0;
 			mouseuse = true;
 		}
+
+		//星の持ってる数によって押せるようにする。
+		if (AllLockWorldStar > 21)
+		{
 		//2 480 500
-		else if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 425.0f && mouse_pos_Y < 575.0f)
+		if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 425.0f && mouse_pos_Y < 575.0f)
 		{
 			g_WorldSelect.select_x = 1;
 			mouseuse = true;
@@ -225,6 +232,9 @@ void UpdateWorldSelect(void)
 			g_WorldSelect.select_x = 4;
 			mouseuse = true;
 		}
+		}
+
+		
 		//タイトル 240 700
 		else if (mouse_pos_X > 165.0f && mouse_pos_X < 315.0f && mouse_pos_Y > 625.0f && mouse_pos_Y < 775.0f)
 		{

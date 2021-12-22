@@ -21,6 +21,7 @@
 #include "stagedata.h"
 #include "FileDataManagement.h"
 #include "keyboard.h"
+#include "pause.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -857,6 +858,7 @@ void UpdateBullet(void)
 				if (g_Bullet[i].shottime >= 120)
 				{
 					GameoverTrue();
+					GameoverTrue_Pause();
 				}
 
 			}
@@ -878,7 +880,7 @@ void UpdateBullet(void)
 				{
 					// ゴールに入った時の処理
 					GoalTrue();
-
+					GoalTrue_Pause();
 					bool updata_savedata = false;
 
 					// ミッションをクリアしているかどうかの処理。新たにクリアしていた場合のみ更新する

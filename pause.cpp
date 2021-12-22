@@ -61,8 +61,8 @@ bool pausemission = false;	//ミッションのボタン
 
 bool pauseonce = false;
 
-
-
+bool gameover_pause = false;
+bool goal2_pause = false;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -73,7 +73,8 @@ HRESULT InitPause(void)
 	STAGEDATA* p_Stagedata = GetStagedata();
 	pause = false;
 
-
+	gameover_pause = false;
+	goal2_pause = false;
 	//初期化
 	pause_select_once = false;
 	now_pause_select_EffectArray = -1;
@@ -101,7 +102,8 @@ HRESULT InitPause(void)
 //=============================================================================
 void UninitPause(void)
 {
-
+	gameover_pause = false;
+	goal2_pause = false;
 }
 
 //=============================================================================
@@ -116,199 +118,213 @@ void UpdatePause(void)
 	bool mouse_Rclick = GetMouseRClick();
 
 	// マウスの座標を使っての入力処理
-
-		//ポーズボタン 1200 700	300 300
-	if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 15.0f && mouse_pos_Y < 85.0f)
+	if (goal2_pause == false)
 	{
-		//g_Pause.selectpush = 0;
-		pausemouseuse = true;
-
-		// マウスが表示にあっている状態で左クリックをしたら
-		if (pausemouseuse && mouse_Lclick)
+		if (gameover_pause == false)
 		{
-			//ポーズ画面を開く
-			pauseclickuse = true;
-		}
-	}
-
-	//ポーズ画面を開いている状態
-	if (pauseclickuse)
-	{
-		//明るくするなら48暗くするなら4
-			now_pause_select_EffectArray =
-			SetEffect(4, D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(0.0f, 0.0f), 0,
-			D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), 0,
-			0.0f, 0.5f, 0, 1, 0, 1,
-			0.0f, 0.0f, 0);
-
-		// 上からのマップ
-		SetEffect(64, D3DXVECTOR2(50, 150), D3DXVECTOR2(50, 150), 0,
-			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 1,
-			0.0f, 0.0f, 0);
-
-		// 配置からやり直す
-		SetEffect(65, D3DXVECTOR2(50, 250), D3DXVECTOR2(50, 250), 0,
-			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 1,
-			0.0f, 0.0f, 0);
-
-		// ミッション
-		SetEffect(66, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,
-			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 1,
-			0.0f, 0.0f, 0);
-
-		// ステージ選択
-		SetEffect(67, D3DXVECTOR2(50, 450), D3DXVECTOR2(50, 450), 0,
-			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 1,
-			0.0f, 0.0f, 0);
-
-		if (pause_cool <= 0)
-		{
-			//ポーズ画面の中のボタン(上から視点、リトライ、ミッション、ステージ選択)
-
-				///////上からのマップ/////////////
-			if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 112.0f && mouse_pos_Y < 180.0f)
+			//ポーズボタン 1200 700	300 300
+			if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 15.0f && mouse_pos_Y < 85.0f)
 			{
+				//g_Pause.selectpush = 0;
 				pausemouseuse = true;
 
-				// 選択しましたマーク
-				SetEffect(73, D3DXVECTOR2(50, 150), D3DXVECTOR2(50, 150), 0,
-					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-					0.0f, 1.0f, 0, 1, 0, 1,
-					0.0f, 0.0f, 0);
-
+				// マウスが表示にあっている状態で左クリックをしたら
 				if (pausemouseuse && mouse_Lclick)
 				{
-					Abovemap = !Abovemap;
-					pause_cool = CLICK_COOLTIME;
-					if (Abovemap)
-					{
-						pausemission = false;
-						DeleteMissionPause();
-
-						/*DrawBGaboveForPlacement();
-						DrawPlayerForPlacement();*/
-					}
-					else
-					{
-						Abovemap = false;
-					}
+					//ポーズ画面を開く
+					pauseclickuse = true;
 				}
 			}
 
-			/////////////配置からやり直す//////////////////
-			if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 212.0f && mouse_pos_Y < 280.0f)
+			//ポーズ画面を開いている状態
+			if (pauseclickuse)
 			{
-				
-				pausemouseuse = true;
-				
-				// 選択しましたマーク
-				SetEffect(73, D3DXVECTOR2(50, 250), D3DXVECTOR2(50, 250), 0,
+				//明るくするなら48暗くするなら4
+				now_pause_select_EffectArray =
+					SetEffect(4, D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(0.0f, 0.0f), 0,
+						D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), 0,
+						0.0f, 0.5f, 0, 1, 0, 1,
+						0.0f, 0.0f, 0);
+
+				// 上からのマップ
+				SetEffect(64, D3DXVECTOR2(50, 150), D3DXVECTOR2(50, 150), 0,
 					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 					0.0f, 1.0f, 0, 1, 0, 1,
 					0.0f, 0.0f, 0);
 
-				if (pausemouseuse && mouse_Lclick)
-				{
-					SceneTransition(SCENE_PLACEMENT);
-					pauseclickuse = false;
-					//上から視点かミッションを開いていたら閉じる
-					Abovemap = false;
-					pausemission = false;
-					DeleteMissionPause();
-				}
-
-				
-			}
-
-			////////ミッション/////////
-			if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 312.0f && mouse_pos_Y < 380.0f)
-			{
-				pausemouseuse = true;
-
-				// 選択しましたマーク
-				SetEffect(73, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,
+				// 配置からやり直す
+				SetEffect(65, D3DXVECTOR2(50, 250), D3DXVECTOR2(50, 250), 0,
 					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 					0.0f, 1.0f, 0, 1, 0, 1,
 					0.0f, 0.0f, 0);
 
-				//ミッションを表示する
-				if (pausemouseuse && mouse_Lclick)
-				{
-					//aboveを開いてたら閉じる
-					Abovemap = false;
+				// ミッション
+				SetEffect(66, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,
+					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+					0.0f, 1.0f, 0, 1, 0, 1,
+					0.0f, 0.0f, 0);
 
-					pausemission = !pausemission;
-					pause_cool = CLICK_COOLTIME;
-					
-					if (pausemission)
+				// ステージ選択
+				SetEffect(67, D3DXVECTOR2(50, 450), D3DXVECTOR2(50, 450), 0,
+					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+					0.0f, 1.0f, 0, 1, 0, 1,
+					0.0f, 0.0f, 0);
+
+				if (pause_cool <= 0)
+				{
+					//ポーズ画面の中のボタン(上から視点、リトライ、ミッション、ステージ選択)
+
+						///////上からのマップ/////////////
+					if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 112.0f && mouse_pos_Y < 180.0f)
 					{
-						Abovemap = false;
-						SetEffect(70, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,
+						pausemouseuse = true;
+
+						// 選択しましたマーク
+						SetEffect(73, D3DXVECTOR2(50, 150), D3DXVECTOR2(50, 150), 0,
 							D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 							0.0f, 1.0f, 0, 1, 0, 1,
 							0.0f, 0.0f, 0);
-						DrawMissionPause();
+
+						if (pausemouseuse && mouse_Lclick)
+						{
+							Abovemap = !Abovemap;
+							pause_cool = CLICK_COOLTIME;
+							if (Abovemap)
+							{
+								pausemission = false;
+								DeleteMissionPause();
+
+								/*DrawBGaboveForPlacement();
+								DrawPlayerForPlacement();*/
+							}
+							else
+							{
+								Abovemap = false;
+							}
+						}
 					}
-					else
+
+					/////////////配置からやり直す//////////////////
+					if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 212.0f && mouse_pos_Y < 280.0f)
 					{
+
+						pausemouseuse = true;
+
+						// 選択しましたマーク
+						SetEffect(73, D3DXVECTOR2(50, 250), D3DXVECTOR2(50, 250), 0,
+							D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+							0.0f, 1.0f, 0, 1, 0, 1,
+							0.0f, 0.0f, 0);
+
+						if (pausemouseuse && mouse_Lclick)
+						{
+							SceneTransition(SCENE_PLACEMENT);
+							pauseclickuse = false;
+							//上から視点かミッションを開いていたら閉じる
+							Abovemap = false;
+							pausemission = false;
+							DeleteMissionPause();
+						}
+
+
+					}
+
+					////////ミッション/////////
+					if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 312.0f && mouse_pos_Y < 380.0f)
+					{
+						pausemouseuse = true;
+
+						// 選択しましたマーク
+						SetEffect(73, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,
+							D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+							0.0f, 1.0f, 0, 1, 0, 1,
+							0.0f, 0.0f, 0);
+
+						//ミッションを表示する
+						if (pausemouseuse && mouse_Lclick)
+						{
+							//aboveを開いてたら閉じる
+							Abovemap = false;
+
+							pausemission = !pausemission;
+							pause_cool = CLICK_COOLTIME;
+
+							if (pausemission)
+							{
+								Abovemap = false;
+								SetEffect(70, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,
+									D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+									0.0f, 1.0f, 0, 1, 0, 1,
+									0.0f, 0.0f, 0);
+								DrawMissionPause();
+							}
+							else
+							{
+								pausemission = false;
+								DeleteMissionPause();
+							}
+
+						}
+
+					}
+
+					////////ステージ選択/////////
+					if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 412.0f && mouse_pos_Y < 480.0f)
+					{
+						pausemouseuse = true;
+
+						// 選択しましたマーク
+						SetEffect(73, D3DXVECTOR2(50, 450), D3DXVECTOR2(50, 450), 0,
+							D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+							0.0f, 1.0f, 0, 1, 0, 1,
+							0.0f, 0.0f, 0);
+
+						if (pausemouseuse && mouse_Lclick && (Abovemap || pausemission))
+						{
+							SceneTransition(SCENE_STAGE_SELECT);
+							pauseclickuse = false;
+							Abovemap = false;
+							pausemission = false;
+							DeleteMissionPause();
+
+						}
+						if (pausemouseuse && mouse_Lclick)
+						{
+							SceneTransition(SCENE_STAGE_SELECT);
+							pauseclickuse = false;
+						}
+
+					}
+
+				}
+
+				//画面の360より右を押したらポーズ画面をすべて閉じる
+				if (mouse_pos_X > 360.0f)
+				{
+					if (mouse_Lclick)
+					{
+						pauseclickuse = false;
 						pausemission = false;
+						Abovemap = false;
 						DeleteMissionPause();
 					}
-					
-				}
-				
-			}
-			
-			////////ステージ選択/////////
-			if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 412.0f && mouse_pos_Y < 480.0f)
-			{
-				pausemouseuse = true;
-
-				// 選択しましたマーク
-				SetEffect(73, D3DXVECTOR2(50, 450), D3DXVECTOR2(50, 450), 0,
-					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-					0.0f, 1.0f, 0, 1, 0, 1,
-					0.0f, 0.0f, 0);
-
-				if (pausemouseuse && mouse_Lclick && (Abovemap || pausemission))
-				{
-					SceneTransition(SCENE_STAGE_SELECT);
-					pauseclickuse = false;
-					Abovemap = false;
-					pausemission = false;
-					DeleteMissionPause();
-				
-				}
-				if (pausemouseuse && mouse_Lclick)
-				{
-					SceneTransition(SCENE_STAGE_SELECT);
-					pauseclickuse = false;
 				}
 
-			}
 
-		}
-
-		//画面の360より右を押したらポーズ画面をすべて閉じる
-		if (mouse_pos_X > 360.0f)
-		{
-			if (mouse_Lclick)
-			{
-				pauseclickuse = false;
-				pausemission = false;
-				Abovemap = false;
-				DeleteMissionPause();
 			}
 		}
-		
-
+	}
+	
+	if (gameover_pause == true || goal2_pause == true)
+	{
+		pauseclickuse = false;
+		pausemission = false;
+		Abovemap = false;
+		DeleteMissionPause();
 	}
 
-	
+
+
 	if (pause_cool > 0)
 		pause_cool--;
 	
@@ -371,4 +387,18 @@ void DrawPause(void)
 void SetPause(D3DXVECTOR2 pos)
 {
 
+}
+
+void GoalTrue_Pause()
+{
+	goal2_pause = true;
+
+	return;
+}
+
+void GameoverTrue_Pause()
+{
+	gameover_pause = true;
+
+	return;
 }

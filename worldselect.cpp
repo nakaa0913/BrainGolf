@@ -206,32 +206,44 @@ void UpdateWorldSelect(void)
 		}
 
 		//星の持ってる数によって押せるようにする。
+		//21以上
 		if (AllLockWorldStar > 21)
 		{
-		//2 480 500
-		if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 425.0f && mouse_pos_Y < 575.0f)
-		{
-			g_WorldSelect.select_x = 1;
-			mouseuse = true;
-		}
-		//3 720 250
-		else if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 175.0f && mouse_pos_Y < 325.0f)
-		{
-			g_WorldSelect.select_x = 2;
-			mouseuse = true;
-		}
-		//4 960 550
-		else if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 475.0f && mouse_pos_Y < 625.0f)
-		{
-			g_WorldSelect.select_x = 3;
-			mouseuse = true;
-		}
-		//5 1200 400
-		else if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 325.0f && mouse_pos_Y < 475.0f)
-		{
-			g_WorldSelect.select_x = 4;
-			mouseuse = true;
-		}
+			//2 480 500
+			if (mouse_pos_X > 405.0f && mouse_pos_X < 555.0f && mouse_pos_Y > 425.0f && mouse_pos_Y < 575.0f)
+			{
+				g_WorldSelect.select_x = 1;
+				mouseuse = true;
+			}
+			//42以上
+			if (AllLockWorldStar > 42) {
+				//3 720 250
+				if (mouse_pos_X > 645.0f && mouse_pos_X < 795.0f && mouse_pos_Y > 175.0f && mouse_pos_Y < 325.0f)
+				{
+					g_WorldSelect.select_x = 2;
+					mouseuse = true;
+				}
+				//63以上
+				if (AllLockWorldStar > 63)
+				{
+					//4 960 550
+					if (mouse_pos_X > 885.0f && mouse_pos_X < 1035.0f && mouse_pos_Y > 475.0f && mouse_pos_Y < 625.0f)
+					{
+						g_WorldSelect.select_x = 3;
+						mouseuse = true;
+					}
+					//84以上
+					if (AllLockWorldStar > 84)
+					{
+						//5 1200 400
+						if (mouse_pos_X > 1125.0f && mouse_pos_X < 1275.0f && mouse_pos_Y > 325.0f && mouse_pos_Y < 475.0f)
+						{
+							g_WorldSelect.select_x = 4;
+							mouseuse = true;
+						}
+					}
+				}
+			}
 		}
 
 		
@@ -454,6 +466,7 @@ void StartWorldSelectScreen()
 
 	int Number_EffectArray[2] = { 0,0 };
 	int* p_Number_EffectArray = Number_EffectArray;
+
 	// セーブデータから読み込んだ全ての星の数の表示
 	SetEffectNumber(AllWorldStar, p_Number_EffectArray, D3DXVECTOR2(250.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
 		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,

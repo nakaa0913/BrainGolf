@@ -54,7 +54,7 @@ STAGEDATA* GetStagedata()
 void SetStageData(int stagenum)
 {
 	// 現在選択されているステージ番号を入れておく。
-	g_Stagedata.stagenum = stagenum - 1;
+	g_Stagedata.stagenum = stagenum;
 
 	// 引数でもらったステージの番号を1桁ずつchar型にして合成する
 

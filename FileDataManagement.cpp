@@ -298,6 +298,8 @@ void WriteSavedata(char* fileName)
 		// 書き込む処理
 		fprintf(fp, "%s%s,%s,%s,%s,%s,\n", bases, stagenum, mission0char, mission1char, mission2char, cleartimechar);
 	}
+	fprintf(fp, "\n");
+	fprintf(fp, "EndLoadFile");
 
 	// 終了の処理
 	fclose(fp); // ファイルを閉じる

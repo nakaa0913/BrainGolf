@@ -139,8 +139,25 @@ void InitStageSelect(void)
 		tex_NowWorld_mission = 29;
 	}
 
+
 	StartStageSelectScreen();
 
+	// セーブデータからゲットしてる星の数を読み込む
+	int StageStar = GetStar(NowWorld);
+
+	int Number_EffectArray[2] = { 0,0 };
+	int* p_Number_EffectArray = Number_EffectArray;
+	// セーブデータから読み込んだ全ての星の数の表示
+	SetEffectNumber(StageStar, p_Number_EffectArray, D3DXVECTOR2(250.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
+		0.0f, 1.0f, 0, 999, 0, 0,
+		0.0f, 0.0f, 0);
+
+	// 全ての星の数(30)の表示
+	SetEffectNumber(30, p_Number_EffectArray, D3DXVECTOR2(400.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
+		0.0f, 1.0f, 0, 999, 0, 0,
+		0.0f, 0.0f, 0);
 
 	stage_select_once = false;
 	now_stage_select_EffectArray = -1;
@@ -175,29 +192,6 @@ void UpdateStageSelect(void)
 		// 1フレーム前のポジションの保存。この後キー操作などで変更があった場合のみエフェクトを更新させる
 		int OldStageSelectX = g_StageSelect.select_x;
 		int OldStageSelectY = g_StageSelect.select_y;
-
-		//星
-		SetEffect(9, D3DXVECTOR2(280.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
-			D3DXVECTOR2(500.0f, 150.0f), D3DXVECTOR2(500.0f, 150.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 0,
-			0.0f, 0.0f, 0);
-
-		// セーブデータからゲットしてる星の数を読み込む
-		int StageStar = GetStar(NowWorld);
-
-		int Number_EffectArray[2] = { 0,0 };
-		int* p_Number_EffectArray = Number_EffectArray;
-		// セーブデータから読み込んだ全ての星の数の表示
-		SetEffectNumber(StageStar, p_Number_EffectArray, D3DXVECTOR2(250.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
-			D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 999, 0, 0,
-			0.0f, 0.0f, 0);
-
-		// 全ての星の数(30)の表示
-		SetEffectNumber(30, p_Number_EffectArray, D3DXVECTOR2(400.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
-			D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
-			0.0f, 1.0f, 0, 999, 0, 0,
-			0.0f, 0.0f, 0);
 
 		// 移動キーが押された時の処理
 		if (g_StageSelect.selectcooltime <= 0)
@@ -597,6 +591,29 @@ void StartStageSelectScreen()
 				0.0f, 0.0f, 0);
 		}
 	}
+
+	//星
+	SetEffect(9, D3DXVECTOR2(280.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+		D3DXVECTOR2(500.0f, 150.0f), D3DXVECTOR2(500.0f, 150.0f), 0,
+		0.0f, 1.0f, 0, 1, 0, 0,
+		0.0f, 0.0f, 0);
+
+	// セーブデータからゲットしてる星の数を読み込む
+	int StageStar = GetStar(NowWorld);
+
+	int Number_EffectArray[2] = { 0,0 };
+	int* p_Number_EffectArray = Number_EffectArray;
+	// セーブデータから読み込んだ全ての星の数の表示
+	SetEffectNumber(StageStar, p_Number_EffectArray, D3DXVECTOR2(250.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
+		0.0f, 1.0f, 0, 999, 0, 0,
+		0.0f, 0.0f, 0);
+
+	// 全ての星の数(30)の表示
+	SetEffectNumber(30, p_Number_EffectArray, D3DXVECTOR2(400.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
+		0.0f, 1.0f, 0, 999, 0, 0,
+		0.0f, 0.0f, 0);
 
 	return;
 }

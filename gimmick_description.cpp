@@ -263,12 +263,41 @@ float CheckGimmickDescriptionChipPos(int block_data, int XorY)
 		sy = ty * 1;
 		break;
 	case 14:					// すいっち
+	case 18:
 		sx = tx * 2;
 		sy = ty * 1;
 		break;
 	case 15:					// 反射板
 		sx = tx * 2;
 		sy = ty * 0;
+		break;
+	case 16:					// 針
+	case 17:					// 針
+		sx = tx * 0;
+		sy = ty * 2;
+		break;
+	case 21:					// 壊れる床
+	case 22:
+	case 37:
+		sx = tx * 3;
+		sy = ty * 1;
+		break;
+	case 24:					// ワープホール
+	case 25:
+	case 26:					
+	case 27:
+	case 28:
+	case 29:
+	case 30:
+	case 31:
+	case 32:
+	case 33:
+		sx = tx * 3;
+		sy = ty * 0;
+		break;
+	case 34:					// 池（仮）
+		sx = tx * 1;
+		sy = ty * 2;
 		break;
 
 	default:
@@ -281,7 +310,7 @@ float CheckGimmickDescriptionChipPos(int block_data, int XorY)
 		return sx;
 	else
 		return sy;
-
+	
 }
 
 

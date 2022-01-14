@@ -986,7 +986,7 @@ void UpdateBullet(void)
 						g_Bullet[i].angle = 90.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
-						g_Bullet[i].accboardcool = 60;
+						g_Bullet[i].accboardcool = 20;
 					}
 				}
 				if (collision_num == 4)
@@ -999,7 +999,7 @@ void UpdateBullet(void)
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
 
-						g_Bullet[i].accboardcool = 60;
+						g_Bullet[i].accboardcool = 20;
 					}
 				}
 				if (collision_num == 5)
@@ -1011,7 +1011,7 @@ void UpdateBullet(void)
 						g_Bullet[i].angle = 0.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
-						g_Bullet[i].accboardcool = 60;
+						g_Bullet[i].accboardcool = 20;
 					}
 				}
 				if (collision_num == 6)
@@ -1023,7 +1023,7 @@ void UpdateBullet(void)
 						g_Bullet[i].angle = 180.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
-						g_Bullet[i].accboardcool = 60;
+						g_Bullet[i].accboardcool = 20;
 					}
 				}
 				if (collision_num == 7)
@@ -1035,7 +1035,7 @@ void UpdateBullet(void)
 						g_Bullet[i].angle = 45.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
-						g_Bullet[i].accboardcool = 60;
+						g_Bullet[i].accboardcool = 20;
 					}
 				}
 				if (collision_num == 8)
@@ -1047,7 +1047,7 @@ void UpdateBullet(void)
 						g_Bullet[i].angle = 315.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
-						g_Bullet[i].accboardcool = 60;
+						g_Bullet[i].accboardcool = 20;
 					}
 				}
 				if (collision_num == 9)
@@ -1059,7 +1059,7 @@ void UpdateBullet(void)
 						g_Bullet[i].angle = 225.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
-						g_Bullet[i].accboardcool = 60;
+						g_Bullet[i].accboardcool = 20;
 					}
 				}
 				if (collision_num == 10)
@@ -1071,7 +1071,7 @@ void UpdateBullet(void)
 						g_Bullet[i].angle = 135.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
-						g_Bullet[i].accboardcool = 60;
+						g_Bullet[i].accboardcool = 20;
 
 					}
 				}
@@ -1108,7 +1108,7 @@ void UpdateBullet(void)
 							if (g_Bullet[i].onswitch == true)
 							{
 								p_Stagedata->maparray[y][x] = 18;
-								g_Bullet[i].switchcool = 120.0f;
+								g_Bullet[i].switchcool = 25.0f;
 							}
 						}
 
@@ -1118,7 +1118,7 @@ void UpdateBullet(void)
 							if (g_Bullet[i].onswitch == false)
 							{
 								p_Stagedata->maparray[y][x] = 14;
-								g_Bullet[i].switchcool = 120.0f;
+								g_Bullet[i].switchcool = 25.0f;
 							}
 						}
 
@@ -1216,7 +1216,7 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
-								g_Bullet[i].warpcool = 60;
+								g_Bullet[i].warpcool = 20;
 							}
 
 						}
@@ -1233,7 +1233,7 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
-								g_Bullet[i].warpcool = 60;
+								g_Bullet[i].warpcool = 20;
 							}
 
 						}
@@ -1251,7 +1251,7 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
-								g_Bullet[i].warpcool = 60;
+								g_Bullet[i].warpcool = 20;
 							}
 
 						}
@@ -1268,7 +1268,7 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
-								g_Bullet[i].warpcool = 60;
+								g_Bullet[i].warpcool = 20;
 							}
 
 						}
@@ -1287,7 +1287,7 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
-								g_Bullet[i].warpcool = 60;
+								g_Bullet[i].warpcool = 20;
 							}
 
 						}
@@ -1304,7 +1304,7 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
-								g_Bullet[i].warpcool = 60;
+								g_Bullet[i].warpcool = 20;
 							}
 
 						}
@@ -1323,7 +1323,7 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
-								g_Bullet[i].warpcool = 60;
+								g_Bullet[i].warpcool = 20;
 							}
 
 						}
@@ -1340,7 +1340,7 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
-								g_Bullet[i].warpcool = 60;
+								g_Bullet[i].warpcool = 20;
 							}
 
 						}
@@ -1359,7 +1359,7 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
-								g_Bullet[i].warpcool = 60;
+								g_Bullet[i].warpcool = 20;
 							}
 
 						}
@@ -1376,7 +1376,7 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
-								g_Bullet[i].warpcool = 60;
+								g_Bullet[i].warpcool = 20;
 							}
 
 						}
@@ -1395,7 +1395,7 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
-								g_Bullet[i].warpcool = 60;
+								g_Bullet[i].warpcool = 20;
 							}
 
 						}
@@ -1412,7 +1412,7 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
-								g_Bullet[i].warpcool = 60;
+								g_Bullet[i].warpcool = 20;
 							}
 
 						}

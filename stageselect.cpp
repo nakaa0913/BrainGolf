@@ -88,6 +88,8 @@ int stage_select_once_time = 0;
 
 bool StageDecision = false;				// エンターか左クリックでステージを確定させたら他のとこに移動できなくする
 
+int change_cool = 30;
+
 /*------------------------------------------------------------------------------
    初期化関数
 ------------------------------------------------------------------------------*/
@@ -184,6 +186,8 @@ void InitStageSelect(void)
 	now_stage_select_EffectArray = -1;
 	stage_select_once_time = 0;
 
+	change_cool = 30;
+
 	return;
 }
 
@@ -201,8 +205,26 @@ void UninitStageSelect()
 ------------------------------------------------------------------------------*/
 void UpdateStageSelect(void)
 {
+
+	if (Keyboard_IsKeyDown(KK_E))
+	{
+		if (change_cool <= 0)
+		{
+			change_cool = 60;
+			ChangePage(1);
+		}
+	}
 	if (Keyboard_IsKeyDown(KK_Q))
-		ChangePage();
+	{
+		if (change_cool <= 0)
+		{
+			change_cool = 60;
+			ChangePage(-1);
+		}
+	}
+
+	if(change_cool > 0)
+	change_cool--;
 	
 	if (StageDecision == false)
 	{
@@ -580,7 +602,7 @@ void StartStageSelectScreen()
 	float interval_y = 240.0f;
 
 
-	float page_interval_x = 300.0f;
+	float page_interval_x = SCREEN_WIDTH;
 
 
 
@@ -674,7 +696,7 @@ void StartStageSelectScreen()
 	return;
 }
 
-void ChangePage()
+void ChangePage(int ToGoPage)
 {
 	{
 		SAVEDATA* p_Savedata = GetSavedata();
@@ -694,11 +716,10 @@ void ChangePage()
 		float interval_x = 240.0f;
 		float interval_y = 240.0f;
 
+		float page_interval			= SCREEN_WIDTH;
+		float change_page_interval = -ToGoPage * SCREEN_WIDTH;		// 移動距離
 
-		float page_interval_x = 300.0f;
-		float change_page_interval_x = interval_x * SELECT_MAX_X + page_interval_x;
-
-		float change_page_interval = -change_page_interval_x;
+		int cahngetime = 60;
 
 		//ステージ選択
 		for (int page = 0; page < PAGE_MAX; page++)
@@ -711,7 +732,7 @@ void ChangePage()
 					int NowWorld_stagenum = NowWorld * 10 - 10 + x + y * SELECT_MAX_X + (page * 10);	// 0~19
 
 					// 現在の座標を求める
-					float now_x = stage_origin_x + interval_x * x + page * page_interval_x;
+					float now_x = stage_origin_x + interval_x * x + page * page_interval;
 					float now_y = stage_origin_y + interval_y * y;
 
 					D3DXVECTOR2 now_stagePos	= GetEffectPos(stage_EffectArray[NowWorld_stagenum]);
@@ -723,7 +744,7 @@ void ChangePage()
 					// 選択されてないときの表示を出す(ステージすべて)
 						ChangeEffect(stage_EffectArray[NowWorld_stagenum], tex_NowWorld_stagechoice, now_stagePos, D3DXVECTOR2(now_stagePos.x + change_page_interval, now_stagePos.y), 1,
 							D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-							0.0f, 1.0f, 0, 999, 0, 0,
+							0.0f, 1.0f, 0, 999, 0, cahngetime,
 							0.0f, 0.0f, 0);
 
 					// ミッションをクリアしているなら表示する
@@ -732,7 +753,7 @@ void ChangePage()
 						//星
 						ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][0], 83, now_stage_starPos[0], D3DXVECTOR2(now_stage_starPos[0].x + change_page_interval, now_stage_starPos[0].y), 1,
 								D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-								0.0f, 1.0f, 120, 999, 0, 60,
+								0.0f, 1.0f, 120, 999, 0, cahngetime,
 								0.0f, 0.0f, 0);
 					}
 
@@ -742,7 +763,7 @@ void ChangePage()
 						//星
 						ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][1], 84, now_stage_starPos[1], D3DXVECTOR2(now_stage_starPos[1].x + change_page_interval, now_stage_starPos[1].y), 1,
 								D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-								0.0f, 1.0f, 120, 999, 0, 60,
+								0.0f, 1.0f, 120, 999, 0, cahngetime,
 								0.0f, 0.0f, 0);
 					}
 
@@ -752,7 +773,7 @@ void ChangePage()
 						//星
 						ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][2], 85, now_stage_starPos[2], D3DXVECTOR2(now_stage_starPos[2].x + change_page_interval, now_stage_starPos[2].y), 1,
 								D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-								0.0f, 1.0f, 120, 999, 0, 60,
+								0.0f, 1.0f, 120, 999, 0, cahngetime,
 								0.0f, 0.0f, 0);
 					}
 				}

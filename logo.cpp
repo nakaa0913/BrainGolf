@@ -82,6 +82,11 @@ void UpdateLogo(void)
 	{
 		SceneTransition(SCENE_Prologue);
 	}
+	//
+	if (Keyboard_IsKeyDown(KK_G) && GetFadeState() == FADE_NONE)
+	{
+		SceneTransition(SCENE_GAME);
+	}
 }
 
 //=============================================================================

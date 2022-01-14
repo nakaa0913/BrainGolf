@@ -238,11 +238,16 @@ void UpdateStageSelect(void)
 					{
 						g_StageSelect.select_y = 0;
 					}
-					//ENTERでシーンワールド選択にいく
+					//ENTERでタイトルへ戻る
 					if (Keyboard_IsKeyDown(KK_ENTER))
 					{
-						SceneTransition(SCENE_WORLD_SELECT);
+						SceneTransition(SCENE_TITLE);
 					}
+					////ENTERでシーンワールド選択にいく
+					//if (Keyboard_IsKeyDown(KK_ENTER))
+					//{
+					//	SceneTransition(SCENE_WORLD_SELECT);
+					//}
 				}
 				//y = 3以外の時に左右移動ができる（3は「ワールド選択に戻るボタン」）
 				if (g_StageSelect.select_y != 3)
@@ -393,7 +398,7 @@ void UpdateStageSelect(void)
 			ResetPlacementArray();
 			if (g_StageSelect.select_x == 0 && g_StageSelect.select_y == 3)
 			{
-				SceneTransition(SCENE_WORLD_SELECT);
+				SceneTransition(SCENE_TITLE);
 			}
 			else
 			{

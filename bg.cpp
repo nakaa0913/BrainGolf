@@ -351,7 +351,9 @@ void DrawBG(void)
 				float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
 				float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
 
-
+				// ブロックだった場合見やすくするために半透明にする
+				if(mapchipdata == 1)
+					color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
 
 				// プレイヤー周りにいるかの検索とその時ブロックを透明にする処理
 				for (int i = 0; i < PLAYER_MAX; i++)

@@ -56,6 +56,8 @@ static int	g_TextureNo = 0;	// テクスチャ情報
 static int	g_BGMNo = 0;		// BGM識別子
 static int g_SENo = 0;
 
+static int now_page = 0;		// 現在開いているページ
+
 int			UseArrow;
 int			UseEnter;
 
@@ -95,6 +97,7 @@ int change_cool = 30;
 ------------------------------------------------------------------------------*/
 void InitStageSelect(void)
 {
+	now_page = 0;
 
 	g_StageSelect.select_x = 0;
 	g_StageSelect.select_y = 0;
@@ -719,7 +722,7 @@ void ChangePage(int ToGoPage)
 		float page_interval			= SCREEN_WIDTH;
 		float change_page_interval = -ToGoPage * SCREEN_WIDTH;		// 移動距離
 
-		int cahngetime = 60;
+		int cahngetime = 60;		// 60フレームかけてページが変わる
 
 		//ステージ選択
 		for (int page = 0; page < PAGE_MAX; page++)
@@ -809,6 +812,13 @@ void ChangePage(int ToGoPage)
 		//	D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
 		//	0.0f, 1.0f, 0, 999, 0, 0,
 		//	0.0f, 0.0f, 0);
+
+		// 変更があった場合ので、初期化と新しいもののセット
+		g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
+		EffectBreak(now_stage_select_EffectArray);
+		DeleteMissionStageSelect();
+		stage_select_once = false;
+		stage_select_once_time = 0;
 
 		return;
 	}

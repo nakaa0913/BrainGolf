@@ -19,6 +19,7 @@
 #include "gamedata.h"
 #include "savedata.h"
 #include "stagedata.h"
+#include "sound.h"
 #include "FileDataManagement.h"
 #include "keyboard.h"
 #include "pause.h"
@@ -40,6 +41,8 @@
 static BULLET g_Bullet[BULLET_MAX];					// バレット構造体
 static SHADOWBULLET g_ShadowBullet[BULLET_MAX];		// バレットの影構造体
 
+static int g_SENo = 0;								//SE識別
+
 int needletime = 0;									//針の当たり判定の時間
 int hole_changetime = 0;							//踏んだら消える床の画像の変わる時間時間
 //double angle = 00.0;								//向かせたい角度
@@ -55,7 +58,7 @@ HRESULT InitBullet(void)
 	int texNo = LoadTexture("data/TEXTURE/bullet/ao.png");
 	int tex_bullet_shadow = LoadTexture("data/TEXTURE/bullet/bullet_shadow.png");
 
-
+	g_SENo = 0;
 
 	// バレット構造体の初期化 でも実際はSetBulletで呼ぶときにそっちで値が代入される
 	for (int i = 0; i < BULLET_MAX; i++)
@@ -646,7 +649,8 @@ void UpdateBullet(void)
 						//g_Bullet[i].vector.x *= -1;
 						//CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, HitBlockDatas2D[0].BlockPosX* MAP_CHIP_SIZE_X + 0.0f, g_Bullet[i].nextpos.y);
 						InversionVecAng(i, 0);
-
+						g_SENo = LoadSound("data/SE/Accent44-1.wav");
+						PlaySound(g_SENo, 0);
 					}
 					if (OriginLengthAndWidthPos == 1)
 					{
@@ -656,6 +660,8 @@ void UpdateBullet(void)
 						//CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, HitBlockDatas2D[0].BlockPosX* MAP_CHIP_SIZE_X + MAP_CHIP_SIZE_X, g_Bullet[i].nextpos.y);
 						InversionVecAng(i, 0);
 
+						g_SENo = LoadSound("data/SE/Accent44-1.wav");
+						PlaySound(g_SENo, 0);
 					}
 					if (OriginLengthAndWidthPos == 2)
 					{
@@ -665,6 +671,8 @@ void UpdateBullet(void)
 						//CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, g_Bullet[i].nextpos.x, HitBlockDatas2D[0].BlockPosY* MAP_CHIP_SIZE_Y + 0.0f);
 						InversionVecAng(i, 1);
 
+						g_SENo = LoadSound("data/SE/Accent44-1.wav");
+						PlaySound(g_SENo, 0);
 					}
 					if (OriginLengthAndWidthPos == 3)
 					{
@@ -674,6 +682,8 @@ void UpdateBullet(void)
 						//CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, g_Bullet[i].nextpos.x, HitBlockDatas2D[0].BlockPosY* MAP_CHIP_SIZE_Y + MAP_CHIP_SIZE_Y);
 						InversionVecAng(i, 1);
 
+						g_SENo = LoadSound("data/SE/Accent44-1.wav");
+						PlaySound(g_SENo, 0);
 					}
 				}
 
@@ -800,6 +810,8 @@ void UpdateBullet(void)
 						//CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, block_min.x* MAP_CHIP_SIZE_X + 0.0f, g_Bullet[i].nextpos.y);
 						InversionVecAng(i, 0);
 
+						g_SENo = LoadSound("data/SE/Accent44-1.wav");
+						PlaySound(g_SENo, 0);
 					}
 					if (BulletCircle.x > block_min.x * MAP_CHIP_SIZE_X + MAP_CHIP_SIZE_X)
 					{
@@ -811,17 +823,25 @@ void UpdateBullet(void)
 						//CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, block_min.x* MAP_CHIP_SIZE_X + MAP_CHIP_SIZE_X, g_Bullet[i].nextpos.y);
 						InversionVecAng(i, 0);
 
+						g_SENo = LoadSound("data/SE/Accent44-1.wav");
+						PlaySound(g_SENo, 0);
 					}
 
 					if (BulletCircle.x > HitBlockDatas2D[0].BlockPosX * MAP_CHIP_SIZE_X + 0.0f && BulletCircle.x < HitBlockDatas2D[0].BlockPosX * MAP_CHIP_SIZE_X + MAP_CHIP_SIZE_X)
 					{
 						if (BulletCircle.y < HitBlockDatas2D[0].BlockPosY * MAP_CHIP_SIZE_Y + 0.0f)
 							LeftorRight = 2;
+
+						g_SENo = LoadSound("data/SE/Accent44-1.wav");
+						PlaySound(g_SENo, 0);
 					}
 					if (BulletCircle.x > HitBlockDatas2D[0].BlockPosX * MAP_CHIP_SIZE_X + 0.0f && BulletCircle.x < HitBlockDatas2D[0].BlockPosX * MAP_CHIP_SIZE_X + MAP_CHIP_SIZE_X)
 					{
 						if (BulletCircle.y > HitBlockDatas2D[0].BlockPosY * MAP_CHIP_SIZE_Y + MAP_CHIP_SIZE_Y)
 							LeftorRight = 3;
+
+						g_SENo = LoadSound("data/SE/Accent44-1.wav");
+						PlaySound(g_SENo, 0);
 					}
 
 				}
@@ -836,7 +856,8 @@ void UpdateBullet(void)
 						//g_Bullet[i].vector.y *= -1;
 						//CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, g_Bullet[i].nextpos.x, block_min.y* MAP_CHIP_SIZE_Y + 0.0);
 						InversionVecAng(i, 1);
-
+						g_SENo = LoadSound("data/SE/Accent44-1.wav");
+						PlaySound(g_SENo, 0);
 					}
 					if (BulletCircle.y > block_min.y * MAP_CHIP_SIZE_Y + MAP_CHIP_SIZE_Y)
 					{
@@ -846,7 +867,8 @@ void UpdateBullet(void)
 						//g_Bullet[i].vector.y *= -1;
 						//CalculateNewVecAng(i, g_Bullet[i].nextpos.x, g_Bullet[i].nextpos.y, g_Bullet[i].nextpos.x, block_min.y* MAP_CHIP_SIZE_Y + MAP_CHIP_SIZE_Y);
 						InversionVecAng(i, 1);
-
+						g_SENo = LoadSound("data/SE/Accent44-1.wav");
+						PlaySound(g_SENo, 0);
 					}
 				}
 
@@ -857,6 +879,7 @@ void UpdateBullet(void)
 			{
 				if (g_Bullet[i].shottime >= 120)
 				{
+					StopSoundAll();
 					GameoverTrue();
 					GameoverTrue_Pause();
 				}
@@ -987,6 +1010,9 @@ void UpdateBullet(void)
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
 						g_Bullet[i].accboardcool = 20;
+
+						g_SENo = LoadSound("data/SE/Shortbridge29-4.wav");
+						PlaySound(g_SENo, 0);
 					}
 				}
 				if (collision_num == 4)
@@ -1000,6 +1026,8 @@ void UpdateBullet(void)
 
 
 						g_Bullet[i].accboardcool = 20;
+						g_SENo = LoadSound("data/SE/Shortbridge29-4.wav");
+						PlaySound(g_SENo, 0);
 					}
 				}
 				if (collision_num == 5)
@@ -1012,6 +1040,8 @@ void UpdateBullet(void)
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
 						g_Bullet[i].accboardcool = 20;
+						g_SENo = LoadSound("data/SE/Shortbridge29-4.wav");
+						PlaySound(g_SENo, 0);
 					}
 				}
 				if (collision_num == 6)
@@ -1024,6 +1054,8 @@ void UpdateBullet(void)
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
 						g_Bullet[i].accboardcool = 20;
+						g_SENo = LoadSound("data/SE/Shortbridge29-4.wav");
+						PlaySound(g_SENo, 0);
 					}
 				}
 				if (collision_num == 7)
@@ -1036,6 +1068,8 @@ void UpdateBullet(void)
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
 						g_Bullet[i].accboardcool = 20;
+						g_SENo = LoadSound("data/SE/Shortbridge29-4.wav");
+						PlaySound(g_SENo, 0);
 					}
 				}
 				if (collision_num == 8)
@@ -1048,6 +1082,8 @@ void UpdateBullet(void)
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
 						g_Bullet[i].accboardcool = 20;
+						g_SENo = LoadSound("data/SE/Shortbridge29-4.wav");
+						PlaySound(g_SENo, 0);
 					}
 				}
 				if (collision_num == 9)
@@ -1060,6 +1096,8 @@ void UpdateBullet(void)
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
 						g_Bullet[i].accboardcool = 20;
+						g_SENo = LoadSound("data/SE/Shortbridge29-4.wav");
+						PlaySound(g_SENo, 0);
 					}
 				}
 				if (collision_num == 10)
@@ -1072,7 +1110,8 @@ void UpdateBullet(void)
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
 						g_Bullet[i].accboardcool = 20;
-
+						g_SENo = LoadSound("data/SE/Shortbridge29-4.wav");
+						PlaySound(g_SENo, 0);
 					}
 				}
 
@@ -1217,6 +1256,8 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
 								g_Bullet[i].warpcool = 20;
+								g_SENo = LoadSound("data/SE/Shortbridge30-3.wav");
+								PlaySound(g_SENo, 0);
 							}
 
 						}
@@ -1234,6 +1275,8 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
 								g_Bullet[i].warpcool = 20;
+								g_SENo = LoadSound("data/SE/Shortbridge30-3.wav");
+								PlaySound(g_SENo, 0);
 							}
 
 						}
@@ -1252,6 +1295,8 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
 								g_Bullet[i].warpcool = 20;
+								g_SENo = LoadSound("data/SE/Shortbridge30-3.wav");
+								PlaySound(g_SENo, 0);
 							}
 
 						}
@@ -1269,6 +1314,8 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
 								g_Bullet[i].warpcool = 20;
+								g_SENo = LoadSound("data/SE/Shortbridge30-3.wav");
+								PlaySound(g_SENo, 0);
 							}
 
 						}
@@ -1288,6 +1335,8 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
 								g_Bullet[i].warpcool = 20;
+								g_SENo = LoadSound("data/SE/Shortbridge30-3.wav");
+								PlaySound(g_SENo, 0);
 							}
 
 						}
@@ -1305,6 +1354,8 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
 								g_Bullet[i].warpcool = 20;
+								g_SENo = LoadSound("data/SE/Shortbridge30-3.wav");
+								PlaySound(g_SENo, 0);
 							}
 
 						}
@@ -1324,6 +1375,8 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
 								g_Bullet[i].warpcool = 20;
+								g_SENo = LoadSound("data/SE/Shortbridge30-3.wav");
+								PlaySound(g_SENo, 0);
 							}
 
 						}
@@ -1341,6 +1394,8 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
 								g_Bullet[i].warpcool = 20;
+								g_SENo = LoadSound("data/SE/Shortbridge30-3.wav");
+								PlaySound(g_SENo, 0);
 							}
 
 						}
@@ -1360,6 +1415,8 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
 								g_Bullet[i].warpcool = 20;
+								g_SENo = LoadSound("data/SE/Shortbridge30-3.wav");
+								PlaySound(g_SENo, 0);
 							}
 
 						}
@@ -1377,6 +1434,8 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
 								g_Bullet[i].warpcool = 20;
+								g_SENo = LoadSound("data/SE/Shortbridge30-3.wav");
+								PlaySound(g_SENo, 0);
 							}
 
 						}
@@ -1396,6 +1455,8 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
 								g_Bullet[i].warpcool = 20;
+								g_SENo = LoadSound("data/SE/Shortbridge30-3.wav");
+								PlaySound(g_SENo, 0);
 							}
 
 						}
@@ -1413,6 +1474,88 @@ void UpdateBullet(void)
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
 								g_Bullet[i].warpcool = 20;
+								g_SENo = LoadSound("data/SE/Shortbridge30-3.wav");
+								PlaySound(g_SENo, 0);
+							}
+
+						}
+					}
+
+					//ワープ7
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 38)
+					{
+						if (g_Bullet[i].warpcool <= 0)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 39)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 20;
+								g_SENo = LoadSound("data/SE/Shortbridge30-3.wav");
+								PlaySound(g_SENo, 0);
+							}
+
+						}
+					}
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 39)
+					{
+						if (g_Bullet[i].warpcool <= 0)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 38)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 20;
+								g_SENo = LoadSound("data/SE/Shortbridge30-3.wav");
+								PlaySound(g_SENo, 0);
+							}
+
+						}
+					}
+
+					//ワープ8
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 40)
+					{
+						if (g_Bullet[i].warpcool <= 0)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 41)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 20;
+								g_SENo = LoadSound("data/SE/Shortbridge30-3.wav");
+								PlaySound(g_SENo, 0);
+							}
+
+						}
+					}
+					if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 41)
+					{
+						if (g_Bullet[i].warpcool <= 0)
+						{
+							// そのブロックが当たり判定があるブロックかどうか調べるa
+							int BlockData = CheckBlockdata(x, y);
+							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
+							if (BlockData == 40)
+							{
+								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
+
+								g_Bullet[i].warpcool = 20;
+								g_SENo = LoadSound("data/SE/Shortbridge30-3.wav");
+								PlaySound(g_SENo, 0);
 							}
 
 						}

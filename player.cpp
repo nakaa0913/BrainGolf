@@ -52,7 +52,7 @@ static int g_AnimeWaitFrame = 0;
 int	club_pattern;			// 使うクラブ(打ち方)0が転がる、1がとぶ
 int club_ChangeCool;		// クラブを持ち替えた時のクールタイム
 
-bool mouseuse = false;
+bool mouseuse = true;
 
 bool pausemouseuse2 = false;
 
@@ -397,7 +397,7 @@ void UpdatePlayer(void)
 
 
 					// プレイヤーの角度を変える処理,回転させる処理撃つ方向を決める
-					if (Keyboard_IsKeyDown(KK_LEFT))
+					/*if (Keyboard_IsKeyDown(KK_LEFT))
 					{
 						g_Player[i].angle += 3.0f;
 
@@ -415,7 +415,7 @@ void UpdatePlayer(void)
 							g_Player[i].angle = 360.0f;
 						g_Player[i].direction = 0;
 						mouseuse = false;
-					}
+					}*/
 
 					// マウスカーソルの場所でとばす方向を決める処理
 					// mouse_pos_X  mouse_pos_Y
@@ -431,10 +431,10 @@ void UpdatePlayer(void)
 
 
 
-						if (mouse_Rclick)
+				/*		if (mouse_Rclick)
 						{
 							mouseuse = true;
-						}
+						}*/
 
 						if (mouseuse)
 						{
@@ -499,7 +499,7 @@ void UpdatePlayer(void)
 						if (pause_cool2 <= 0)
 						{
 							//ENTERで弾だす
-							if (Keyboard_IsKeyDown(KK_ENTER) || mouse_Lclick && mouseuse)
+							if (mouse_Lclick && mouseuse)
 							{
 								// パスした回数を増やす
 								p_Gamedata->pass_count++;

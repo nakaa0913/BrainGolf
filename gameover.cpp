@@ -16,6 +16,7 @@
 #include "bg.h"
 #include "result.h"
 #include "scene.h"
+#include "sound.h"
 #include "fade.h"
 #include "effect.h"
 #include "mission.h"
@@ -41,6 +42,9 @@
 // グローバル変数
 //*****************************************************************************
 static GAMEOVER g_Gameover;
+static int g_GameoverSENo = 0;
+
+int			onceSE;
 
 //=============================================================================
 // 初期化処理
@@ -55,7 +59,8 @@ HRESULT InitGameover(void)
 
 
 	//初期化
-
+	g_GameoverSENo = LoadSound("data/SE/Phrase04-1.wav");
+	onceSE = 0;
 
 	return S_OK;
 }
@@ -73,6 +78,11 @@ void UninitGameover(void)
 //=============================================================================
 void UpdateGameover(void)
 {
+	if (onceSE == 0)
+	{
+		PlaySound(g_GameoverSENo, 0);
+		onceSE = 1;
+	}
 	//マウスの座標を取得
 	float mouse_pos_X = GetMousePosX();
 	float mouse_pos_Y = GetMousePosY();

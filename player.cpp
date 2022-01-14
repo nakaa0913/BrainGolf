@@ -68,7 +68,7 @@ HRESULT InitPlayer(void)
 
 	pause_cool2 = 0;
 	//
-	g_ShotSENo = LoadSound("data/SE/shot000.wav");
+	g_ShotSENo = LoadSound("data/SE/Motion-Pop26-1.wav");
 	tex_yazirushi = LoadTexture("data/TEXTURE/game/player/yazirusi.png");
 
 	for (int i = 0; i < PLAYER_MAX; i++)
@@ -508,8 +508,6 @@ void UpdatePlayer(void)
 								g_Player[i].have = false;
 
 								PlaySound(g_ShotSENo, 0);
-
-								SetVolume(g_ShotSENo, 0.1f);
 
 								D3DXVECTOR2 pos = g_Player[i].pos;
 								SetBullet(pos, g_Player[i].angle, g_Player[i].ShotPower, club_pattern);

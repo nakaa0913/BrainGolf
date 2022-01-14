@@ -202,7 +202,7 @@ void InitEffect(void)
 	pause_mission_66 = LoadTexture("data/TEXTURE/pause/mission.png");
 	pause_stageselect_67 = LoadTexture("data/TEXTURE/pause/stageselect.png");
 
-	GimmickDescriptionChip_68 = LoadTexture("data/TEXTURE/game/GimmickDescription/GimmickDescriptionChip.png");
+	GimmickDescriptionChip_68 = LoadTexture("data/TEXTURE/game/GimmickDescription/gimmick.png");
 	pickup_GimmickDescription_69 = LoadTexture("data/TEXTURE/game/GimmickDescription/pickup_GimmickDescription.png");
 	
 	batu_70 = LoadTexture("data/TEXTURE/pause/batu.png");

@@ -54,6 +54,11 @@ static STAGESELECT g_StageSelect;
 
 static int	g_TextureNo = 0;	// テクスチャ情報
 static int	g_BGMNo = 0;		// BGM識別子
+static int g_SENo = 0;
+
+int			UseArrow;
+int			UseEnter;
+
 
 //static int world_1_background;
 //static int world_2_background;
@@ -93,6 +98,9 @@ void InitStageSelect(void)
 	g_StageSelect.select_y = 0;
 
 	StageDecision = false;
+
+	UseArrow = 0;
+	UseEnter = 0;
 
 	// 並べたステージを表示するときのエフェクト配列の初期化
 	for (int i = 0; i < USE_STAGE_MAX; i++)
@@ -185,7 +193,7 @@ void InitStageSelect(void)
 void UninitStageSelect()
 {
 	UnloadTexture("data/TEXTURE/select/stage_select.png");
-
+	StopSoundAll();
 }
 
 /*------------------------------------------------------------------------------
@@ -257,6 +265,13 @@ void UpdateStageSelect(void)
 					if (Keyboard_IsKeyDown(KK_ENTER))
 					{
 						SceneTransition(SCENE_TITLE);
+
+						if (UseEnter == 0)
+						{
+							g_SENo = LoadSound("data/SE/Accent03-1.wav");
+							PlaySound(g_SENo, 0);
+							UseEnter = 1;
+						}
 					}
 					////ENTERでシーンワールド選択にいく
 					//if (Keyboard_IsKeyDown(KK_ENTER))
@@ -401,11 +416,17 @@ void UpdateStageSelect(void)
 			// プレイヤー配置フェーズに行く前に前回の配置情報をリセットする
 			ResetPlacementArray();
 			SceneTransition(SCENE_PLACEMENT);
+
+			g_SENo = LoadSound("data/SE/Accent03-1.wav");
+			PlaySound(g_SENo, 0);
 		}
 
 		// マウスが表示にあっている状態で左クリックをしたら
 		if (mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
 		{
+			g_SENo = LoadSound("data/SE/Accent03-1.wav");
+			PlaySound(g_SENo, 0);
+
 			StageDecision = true;
 			// 移動入力のとこですでにステージデータはもらっているのでこのままいってOK
 			g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
@@ -469,6 +490,9 @@ void UpdateStageSelect(void)
 								D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
 								1.0f, 1.0f, 0, 999, 0, 60,
 								0.0f, 0.0f, 0);
+
+						g_SENo = LoadSound("data/SE/Accent03-1.wav");
+						PlaySound(g_SENo, 0);
 					}
 				}
 

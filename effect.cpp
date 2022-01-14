@@ -1190,8 +1190,11 @@ void EffectBreak(int use_array_num, int SerialNumber)
 // 配列の何番目のエフェクトの今の座標を返す
 D3DXVECTOR2 GetEffectPos(int use_array_num)
 {
+	/*if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
+		exit(36);*/
+
 	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
-		exit(36);
+		return D3DXVECTOR2(300.f, 300.f);
 
 	return g_Effect[use_array_num].pos;
 }

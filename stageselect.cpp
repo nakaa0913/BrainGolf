@@ -44,7 +44,8 @@
 /*------------------------------------------------------------------------------
    プロトタイプ宣言
 ------------------------------------------------------------------------------*/
-
+#define USE_STAGE_MAX	(20)	// 実際に実装されて使うステージの数
+#define PAGE_MAX		(2)		// ページ数
 
 /*------------------------------------------------------------------------------
    グローバル変数の定義
@@ -75,6 +76,8 @@ int tex_NowWorld_mission = -1;     //ミッション
 
 // 選択したときの処理で使う
 int now_stage_select_EffectArray = -1;
+int stage_EffectArray[USE_STAGE_MAX];
+int stage_star_EffectArray[USE_STAGE_MAX][MAX_MISSION];
 bool stage_select_once = false;
 int stage_select_once_time = 0;
 
@@ -90,6 +93,16 @@ void InitStageSelect(void)
 	g_StageSelect.select_y = 0;
 
 	StageDecision = false;
+
+	// 並べたステージを表示するときのエフェクト配列の初期化
+	for (int i = 0; i < USE_STAGE_MAX; i++)
+	{
+		stage_EffectArray[i] = -1;
+		for (int j = 0; j < MAX_MISSION; j++)
+		{
+			stage_star_EffectArray[i][j] = -1;
+		}
+	}
 
 
 
@@ -180,6 +193,8 @@ void UninitStageSelect()
 ------------------------------------------------------------------------------*/
 void UpdateStageSelect(void)
 {
+	if (Keyboard_IsKeyDown(KK_Q))
+		ChangePage();
 	
 	if (StageDecision == false)
 	{
@@ -541,69 +556,81 @@ void StartStageSelectScreen()
 	float interval_y = 240.0f;
 
 
+	float page_interval_x = 300.0f;
+
+
 
 	//ステージ選択
-	for (int x = 0; x < SELECT_MAX_X; x++)
+	for (int page = 0; page < PAGE_MAX; page++)
 	{
-		for (int y = 0; y < SELECT_MAX_Y; y++)
+		for (int x = 0; x < SELECT_MAX_X; x++)
 		{
-			int NowWorld_stagenum = NowWorld * 10 - 10 + x + y * SELECT_MAX_X;
-
-			// 現在の座標を求める
-			float now_x = stage_origin_x + interval_x * x;
-			float now_y = stage_origin_y + interval_y * y;
-
-			// 選択されてないときの表示を出す(ステージすべて)
-			SetEffect(tex_NowWorld_stagechoice, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
-				D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-				0.0f, 1.0f, 0, 999, 0, 0,
-				0.0f, 0.0f, 0);
-
-			// ミッションをクリアしているなら表示する
-			if (p_Savedata[NowWorld_stagenum].mission_clear[0] == 1)
+			for (int y = 0; y < SELECT_MAX_Y; y++)
 			{
-				//星
-				SetEffect(83, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
-					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-					0.0f, 1.0f, 120, 999, 0, 60,
-					0.0f, 0.0f, 0);
-			}
+				//int now_num = x + y * SELECT_MAX_X + (page * 10);
+				int NowWorld_stagenum = NowWorld * 10 - 10 + x + y * SELECT_MAX_X + (page * 10);	// 0~19
 
-			// ミッションをクリアしているなら表示する
-			if (p_Savedata[NowWorld_stagenum].mission_clear[1] == 1)
-			{
-				//星
-				SetEffect(84, D3DXVECTOR2(now_x - 50, now_y), D3DXVECTOR2(now_x - 50, now_y), 0,
-					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-					0.0f, 1.0f, 120, 999, 0, 60,
-					0.0f, 0.0f, 0);
-			}
+				// 現在の座標を求める
+				float now_x = stage_origin_x + interval_x * x + page * page_interval_x;
+				float now_y = stage_origin_y + interval_y * y;
 
-			// ミッションをクリアしているなら表示する
-			if (p_Savedata[NowWorld_stagenum].mission_clear[2] == 1)
-			{
-				//星
-				SetEffect(85, D3DXVECTOR2(now_x + 50, now_y), D3DXVECTOR2(now_x + 50, now_y), 0,
-					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-					0.0f, 1.0f, 120, 999, 0, 60,
-					0.0f, 0.0f, 0);
-			}
+				// 選択されてないときの表示を出す(ステージすべて)
+				stage_EffectArray[NowWorld_stagenum] =
+					SetEffect(tex_NowWorld_stagechoice, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
+						D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+						0.0f, 1.0f, 0, 999, 0, 0,
+						0.0f, 0.0f, 0);
 
-			// タイトルに戻る処理
-			SetEffect(61, D3DXVECTOR2(240.0f, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
-				D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-				0.0f, 1.0f, 0, 999, 0, 0,
-				0.0f, 0.0f, 0);
+				// ミッションをクリアしているなら表示する
+				if (p_Savedata[NowWorld_stagenum].mission_clear[0] == 1)
+				{
+					//星
+					stage_star_EffectArray[NowWorld_stagenum][0] =
+					SetEffect(83, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
+						D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+						0.0f, 1.0f, 120, 999, 0, 60,
+						0.0f, 0.0f, 0);
+				}
+
+				// ミッションをクリアしているなら表示する
+				if (p_Savedata[NowWorld_stagenum].mission_clear[1] == 1)
+				{
+					//星
+					stage_star_EffectArray[NowWorld_stagenum][1] =
+					SetEffect(84, D3DXVECTOR2(now_x - 50, now_y), D3DXVECTOR2(now_x - 50, now_y), 0,
+						D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+						0.0f, 1.0f, 120, 999, 0, 60,
+						0.0f, 0.0f, 0);
+				}
+
+				// ミッションをクリアしているなら表示する
+				if (p_Savedata[NowWorld_stagenum].mission_clear[2] == 1)
+				{
+					//星
+					stage_star_EffectArray[NowWorld_stagenum][2] =
+					SetEffect(85, D3DXVECTOR2(now_x + 50, now_y), D3DXVECTOR2(now_x + 50, now_y), 0,
+						D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+						0.0f, 1.0f, 120, 999, 0, 60,
+						0.0f, 0.0f, 0);
+				}
+			}
 		}
 	}
 
-	//星
+	// タイトルに戻る処理
+	SetEffect(61, D3DXVECTOR2(240.0f, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
+		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+		0.0f, 1.0f, 0, 999, 0, 0,
+		0.0f, 0.0f, 0);
+
+	//どのこの星？
 	SetEffect(9, D3DXVECTOR2(280.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
 		D3DXVECTOR2(500.0f, 150.0f), D3DXVECTOR2(500.0f, 150.0f), 0,
 		0.0f, 1.0f, 0, 1, 0, 0,
 		0.0f, 0.0f, 0);
 
 	// セーブデータからゲットしてる星の数を読み込む
+	// 多分左上のやつら？
 	int StageStar = GetStar(NowWorld);
 
 	int Number_EffectArray[2] = { 0,0 };
@@ -621,4 +648,123 @@ void StartStageSelectScreen()
 		0.0f, 0.0f, 0);
 
 	return;
+}
+
+void ChangePage()
+{
+	{
+		SAVEDATA* p_Savedata = GetSavedata();
+		STAGEDATA* p_Stagedata = GetStagedata();
+
+		////背景表示
+		//SetEffect(tex_NowWorld_background, D3DXVECTOR2(SCREEN_WIDTH / 2, 405), D3DXVECTOR2(SCREEN_WIDTH / 2, 405), 0,
+		//	D3DXVECTOR2(590, 1000), D3DXVECTOR2(590, 1000), 1,
+		//	0.0f, 1.0f, 100, 999, 0, 180,
+		//	0.0f, 0.0f, 0);
+
+		// ステージ選択の時の原点となる場所
+		float	stage_origin_x = 240.0f;			    // xの原点(0,0を選択しているとき)
+		float	stage_origin_y = 200.0f;			    // yの原点(0,0を選択しているとき)
+
+		// ステージ選択の時1個離れたらこれだけ離れるよってやつ
+		float interval_x = 240.0f;
+		float interval_y = 240.0f;
+
+
+		float page_interval_x = 300.0f;
+		float change_page_interval_x = interval_x * SELECT_MAX_X + page_interval_x;
+
+		float change_page_interval = -change_page_interval_x;
+
+		//ステージ選択
+		for (int page = 0; page < PAGE_MAX; page++)
+		{
+			for (int x = 0; x < SELECT_MAX_X; x++)
+			{
+				for (int y = 0; y < SELECT_MAX_Y; y++)
+				{
+					//int now_num = x + y * SELECT_MAX_X + (page * 10);
+					int NowWorld_stagenum = NowWorld * 10 - 10 + x + y * SELECT_MAX_X + (page * 10);	// 0~19
+
+					// 現在の座標を求める
+					float now_x = stage_origin_x + interval_x * x + page * page_interval_x;
+					float now_y = stage_origin_y + interval_y * y;
+
+					D3DXVECTOR2 now_stagePos	= GetEffectPos(stage_EffectArray[NowWorld_stagenum]);
+					D3DXVECTOR2 now_stage_starPos[3];
+					now_stage_starPos[0]= GetEffectPos(stage_star_EffectArray[NowWorld_stagenum][0]);
+					now_stage_starPos[1]= GetEffectPos(stage_star_EffectArray[NowWorld_stagenum][1]);
+					now_stage_starPos[2]= GetEffectPos(stage_star_EffectArray[NowWorld_stagenum][2]);
+
+					// 選択されてないときの表示を出す(ステージすべて)
+						ChangeEffect(stage_EffectArray[NowWorld_stagenum], tex_NowWorld_stagechoice, now_stagePos, D3DXVECTOR2(now_stagePos.x + change_page_interval, now_stagePos.y), 1,
+							D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+							0.0f, 1.0f, 0, 999, 0, 0,
+							0.0f, 0.0f, 0);
+
+					// ミッションをクリアしているなら表示する
+					if (p_Savedata[NowWorld_stagenum].mission_clear[0] == 1)
+					{
+						//星
+						ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][0], 83, now_stage_starPos[0], D3DXVECTOR2(now_stage_starPos[0].x + change_page_interval, now_stage_starPos[0].y), 1,
+								D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+								0.0f, 1.0f, 120, 999, 0, 60,
+								0.0f, 0.0f, 0);
+					}
+
+					// ミッションをクリアしているなら表示する
+					if (p_Savedata[NowWorld_stagenum].mission_clear[1] == 1)
+					{
+						//星
+						ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][1], 84, now_stage_starPos[1], D3DXVECTOR2(now_stage_starPos[1].x + change_page_interval, now_stage_starPos[1].y), 1,
+								D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+								0.0f, 1.0f, 120, 999, 0, 60,
+								0.0f, 0.0f, 0);
+					}
+
+					// ミッションをクリアしているなら表示する
+					if (p_Savedata[NowWorld_stagenum].mission_clear[2] == 1)
+					{
+						//星
+						ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][2], 85, now_stage_starPos[2], D3DXVECTOR2(now_stage_starPos[2].x + change_page_interval, now_stage_starPos[2].y), 1,
+								D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+								0.0f, 1.0f, 120, 999, 0, 60,
+								0.0f, 0.0f, 0);
+					}
+				}
+			}
+		}
+
+		//// タイトルに戻る処理
+		//SetEffect(61, D3DXVECTOR2(240.0f, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
+		//	D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+		//	0.0f, 1.0f, 0, 999, 0, 0,
+		//	0.0f, 0.0f, 0);
+
+		////どのこの星？
+		//SetEffect(9, D3DXVECTOR2(280.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+		//	D3DXVECTOR2(500.0f, 150.0f), D3DXVECTOR2(500.0f, 150.0f), 0,
+		//	0.0f, 1.0f, 0, 1, 0, 0,
+		//	0.0f, 0.0f, 0);
+
+		//// セーブデータからゲットしてる星の数を読み込む
+		//// 多分左上のやつら？
+		//int StageStar = GetStar(NowWorld);
+
+		//int Number_EffectArray[2] = { 0,0 };
+		//int* p_Number_EffectArray = Number_EffectArray;
+		//// セーブデータから読み込んだ全ての星の数の表示
+		//SetEffectNumber(StageStar, p_Number_EffectArray, D3DXVECTOR2(250.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+		//	D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
+		//	0.0f, 1.0f, 0, 999, 0, 0,
+		//	0.0f, 0.0f, 0);
+
+		//// 全ての星の数(30)の表示
+		//SetEffectNumber(30, p_Number_EffectArray, D3DXVECTOR2(400.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+		//	D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
+		//	0.0f, 1.0f, 0, 999, 0, 0,
+		//	0.0f, 0.0f, 0);
+
+		return;
+	}
 }

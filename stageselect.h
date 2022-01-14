@@ -34,3 +34,4 @@ void DrawStageSelect(void);
 STAGESELECT* GetStageSelect();
 //void SetStageSelect(int stagenum);
 void StartStageSelectScreen();
+void ChangePage();

@@ -61,14 +61,24 @@ void UpdateTitle(void)
 {
 	bool mouse_Lclick = GetMouseLClick();
 
+	// ステージセレクトへ飛ぶ。この時ワールド１を選択されていることにする
 	if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
+	{
+		SceneTransition(SCENE_STAGE_SELECT);
+	}
+	if (mouse_Lclick && GetFadeState() == FADE_NONE)
+	{
+		SceneTransition(SCENE_STAGE_SELECT);
+	}
+
+	/*if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
 	{
 		SceneTransition(SCENE_WORLD_SELECT);
 	}
 	if (mouse_Lclick && GetFadeState() == FADE_NONE)
 	{
 		SceneTransition(SCENE_WORLD_SELECT);
-	}
+	}*/
 }
 
 //=============================================================================

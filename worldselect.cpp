@@ -439,7 +439,9 @@ void DrawWorldSelect(void)
 
 int GetNowWorld()
 {
-	return g_WorldSelect.select_x + 1;
+	// ƒ[ƒ‹ƒh1‚ğ‘I‘ğ‚µ‚Ä‚¢‚é‚±‚Æ‚É‚·‚é
+	return 1;
+	//return g_WorldSelect.select_x + 1;
 }
 
 

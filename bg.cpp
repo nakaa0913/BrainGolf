@@ -186,6 +186,8 @@ static int tex_base_wall_center = 0;		// 背景用テクスチャ情報
 static int tex_base_wall_left = 0;		// 背景用テクスチャ情報
 static int tex_base_wall_right = 0;		// 背景用テクスチャ情報
 
+static int g_BG_03 = 0;			// 背景用テクスチャ情報
+
 
 
 static int g_CurrentPos = 0;	// 現在のマップ座標
@@ -207,6 +209,8 @@ HRESULT InitBG(void)
 	tex_base_wall_center = LoadTexture("data/TEXTURE/game/side/base_wall_center.png");
 	tex_base_wall_left = LoadTexture("data/TEXTURE/game/side/base_wall_left.png");
 	tex_base_wall_right = LoadTexture("data/TEXTURE/game/side/base_wall_right.png");
+
+	g_BG_03 = LoadTexture("data/TEXTURE/game/side/Back_image_3.png");
 
 	return S_OK;
 }
@@ -241,6 +245,9 @@ void UpdateBG(void)
 //=============================================================================
 void DrawBG(void)
 {
+	// 雪原背景の表示
+	DrawSpriteLeftTop(g_BG_03, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
+
 	STAGEDATA* p_Stagedata = GetStagedata();
 	CAMERA* p_Camera = GetCamera();
 
@@ -353,7 +360,7 @@ void DrawBG(void)
 
 				// ブロックだった場合見やすくするために半透明にする
 				if(mapchipdata == 1)
-					color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+					color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 				// プレイヤー周りにいるかの検索とその時ブロックを透明にする処理
 				for (int i = 0; i < PLAYER_MAX; i++)

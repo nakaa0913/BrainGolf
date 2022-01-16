@@ -112,7 +112,7 @@ void UpdateResult(void)
 
 
 
-	if (g_Result.goaltime == 240)
+	if (g_Result.goaltime == 30)
 	{
 		//（アドバイス？）
 		/*SetEffect(1, D3DXVECTOR2(SCREEN_WIDTH / 2, 405), D3DXVECTOR2(SCREEN_WIDTH / 2, 405), 0,
@@ -126,7 +126,7 @@ void UpdateResult(void)
 		//DrawMissionResult();
 	}
 
-	if (g_Result.goaltime == 300)
+	if (g_Result.goaltime == 30)
 	{
 		//星(影)
 		SetEffect(82, D3DXVECTOR2(800.0f, 280.0f), D3DXVECTOR2(800.0f, 280.0f), 0,
@@ -145,7 +145,7 @@ void UpdateResult(void)
 			0.0f, 0.0f, 0);
 	}
 
-	if (g_Result.goaltime == 400)
+	if (g_Result.goaltime == 80)
 	{
 		// ミッションをクリアしているなら表示する
 		if (p_Savedata[p_Stagedata->stagenum].mission_clear[0] == 1)
@@ -160,7 +160,7 @@ void UpdateResult(void)
 		//縦810
 	}
 
-	if (g_Result.goaltime == 430)
+	if (g_Result.goaltime == 100)
 	{
 		// ミッションをクリアしているなら表示する
 		if (p_Savedata[p_Stagedata->stagenum].mission_clear[1] == 1)
@@ -173,7 +173,7 @@ void UpdateResult(void)
 		}
 	}
 
-	if (g_Result.goaltime == 460)
+	if (g_Result.goaltime == 120)
 	{
 		// ミッションをクリアしているなら表示する
 		if (p_Savedata[p_Stagedata->stagenum].mission_clear[2] == 1)
@@ -186,22 +186,22 @@ void UpdateResult(void)
 		}
 	}
 
-	if (g_Result.goaltime >= 560)
+	/*if (g_Result.goaltime >= 120)
 	{
-		if (g_Result.goaltime <= 8000)
+		if (g_Result.goaltime <= 200)
 		{
 			if (GetKeyboardPress(DIK_RETURN))
 			{
-				g_Result.goaltime = 9000;
+				g_Result.goaltime = 210;
 			}
 			if (mouse_Lclick)
 			{
-				g_Result.goaltime = 9000;
+				g_Result.goaltime = 210;
 			}
 		}
-	}
+	}*/
 
-	if (g_Result.goaltime >= 9000)
+	if (g_Result.goaltime >= 160)
 	{
 		//明るくする暗くするなら4
 		/*SetEffect(48, D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(0.0f, 0.0f), 0,

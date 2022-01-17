@@ -122,20 +122,27 @@ void UpdatePause(void)
 	{
 		if (gameover_pause == false)
 		{
-			//ポーズボタン 1200 700	300 300
-			if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 15.0f && mouse_pos_Y < 85.0f)
+			if (pauseclickuse == false)
 			{
-				//g_Pause.selectpush = 0;
-				pausemouseuse = true;
-
-				// マウスが表示にあっている状態で左クリックをしたら
-				if (pausemouseuse && mouse_Lclick)
+				if (pause_cool <= 0)
 				{
-					//ポーズ画面を開く
-					pauseclickuse = true;
+					//ポーズボタン 1200 700	300 300
+					if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 15.0f && mouse_pos_Y < 85.0f)
+					{
+						//g_Pause.selectpush = 0;
+
+						pausemouseuse = true;
+
+						// マウスが表示にあっている状態で左クリックをしたら
+						if (pausemouseuse && mouse_Lclick)
+						{
+							//ポーズ画面を開く
+							pauseclickuse = true;
+							pause_cool = CLICK_COOLTIME;
+						}
+					}
 				}
 			}
-
 			//ポーズ画面を開いている状態
 			if (pauseclickuse)
 			{
@@ -296,6 +303,23 @@ void UpdatePause(void)
 
 					}
 
+					//ポーズボタン閉じる 1200 700	300 300
+					if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 15.0f && mouse_pos_Y < 85.0f)
+					{
+						//g_Pause.selectpush = 0;
+						pausemouseuse = true;
+
+						// マウスが表示にあっている状態で左クリックをしたら
+						if (pausemouseuse && mouse_Lclick)
+						{
+							//ポーズ画面を閉じる
+							pauseclickuse = false;
+							pausemission = false;
+							Abovemap = false;
+							DeleteMissionPause();
+							pause_cool = CLICK_COOLTIME;
+						}
+					}
 				}
 
 				//画面の360より右を押したらポーズ画面をすべて閉じる

@@ -265,9 +265,9 @@ void DrawBG(void)
 		offset_y = -560.0f;
 
 	//レイヤー０の表示
-	for (int x = 0; x < MAP_X + 1; x++)
+	for (int x = 0 - 1; x < MAP_X + 1; x++)
 	{
-		for(int y = 0; y < MAP_Y + 1; y++)
+		for (int y = 0 - 1; y < MAP_Y + 1; y++)
 		{
 
 			float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
@@ -280,7 +280,7 @@ void DrawBG(void)
 			// tex_base_wall
 
 			// 床の描写
-			if (x < MAP_X && y < MAP_Y)
+			if (x < MAP_X + 1 && y < MAP_Y + 1)
 			{
 				// 等角図での床の描写
 				DrawSpriteLeftTop(tex_floor_huchinasi, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
@@ -327,6 +327,8 @@ void DrawBG(void)
 			{
 				mapchipdata = 1;
 				mapchip = g_MapInfo[1];
+				if (mapchipdata == 1)							// 壁ブロックをうすくする処理
+					mapchip.uv = D3DXVECTOR2(0.75f, 0.875f);
 
 				if (x == -1 || y == -1)
 				{
@@ -346,6 +348,9 @@ void DrawBG(void)
 			{
 				mapchipdata = p_Stagedata->maparray[y][x];
 				mapchip = g_MapInfo[mapchipdata];
+				if (mapchipdata == 1)							// 壁ブロックをうすくする処理
+					mapchip.uv = D3DXVECTOR2(0.75f, 0.875f);
+
 			}
 
 			// マップのデータが0の場合何も表示しないし計算もしない。

@@ -76,9 +76,9 @@ void InitGame(void)
 
 	InitGimmickDescription();
 
-	g_BGMNo = LoadSound("data/BGM/morningroutine(title).wav");
+	g_BGMNo = LoadSound("data/BGM/ƒ†ƒLƒmƒCƒƒhƒŠ.wav");
 
-	SetVolume(g_BGMNo, 1.0f);
+	SetVolume(g_BGMNo, 0.5f);
 	PlaySound(g_BGMNo, -1);
 	sound_once = 0;
 }

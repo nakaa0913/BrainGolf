@@ -99,7 +99,7 @@ void SetStageData(int stagenum)
 	strcat(stagename, stagenameend);
 
 	// とりあえずテスト
-	LoadMapdataMain("data/STAGEDATA/0.txt");
+	LoadMapdataMain("data/STAGEDATA/Iwadera 1.txt");
 	
 	// 本番はこっち
 	//LoadMapdataMain(stagename);

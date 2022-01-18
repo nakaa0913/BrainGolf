@@ -39,6 +39,8 @@ PLACEMENT g_Placement[PLACEMENT_MAX];
 
 POS nowchoice;
 
+static int g_SENo = 0;						//SE識別
+
 int MoveKeyCool = 0;
 int PushKeyCool = PUSHKEY_COOLTIME;
 
@@ -295,6 +297,9 @@ void UpdatePlacement(void)
 		{
 			if (Keyboard_IsKeyDown(KK_SPACE) || mouse_Lclick)
 			{
+				g_SENo = LoadSound("data/SE/やさしいベルの上昇音.wav");
+				PlaySound(g_SENo, 0);
+
 				PushKeyCool = PUSHKEY_COOLTIME;
 				// プレイヤーの配置するときに被っていなければそのまま配置、被っていたら取り除く処理
 				// SetPlacementAndPlayerの中でさらにブロックがあったり主人公がいたりで配置できないときの処理。

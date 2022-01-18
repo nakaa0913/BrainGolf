@@ -168,7 +168,7 @@ void UpdatePlacement(void)
 			0.0f, 1.0f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
 		mouseuse = true;
-		if (mouseuse && mouse_Lclick)
+		if (mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
 		{
 			SceneTransition(SCENE_GAME);
 		}
@@ -190,7 +190,7 @@ void UpdatePlacement(void)
 			0.0f, 1.0f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
 		mouseuse = true;
-		if (mouseuse && mouse_Lclick)
+		if (mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
 		{
 			SceneTransition(SCENE_STAGE_SELECT);
 		}
@@ -295,16 +295,19 @@ void UpdatePlacement(void)
 		// スペースキーが押されたらプレイヤーを配置する
 		if (PushKeyCool <= 0)
 		{
-			if (Keyboard_IsKeyDown(KK_SPACE) || mouse_Lclick)
+			if (GetFadeState() == FADE_NONE)
 			{
-				g_SENo = LoadSound("data/SE/やさしいベルの上昇音.wav");
-				PlaySound(g_SENo, 0);
+				if (Keyboard_IsKeyDown(KK_SPACE) || mouse_Lclick)
+				{
+					g_SENo = LoadSound("data/SE/やさしいベルの上昇音.wav");
+					PlaySound(g_SENo, 0);
 
-				PushKeyCool = PUSHKEY_COOLTIME;
-				// プレイヤーの配置するときに被っていなければそのまま配置、被っていたら取り除く処理
-				// SetPlacementAndPlayerの中でさらにブロックがあったり主人公がいたりで配置できないときの処理。
-				if (!SamePlacement(nowchoice.x, nowchoice.y))
-					SetPlacementAndPlayer(nowchoice.x, nowchoice.y);
+					PushKeyCool = PUSHKEY_COOLTIME;
+					// プレイヤーの配置するときに被っていなければそのまま配置、被っていたら取り除く処理
+					// SetPlacementAndPlayerの中でさらにブロックがあったり主人公がいたりで配置できないときの処理。
+					if (!SamePlacement(nowchoice.x, nowchoice.y))
+						SetPlacementAndPlayer(nowchoice.x, nowchoice.y);
+				}
 			}
 		}
 

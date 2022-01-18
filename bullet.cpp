@@ -1132,6 +1132,9 @@ void UpdateBullet(void)
 					{
 						g_Bullet[i].onswitch = !g_Bullet[i].onswitch;
 						g_Bullet[i].switchcool = 120.0f;
+
+						g_SENo = LoadSound("data/SE/ポコッ.wav");
+						PlaySound(g_SENo, 0);
 					}
 				}
 				//スイッチ押された後
@@ -1141,6 +1144,9 @@ void UpdateBullet(void)
 					{
 						g_Bullet[i].onswitch = !g_Bullet[i].onswitch;
 						g_Bullet[i].switchcool = 120.0f;
+
+						g_SENo = LoadSound("data/SE/ポコッ.wav");
+						PlaySound(g_SENo, 0);
 					}
 				}
 
@@ -1248,6 +1254,12 @@ void UpdateBullet(void)
 					// パワーを減衰させる
 					if (g_Bullet[i].shotpower > 0.0f)
 					{
+						if (Holeonetime <= 0)
+						{
+							g_SENo = LoadSound("data/SE/水面に石投げ2.wav");
+							PlaySound(g_SENo, 0);
+							Holeonetime = 365.0f;
+						}
 						g_Bullet[i].shotpower = 0.0f;
 						g_Bullet[i].nextpos.x = 1000.0f;
 						g_Bullet[i].nextpos.y = 1000.0f;

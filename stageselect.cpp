@@ -147,8 +147,8 @@ void InitStageSelect(void)
 
 
 
-	g_BGMNo = LoadSound("data/BGM/sample000.wav");
-
+	g_BGMNo = LoadSound("data/BGM/飛んでバタフライ.wav");
+	SetVolume(g_BGMNo, 0.8f);
 	//255(-1)をループ指定すると無限ループ
 	PlaySound(g_BGMNo, -1);
 
@@ -449,7 +449,7 @@ void UpdateStageSelect(void)
 		{
 			if (Keyboard_IsKeyDown(KK_ENTER) || mouseclick)
 			{
-				g_SENo = LoadSound("data/SE/Accent03-1.wav");
+				g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
 				PlaySound(g_SENo, 0);
 
 				StageDecision = true;

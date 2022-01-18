@@ -156,7 +156,7 @@ void UpdateGame(void)
 		}
 		if (sound_once == 1)
 		{
-			if (p_GetResult->goaltime == 240)
+			if (p_GetResult->goaltime == 200)
 			{
 				StopSoundAll();
 				g_BGMNo = LoadSound("data/BGM/wish_m329.wav");

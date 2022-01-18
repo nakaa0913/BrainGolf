@@ -42,8 +42,10 @@ static BULLET g_Bullet[BULLET_MAX];					// バレット構造体
 static SHADOWBULLET g_ShadowBullet[BULLET_MAX];		// バレットの影構造体
 
 static int g_SENo = 0;								//SE識別
+static int g_NeedleSENo = 0;						//針のSE識別
 
 int needletime = 0;									//針の当たり判定の時間
+int Holeonetime = 0;								//落下音を一度だけ出す
 int hole_changetime = 0;							//踏んだら消える床の画像の変わる時間時間
 //double angle = 00.0;								//向かせたい角度
 //
@@ -59,6 +61,8 @@ HRESULT InitBullet(void)
 	int tex_bullet_shadow = LoadTexture("data/TEXTURE/bullet/bullet_shadow.png");
 
 	g_SENo = 0;
+	g_NeedleSENo = 0;
+	Holeonetime = 0;
 
 	// バレット構造体の初期化 でも実際はSetBulletで呼ぶときにそっちで値が代入される
 	for (int i = 0; i < BULLET_MAX; i++)
@@ -153,6 +157,10 @@ void UpdateBullet(void)
 					//241以上の時に当たるとボールを止める
 					if (needletime > 240)
 					{
+						g_NeedleSENo = LoadSound("data/SE/SwordHit.wav");
+						SetVolume(g_NeedleSENo, 0.4f);
+						PlaySound(g_NeedleSENo, 0);
+
 						p_Stagedata->maparray[y][x] = 16;
 					}
 				}
@@ -1205,8 +1213,11 @@ void UpdateBullet(void)
 				// 踏んだら消えるブロック
 				if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 21)
 				{
+
 					if (p_Stagedata->maparray[axis_y][axis_x] == 21)
 					{
+						g_SENo = LoadSound("data/SE/ガラスにひびが入る.wav");
+						PlaySound(g_SENo, 0);
 						p_Stagedata->maparray[axis_y][axis_x] = 37;
 						hole_changetime = 0;
 					}
@@ -1219,7 +1230,15 @@ void UpdateBullet(void)
 				{
 					if (g_Bullet[i].holecool <= 0)
 					{
+						if (Holeonetime <= 0)
+						{
+							g_SENo = LoadSound("data/SE/fall02.wav");
+							PlaySound(g_SENo, 0);
+							Holeonetime = 365.0f;
+						}
 						g_Bullet[i].shotpower = 0.0f;
+						g_Bullet[i].nextpos.x = 1000.0f;
+						g_Bullet[i].nextpos.y = 1000.0f;
 					}
 				}
 
@@ -1228,7 +1247,11 @@ void UpdateBullet(void)
 				{
 					// パワーを減衰させる
 					if (g_Bullet[i].shotpower > 0.0f)
+					{
 						g_Bullet[i].shotpower = 0.0f;
+						g_Bullet[i].nextpos.x = 1000.0f;
+						g_Bullet[i].nextpos.y = 1000.0f;
+					}
 
 				}
 
@@ -1574,6 +1597,10 @@ void UpdateBullet(void)
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 16)
 			{
 				g_Bullet[i].shotpower = 0.0f;
+				g_Bullet[i].nextpos.x = 1000.0f;
+				g_Bullet[i].nextpos.y = 1000.0f;
+				g_SENo = LoadSound("data/SE/defend000.wav");
+				PlaySound(g_SENo, 0);
 			}
 
 
@@ -1627,6 +1654,9 @@ void UpdateBullet(void)
 		// 加速版のクールタイムを減らしていく
 		if (g_Bullet[i].accboardcool > 0)
 			g_Bullet[i].accboardcool--;
+
+		if (Holeonetime > 0)
+			Holeonetime--;
 
 		// 弾が発射されてからのカウントを増やす
 		g_Bullet[i].shottime++;

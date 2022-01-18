@@ -412,19 +412,138 @@ void DrawBG(void)
 						if (x - 1 == mappos_x && y == mappos_y - 1)
 						{
 							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+								D3DXCOLOR Ncolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+								float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+								float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+								// とうかくず視点
+								//mapchip = g_MapInfo[1];
+								DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, 0.125f, 0.125f, 0.125f, 0.125f, Ncolor);
+							}
+							
 						}
 						if (x - 1 == mappos_x && y == mappos_y + 0)
 						{
 							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+								D3DXCOLOR Ncolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+								float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+								float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+								// とうかくず視点
+								//mapchip = g_MapInfo[1];
+								DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, 0.125f, 0.125f, 0.125f, 0.125f, Ncolor);
+							}
 						}
 						if (x - 1 == mappos_x && y == mappos_y + 1)
 						{
 							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+								D3DXCOLOR Ncolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+								float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+								float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+								// とうかくず視点
+								//mapchip = g_MapInfo[1];
+								DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, 0.125f, 0.125f, 0.125f, 0.125f, Ncolor);
+							}
 						}
 						if (x == mappos_x && y == mappos_y + 1)
 						{
 							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+								D3DXCOLOR Ncolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+								float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+								float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+								// とうかくず視点
+								//mapchip = g_MapInfo[1];
+								DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, 0.125f, 0.125f, 0.125f, 0.125f, Ncolor);
+							}
 						}
+						// ボールのみボールの近く全範囲
+						if (x == mappos_x && y == mappos_y + 0)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+								D3DXCOLOR Ncolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+								float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+								float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+								// とうかくず視点
+								//mapchip = g_MapInfo[1];
+								DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, 0.125f, 0.125f, 0.125f, 0.125f, Ncolor);
+							}
+						}
+						if (x == mappos_x && y == mappos_y - 1)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+								D3DXCOLOR Ncolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+								float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+								float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+								// とうかくず視点
+								//mapchip = g_MapInfo[1];
+								DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, 0.125f, 0.125f, 0.125f, 0.125f, Ncolor);
+							}
+						}
+						if (x + 1 == mappos_x && y == mappos_y + 1)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+								D3DXCOLOR Ncolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+								float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+								float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+								// とうかくず視点
+								//mapchip = g_MapInfo[1];
+								DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, 0.125f, 0.125f, 0.125f, 0.125f, Ncolor);
+							}
+						}
+						if (x + 1 == mappos_x && y == mappos_y + 0)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+								D3DXCOLOR Ncolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+								float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+								float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+								// とうかくず視点
+								//mapchip = g_MapInfo[1];
+								DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, 0.125f, 0.125f, 0.125f, 0.125f, Ncolor);
+							}
+						}
+						if (x + 1 == mappos_x && y == mappos_y - 1)
+						{
+							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+								D3DXCOLOR Ncolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+								float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+								float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+								// とうかくず視点
+								//mapchip = g_MapInfo[1];
+								DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, 0.125f, 0.125f, 0.125f, 0.125f, Ncolor);
+							}
+
+						}
+
+						
+
+
+
+
 					}
 				}
 				// 強調表示が周りにいるかの検索とその時ブロックを透明にする処理
@@ -518,12 +637,52 @@ void DrawBG(void)
 					}
 				}
 			}
-
-
-		
+			
 
 		}
 	}
+
+
+	// 外周の-1の壁ブロックの球が近い時透明で表示させる処理
+	// マップでの座標に変換する
+	D3DXVECTOR2 mappos = PosToMappos(p_bullet[0].pos);
+	// 変換した座標の小数点を切り捨てる
+	int mappos_x = mappos.x;
+	int mappos_y = mappos.y;
+
+	if (mappos_x - 1 == -1)
+	{
+		int nx = -1;
+		int ny = 0;
+		for (int k = -1; k < 2; k++)
+		{
+			ny = mappos_y + k;
+			D3DXCOLOR Ncolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+			float slanted_x = GAME_ORIGIN_POINT_X + nx * (DRAW_MAP_CHIP_SIZE_X / 2) - ny * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+			float slanted_y = GAME_ORIGIN_POINT_Y + ny * (DRAW_MAP_CHIP_SIZE_Y / 2) + nx * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+			// とうかくず視点
+			//mapchip = g_MapInfo[1];
+			DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, 0.125f, 0.125f, 0.125f, 0.125f, Ncolor);
+
+		}
+	}
+	if (mappos_y - 1 == -1)
+	{
+		int nx = 0;
+		int ny = -1;
+		for (int k = -1; k < 2; k++)
+		{
+			nx = mappos_x + k;
+			D3DXCOLOR Ncolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+			float slanted_x = GAME_ORIGIN_POINT_X + nx * (DRAW_MAP_CHIP_SIZE_X / 2) - ny * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
+			float slanted_y = GAME_ORIGIN_POINT_Y + ny * (DRAW_MAP_CHIP_SIZE_Y / 2) + nx * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
+			// とうかくず視点
+			//mapchip = g_MapInfo[1];
+			DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, 0.125f, 0.125f, 0.125f, 0.125f, Ncolor);
+
+		}
+	}
+
 }
 
 int GetMapEnter(D3DXVECTOR2 pos)

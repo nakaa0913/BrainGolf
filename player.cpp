@@ -59,6 +59,8 @@ bool pausemouseuse2 = false;
 bool pauseclickuse2 = false;	//ポーズ画面を開いたかどうか
 
 int pause_cool2;		// ポーズ切り替えのクールタイム
+
+int shotwait = 0;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -67,6 +69,7 @@ HRESULT InitPlayer(void)
 	//テクスチャ読み込み
 
 	pause_cool2 = 0;
+	shotwait = 0;
 	//
 	g_ShotSENo = LoadSound("data/SE/Motion-Pop26-1.wav");
 	tex_yazirushi = LoadTexture("data/TEXTURE/game/player/yazirusi.png");
@@ -94,6 +97,7 @@ HRESULT InitPlayer(void)
 		g_Player[i].direction = 0;
 		g_Player[i].have = false;
 		g_Player[i].catchwait = 0;
+		g_Player[i].shotwait = 0;
 		g_Player[i].angle = 0.0f;
 		g_Player[i].ShotPower = 0;
 		g_Player[i].ConfirmAngle = false;
@@ -392,10 +396,11 @@ void UpdatePlayer(void)
 			if (g_Player[i].have == true)
 			{
 				now_have = true;
+				
 				if (g_Player[i].ConfirmAngle == false)
 				{
 
-
+					
 					// プレイヤーの角度を変える処理,回転させる処理撃つ方向を決める
 					/*if (Keyboard_IsKeyDown(KK_LEFT))
 					{
@@ -436,94 +441,103 @@ void UpdatePlayer(void)
 							mouseuse = true;
 						}*/
 
-						if (mouseuse)
+					if (mouseuse)
+					{
+						Float2 more_mousepos = Getmoremousepos();
+
+						// ①の点から②を見た時のラジアンを計算する
+						float mouse_rad = CalculateRadianFrom2Points(g_Player[i].pos.x / MAP_CHIP_SIZE_X, g_Player[i].pos.y / MAP_CHIP_SIZE_Y, more_mousepos.x, more_mousepos.y);
+						mouse_rad = InversionYRadian(mouse_rad);
+						float mouse_angle = RadianToDegree(mouse_rad);
+
+						g_Player[i].angle = mouse_angle;
+
+						if (g_Player[i].angle <= 0.0f)
+							g_Player[i].angle = 360.0f;
+						g_Player[i].direction = 0;
+					}
+
+					// クラブを持ち変える処理
+					if (club_ChangeCool <= 0)
+					{
+						if (Keyboard_IsKeyDown(KK_UP))
 						{
-							Float2 more_mousepos = Getmoremousepos();
-
-							// ①の点から②を見た時のラジアンを計算する
-							float mouse_rad = CalculateRadianFrom2Points(g_Player[i].pos.x / MAP_CHIP_SIZE_X, g_Player[i].pos.y / MAP_CHIP_SIZE_Y, more_mousepos.x, more_mousepos.y);
-							mouse_rad = InversionYRadian(mouse_rad);
-							float mouse_angle = RadianToDegree(mouse_rad);
-
-							g_Player[i].angle = mouse_angle;
-
-							if (g_Player[i].angle <= 0.0f)
-								g_Player[i].angle = 360.0f;
-							g_Player[i].direction = 0;
+							club_pattern--;
+							club_ChangeCool = CLUB_CHANGECOOL;
 						}
-
-						// クラブを持ち変える処理
-						if (club_ChangeCool <= 0)
+						if (Keyboard_IsKeyDown(KK_DOWN))
 						{
-							if (Keyboard_IsKeyDown(KK_UP))
-							{
-								club_pattern--;
-								club_ChangeCool = CLUB_CHANGECOOL;
-							}
-							if (Keyboard_IsKeyDown(KK_DOWN))
-							{
-								club_pattern++;
-								club_ChangeCool = CLUB_CHANGECOOL;
-							}
-							if (mouse_Wheel)
-							{
-								club_pattern++;
-								club_ChangeCool = CLUB_CHANGECOOL;
-								mouse_Wheelfalse;
-							}
+							club_pattern++;
+							club_ChangeCool = CLUB_CHANGECOOL;
 						}
-
-						// クラブ持ち替えの限界処理
-						if (club_pattern < 0)
-							club_pattern = 1;
-						if (club_pattern > 1)
-							club_pattern = 0;
-
-						//クラブの種類の表示
-						if (club_pattern == 0)
+						if (mouse_Wheel)
 						{
-							SetEffect(71, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 0,
-								D3DXVECTOR2(200.0f, 150.0f), D3DXVECTOR2(200.0f, 150.0f), 0,
-								0.0f, 1.0f, 0, 1, 0, 0,
-								0.0f, 0.0f, 0);
+							club_pattern++;
+							club_ChangeCool = CLUB_CHANGECOOL;
+							mouse_Wheelfalse;
 						}
-						if (club_pattern == 1)
-						{
-							SetEffect(72, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 0,
-								D3DXVECTOR2(200.0f, 150.0f), D3DXVECTOR2(200.0f, 150.0f), 0,
-								0.0f, 1.0f, 0, 1, 0, 0,
-								0.0f, 0.0f, 0);
-						}
-						if (pauseclickuse2 == false && pausemouseuse2 == false)
-						{
+					}
+
+					// クラブ持ち替えの限界処理
+					if (club_pattern < 0)
+						club_pattern = 1;
+					if (club_pattern > 1)
+						club_pattern = 0;
+
+					//クラブの種類の表示
+					if (club_pattern == 0)
+					{
+						SetEffect(71, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 0,
+							D3DXVECTOR2(200.0f, 150.0f), D3DXVECTOR2(200.0f, 150.0f), 0,
+							0.0f, 1.0f, 0, 1, 0, 0,
+							0.0f, 0.0f, 0);
+					}
+					if (club_pattern == 1)
+					{
+						SetEffect(72, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 0,
+							D3DXVECTOR2(200.0f, 150.0f), D3DXVECTOR2(200.0f, 150.0f), 0,
+							0.0f, 1.0f, 0, 1, 0, 0,
+							0.0f, 0.0f, 0);
+					}
+				
+					if (pauseclickuse2 == false && pausemouseuse2 == false)
+					{
 						if (pause_cool2 <= 0)
 						{
 							//ENTERで弾だす
-							if (mouse_Lclick && mouseuse)
+							
+							if (shotwait <= 0)
 							{
-								// パスした回数を増やす
-								p_Gamedata->pass_count++;
+								if (mouse_Lclick && mouseuse)
+								{
+									// パスした回数を増やす
+									p_Gamedata->pass_count++;
 
-								g_Player[i].catchwait = 60;
-								g_Player[i].have = false;
+									g_Player[i].catchwait = 60;
+									g_Player[i].have = false;
 
-								PlaySound(g_ShotSENo, 0);
+									shotwait = 120;
+									PlaySound(g_ShotSENo, 0);
 
-								D3DXVECTOR2 pos = g_Player[i].pos;
-								SetBullet(pos, g_Player[i].angle, g_Player[i].ShotPower, club_pattern);
-							}
+									D3DXVECTOR2 pos = g_Player[i].pos;
+									SetBullet(pos, g_Player[i].angle, g_Player[i].ShotPower, club_pattern);
+								}
+							
 						}
+					}
 				}
+
 			}
-
-
 		}
 
 		// クールタイムを減らす処理
 		if (g_Player[i].catchwait > 0)
 			g_Player[i].catchwait--;
 
-	
+		// クールタイムを減らす処理
+		if (shotwait > 0)
+			shotwait--;
+		
 	}
 
 	if (now_have == true)

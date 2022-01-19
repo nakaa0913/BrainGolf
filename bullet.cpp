@@ -885,7 +885,7 @@ void UpdateBullet(void)
 			//ゲームオーバー処理
 			if (g_Bullet[i].shotpower <= 0)
 			{
-				if (g_Bullet[i].shottime >= 120)
+				if (g_Bullet[i].shottime >= 60)
 				{
 					StopSoundAll();
 					GameoverTrue();
@@ -1245,6 +1245,7 @@ void UpdateBullet(void)
 						g_Bullet[i].shotpower = 0.0f;
 						g_Bullet[i].nextpos.x = 1000.0f;
 						g_Bullet[i].nextpos.y = 1000.0f;
+				
 					}
 				}
 
@@ -1613,6 +1614,7 @@ void UpdateBullet(void)
 				g_Bullet[i].nextpos.y = 1000.0f;
 				g_SENo = LoadSound("data/SE/defend000.wav");
 				PlaySound(g_SENo, 0);
+	
 			}
 
 

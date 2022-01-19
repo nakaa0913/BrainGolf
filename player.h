@@ -15,7 +15,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define PLAYER_MAX (10)
+#define PLAYER_MAX (11)
 
 #define ORDER_MAX			 (5)
 #define INPUT_DIGIT_X_MAX	 (4)
@@ -51,6 +51,7 @@ struct PLAYER
 	int						direction;				// プレイヤーの向いてる向き 0:下,1:左,2:右,3:上
 	bool					have;					// ボールを持っているかどうか
 	int						catchwait;				// ボールを打ってから次にキャッチできるまでのクールタイム管理
+	int						shotwait;				// 撃つまでのクールタイム
 	float					angle;					// どの角度を向いているか
 	int						ShotPower;				// 弾を打ち出す強さ
 	bool					ConfirmAngle;			// 角度を確定したかどうか

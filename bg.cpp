@@ -753,6 +753,9 @@ int LimitRange(int num, int min, int max)
 // プレイヤー配置フェーズ用上から視点
 void DrawBGaboveForPlacement(void)
 {
+	// 雪原背景の表示
+	DrawSpriteLeftTop(g_BG_03, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
+
 	// ゲッターでポインタを受け取る
 	PLAYER* p_player = GetPlayer();
 	BULLET* p_bullet = GetBullet();

@@ -61,6 +61,7 @@ bool pauseclickuse2 = false;	//ポーズ画面を開いたかどうか
 int pause_cool2;		// ポーズ切り替えのクールタイム
 
 int shotwait = 0;
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -68,6 +69,8 @@ HRESULT InitPlayer(void)
 {
 	//テクスチャ読み込み
 
+	pausemouseuse2 = false;
+	pauseclickuse2 = false;
 	pause_cool2 = 0;
 	shotwait = 0;
 	//
@@ -364,21 +367,48 @@ void UpdatePlayer(void)
 
 
 		//ポーズボタン 1200 700	300 300
-		if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 15.0f && mouse_pos_Y < 85.0f)
+		if (pauseclickuse2 == false)
 		{
-			//g_Pause.selectpush = 0;
-			pausemouseuse2 = true;
-
-			// マウスが表示にあっている状態で左クリックをしたら
-			if (pausemouseuse2 && mouse_Lclick)
+			if (pause_cool2 <= 0)
 			{
-				//ポーズ画面を開く
-				pauseclickuse2 = true;
+				if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 15.0f && mouse_pos_Y < 85.0f)
+				{
+					//g_Pause.selectpush = 0;
+					pausemouseuse2 = true;
+
+					// マウスが表示にあっている状態で左クリックをしたら
+					if (pausemouseuse2 && mouse_Lclick)
+					{
+						//ポーズ画面を開く
+						pauseclickuse2 = true;
+						pause_cool2 = 20;
+					}
+				}
 			}
 		}
 
-		if (pausemouseuse2 || pauseclickuse2)
+		if (pauseclickuse2)
 		{
+			if (pause_cool2 <= 0)
+			{
+	
+				//ポーズボタン 1200 700	300 300
+				if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 15.0f && mouse_pos_Y < 85.0f)
+				{
+					//g_Pause.selectpush = 0;
+					pausemouseuse2 = true;
+
+
+					// マウスが表示にあっている状態で左クリックをしたら
+					if (pausemouseuse2 && mouse_Lclick)
+					{
+						//ポーズ画面を閉じる
+						pauseclickuse2 = false;
+						pause_cool2 = 20;
+					}
+
+				}
+			}
 			//画面の360より右を押したらポーズ画面をすべて閉じる
 			if (mouse_pos_X > 360.0f)
 			{
@@ -386,7 +416,7 @@ void UpdatePlayer(void)
 				{
 					pauseclickuse2 = false;
 					pausemouseuse2 = false;
-					pause_cool2 = 30;
+					pause_cool2 = 20;
 				}
 			}
 		}
@@ -500,7 +530,7 @@ void UpdatePlayer(void)
 							0.0f, 0.0f, 0);
 					}
 				
-					if (pauseclickuse2 == false && pausemouseuse2 == false)
+					if (pauseclickuse2 == false)
 					{
 						if (pause_cool2 <= 0)
 						{

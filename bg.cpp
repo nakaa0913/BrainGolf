@@ -198,7 +198,7 @@ static int g_CurrentPos = 0;	// 現在のマップ座標
 HRESULT InitBG(void)
 {
 	//g_Ground = LoadTexture("data/TEXTURE/basechip.png");
-	g_Ground = LoadTexture("data/TEXTURE/game/above/basechip_test.png");
+	g_Ground = LoadTexture("data/TEXTURE/game/above/basechip_test1.png");
 	tex_mapchip_3d = LoadTexture("data/TEXTURE/game/side/mapchip_3d.png");
 
 	tex_floor = LoadTexture("data/TEXTURE/game/side/floor.png");

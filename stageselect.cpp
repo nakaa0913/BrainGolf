@@ -76,6 +76,8 @@ int			UseEnter;
 
 int NowWorld = 0;				   //今選択してるやつ
 int tex_NowWorld_background = -1;  //背景
+int tex_Page_background_EffectArray[2] = { -1, -1 };  //ページ背景のための配列
+int tex_StageNum_background_EffectArray[2] = { -1, -1 };  //ステージ番号(1枚絵で扱う)のための配列
 int tex_NowWorld_stagechoice = -1; //ステージ選択の四角いやつ
 int tex_NowWorld_mission = -1;     //ミッション
 
@@ -1044,10 +1046,32 @@ void StartStageSelectScreen()
 	STAGEDATA* p_Stagedata = GetStagedata();
 
 	//背景表示
-	SetEffect(tex_NowWorld_background, D3DXVECTOR2(SCREEN_WIDTH / 2, 405), D3DXVECTOR2(SCREEN_WIDTH / 2, 405), 0,
-		D3DXVECTOR2(590, 1000), D3DXVECTOR2(590, 1000), 1,
-		0.0f, 1.0f, 100, 999, 0, 180,
+	// 1ページ目
+	tex_Page_background_EffectArray[0] =
+	SetEffect(89, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+		D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+		0.0f, 1.0f, 100, 999, 0, 60,
 		0.0f, 0.0f, 0);
+	// 2ページ目
+	tex_Page_background_EffectArray[1] =
+		SetEffect(90, D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH, SCREEN_HEIGHT / 2), 0,
+			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+			0.0f, 1.0f, 100, 999, 0, 60,
+			0.0f, 0.0f, 0);
+
+	// 1ページ目
+	tex_StageNum_background_EffectArray[0] = 
+		SetEffect(91, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+			0.0f, 1.0f, 100, 999, 0, 60,
+			0.0f, 0.0f, 0);
+
+	// 2ページ目
+	tex_StageNum_background_EffectArray[1] =
+		SetEffect(92, D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH, SCREEN_HEIGHT / 2), 0,
+			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+			0.0f, 1.0f, 100, 999, 0, 60,
+			0.0f, 0.0f, 0);
 
 	// ステージ選択の時の原点となる場所
 	float	stage_origin_x = 240.0f;			    // xの原点(0,0を選択しているとき)
@@ -1213,6 +1237,22 @@ void ChangePage(int ToGoPage)
 	//ステージ選択
 	for (int page = 0; page < PAGE_MAX; page++)
 	{
+		// ページの背景
+		ChangeEffect(tex_Page_background_EffectArray[page], -1, D3DXVECTOR2(99999, 99999), D3DXVECTOR2(change_page_interval, 0.0f), 1,
+			D3DXVECTOR2(99999, 99999), D3DXVECTOR2(0.0f, 0.0f), 0,
+			0.0f, 1.0f, 0, 999, 0, cahngetime,
+			0.0f, 0.0f, 0);
+
+		// ステージ番号
+		ChangeEffect(tex_StageNum_background_EffectArray[page], -1, D3DXVECTOR2(99999, 99999), D3DXVECTOR2(change_page_interval, 0.0f), 1,
+			D3DXVECTOR2(99999, 99999), D3DXVECTOR2(0.0f, 0.0f), 0,
+			0.0f, 1.0f, 0, 999, 0, cahngetime,
+			0.0f, 0.0f, 0);
+
+		// tex_Page_background_EffectArray[page]
+		// tex_StageNum_background_EffectArray
+
+
 		for (int x = 0; x < SELECT_MAX_X; x++)
 		{
 			for (int y = 0; y < SELECT_MAX_Y; y++)

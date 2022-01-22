@@ -121,6 +121,17 @@ static int RedJewlry_83;
 static int BlueJewlry_84;
 static int YellowJewlry_85;
 
+// ステージ選択画面
+static int mission_waku_1_86;
+static int pin_87;
+static int botan_waku_1_88;
+
+static int senntaku_haikei_1_89;
+static int senntaku_haikei_2_90;
+static int botan_1_91;
+static int botan_2_92;
+
+
 
 void InitEffect(void)
 {
@@ -224,6 +235,16 @@ void InitEffect(void)
 	RedJewlry_83 = LoadTexture("data/TEXTURE/result/jewelry_Red.png");
 	BlueJewlry_84 = LoadTexture("data/TEXTURE/result/jewelry_Blue.png");
 	YellowJewlry_85 = LoadTexture("data/TEXTURE/result/jewelry_Yellow.png");
+
+	mission_waku_1_86 = LoadTexture("data/TEXTURE/select/mission_waku_1.png");
+	pin_87 = LoadTexture("data/TEXTURE/select/pin.png");
+	botan_waku_1_88 = LoadTexture("data/TEXTURE/select/botan_waku_1.png");
+
+	senntaku_haikei_1_89 = LoadTexture("data/TEXTURE/select/senntaku_haikei_1.jpg");
+	senntaku_haikei_2_90 = LoadTexture("data/TEXTURE/select/senntaku_haikei_2.jpg");
+	botan_1_91 = LoadTexture("data/TEXTURE/select/botan_1.png");
+	botan_2_92 = LoadTexture("data/TEXTURE/select/botan_2.png");
+
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -1040,6 +1061,27 @@ int GetTextureData(int id)
 	case 85:
 		return YellowJewlry_85;
 		break;
+	case 86:
+		return mission_waku_1_86;
+		break;
+	case 87:
+		return pin_87;
+		break;
+	case 88:
+		return botan_waku_1_88;
+		break;
+	case 89:
+		return senntaku_haikei_1_89;
+		break;
+	case 90:
+		return senntaku_haikei_2_90;
+		break;
+	case 91:
+		return botan_1_91;
+		break;
+	case 92:
+		return botan_2_92;
+		break;
 		
 	}
 
@@ -1077,9 +1119,18 @@ void ChangeEffect(int use_array_num, int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2,
 			g_Effect[new_array_num].pos2 = pos2;
 		}
 		g_Effect[new_array_num].pos_moving_pattern = pos_moving_pattern;
-		g_Effect[new_array_num].size = size1;
-		g_Effect[new_array_num].size1 = size1;
-		g_Effect[new_array_num].size2 = size2;
+		if (size1 == D3DXVECTOR2(99999, 99999))			// 引き数のsize1が99999ならば、今のエフェクトのサイズからsize2のサイズをたす設定。
+		{
+			g_Effect[new_array_num].size = g_Effect[new_array_num].size;
+			g_Effect[new_array_num].size1 = g_Effect[new_array_num].size;
+			g_Effect[new_array_num].size2 = g_Effect[new_array_num].size + size2;
+		}
+		else
+		{
+			g_Effect[new_array_num].size = size1;
+			g_Effect[new_array_num].size1 = size1;
+			g_Effect[new_array_num].size2 = size2;
+		}
 		g_Effect[new_array_num].size_moving_pattern = size_moving_pattern;
 		g_Effect[new_array_num].Clarity_min = Clarity_min;
 		g_Effect[new_array_num].Clarity_max = Clarity_max;

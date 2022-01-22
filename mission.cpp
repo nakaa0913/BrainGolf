@@ -211,6 +211,26 @@ void DrawMissionStageSelect()
 	float base_pos2_x = SCREEN_WIDTH / 2;
 	float base_pos2_y = SCREEN_HEIGHT / 2;
 
+	// 現在のステージから右と左どちらにミッションを表示させるか
+	int LeftOrRight = DisplayLeftOrRight(GetNowChoiceStageNum());
+
+	if (LeftOrRight == 0)
+	{
+		base_pos2_x = 0.0f + 300.0f;
+		base_pos2_y = 550.0f;
+
+		base_pos1_x = base_pos2_x - 500.0f;
+		base_pos1_y = base_pos2_y;
+	}
+	else
+	{
+		base_pos2_x = SCREEN_WIDTH - 300.0f;
+		base_pos2_y = 550.0f;
+
+		base_pos1_x = base_pos2_x + 500.0f;
+		base_pos1_y = base_pos2_y;
+	}
+
 	// 数字の設定
 	float num_size_x = 40.0f;
 	float num_size_y = 40.0f;
@@ -468,4 +488,73 @@ void DeleteMissionPause()
 
 	}
 	return;
+}
+
+// 左が0右が1
+int DisplayLeftOrRight(int stagenum)
+{
+	switch (stagenum)
+	{
+	case 1:
+		return 1;
+		break;
+	case 2:
+		return 1;
+		break;
+	case 3:
+		return 1;
+		break;
+	case 4:
+		return 0;
+		break;
+	case 5:
+		return 0;
+		break;
+	case 6:
+		return 1;
+		break;
+	case 7:
+		return 1;
+		break;
+	case 8:
+		return 0;
+		break;
+	case 9:
+		return 0;
+		break;
+	case 10:
+		return 0;
+		break;
+
+	case 11:
+		return 1;
+		break;
+	case 12:
+		return 1;
+		break;
+	case 13:
+		return 1;
+		break;
+	case 14:
+		return 0;
+		break;
+	case 15:
+		return 0;
+		break;
+	case 16:
+		return 0;
+		break;
+	case 17:
+		return 0;
+		break;
+	case 18:
+		return 0;
+		break;
+	case 19:
+		return 0;
+		break;
+	case 20:
+		return 1;
+		break;
+	}
 }

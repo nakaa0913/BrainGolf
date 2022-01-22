@@ -33,3 +33,4 @@ void DeleteMissionPause();
 bool ClearorFailure(int ContentsNum, int JudgeNum);
 int ContentsNumToTexid(int mission_ContentsNum);
 bool JudgeClearMission(int missionnum);
+int DisplayLeftOrRight(int stagenum);

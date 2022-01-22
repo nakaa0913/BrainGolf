@@ -298,20 +298,20 @@ void UninitEffect(void)
 		g_Effect[i].isUse = false;
 	}
 	// UninitScore();
-	UnloadTexture("data/TEXTURE/ao.png");
-	UnloadTexture("data/TEXTURE/result/advice.png");
-	UnloadTexture("data/TEXTURE/title/title_effect.png");
-	UnloadTexture("data/TEXTURE/other_effect/black.png");
-	UnloadTexture("data/TEXTURE/select/1.png");
-	UnloadTexture("data/TEXTURE/select/2.png");
-	UnloadTexture("data/TEXTURE/select/mission.png");
-	UnloadTexture("data/TEXTURE/select/selectstar.png");
-	UnloadTexture("data/TEXTURE/select/selectlock.png");
-	UnloadTexture("data/TEXTURE/result/clear_star_1.png");
-	UnloadTexture("data/TEXTURE/result/clear_star_2.png");
-	UnloadTexture("data/TEXTURE/result/clear_star_3.png");
-	UnloadTexture("data/TEXTURE/result/clear_star_black_1.png");
-	UnloadTexture("data/TEXTURE/other_effect/number.png");
+	//UnloadTexture("data/TEXTURE/ao.png");
+	//UnloadTexture("data/TEXTURE/result/advice.png");
+	//UnloadTexture("data/TEXTURE/title/title_effect.png");
+	//UnloadTexture("data/TEXTURE/other_effect/black.png");
+	//UnloadTexture("data/TEXTURE/select/1.png");
+	//UnloadTexture("data/TEXTURE/select/2.png");
+	//UnloadTexture("data/TEXTURE/select/mission.png");
+	//UnloadTexture("data/TEXTURE/select/selectstar.png");
+	//UnloadTexture("data/TEXTURE/select/selectlock.png");
+	//UnloadTexture("data/TEXTURE/result/clear_star_1.png");
+	//UnloadTexture("data/TEXTURE/result/clear_star_2.png");
+	//UnloadTexture("data/TEXTURE/result/clear_star_3.png");
+	//UnloadTexture("data/TEXTURE/result/clear_star_black_1.png");
+	//UnloadTexture("data/TEXTURE/other_effect/number.png");
 
 }
 
@@ -450,6 +450,61 @@ int SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern
 
 	// MAX_EFFECT を超えた数エフェクトを作成しようとするとゲームが落ちる
 	 exit(1);
+}
+
+
+// 配列の逆から入れていく
+int SetEffectInReverse(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
+	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
+	float rot_angle1, float rot_angle2, int rot_moving_pattern, float tx, float ty, float sx, float sy)
+{
+	for (int i = MAX_EFFECT - 1; i > 0; i--)
+	{
+		if (g_Effect[i].isUse == false)
+		{
+			//g_Effect[i].id = id;	下で引数で入力した値によってテクスチャを変更している
+			g_Effect[i].pos = pos1;
+			g_Effect[i].pos1 = pos1;
+			g_Effect[i].pos2 = pos2;
+			g_Effect[i].pos_moving_pattern = pos_moving_pattern;
+			g_Effect[i].size = size1;
+			g_Effect[i].size1 = size1;
+			g_Effect[i].size2 = size2;
+			g_Effect[i].size_moving_pattern = size_moving_pattern;
+			g_Effect[i].Clarity_min = Clarity_min;
+			g_Effect[i].Clarity_max = Clarity_max;
+			g_Effect[i].Clarity = g_Effect[i].Clarity_min;
+			g_Effect[i].fadeIn_count = fadeIn_count;
+			g_Effect[i].all_count = all_count;
+			g_Effect[i].fadeOut_count = fadeOut_count;
+			g_Effect[i].now_count = 0;
+			g_Effect[i].moving_count = moving_count;
+			g_Effect[i].rot = AngleToRadian(rot_angle1);
+			g_Effect[i].rot_angle = rot_angle1;
+			g_Effect[i].rot_angle1 = rot_angle1;
+			g_Effect[i].rot_angle2 = rot_angle2;
+			g_Effect[i].rot_moving_pattern = rot_moving_pattern;
+			g_Effect[i].rot_count = 0;
+
+			g_Effect[i].drawpos = g_Effect[i].pos1;
+			g_Effect[i].use_array_num = i;
+
+			g_Effect[i].tx = tx;					// テクスチャ1マスの幅
+			g_Effect[i].ty = ty;					// テクスチャ1マスの高さ
+			g_Effect[i].sx = sx;					// テクスチャのスタート位置x
+			g_Effect[i].sy = sy;					// テクスチャのスタート位置y
+
+			g_Effect[i].isUse = true;
+
+			g_Effect[i].id = GetTextureData(id);
+
+			return i;
+		}
+
+	}
+
+	// MAX_EFFECT を超えた数エフェクトを作成しようとするとゲームが落ちる
+	exit(1);
 }
 
 // 正の整数のみ対応

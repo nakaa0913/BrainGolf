@@ -63,6 +63,10 @@ int SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
 	float rot_angle1, float rot_angle2, int rot_moving_pattern, float tx = 1.0f, float ty = 1.0f, float sx = 0.0f, float sy = 0.0f);
 
+int SetEffectInReverse(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
+	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
+	float rot_angle1, float rot_angle2, int rot_moving_pattern, float tx = 1.0f, float ty = 1.0f, float sx = 0.0f, float sy = 0.0f);
+
 int SetGameEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
 	float rot_angle1, float rot_angle2, int rot_moving_pattern);

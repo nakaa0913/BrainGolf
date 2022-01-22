@@ -36,7 +36,7 @@ static int	g_BGMNo = 0;		// BGM識別子
 HRESULT InitTitle(void)
 {
 	//テクスチャ生成
-	g_TextureNo = LoadTexture("data/TEXTURE/title/titlerogo_4.png");
+	//g_TextureNo = LoadTexture("data/TEXTURE/title/titlerogo_4.png");
 
 	g_BGMNo = LoadSound("data/BGM/morningroutine(title).wav");
 
@@ -52,7 +52,7 @@ HRESULT InitTitle(void)
 void UninitTitle(void)
 {
 	StopSoundAll();
-	UnloadTexture("data/TEXTURE/title/titlerogo_4.png");
+	//UnloadTexture("data/TEXTURE/title/titlerogo_4.png");
 }
 
 //=============================================================================
@@ -71,11 +71,31 @@ void UpdateTitle(void)
 	{
 		SceneTransition(SCENE_STAGE_SELECT);
 	}
+	// タイトルぼかし
+	SetEffect(95, D3DXVECTOR2(SCREEN_WIDTH/2, SCREEN_HEIGHT/2), D3DXVECTOR2(SCREEN_WIDTH/2, SCREEN_HEIGHT/2), 0,
+		D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+		0.0f, 1.0f, 0, 1, 0, 1,
+		0.0f, 0.0f, 0);
 
-	SetEffect(93, D3DXVECTOR2(720, 400), D3DXVECTOR2(720, 400), 0,
+	//明るくするなら48暗くするなら4
+	SetEffect(4, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+		D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+		0.0f, 0.5f, 0, 1, 0, 1,
+		0.0f, 0.0f, 0);
+
+	// タイトルクリック指示
+	SetEffect(93, D3DXVECTOR2(720, 300), D3DXVECTOR2(720, 300), 0,
 		D3DXVECTOR2(1200.0f, 1200.0f), D3DXVECTOR2(1200.0f, 1200.0f), 0,
 		0.0f, 1.0f, 0, 1, 0, 1,
 		0.0f, 0.0f, 0);
+	
+	// タイトルロゴ
+	SetEffect(94, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+		D3DXVECTOR2(1000.0f, 500.0f), D3DXVECTOR2(1000.0f, 500.0f), 0,
+		0.0f, 1.0f, 0, 1, 0, 1,
+		0.0f, 0.0f, 0);
+
+
 
 	/*if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
 	{

@@ -131,7 +131,10 @@ static int senntaku_haikei_2_90;
 static int botan_1_91;
 static int botan_2_92;
 
-
+// ƒ^ƒCƒgƒ‹
+static int title_click_93;
+static int title_logo_94;
+static int title_bokashi_95;
 
 void InitEffect(void)
 {
@@ -245,6 +248,9 @@ void InitEffect(void)
 	botan_1_91 = LoadTexture("data/TEXTURE/select/botan_1.png");
 	botan_2_92 = LoadTexture("data/TEXTURE/select/botan_2.png");
 
+	title_click_93 = LoadTexture("data/TEXTURE/title/title_click.png");
+	title_logo_94 = LoadTexture("data/TEXTURE/title/titlerogo_4.png");
+	title_bokashi_95 = LoadTexture("data/TEXTURE/title/title_bokashi.jpg");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -1137,9 +1143,16 @@ int GetTextureData(int id)
 	case 92:
 		return botan_2_92;
 		break;
-		
+	case 93:
+		return title_click_93;
+		break;
+	case 94:
+		return title_logo_94;
+		break;
+	case 95:
+		return title_bokashi_95;
+		break;
 	}
-
 	// ‚Ç‚±‚É‚à‚½‚Ç‚è’…‚©‚È‚©‚Á‚½ê‡
 	exit(21);
 	return -1;

@@ -215,17 +215,17 @@ void InitStageSelect(void)
 
 	int Number_EffectArray[2] = { 0,0 };
 	int* p_Number_EffectArray = Number_EffectArray;
-	// セーブデータから読み込んだ全ての星の数の表示
-	SetEffectNumber(StageStar, p_Number_EffectArray, D3DXVECTOR2(250.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
-		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
-		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
+	//// セーブデータから読み込んだ全ての星の数の表示
+	//SetEffectNumber(StageStar, p_Number_EffectArray, D3DXVECTOR2(250.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+	//	D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
+	//	0.0f, 1.0f, 0, 999, 0, 0,
+	//	0.0f, 0.0f, 0);
 
-	// 全ての星の数(30)の表示
-	SetEffectNumber(30, p_Number_EffectArray, D3DXVECTOR2(400.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
-		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
-		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
+	//// 全ての星の数(30)の表示
+	//SetEffectNumber(30, p_Number_EffectArray, D3DXVECTOR2(400.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+	//	D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
+	//	0.0f, 1.0f, 0, 999, 0, 0,
+	//	0.0f, 0.0f, 0);
 
 	stage_select_once = false;
 	now_stage_select_EffectArray = -1;
@@ -980,17 +980,17 @@ void StartStageSelectScreen()
 
 	int Number_EffectArray[2] = { 0,0 };
 	int* p_Number_EffectArray = Number_EffectArray;
-	// セーブデータから読み込んだ全ての星の数の表示
-	SetEffectNumber(StageStar, p_Number_EffectArray, D3DXVECTOR2(250.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
-		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
-		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
+	//// セーブデータから読み込んだ全ての星の数の表示
+	//SetEffectNumber(StageStar, p_Number_EffectArray, D3DXVECTOR2(250.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+	//	D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
+	//	0.0f, 1.0f, 0, 999, 0, 0,
+	//	0.0f, 0.0f, 0);
 
-	// 全ての星の数(30)の表示
-	SetEffectNumber(30, p_Number_EffectArray, D3DXVECTOR2(400.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
-		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
-		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
+	//// 全ての星の数(30)の表示
+	//SetEffectNumber(30, p_Number_EffectArray, D3DXVECTOR2(400.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
+	//	D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
+	//	0.0f, 1.0f, 0, 999, 0, 0,
+	//	0.0f, 0.0f, 0);
 
 	// 矢印の透明度を下げる処理
 	if (now_page == 0)

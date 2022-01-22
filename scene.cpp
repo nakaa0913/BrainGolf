@@ -24,6 +24,7 @@
 #include "mission.h"
 #include "Prologue.h"
 #include "pause.h"
+#include "stageselect.h"
 
 /*------------------------------------------------------------------------------
    íËêîíËã`
@@ -93,6 +94,7 @@ void InitScene(SCENE index)
 		InitEffect();
 		InitGame();
 		InitStagedata();
+		SetStageData(GetNowChoiceStageNum());
 		InitPlacement(); 
 		break;
 
@@ -100,6 +102,7 @@ void InitScene(SCENE index)
 		InitEffect();
 		InitGame();
 		InitStagedata();
+		SetStageData(GetNowChoiceStageNum());
 		InitPause();
 		break;
 

@@ -26,7 +26,8 @@ void InitSavedata()
 		g_Savedata[i].clear_time = 0;
 	}
 
-	LoadSavedata("data/SAVEDATA/savedata2.txt");
+	//LoadSavedata("data/SAVEDATA/savedata2.txt");
+	LoadSavedata(SAVEDATA_FILE);
 		
 	return;
 }

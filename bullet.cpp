@@ -23,6 +23,8 @@
 #include "FileDataManagement.h"
 #include "keyboard.h"
 #include "pause.h"
+#include "stageselect.h"
+#include "score.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -914,21 +916,25 @@ void UpdateBullet(void)
 					GoalTrue_Pause();
 					bool updata_savedata = false;
 
+					int stagenum_now = GetNowChoiceStageNum();			// 現在のステージをもらう1~20
+
+					int stageminus1 = stagenum_now - 1;
+
 					// ミッションをクリアしているかどうかの処理。新たにクリアしていた場合のみ更新する
 					for (int missionnum = 0; missionnum < MAX_MISSION; missionnum++)
 					{
 						if (JudgeClearMission(missionnum) == true)
 						{
 							// クリアしていて更新があった場合セーブデータ構造体を変更する
-							p_Savedata[p_Stagedata->stagenum].mission_clear[missionnum] = 1;
+							p_Savedata[stageminus1].mission_clear[missionnum] = 1;
 							updata_savedata = true;
 						}
 					}
 					// クリアタイムが更新されたら
-					if (p_Gamedata->game_time < p_Savedata[p_Stagedata->stagenum].clear_time)
+					if (p_Gamedata->game_time < p_Savedata[stageminus1].clear_time)
 					{
 						// クリアしていて更新があった場合セーブデータ構造体を変更する
-						p_Savedata[p_Stagedata->stagenum].clear_time = p_Gamedata->game_time;
+						p_Savedata[stageminus1].clear_time = p_Gamedata->game_time;
 						updata_savedata = true;
 					}
 					// セーブデータの更新があったならば、テキストも更新する

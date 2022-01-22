@@ -13,6 +13,7 @@
 #include "mission.h"
 #include "effect.h"
 #include "savedata.h"
+#include "stageselect.h"
 
 MISSION g_Mission;
 
@@ -179,6 +180,11 @@ bool JudgeClearMission(int missionnum)
 
 	SAVEDATA* p_Savedata = GetSavedata();
 	STAGEDATA* p_Stagedata = GetStagedata();
+
+	//int stagenum_now = GetNowChoiceStageNum();			// 現在のステージをもらう1~20
+
+	int mission_ContentsNum = p_Stagedata->mission_ContentsNum[missionnum];
+	int mission_JudgeNum = p_Stagedata->mission_JudgeNum[missionnum];
 
 	judge = ClearorFailure(p_Stagedata->mission_ContentsNum[missionnum], p_Stagedata->mission_JudgeNum[missionnum]);
 

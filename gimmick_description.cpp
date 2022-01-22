@@ -128,8 +128,8 @@ void UpdateGimmickDescription_Game()
 		GimmickDescription_y = -1;
 	}
 
-	SetScore2(GimmickDescription_x);
-	SetScore3(GimmickDescription_y);
+	//SetScore2(GimmickDescription_x);
+	//SetScore3(GimmickDescription_y);
 
 	bool DrawRequest = false;
 

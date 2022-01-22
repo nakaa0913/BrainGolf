@@ -99,6 +99,8 @@ static bool changing = false;			// ページチェンジ中かどうか
 
 static int now_page = 0;		// 現在開いているページ
 
+int now_stagenum = -1;			// 1~20での現在のステージ番号
+
 
 //int stageNumber_EffectArray[2] = { 0, 0 };
 //int* p_stageNumber_EffectArray[20];				// 20ステージ分の配列をポインターで用意する
@@ -504,8 +506,9 @@ void UpdateStageSelect(void)
 			{
 				// ステージデータを受け取る,ミッションやマップの表示で使うため。
 				// xとyからマップの番号を計算する
-				int stagenum = (SELECT_MAX_X * g_StageSelect.select_y) + (g_StageSelect.select_x + 1);
-				SetStageData(stagenum);
+				int stagenum = (now_page * 10) + (SELECT_MAX_X * g_StageSelect.select_y) + (g_StageSelect.select_x + 1);
+				now_stagenum = stagenum;
+				SetStageData(stagenum);		// 1~20の値を入れる
 
 				// ステージデータを受け取った(更新された)のでミッションを表示させる
 				DrawMissionStageSelect();
@@ -1097,7 +1100,7 @@ void StartStageSelectScreen()
 				{
 					//星
 					stage_star_EffectArray[NowWorld_stagenum][0] =
-					SetEffect(83, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
+					SetEffect(83, D3DXVECTOR2(now_x - 40, now_y), D3DXVECTOR2(now_x - 40, now_y), 0,
 						D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
 						0.0f, 1.0f, 120, 999, 0, 60,
 						0.0f, 0.0f, 0);
@@ -1108,7 +1111,7 @@ void StartStageSelectScreen()
 				{
 					//星
 					stage_star_EffectArray[NowWorld_stagenum][1] =
-					SetEffect(84, D3DXVECTOR2(now_x - 50, now_y), D3DXVECTOR2(now_x - 50, now_y), 0,
+					SetEffect(84, D3DXVECTOR2(now_x - 0, now_y), D3DXVECTOR2(now_x - 0, now_y), 0,
 						D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
 						0.0f, 1.0f, 120, 999, 0, 60,
 						0.0f, 0.0f, 0);
@@ -1326,4 +1329,9 @@ void ChangePage(int ToGoPage)
 
 	return;
 
+}
+
+int GetNowChoiceStageNum()
+{
+	return now_stagenum;
 }

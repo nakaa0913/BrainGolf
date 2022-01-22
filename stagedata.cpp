@@ -26,7 +26,8 @@ void InitStagedata()
 	g_Stagedata.NumberofPeople = 9;
 
 
-	SetStageData(1);				// テストでこれしてるだけ。実際はセットステージはInitGameが終わった後にする。
+	//SetStageData(1);				// テストでこれしてるだけ。実際はセットステージはInitGameが終わった後にする。
+	//SetStageData(1);				// テストでこれしてるだけ。実際はセットステージはInitGameが終わった後にする。
 
 	return;
 }
@@ -54,7 +55,7 @@ STAGEDATA* GetStagedata()
 void SetStageData(int stagenum)
 {
 	// 現在選択されているステージ番号を入れておく。
-	g_Stagedata.stagenum = stagenum;
+	g_Stagedata.stagenum = stagenum - 1;
 
 	// 引数でもらったステージの番号を1桁ずつchar型にして合成する
 
@@ -99,10 +100,10 @@ void SetStageData(int stagenum)
 	strcat(stagename, stagenameend);
 
 	// とりあえずテスト
-	LoadMapdataMain("data/STAGEDATA/Iwadera 1.txt");
+	//LoadMapdataMain("data/STAGEDATA/Iwadera 1.txt");
 	
 	// 本番はこっち
-	//LoadMapdataMain(stagename);
+	LoadMapdataMain(stagename);
 
 	return;
 }

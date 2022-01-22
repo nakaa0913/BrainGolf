@@ -197,7 +197,7 @@ void InitEffect(void)
 	pickup_red_53 = LoadTexture("data/TEXTURE/placement/pickup_red.png");
 	batten_red_54 = LoadTexture("data/TEXTURE/placement/batten_red.png");
 
-	gameover_55 = LoadTexture("data/TEXTURE/result/gameover/gameover.png");
+	gameover_55 = LoadTexture("data/TEXTURE/result/gameover/OVER.png");
 	restart_56 = LoadTexture("data/TEXTURE/result/gameover/restart.png");
 	stagename_57 = LoadTexture("data/TEXTURE/result/gameover/stagename.png");
 	gameover_back_58 = LoadTexture("data/TEXTURE/result/gameover/gameover_back.png");

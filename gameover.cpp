@@ -106,13 +106,13 @@ void UpdateGameover(void)
 		//ゲームオーバー
 		SetEffect(55, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
 			D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT / 2), 1,
-			0.0f, 1.0f, 10, 70, 10, 90,
+			0.0f, 1.0f, 10, 70, 10, 100,
 			0.0f, 0.0f, 0);
 
 	}
 
 
-	if (g_Gameover.gameovertime >= 90)
+	if (g_Gameover.gameovertime >= 100)
 	{
 		////明るくする暗くするなら4
 		//SetEffect(4, D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(0.0f, 0.0f), 0,

@@ -11,6 +11,7 @@
 #include "fade.h"
 #include "sound.h"
 #include "keyboard.h"
+#include "effect.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -29,13 +30,13 @@
 static int	g_TextureNo = 0;	// テクスチャ情報
 static int	g_BGMNo = 0;		// BGM識別子
 
-								//=============================================================================
+//=============================================================================
 // 初期化処理
 //=============================================================================
 HRESULT InitTitle(void)
 {
 	//テクスチャ生成
-	g_TextureNo = LoadTexture("data/TEXTURE/title/titlerogo_32.png");
+	g_TextureNo = LoadTexture("data/TEXTURE/title/titlerogo_4.png");
 
 	g_BGMNo = LoadSound("data/BGM/morningroutine(title).wav");
 
@@ -51,7 +52,7 @@ HRESULT InitTitle(void)
 void UninitTitle(void)
 {
 	StopSoundAll();
-	UnloadTexture("data/TEXTURE/title/titlerogo_3.png");
+	UnloadTexture("data/TEXTURE/title/titlerogo_4.png");
 }
 
 //=============================================================================
@@ -70,6 +71,11 @@ void UpdateTitle(void)
 	{
 		SceneTransition(SCENE_STAGE_SELECT);
 	}
+
+	SetEffect(93, D3DXVECTOR2(720, 400), D3DXVECTOR2(720, 400), 0,
+		D3DXVECTOR2(1200.0f, 1200.0f), D3DXVECTOR2(1200.0f, 1200.0f), 0,
+		0.0f, 1.0f, 0, 1, 0, 1,
+		0.0f, 0.0f, 0);
 
 	/*if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
 	{

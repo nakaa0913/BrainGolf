@@ -199,7 +199,7 @@ HRESULT InitBG(void)
 {
 	//g_Ground = LoadTexture("data/TEXTURE/basechip.png");
 	g_Ground = LoadTexture("data/TEXTURE/game/above/basechip_test1.png");
-	tex_mapchip_3d = LoadTexture("data/TEXTURE/game/side/mapchip_3d.png");
+	tex_mapchip_3d = LoadTexture("data/TEXTURE/game/side/mapchip_3d1.png");
 
 	tex_floor = LoadTexture("data/TEXTURE/game/side/floor.png");
 	tex_floor_mozinasi = LoadTexture("data/TEXTURE/game/side/floor_mozinasi.png");
@@ -220,8 +220,8 @@ HRESULT InitBG(void)
 //=============================================================================
 void UninitBG(void)
 {
-	UnloadTexture("data/TEXTURE/game/above/basechip_test.png");
-	UnloadTexture("data/TEXTURE/game/side/mapchip_3d.png");
+	UnloadTexture("data/TEXTURE/game/above/basechip_test1.png");
+	UnloadTexture("data/TEXTURE/game/side/mapchip_3d1.png");
 	UnloadTexture("data/TEXTURE/game/side/floor.png");
 	UnloadTexture("data/TEXTURE/game/side/floor_mozinasi.png");
 	UnloadTexture("data/TEXTURE/game/side/floor_huchinasi.png");

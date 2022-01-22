@@ -80,7 +80,7 @@ void UpdateLogo(void)
 	}
 	if (mouse_Lclick && GetFadeState() == FADE_NONE)
 	{
-		SceneTransition(SCENE_Prologue);
+		SceneTransition(SCENE_STAGE_SELECT);
 	}
 	//
 	if (Keyboard_IsKeyDown(KK_G) && GetFadeState() == FADE_NONE)

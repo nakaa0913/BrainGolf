@@ -451,76 +451,76 @@ void UpdateStageSelect(void)
 			// 移動キーが押された時の処理
 			if (g_StageSelect.selectcooltime <= 0)
 			{
-				if (Keyboard_IsKeyDown(KK_UP) && g_StageSelect.select_x != 5 && g_StageSelect.select_x != 6)
-				{
-					if (g_StageSelect.select_y == 0 && g_StageSelect.select_x == 0)		// 0,0の時上を押すとタイトルへ行くになる
-						g_StageSelect.select_y = 2;
-					else if (g_StageSelect.select_y == 0)								// 最上段の時上を押すと最下層に行く
-						g_StageSelect.select_y = 1;
-					else
-						g_StageSelect.select_y--;										// 通常
-					g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
-				}
-				if (Keyboard_IsKeyDown(KK_DOWN) && g_StageSelect.select_x != 5 && g_StageSelect.select_x != 6)
-				{
-					if (g_StageSelect.select_y == 2 && g_StageSelect.select_x == 0)		// タイトルの時押すと0,0になる
-						g_StageSelect.select_y = 0;
-					else if (g_StageSelect.select_y == 1 && g_StageSelect.select_x == 0)								// 0,1の時タイトルに行く
-						g_StageSelect.select_y = 2;
-					else if (g_StageSelect.select_y == 1)								// 最下層時上を押すと最上段行く
-						g_StageSelect.select_y = 1;
-					else
-						g_StageSelect.select_y++;										// 通常
-					g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
-				}
-				if (Keyboard_IsKeyDown(KK_RIGHT) && g_StageSelect.select_y != 2)
-				{
-					if (g_StageSelect.select_x == 4)				// 端の時押すと矢印に行く
-					{
-						if (now_page == 0)
-						{
-							g_StageSelect.select_x = 6;
-							g_StageSelect.select_y = 0;
-						}
-					}
-					else if (g_StageSelect.select_x == 6)			// 矢印の時押すとページチェンジする
-					{
-						change_cool = 60;
-						g_StageSelect.select_x = 0;
-						g_StageSelect.select_y = 0;
-						ChangePage(1);
-						return;
-					}
-					else if (g_StageSelect.select_x == 5)				// 左矢印の時押すと0にいく
-						g_StageSelect.select_x = 0;
-					else
-						g_StageSelect.select_x++;					// 通常
-					g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
-				}
-				if (Keyboard_IsKeyDown(KK_LEFT) && g_StageSelect.select_y != 2)
-				{
-					if (g_StageSelect.select_x == 0)				// 端の時押すと矢印に行く
-					{
-						if (now_page == 1)
-						{
-							g_StageSelect.select_x = 5;
-							g_StageSelect.select_y = 0;
-						}
-					}
-					else if (g_StageSelect.select_x == 5)			// 矢印の時押すとページチェンジする
-					{
-						change_cool = 60;
-						g_StageSelect.select_x = 4;
-						g_StageSelect.select_y = 0;
-						ChangePage(-1);
-						return;
-					}
-					else if (g_StageSelect.select_x == 6)				// 右矢印の時押すと4にいく
-						g_StageSelect.select_x = 4;
-					else
-						g_StageSelect.select_x--;					// 通常
-					g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
-				}
+				//if (Keyboard_IsKeyDown(KK_UP) && g_StageSelect.select_x != 5 && g_StageSelect.select_x != 6)
+				//{
+				//	if (g_StageSelect.select_y == 0 && g_StageSelect.select_x == 0)		// 0,0の時上を押すとタイトルへ行くになる
+				//		g_StageSelect.select_y = 2;
+				//	else if (g_StageSelect.select_y == 0)								// 最上段の時上を押すと最下層に行く
+				//		g_StageSelect.select_y = 1;
+				//	else
+				//		g_StageSelect.select_y--;										// 通常
+				//	g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
+				//}
+				//if (Keyboard_IsKeyDown(KK_DOWN) && g_StageSelect.select_x != 5 && g_StageSelect.select_x != 6)
+				//{
+				//	if (g_StageSelect.select_y == 2 && g_StageSelect.select_x == 0)		// タイトルの時押すと0,0になる
+				//		g_StageSelect.select_y = 0;
+				//	else if (g_StageSelect.select_y == 1 && g_StageSelect.select_x == 0)								// 0,1の時タイトルに行く
+				//		g_StageSelect.select_y = 2;
+				//	else if (g_StageSelect.select_y == 1)								// 最下層時上を押すと最上段行く
+				//		g_StageSelect.select_y = 1;
+				//	else
+				//		g_StageSelect.select_y++;										// 通常
+				//	g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
+				//}
+				//if (Keyboard_IsKeyDown(KK_RIGHT) && g_StageSelect.select_y != 2)
+				//{
+				//	if (g_StageSelect.select_x == 4)				// 端の時押すと矢印に行く
+				//	{
+				//		if (now_page == 0)
+				//		{
+				//			g_StageSelect.select_x = 6;
+				//			g_StageSelect.select_y = 0;
+				//		}
+				//	}
+				//	else if (g_StageSelect.select_x == 6)			// 矢印の時押すとページチェンジする
+				//	{
+				//		change_cool = 60;
+				//		g_StageSelect.select_x = 0;
+				//		g_StageSelect.select_y = 0;
+				//		ChangePage(1);
+				//		return;
+				//	}
+				//	else if (g_StageSelect.select_x == 5)				// 左矢印の時押すと0にいく
+				//		g_StageSelect.select_x = 0;
+				//	else
+				//		g_StageSelect.select_x++;					// 通常
+				//	g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
+				//}
+				//if (Keyboard_IsKeyDown(KK_LEFT) && g_StageSelect.select_y != 2)
+				//{
+				//	if (g_StageSelect.select_x == 0)				// 端の時押すと矢印に行く
+				//	{
+				//		if (now_page == 1)
+				//		{
+				//			g_StageSelect.select_x = 5;
+				//			g_StageSelect.select_y = 0;
+				//		}
+				//	}
+				//	else if (g_StageSelect.select_x == 5)			// 矢印の時押すとページチェンジする
+				//	{
+				//		change_cool = 60;
+				//		g_StageSelect.select_x = 4;
+				//		g_StageSelect.select_y = 0;
+				//		ChangePage(-1);
+				//		return;
+				//	}
+				//	else if (g_StageSelect.select_x == 6)				// 右矢印の時押すと4にいく
+				//		g_StageSelect.select_x = 4;
+				//	else
+				//		g_StageSelect.select_x--;					// 通常
+				//	g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
+				//}
 
 
 
@@ -638,7 +638,8 @@ void UpdateStageSelect(void)
 				// マウスが表示にあっている状態で左クリックもしくはエンターキーをしたら
 				if (GetFadeState() == FADE_NONE)
 				{
-					if (Keyboard_IsKeyDown(KK_ENTER) || mouseclick)
+					/*if (Keyboard_IsKeyDown(KK_ENTER) || mouseclick)*/
+					if (mouseclick)
 					{
 						g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
 						PlaySound(g_SENo, 0);

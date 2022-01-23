@@ -128,7 +128,7 @@ void UpdateGameover(void)
 			gameover =
 			//ゲームオーバー
 			SetEffect(55, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
-				D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT / 2), 1,
+				D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(1300, 700), 1,
 				0.0f, 1.0f, 30, 999, 0, 90,
 				0.0f, 0.0f, 0);
 
@@ -153,29 +153,29 @@ void UpdateGameover(void)
 
 			next2 =
 			//リスタート
-			SetEffect(56, D3DXVECTOR2(1200.0f, 700.0f), D3DXVECTOR2(1200.0f, 700.0f), 1,
-				D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 1,
+			SetEffect(79, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 1,
+				D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 1,
 				0.0f, 1.0f, 0, 999, 0, 1,
 				0.0f, 0.0f, 0);
 
 			placement2 =
 			//プレイヤー配置に戻る
-			SetEffect(59, D3DXVECTOR2(600.0f, 700.0f), D3DXVECTOR2(600.0f, 700.0f), 1,
-				D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 1,
+			SetEffect(99, D3DXVECTOR2(1100.0f, 700.0f), D3DXVECTOR2(1100.0f, 700.0f), 1,
+				D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 1,
 				0.0f, 1.0f, 0, 999, 0, 1,
 				0.0f, 0.0f, 0);
 
 			map_back2 =
 			//マップ？に戻る
-			SetEffect(58, D3DXVECTOR2(100.0f, 700.0f), D3DXVECTOR2(100.0f, 700.0f), 1,
-				D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 1,
+			SetEffect(75, D3DXVECTOR2(100.0f, 700.0f), D3DXVECTOR2(100.0f, 700.0f), 1,
+				D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 1,
 				0.0f, 1.0f, 0, 999, 0, 1,
 				0.0f, 0.0f, 0);
 
 			result2 =
 			//リザルトに行く
-			SetEffect(96, D3DXVECTOR2(700.0f, 550.0f), D3DXVECTOR2(700.0f, 550.0f), 1,
-				D3DXVECTOR2(300.0f, 100.0f), D3DXVECTOR2(300.0f, 100.0f), 1,
+			SetEffect(97, D3DXVECTOR2(700.0f, 550.0f), D3DXVECTOR2(700.0f, 550.0f), 1,
+				D3DXVECTOR2(700.0f, 80.0f), D3DXVECTOR2(700.0f, 80.0f), 1,
 				0.0f, 1.0f, 0, 999, 0, 1,
 				0.0f, 0.0f, 0);
 		}
@@ -187,8 +187,8 @@ void UpdateGameover(void)
 				if (g_Gameover.selectpush == 0)
 				{
 					//next?次のステージへ的な
-					SetEffect(56, D3DXVECTOR2(1200.0f, 700.0f), D3DXVECTOR2(1200.0f, 700.0f), 1,
-						D3DXVECTOR2(500.0f, 500.0f), D3DXVECTOR2(500.0f, 500.0f), 1,
+					SetEffect(80, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 1,
+						D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 1,
 						0.0f, 1.0f, 0, 1, 0, 1,
 						0.0f, 0.0f, 0);
 
@@ -198,8 +198,8 @@ void UpdateGameover(void)
 				if (g_Gameover.selectpush == 1)
 				{
 					//ワールド選択に戻る
-					SetEffect(58, D3DXVECTOR2(100.0f, 700.0f), D3DXVECTOR2(100.0f, 700.0f), 1,
-						D3DXVECTOR2(500.0f, 500.0f), D3DXVECTOR2(500.0f, 500.0f), 1,
+					SetEffect(76, D3DXVECTOR2(90.0f, 700.0f), D3DXVECTOR2(90.0f, 700.0f), 1,
+						D3DXVECTOR2(227.0f, 202.0f), D3DXVECTOR2(227.0f, 202.0f), 1,
 						0.0f, 1.0f, 0, 1, 0, 1,
 						0.0f, 0.0f, 0);
 				}
@@ -207,8 +207,8 @@ void UpdateGameover(void)
 				if (g_Gameover.selectpush == 2)
 				{
 					//プレイヤー配置に戻る
-					SetEffect(59, D3DXVECTOR2(600.0f, 700.0f), D3DXVECTOR2(600.0f, 700.0f), 1,
-						D3DXVECTOR2(500.0f, 500.0f), D3DXVECTOR2(500.0f, 500.0f), 1,
+					SetEffect(100, D3DXVECTOR2(1100.0f, 700.0f), D3DXVECTOR2(1100.0f, 700.0f), 1,
+						D3DXVECTOR2(200.0f, 109.0f), D3DXVECTOR2(200.0f, 109.0f), 1,
 						0.0f, 1.0f, 0, 1, 0, 1,
 						0.0f, 0.0f, 0);
 				}
@@ -216,8 +216,8 @@ void UpdateGameover(void)
 				if (g_Gameover.selectpush == 3)
 				{
 					//リザルトに行く
-					SetEffect(96, D3DXVECTOR2(700.0f, 550.0f), D3DXVECTOR2(700.0f, 550.0f), 1,
-						D3DXVECTOR2(500.0f, 150.0f), D3DXVECTOR2(500.0f, 150.0f), 1,
+					SetEffect(98, D3DXVECTOR2(700.0f, 545.0f), D3DXVECTOR2(700.0f, 545.0f), 1,
+						D3DXVECTOR2(725.0f, 85.0f), D3DXVECTOR2(725.0f, 85.0f), 1,
 						0.0f, 1.0f, 0, 1, 0, 1,
 						0.0f, 0.0f, 0);
 				}
@@ -296,19 +296,19 @@ void UpdateGameover(void)
 
 				//マウス操作
 				//next				1200, 700
-				if (mouse_pos_X > 1100.0f && mouse_pos_X < 1300.0f && mouse_pos_Y > 670.0f && mouse_pos_Y < 710.0f)
+				if (mouse_pos_X > 1215.0f && mouse_pos_X < 1370.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 730.0f)
 				{
 					g_Gameover.selectpush = 0;
 					mouseuse = true;
 				}
 				//ワールド選択		100, 700
-				if (mouse_pos_X > 70.0f && mouse_pos_X < 130.0f && mouse_pos_Y > 670.0f && mouse_pos_Y < 710.0f)
+				if (mouse_pos_X > 22.0f && mouse_pos_X < 150.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 730.0f)
 				{
 					g_Gameover.selectpush = 1;
 					mouseuse = true;
 				}
 				//プレイヤー配置	600, 700
-				if (mouse_pos_X > 500.0f && mouse_pos_X < 700.0f && mouse_pos_Y > 670.0f && mouse_pos_Y < 710.0f)
+				if (mouse_pos_X > 1025.0f && mouse_pos_X < 1175.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 730.0f)
 				{
 					g_Gameover.selectpush = 2;
 					mouseuse = true;

@@ -138,6 +138,10 @@ static int title_bokashi_95;
 
 // ƒŠƒUƒ‹ƒg
 static int result_go_96;
+static int kekkahappyou_97;
+static int kekkahappyou_2_98;
+static int haiti_99;
+static int haiti_2_100;
 
 void InitEffect(void)
 {
@@ -256,6 +260,11 @@ void InitEffect(void)
 	title_bokashi_95 = LoadTexture("data/TEXTURE/select/senntaku_haikei_3a.jpg");
 
 	result_go_96 = LoadTexture("data/TEXTURE/result/result.png");
+	kekkahappyou_97 = LoadTexture("data/TEXTURE/result/kekkahappyou.png");
+	kekkahappyou_2_98 = LoadTexture("data/TEXTURE/result/kekkahappyou_2.png");
+	haiti_99 = LoadTexture("data/TEXTURE/result/haiti.png");
+	haiti_2_100 = LoadTexture("data/TEXTURE/result/haiti_2.png");
+
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -1205,8 +1214,19 @@ int GetTextureData(int id)
 	case 96:
 		return result_go_96;
 		break;
+	case 97:
+		return kekkahappyou_97;
+		break;
+	case 98:
+		return kekkahappyou_2_98;
+		break;
+	case 99:
+		return haiti_99;
+		break;
+	case 100:
+		return haiti_2_100;
+		break;
 	}
-	
 	// ‚Ç‚±‚É‚à‚½‚Ç‚è’…‚©‚È‚©‚Á‚½ê‡
 	exit(21);
 	return -1;

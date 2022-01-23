@@ -34,9 +34,10 @@ struct RESULT
 	int						ShotPower;				// 弾を打ち出す強さ
 	bool					ConfirmAngle;			// 角度を確定したかどうか
 	int						ConfirmCooltime;		// 確定してからのクールタイム
-	int						goaltime;				//ゴールしてからの時間
-	int						selectpush;				//選択してるやつ
-	int						selecttime;				//選択クールタイム
+	int						goaltime;				// ゴールしてからの時間
+	int						selectpush;				// 選択してるやつ
+	int						selecttime;				// 選択クールタイム
+	int						resulttime;				// リザルト表示してからの時間
 };
 
 

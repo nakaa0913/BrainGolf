@@ -136,6 +136,9 @@ static int title_click_93;
 static int title_logo_94;
 static int title_bokashi_95;
 
+// リザルト
+static int result_go_96;
+
 void InitEffect(void)
 {
 	//テクスチャの名前
@@ -144,7 +147,7 @@ void InitEffect(void)
 	//tako_2 = LoadTexture("data/TEXTURE/result/tako.png");
 	title_3 = LoadTexture("data/TEXTURE/title/title_effect.png");
 	black_4 = LoadTexture("data/TEXTURE/other_effect/black.png");
-	clear_5 = LoadTexture("data/TEXTURE/result/clear.png");
+	clear_5 = LoadTexture("data/TEXTURE/result/CLEAR.png");
 	select_6 = LoadTexture("data/TEXTURE/select/1.png");
 	select2_7 = LoadTexture("data/TEXTURE/select/2.png");
 	mission_8 = LoadTexture("data/TEXTURE/select/mission.png");
@@ -243,14 +246,16 @@ void InitEffect(void)
 	pin_87 = LoadTexture("data/TEXTURE/select/pin.png");
 	botan_waku_1_88 = LoadTexture("data/TEXTURE/select/botan_waku_1.png");
 
-	senntaku_haikei_1_89 = LoadTexture("data/TEXTURE/select/senntaku_haikei_1.jpg");
-	senntaku_haikei_2_90 = LoadTexture("data/TEXTURE/select/senntaku_haikei_2.jpg");
+	senntaku_haikei_1_89 = LoadTexture("data/TEXTURE/select/senntaku_haikei_1a.jpg");
+	senntaku_haikei_2_90 = LoadTexture("data/TEXTURE/select/senntaku_haikei_2a.jpg");
 	botan_1_91 = LoadTexture("data/TEXTURE/select/botan_1.png");
 	botan_2_92 = LoadTexture("data/TEXTURE/select/botan_2.png");
 
 	title_click_93 = LoadTexture("data/TEXTURE/title/title_click.png");
 	title_logo_94 = LoadTexture("data/TEXTURE/title/titlerogo_4.png");
-	title_bokashi_95 = LoadTexture("data/TEXTURE/title/title_bokashi.jpg");
+	title_bokashi_95 = LoadTexture("data/TEXTURE/select/senntaku_haikei_3a.jpg");
+
+	result_go_96 = LoadTexture("data/TEXTURE/result/result.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -1197,7 +1202,11 @@ int GetTextureData(int id)
 	case 95:
 		return title_bokashi_95;
 		break;
+	case 96:
+		return result_go_96;
+		break;
 	}
+	
 	// どこにもたどり着かなかった場合
 	exit(21);
 	return -1;

@@ -37,6 +37,7 @@ struct GAMEOVER
 	int						gameovertime;				//ゴールしてからの時間
 	int						selectpush;				//選択してるやつ
 	int						selecttime;				//選択クールタイム
+	int						resulttime2;			// リザルト表示してからの時間
 };
 
 

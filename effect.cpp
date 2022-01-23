@@ -449,6 +449,9 @@ int SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern
 		
 		g_Effect[i].id = GetTextureData(id);
 
+		// 透明度の変化の処理を行う。
+		Fadeprocess(i);
+
 		return i;
 		}
 
@@ -503,6 +506,9 @@ int SetEffectInReverse(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_movin
 			g_Effect[i].isUse = true;
 
 			g_Effect[i].id = GetTextureData(id);
+
+			// 透明度の変化の処理を行う。
+			Fadeprocess(i);
 
 			return i;
 		}
@@ -636,6 +642,9 @@ void SetEffectNumber(int num,int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2
 		g_Effect[i + sn].sx = g_Effect[i + sn].tx * nownum;			// テクスチャのスタート位置x
 		g_Effect[i + sn].sy = 0.0f;							// テクスチャのスタート位置y
 
+		// 透明度の変化の処理を行う。
+		Fadeprocess(i + sn);
+
 		// 次の桁へ
 		number /= 10;
 	}
@@ -694,6 +703,9 @@ int SetGameEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pat
 
 			g_Effect[i].id = GetTextureData(id);
 
+			// 透明度の変化の処理を行う。
+			Fadeprocess(i);
+
 
 			return i;
 		}
@@ -707,25 +719,58 @@ int SetGameEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pat
 
 void Fadeprocess(int i)
 {
+	////0～fadeIn
+	//if (g_Effect[i].now_count < 0 + g_Effect[i].fadeIn_count)
+	//{
+	//	float oneframe = (g_Effect[i].Clarity_max - g_Effect[i].Clarity_min) / g_Effect[i].fadeIn_count;
+	//	g_Effect[i].Clarity = g_Effect[i].Clarity_min + oneframe * g_Effect[i].now_count;
+	//}
+	////fadeIn～all
+	//if (g_Effect[i].now_count >= 0 + g_Effect[i].fadeIn_count &&
+	//	g_Effect[i].now_count < g_Effect[i].fadeIn_count + g_Effect[i].all_count)
+	//{
+	//	g_Effect[i].Clarity = g_Effect[i].Clarity_max;
+	//}
+	////all～fadeOut
+	//if (g_Effect[i].now_count >= g_Effect[i].fadeIn_count + g_Effect[i].all_count &&
+	//	g_Effect[i].now_count < g_Effect[i].fadeIn_count + g_Effect[i].all_count + g_Effect[i].fadeOut_count)
+	//{
+	//	float oneframe = (g_Effect[i].Clarity_max - g_Effect[i].Clarity_min) / g_Effect[i].fadeOut_count;
+	//	g_Effect[i].Clarity = g_Effect[i].Clarity_min + oneframe * ((g_Effect[i].fadeIn_count + g_Effect[i].all_count + g_Effect[i].fadeOut_count) - g_Effect[i].now_count);
+	//}
+
+	int sadef = 0;
 	//0～fadeIn
-	if (g_Effect[i].now_count < 0 + g_Effect[i].fadeIn_count)
+	if (g_Effect[i].now_count < g_Effect[i].fadeIn_count && g_Effect[i].fadeIn_count != 0)
 	{
 		float oneframe = (g_Effect[i].Clarity_max - g_Effect[i].Clarity_min) / g_Effect[i].fadeIn_count;
 		g_Effect[i].Clarity = g_Effect[i].Clarity_min + oneframe * g_Effect[i].now_count;
+		if (g_Effect[i].id == 84)
+			sadef = 1;
 	}
 	//fadeIn～all
-	if (g_Effect[i].now_count >= 0 + g_Effect[i].fadeIn_count &&
+	else if (g_Effect[i].now_count >= g_Effect[i].fadeIn_count &&
 		g_Effect[i].now_count < g_Effect[i].fadeIn_count + g_Effect[i].all_count)
 	{
 		g_Effect[i].Clarity = g_Effect[i].Clarity_max;
+		if (g_Effect[i].id == 84)
+			sadef = 2;
 	}
 	//all～fadeOut
-	if (g_Effect[i].now_count >= g_Effect[i].fadeIn_count + g_Effect[i].all_count &&
+	else if (g_Effect[i].now_count >= g_Effect[i].fadeIn_count + g_Effect[i].all_count &&
 		g_Effect[i].now_count < g_Effect[i].fadeIn_count + g_Effect[i].all_count + g_Effect[i].fadeOut_count)
 	{
 		float oneframe = (g_Effect[i].Clarity_max - g_Effect[i].Clarity_min) / g_Effect[i].fadeOut_count;
 		g_Effect[i].Clarity = g_Effect[i].Clarity_min + oneframe * ((g_Effect[i].fadeIn_count + g_Effect[i].all_count + g_Effect[i].fadeOut_count) - g_Effect[i].now_count);
+		if (g_Effect[i].id == 84)
+			sadef = 3;
 	}
+	if (g_Effect[i].id == 84)
+	{
+		if (g_Effect[i].all_count != 999)
+			int sdef = 3434;
+	}
+		
 }
 
 
@@ -1174,7 +1219,7 @@ void ChangeEffect(int use_array_num, int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2,
 	{
 		int new_array_num = use_array_num + i;
 		//g_Effect[new_array_num].id = id;	下で引数で入力した値によってテクスチャを変更している
-		if (pos1 == D3DXVECTOR2(99999, 99999))			// 引き数のpos1が99999ならば、今のエフェクトの座標からpos2の分だけ移動する設定。
+		if (pos1.x >= 99998)			// 引き数のpos1が99999ならば、今のエフェクトの座標からpos2の分だけ移動する設定。
 		{
 			//g_Effect[new_array_num].pos = g_Effect[new_array_num].pos;
 			g_Effect[new_array_num].pos1 = g_Effect[new_array_num].pos;
@@ -1187,9 +1232,9 @@ void ChangeEffect(int use_array_num, int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2,
 			g_Effect[new_array_num].pos2 = pos2;
 		}
 		g_Effect[new_array_num].pos_moving_pattern = pos_moving_pattern;
-		if (size1 == D3DXVECTOR2(99999, 99999))			// 引き数のsize1が99999ならば、今のエフェクトのサイズからsize2のサイズをたす設定。
+		if (size1.x >= 99998)			// 引き数のsize1が99999ならば、今のエフェクトのサイズからsize2のサイズをたす設定。
 		{
-			g_Effect[new_array_num].size = g_Effect[new_array_num].size;
+			//g_Effect[new_array_num].size = g_Effect[new_array_num].size;
 			g_Effect[new_array_num].size1 = g_Effect[new_array_num].size;
 			g_Effect[new_array_num].size2 = g_Effect[new_array_num].size + size2;
 		}
@@ -1202,7 +1247,10 @@ void ChangeEffect(int use_array_num, int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2,
 		g_Effect[new_array_num].size_moving_pattern = size_moving_pattern;
 		g_Effect[new_array_num].Clarity_min = Clarity_min;
 		g_Effect[new_array_num].Clarity_max = Clarity_max;
-		g_Effect[new_array_num].Clarity = g_Effect[new_array_num].Clarity_min;
+		if(fadeIn_count == 0)									// アップデートエフェクトの中のフェードプロセスがこの後実行されればよいが、EffectUpdataのがチェンジエフェクトより遅かったりした場合行われないので。
+			g_Effect[new_array_num].Clarity = g_Effect[new_array_num].Clarity_max;
+		else
+			g_Effect[new_array_num].Clarity = g_Effect[new_array_num].Clarity_min;
 		g_Effect[new_array_num].fadeIn_count = fadeIn_count;
 		g_Effect[new_array_num].all_count = all_count;
 		g_Effect[new_array_num].fadeOut_count = fadeOut_count;
@@ -1223,6 +1271,9 @@ void ChangeEffect(int use_array_num, int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2,
 			g_Effect[new_array_num].id = g_Effect[new_array_num].id;
 		else
 			g_Effect[new_array_num].id = GetTextureData(id);
+
+		// 透明度の変化の処理を行う。
+		Fadeprocess(new_array_num);
 
 		PlaySerial++;
 
@@ -1247,6 +1298,9 @@ void ChangeEffectCount(int use_array_num, int setcount, int SerialNumber)
 	for (int i = 0; i < SerialNumber; i++)
 	{
 		g_Effect[use_array_num].now_count = setcount;
+
+		// 透明度の変化の処理を行う。
+		Fadeprocess(use_array_num);
 	}
 	return;
 }
@@ -1289,6 +1343,9 @@ void ChangeEffectColor(int use_array_num, float r, float g, float b, int SerialN
 	for (int i = 0; i < SerialNumber; i++)
 	{
 		g_Effect[use_array_num].color = D3DXCOLOR(r, g, b, g_Effect[use_array_num].Clarity);
+
+		// 透明度の変化の処理を行う。
+		Fadeprocess(use_array_num);
 	}
 	return;
 }
@@ -1304,6 +1361,9 @@ void ChangeEffectClarity(int use_array_num, float clarity, int SerialNumber)
 		g_Effect[use_array_num].Clarity = clarity;
 		g_Effect[use_array_num].Clarity_min = clarity;
 		g_Effect[use_array_num].Clarity_max = clarity;
+
+		// 透明度の変化の処理を行う。
+		Fadeprocess(use_array_num);
 	}
 	return;
 }

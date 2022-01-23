@@ -200,6 +200,7 @@ void UpdateScene(void)
 	case SCENE_STAGE_SELECT:
 		UpdateEffect();
 		UpdateStageSelect();
+		
 		break;
 
 	case SCENE_PLACEMENT:

@@ -602,6 +602,20 @@ void UpdateStageSelect(void)
 				OldStageSelectY != g_StageSelect.select_y)
 				Change = true;
 
+			//// マウスがステージなどににあってない場合表示しない。
+			//if (!mouseuse)
+			//{
+			//	if (now_stage_select_EffectArray != -1)
+			//	{
+			//		// もし消した場合は変更があったとする。
+			//		Change = true;
+			//		EffectBreak(now_stage_select_EffectArray);
+			//		EffectBreak(now_stage_selectWaku_EffectArray);
+			//		EffectBreak(now_stagenum_select_EffectArray[0], now_stagenum_select_EffectArray[1]);
+			//		DeleteMissionStageSelect();
+			//	}
+			//}
+
 			// 変更があった場合、初期化と新しいもののセット
 			if (Change == true)
 			{
@@ -937,7 +951,7 @@ void UpdateStageSelect(void)
 		}
 
 		// 戻る時間が終わったら戻す
-		if (BackTitlecount > BackTitleTime)
+		if (BackTitlecount > BackTitleTime - 30)
 		{
 			title_display = false;
 			InitStageSelectForTitle();

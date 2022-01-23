@@ -8,7 +8,7 @@
 #define SELECT_MAX_X (5)       // select_xのMAX
 #define SELECT_MAX_Y (2)       // select_yのMAX
 
-#define STAGE_SELECT_COOL (10)       // ステージセレクトの時のクールタイム
+#define STAGE_SELECT_COOL (0)       // ステージセレクトの時のクールタイム
 
 // プレイヤー構造体
 struct STAGESELECT

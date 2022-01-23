@@ -173,13 +173,13 @@ int g_map_hitchk[2][MAP_Y][MAP_X] =
 	//},
 };
 
-
 static int g_Ground = 0;		// 背景用テクスチャ情報
 static int tex_mapchip_3d = 0;		// 背景用テクスチャ情報
 
 static int tex_floor = 0;		// 背景用テクスチャ情報
 static int tex_floor_mozinasi = 0;		// 背景用テクスチャ情報
 static int tex_floor_huchinasi = 0;		// 背景用テクスチャ情報
+static int tex_yuka = 0;		        // 背景用テクスチャ情報
 
 static int tex_base_wall = 0;		// 背景用テクスチャ情報
 static int tex_base_wall_center = 0;		// 背景用テクスチャ情報
@@ -204,6 +204,8 @@ HRESULT InitBG(void)
 	tex_floor = LoadTexture("data/TEXTURE/game/side/floor.png");
 	tex_floor_mozinasi = LoadTexture("data/TEXTURE/game/side/floor_mozinasi.png");
 	tex_floor_huchinasi = LoadTexture("data/TEXTURE/game/side/floor_huchinasi.png");
+
+	tex_yuka = LoadTexture("data/TEXTURE/game/side/yuka.png");
 
 	tex_base_wall = LoadTexture("data/TEXTURE/game/side/base_wall.png");
 	tex_base_wall_center = LoadTexture("data/TEXTURE/game/side/base_wall_center.png");
@@ -283,7 +285,7 @@ void DrawBG(void)
 			if (x < MAP_X + 1 && y < MAP_Y + 1)
 			{
 				// 等角図での床の描写
-				DrawSpriteLeftTop(tex_floor_huchinasi, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
+				DrawSpriteLeftTop(tex_yuka, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
 				// DrawSpriteColorRotate(tex_floor_huchinasi, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 
 

@@ -142,6 +142,7 @@ static int kekkahappyou_97;
 static int kekkahappyou_2_98;
 static int haiti_99;
 static int haiti_2_100;
+static int chara_101;
 
 void InitEffect(void)
 {
@@ -264,7 +265,7 @@ void InitEffect(void)
 	kekkahappyou_2_98 = LoadTexture("data/TEXTURE/result/kekkahappyou_2.png");
 	haiti_99 = LoadTexture("data/TEXTURE/result/haiti.png");
 	haiti_2_100 = LoadTexture("data/TEXTURE/result/haiti_2.png");
-
+	chara_101 = LoadTexture("data/TEXTURE/result/ribon_chara.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -1225,6 +1226,9 @@ int GetTextureData(int id)
 		break;
 	case 100:
 		return haiti_2_100;
+		break;
+	case 101:
+		return chara_101;
 		break;
 	}
 	// ‚Ç‚±‚É‚à‚½‚Ç‚è’…‚©‚È‚©‚Á‚½ê‡

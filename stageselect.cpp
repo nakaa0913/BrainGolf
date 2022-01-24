@@ -1567,65 +1567,65 @@ D3DXVECTOR2 GetStagePos(int num)
 	switch (num)
 	{
 	case 1:
-		return D3DXVECTOR2(200.0f, 180.0f);
+		return D3DXVECTOR2(188.0f, 183.0f);
 		break;
 	case 2:
-		return D3DXVECTOR2(475.0f, 310.0f);
+		return D3DXVECTOR2(462.0f, 310.0f);
 		break;
 	case 3:
-		return D3DXVECTOR2(680.0f, 210.0f);
+		return D3DXVECTOR2(672.0f, 210.0f);
 		break;
 	case 4:
-		return D3DXVECTOR2(980.0f, 120.0f);
+		return D3DXVECTOR2(972.0f, 120.0f);
 		break;
 	case 5:
-		return D3DXVECTOR2(1230.0f, 300.0f);
+		return D3DXVECTOR2(1228.0f, 300.0f);
 		break;
 	case 6:
-		return D3DXVECTOR2(140.0f, 550.0f);
+		return D3DXVECTOR2(128.0f, 560.0f);
 		break;
 	case 7:
-		return D3DXVECTOR2(550.0f, 660.0f);
+		return D3DXVECTOR2(536.0f, 668.0f);
 		break;
 	case 8:
-		return D3DXVECTOR2(850.0f, 490.0f);
+		return D3DXVECTOR2(836.0f, 495.0f);
 		break;
 	case 9:
-		return D3DXVECTOR2(1030.0f, 530.0f);
+		return D3DXVECTOR2(1020.0f, 540.0f);
 		break;
 	case 10:
-		return D3DXVECTOR2(1300.0f, 620.0f);
+		return D3DXVECTOR2(1297.0f, 628.0f);
 		break;
 
 	case 11:
-		return D3DXVECTOR2(150.0f, 450.0f);
+		return D3DXVECTOR2(152.0f, 470.0f);
 		break;
 	case 12:
-		return D3DXVECTOR2(240.0f, 210.0f);
+		return D3DXVECTOR2(243.0f, 225.0f);
 		break;
 	case 13:
-		return D3DXVECTOR2(590.0f, 180.0f);
+		return D3DXVECTOR2(592.0f, 200.0f);
 		break;
 	case 14:
-		return D3DXVECTOR2(970.0f, 90.0f);
+		return D3DXVECTOR2(970.0f, 105.0f);
 		break;
 	case 15:
-		return D3DXVECTOR2(1240.0f, 120.0f);
+		return D3DXVECTOR2(1248.0f, 133.0f);
 		break;
 	case 16:
-		return D3DXVECTOR2(1300.0f, 300.0f);
+		return D3DXVECTOR2(1313.0f, 325.0f);
 		break;
 	case 17:
-		return D3DXVECTOR2(1230.0f, 510.0f);
+		return D3DXVECTOR2(1235.0f, 540.0f);
 		break;
 	case 18:
-		return D3DXVECTOR2(900.0f, 380.0f);
+		return D3DXVECTOR2(903.0f, 405.0f);
 		break;
 	case 19:
-		return D3DXVECTOR2(780.0f, 610.0f);
+		return D3DXVECTOR2(778.0f, 630.0f);
 		break;
 	case 20:
-		return D3DXVECTOR2(480.0f, 640.0f);
+		return D3DXVECTOR2(478.0f, 660.0f);
 		break;
 	}
 }

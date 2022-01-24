@@ -148,6 +148,9 @@ static int chara_101;
 static int migi_102;
 static int hidari_103;
 
+// リザルトのクリアタイムの表示の時の数字
+static int number_104;
+
 void InitEffect(void)
 {
 	//テクスチャの名前
@@ -273,6 +276,8 @@ void InitEffect(void)
 
 	migi_102 = LoadTexture("data/TEXTURE/pause/migi.png");
 	hidari_103 = LoadTexture("data/TEXTURE/pause/hidari.png");
+
+	number_104 = LoadTexture("data/TEXTURE/other_effect/number.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -669,6 +674,154 @@ void SetEffectNumber(int num,int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2
 
 		// 次の桁へ
 		number /= 10;
+	}
+	// スタート位置と連番が何個かを返す
+	back_array[0] = sn;
+	back_array[1] = digit;
+}
+
+// 設置エフェクトナンバーの00:00のように分と秒で表示する。引き数では秒でもらう。
+void SetEffectTimeNumber(int num, int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
+	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
+	float rot_angle1, float rot_angle2, int rot_moving_pattern)
+{
+	int min = num / 60;
+	int second = num - min * 60;
+
+	int num1 = min / 10;		// 00;00の左から1番目
+	int num2 = min % 10;
+	int num3 = second / 10;
+	int num4 = second % 10;
+
+	int digit = 5;		// 5で固定(00:00)
+
+	// 桁数の真ん中を調べる。ここが座標の中心となる
+	int middle_digit = digit / 2;
+
+	int serial = 0;
+	int nextnum = -1;
+
+	int last_i = -1;
+
+	for (int i = 0; i < MAX_EFFECT; i++)
+	{
+		if (g_Effect[i].isUse == false)
+		{
+			if (i == nextnum)
+			{
+				// 連番だった場合
+				serial++;
+			}
+			else
+			{
+				// 連番でなかった場合
+				serial = 0;
+			}
+
+			nextnum = i + 1;
+
+			// serialが桁数分連続していたらbreakして抜ける。
+			if (serial == digit - 1)
+			{
+				last_i = i;
+				break;
+			}
+		}
+		// MAX_EFFECT を超えた数エフェクトを作成しようとするとゲームが落ちる
+		//exit(25);
+	}
+
+	int sn = last_i - (digit - 1);		// startnum
+
+	// セットエフェクトする処理
+	for (int i = 0; i < digit; i++)
+	{
+		//g_Effect[i + sn].id = id;	下で引数で入力した値によってテクスチャを変更している
+		g_Effect[i + sn].pos = pos1;
+		g_Effect[i + sn].pos1 = pos1;
+		g_Effect[i + sn].pos2 = pos2;
+		g_Effect[i + sn].pos_moving_pattern = pos_moving_pattern;
+		g_Effect[i + sn].size = size1;
+		g_Effect[i + sn].size1 = size1;
+		g_Effect[i + sn].size2 = size2;
+		g_Effect[i + sn].size_moving_pattern = size_moving_pattern;
+		g_Effect[i + sn].Clarity_min = Clarity_min;
+		g_Effect[i + sn].Clarity_max = Clarity_max;
+		g_Effect[i + sn].Clarity = g_Effect[i + sn].Clarity_min;
+		g_Effect[i + sn].fadeIn_count = fadeIn_count;
+		g_Effect[i + sn].all_count = all_count;
+		g_Effect[i + sn].fadeOut_count = fadeOut_count;
+		g_Effect[i + sn].now_count = 0;
+		g_Effect[i + sn].moving_count = moving_count;
+		g_Effect[i + sn].rot = AngleToRadian(rot_angle1);
+		g_Effect[i + sn].rot_angle = rot_angle1;
+		g_Effect[i + sn].rot_angle1 = rot_angle1;
+		g_Effect[i + sn].rot_angle2 = rot_angle2;
+		g_Effect[i + sn].rot_moving_pattern = rot_moving_pattern;
+		g_Effect[i + sn].rot_count = 0;
+
+		g_Effect[i + sn].drawpos = g_Effect[i + sn].pos1;
+		g_Effect[i + sn].use_array_num = i + sn;
+		g_Effect[i + sn].isUse = true;
+
+		g_Effect[i + sn].id = GetTextureData(104);		// Numberは46番に設定されてる
+
+
+		// 桁が小さい方から描かれていく。右から左に向かって描いていく
+
+		float interval_magnification = 0.8f;		// 数字の感覚の倍率
+
+		// 桁数が奇数の場合と偶数の場合で表示方法を場合分けする
+		if (digit % 2 == 0)
+		{
+			// 偶数の場合			真ん中の桁数と次の数の間に真ん中が来る
+			// スコアの位置やテクスチャー座標を反映
+			g_Effect[i + sn].pos.x = pos1.x + (middle_digit - i) * size1.x * interval_magnification - (size1.x * interval_magnification / 2);
+			g_Effect[i + sn].pos1.x = pos1.x + (middle_digit - i) * size1.x * interval_magnification - (size1.x * interval_magnification / 2);
+			g_Effect[i + sn].pos2.x = pos2.x + (middle_digit - i) * size2.x * interval_magnification - (size2.x * interval_magnification / 2);
+		}
+		else
+		{
+			// 奇数の場合		指定した座標が真ん中の桁数の中心に来る
+			// スコアの位置やテクスチャー座標を反映
+			g_Effect[i + sn].pos.x = pos1.x + (middle_digit - i) * size1.x * interval_magnification;
+			g_Effect[i + sn].pos1.x = pos1.x + (middle_digit - i) * size1.x * interval_magnification;
+			g_Effect[i + sn].pos2.x = pos2.x + (middle_digit - i) * size2.x * interval_magnification;
+		}
+		int UVxNum = 0;
+		int UVyNum = 0;
+		switch (i)
+		{
+		case 0:
+			UVxNum = num4;
+			break;
+		case 1:
+			UVxNum = num3;
+			break;
+		case 2:
+			UVxNum = 2;			// : の表示
+			UVyNum = 1;
+			break;
+		case 3:
+			UVxNum = num2;
+			break;
+		case 4:
+			UVxNum = num1;
+			break;
+		default:
+			break;
+		}
+
+		g_Effect[i + sn].tx = 1.0f / 10;						// テクスチャ1マスの幅
+		g_Effect[i + sn].ty = 1.0f / 2;							// テクスチャ1マスの高さ
+
+		g_Effect[i + sn].sx = g_Effect[i + sn].tx * UVxNum;			// テクスチャのスタート位置x(ここでテクスチャのUV値設定)
+		g_Effect[i + sn].sy = g_Effect[i + sn].ty * UVyNum;							// テクスチャのスタート位置y
+
+		// 透明度の変化の処理を行う。
+		Fadeprocess(i + sn);
+
+		// 次の桁へ
 	}
 	// スタート位置と連番が何個かを返す
 	back_array[0] = sn;
@@ -1242,6 +1395,9 @@ int GetTextureData(int id)
 		break;
 	case 103:
 		return hidari_103;
+		break;
+	case 104:
+		return number_104;
 		break;
 	}
 	// どこにもたどり着かなかった場合

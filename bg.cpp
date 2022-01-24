@@ -576,10 +576,21 @@ void DrawBG(void)
 						}
 					}
 				}
-
+				bool warp = false;
+				if (mapchipdata >= 24 && mapchipdata <= 33)
+					warp = true;
+				if (mapchipdata == 11 || mapchipdata == 12)
+					warp = true;
+				float sizebairitu = 0.5f;
+				float GAP_X = MAP_CHIP3D_GAP_X * sizebairitu - 18.0f;
+				float GAP_Y = MAP_CHIP3D_GAP_Y * sizebairitu - 10.0f;
 				// 床以外のブロックの描写
 				// とうかくず視点
-				DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f, color[10 * y + x]);
+				// ワープは小さくする
+				if (warp)
+					DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - GAP_X, slanted_y - GAP_Y, MAP_CHIP3D_SIZE_X * sizebairitu, MAP_CHIP3D_SIZE_Y * sizebairitu, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f, color[10 * y + x]);
+				else
+					DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f, color[10 * y + x]);
 
 				// 今までの上からの視点
 				//DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X, offset_y + y * MAP_CHIP_SIZE_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);

@@ -79,10 +79,10 @@ HRESULT InitPlayer(void)
 
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
-		g_Player[i].texNo = LoadTexture("data/TEXTURE/game/player/majo.png");
+		g_Player[i].texNo = LoadTexture("data/TEXTURE/game/player/mob.png");
 
-		if(i == 0)
-			g_Player[i].texNo = LoadTexture("data/TEXTURE/game/player/majo2.png");
+		if (i == 0)
+			g_Player[i].texNo = LoadTexture("data/TEXTURE/game/player/hero.png");
 
 		g_Player[i].pos.x = SCREEN_WIDTH / 2;
 		g_Player[i].pos.y = 440;
@@ -97,7 +97,7 @@ HRESULT InitPlayer(void)
 
 
 		g_Player[i].act = 0;
-		g_Player[i].direction = 0;
+		//g_Player[i].direction = 0;
 		g_Player[i].have = false;
 		g_Player[i].catchwait = 0;
 		g_Player[i].shotwait = 0;
@@ -147,7 +147,7 @@ HRESULT InitPlayer(void)
 void UninitPlayer(void)
 {
 	UnloadTexture("data/TEXTURE/game/player/yazirusi.png");
-	UnloadTexture("data/TEXTURE/game/player/majo.png");
+	UnloadTexture("data/TEXTURE/game/player/hero.png");
 }
 
 //=============================================================================
@@ -186,11 +186,11 @@ void UpdatePlayer(void)
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x, g_Player[i].pos.y - 3.0f)) != 1)
 				g_Player[i].nextpos.y -= 3.0f;
 
-			g_Player[i].direction = 3;
+			//g_Player[i].direction = 3;
 			//g_CharaUV = 0.75f;
 
 			//歩きアニメーション
-			if (g_AnimeWaitFrame > 10)
+			/*if (g_AnimeWaitFrame > 10)
 			{
 				g_AnimePtn++;
 				if (g_AnimePtn > 2)
@@ -198,7 +198,7 @@ void UpdatePlayer(void)
 
 				g_AnimeWaitFrame = 0;
 			}
-			g_AnimeWaitFrame++;
+			g_AnimeWaitFrame++;*/
 		}
 
 		//下
@@ -207,11 +207,11 @@ void UpdatePlayer(void)
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x, g_Player[i].pos.y + 3.0f)) != 1)
 				g_Player[i].nextpos.y += 3.0f;
 
-			g_Player[i].direction = 0;
+			//g_Player[i].direction = 0;
 			//g_CharaUV = 0.0f;
 
 			//歩きアニメーション
-			if (g_AnimeWaitFrame > 10)
+			/*if (g_AnimeWaitFrame > 10)
 			{
 				g_AnimePtn++;
 				if (g_AnimePtn > 2)
@@ -219,7 +219,7 @@ void UpdatePlayer(void)
 
 				g_AnimeWaitFrame = 0;
 			}
-			g_AnimeWaitFrame++;
+			g_AnimeWaitFrame++;*/
 		}
 
 		//左
@@ -228,11 +228,11 @@ void UpdatePlayer(void)
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x - 3.0f, g_Player[i].pos.y)) != 1)
 				g_Player[i].nextpos.x -= 3.0f;
 
-			g_Player[i].direction = 1;
+			//g_Player[i].direction = 1;
 			//g_CharaUV = 0.25f;
 
 			//歩きアニメーション
-			if (g_AnimeWaitFrame > 10)
+			/*if (g_AnimeWaitFrame > 10)
 			{
 				g_AnimePtn++;
 				if (g_AnimePtn > 2)
@@ -240,20 +240,20 @@ void UpdatePlayer(void)
 
 				g_AnimeWaitFrame = 0;
 			}
-			g_AnimeWaitFrame++;
+			g_AnimeWaitFrame++;*/
 		}
-		
+
 		//右
 		if (Keyboard_IsKeyDown(KK_D))
 		{
 			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x + 3.0f, g_Player[i].pos.y)) != 1)
 				g_Player[i].nextpos.x += 3.0f;
 
-			g_Player[i].direction = 2;
+			//g_Player[i].direction = 2;
 			//g_CharaUV = 0.5f;
 
 			//歩きアニメーション
-			if (g_AnimeWaitFrame > 10)
+			/*if (g_AnimeWaitFrame > 10)
 			{
 				g_AnimePtn++;
 				if (g_AnimePtn > 2)
@@ -261,7 +261,7 @@ void UpdatePlayer(void)
 
 				g_AnimeWaitFrame = 0;
 			}
-			g_AnimeWaitFrame++;
+			g_AnimeWaitFrame++;*/
 		}
 
 
@@ -391,7 +391,7 @@ void UpdatePlayer(void)
 		{
 			if (pause_cool2 <= 0)
 			{
-	
+
 				//ポーズボタン 1200 700	300 300
 				if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 15.0f && mouse_pos_Y < 85.0f)
 				{
@@ -421,138 +421,138 @@ void UpdatePlayer(void)
 			}
 		}
 
-		
-			// 弾発射
-			if (g_Player[i].have == true)
+
+		// 弾発射
+		if (g_Player[i].have == true)
+		{
+			now_have = true;
+
+			if (g_Player[i].ConfirmAngle == false)
 			{
-				now_have = true;
-				
-				if (g_Player[i].ConfirmAngle == false)
+
+
+				// プレイヤーの角度を変える処理,回転させる処理撃つ方向を決める
+				/*if (Keyboard_IsKeyDown(KK_LEFT))
 				{
+					g_Player[i].angle += 3.0f;
 
-					
-					// プレイヤーの角度を変える処理,回転させる処理撃つ方向を決める
-					/*if (Keyboard_IsKeyDown(KK_LEFT))
+					if (g_Player[i].angle > 360.0f)
+						g_Player[i].angle = 0.0f;
+					g_Player[i].direction = 0;
+					mouseuse = false;
+				}
+
+				if (Keyboard_IsKeyDown(KK_RIGHT))
+				{
+					g_Player[i].angle -= 3.0f;
+
+					if (g_Player[i].angle <= 0.0f)
+						g_Player[i].angle = 360.0f;
+					g_Player[i].direction = 0;
+					mouseuse = false;
+				}*/
+
+				// マウスカーソルの場所でとばす方向を決める処理
+				// mouse_pos_X  mouse_pos_Y
+				// マウスの座標から上から見た時の座標を出す
+				// その座標とボールを持ってるプレイヤーの座標の2点間から角度を出す
+
+				// 2分探索で徐々に検索していく
+
+
+
+
+
+
+
+
+			/*		if (mouse_Rclick)
 					{
-						g_Player[i].angle += 3.0f;
-
-						if (g_Player[i].angle > 360.0f)
-							g_Player[i].angle = 0.0f;
-						g_Player[i].direction = 0;
-						mouseuse = false;
-					}
-
-					if (Keyboard_IsKeyDown(KK_RIGHT))
-					{
-						g_Player[i].angle -= 3.0f;
-
-						if (g_Player[i].angle <= 0.0f)
-							g_Player[i].angle = 360.0f;
-						g_Player[i].direction = 0;
-						mouseuse = false;
+						mouseuse = true;
 					}*/
 
-					// マウスカーソルの場所でとばす方向を決める処理
-					// mouse_pos_X  mouse_pos_Y
-					// マウスの座標から上から見た時の座標を出す
-					// その座標とボールを持ってるプレイヤーの座標の2点間から角度を出す
+				if (mouseuse)
+				{
+					Float2 more_mousepos = Getmoremousepos();
 
-					// 2分探索で徐々に検索していく
+					// ①の点から②を見た時のラジアンを計算する
+					float mouse_rad = CalculateRadianFrom2Points(g_Player[i].pos.x / MAP_CHIP_SIZE_X, g_Player[i].pos.y / MAP_CHIP_SIZE_Y, more_mousepos.x, more_mousepos.y);
+					mouse_rad = InversionYRadian(mouse_rad);
+					float mouse_angle = RadianToDegree(mouse_rad);
 
+					g_Player[i].angle = mouse_angle;
 
+					if (g_Player[i].angle <= 0.0f)
+						g_Player[i].angle = 360.0f;
+					//g_Player[i].direction = 0;
+				}
 
-
-
-
-
-
-				/*		if (mouse_Rclick)
-						{
-							mouseuse = true;
-						}*/
-
-					if (mouseuse)
+				// クラブを持ち変える処理
+				if (club_ChangeCool <= 0)
+				{
+					if (Keyboard_IsKeyDown(KK_UP))
 					{
-						Float2 more_mousepos = Getmoremousepos();
-
-						// ①の点から②を見た時のラジアンを計算する
-						float mouse_rad = CalculateRadianFrom2Points(g_Player[i].pos.x / MAP_CHIP_SIZE_X, g_Player[i].pos.y / MAP_CHIP_SIZE_Y, more_mousepos.x, more_mousepos.y);
-						mouse_rad = InversionYRadian(mouse_rad);
-						float mouse_angle = RadianToDegree(mouse_rad);
-
-						g_Player[i].angle = mouse_angle;
-
-						if (g_Player[i].angle <= 0.0f)
-							g_Player[i].angle = 360.0f;
-						g_Player[i].direction = 0;
+						club_pattern--;
+						club_ChangeCool = CLUB_CHANGECOOL;
 					}
-
-					// クラブを持ち変える処理
-					if (club_ChangeCool <= 0)
+					if (Keyboard_IsKeyDown(KK_DOWN))
 					{
-						if (Keyboard_IsKeyDown(KK_UP))
-						{
-							club_pattern--;
-							club_ChangeCool = CLUB_CHANGECOOL;
-						}
-						if (Keyboard_IsKeyDown(KK_DOWN))
-						{
-							club_pattern++;
-							club_ChangeCool = CLUB_CHANGECOOL;
-						}
-						if (mouse_Wheel)
-						{
-							club_pattern++;
-							club_ChangeCool = CLUB_CHANGECOOL;
-							mouse_Wheelfalse;
-						}
+						club_pattern++;
+						club_ChangeCool = CLUB_CHANGECOOL;
 					}
-
-					// クラブ持ち替えの限界処理
-					if (club_pattern < 0)
-						club_pattern = 1;
-					if (club_pattern > 1)
-						club_pattern = 0;
-
-					//クラブの種類の表示
-					if (club_pattern == 0)
+					if (mouse_Wheel)
 					{
-						SetEffect(71, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 0,
-							D3DXVECTOR2(200.0f, 150.0f), D3DXVECTOR2(200.0f, 150.0f), 0,
-							0.0f, 1.0f, 0, 1, 0, 0,
-							0.0f, 0.0f, 0);
+						club_pattern++;
+						club_ChangeCool = CLUB_CHANGECOOL;
+						mouse_Wheelfalse;
 					}
-					if (club_pattern == 1)
+				}
+
+				// クラブ持ち替えの限界処理
+				if (club_pattern < 0)
+					club_pattern = 1;
+				if (club_pattern > 1)
+					club_pattern = 0;
+
+				//クラブの種類の表示
+				if (club_pattern == 0)
+				{
+					SetEffect(71, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 0,
+						D3DXVECTOR2(200.0f, 150.0f), D3DXVECTOR2(200.0f, 150.0f), 0,
+						0.0f, 1.0f, 0, 1, 0, 0,
+						0.0f, 0.0f, 0);
+				}
+				if (club_pattern == 1)
+				{
+					SetEffect(72, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 0,
+						D3DXVECTOR2(200.0f, 150.0f), D3DXVECTOR2(200.0f, 150.0f), 0,
+						0.0f, 1.0f, 0, 1, 0, 0,
+						0.0f, 0.0f, 0);
+				}
+
+				if (pauseclickuse2 == false)
+				{
+					if (pause_cool2 <= 0)
 					{
-						SetEffect(72, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 0,
-							D3DXVECTOR2(200.0f, 150.0f), D3DXVECTOR2(200.0f, 150.0f), 0,
-							0.0f, 1.0f, 0, 1, 0, 0,
-							0.0f, 0.0f, 0);
-					}
-				
-					if (pauseclickuse2 == false)
-					{
-						if (pause_cool2 <= 0)
+						//ENTERで弾だす
+
+						if (shotwait <= 0)
 						{
-							//ENTERで弾だす
-							
-							if (shotwait <= 0)
+							if (mouse_Lclick && mouseuse)
 							{
-								if (mouse_Lclick && mouseuse)
-								{
-									// パスした回数を増やす
-									p_Gamedata->pass_count++;
+								// パスした回数を増やす
+								p_Gamedata->pass_count++;
 
-									g_Player[i].catchwait = 60;
-									g_Player[i].have = false;
+								g_Player[i].catchwait = 60;
+								g_Player[i].have = false;
 
-									shotwait = 120;
-									PlaySound(g_ShotSENo, 0);
+								shotwait = 120;
+								PlaySound(g_ShotSENo, 0);
 
-									D3DXVECTOR2 pos = g_Player[i].pos;
-									SetBullet(pos, g_Player[i].angle, g_Player[i].ShotPower, club_pattern);
-								}
-							
+								D3DXVECTOR2 pos = g_Player[i].pos;
+								SetBullet(pos, g_Player[i].angle, g_Player[i].ShotPower, club_pattern);
+							}
+
 						}
 					}
 				}
@@ -567,7 +567,7 @@ void UpdatePlayer(void)
 		// クールタイムを減らす処理
 		if (shotwait > 0)
 			shotwait--;
-		
+
 	}
 
 	if (now_have == true)
@@ -595,7 +595,7 @@ void DrawPlayer(void)
 {
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
-		
+
 	}
 }
 
@@ -604,7 +604,7 @@ void DrawPlayerSpecifyNum(int i)
 {
 	CAMERA* p_Camera = GetCamera();
 
-	float directionUV = 0.0f + 0.25f * g_Player[i].direction;
+	float directionUV = 0.0f;// +0.25f * g_Player[i].direction;
 
 	float rot = AngleToRot(g_Player[i].angle);
 
@@ -624,7 +624,7 @@ void DrawPlayerSpecifyNum(int i)
 
 	// とうかくずでのプレイヤーの表示
 	DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].drawpos.x, g_Player[i].drawpos.y, g_Player[i].drawsize.x, g_Player[i].drawsize.y,
-		g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+		0.0f, directionUV, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 
 	//// 上から見た時の表示
 	//// 矢印の描写
@@ -648,12 +648,12 @@ void DrawPlayerForPlacement(void)
 {
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
-		if(g_Player[i].use == true)
+		if (g_Player[i].use == true)
 		{
 			float directionUV = 0.0f;		// 下向きの状態で表示
 
 			DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x + TO_CENTER_X, g_Player[i].pos.y + TO_CENTER_Y, g_Player[i].w, g_Player[i].h,
-				g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+				.0f, directionUV, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 		}
 	}
 }
@@ -663,7 +663,7 @@ void DrawPlayerSpecifyNumForPlacement(int i)
 {
 	CAMERA* p_Camera = GetCamera();
 
-	float directionUV = 0.0f + 0.25f * g_Player[i].direction;
+	float directionUV = 0.0f;// +0.25f * g_Player[i].direction;
 
 	float rot = AngleToRot(g_Player[i].angle);
 

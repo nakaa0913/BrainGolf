@@ -653,7 +653,7 @@ void DrawPlayerForPlacement(void)
 			float directionUV = 0.0f;		// â∫å¸Ç´ÇÃèÛë‘Ç≈ï\é¶
 
 			DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x + TO_CENTER_X, g_Player[i].pos.y + TO_CENTER_Y, g_Player[i].w, g_Player[i].h,
-				.0f, directionUV, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+				0.0f, directionUV, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 		}
 	}
 }

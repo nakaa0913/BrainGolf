@@ -270,10 +270,13 @@ void DrawMissionStageSelect()
 				0.0f, 1.0f, 0, 999, 0, move_frame,
 				0.0f, 0.0f, 0);
 
+		// ミッションのテクスチャIDから数字の座標がどれだけ真ん中からずれてるかをとってくる(xのみ)
+		float number_gap_x = MissionTexIdToNumXGAP(Content_Texid);
+
 		// 数字の描写		ミッションの番号ごとに数字を描く場所は決まってると思うので、それもswitch分で判別できると楽
 		int Number_EffectArray[2] = { 0,0 };
 		int* p_Number_EffectArray = Number_EffectArray;
-		SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 1,
+		SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x - number_gap_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - number_gap_x, base_pos2_y + interval_y * i), 1,
 			D3DXVECTOR2(num_size_x, num_size_y), D3DXVECTOR2(num_size_x, num_size_y), 0,
 			0.0f, 1.0f, 0, 999, 0, move_frame,
 			0.0f, 0.0f, 0);
@@ -550,7 +553,7 @@ void DeleteMissionPause()
 	return;
 }
 
-// 左が0右が1
+// ステージ選択の時、ミッション表示を左右どっちにするか 左が0右が1
 int DisplayLeftOrRight(int stagenum)
 {
 	switch (stagenum)
@@ -617,4 +620,59 @@ int DisplayLeftOrRight(int stagenum)
 		return 1;
 		break;
 	}
+}
+
+
+// ミッションの文章のIDから数字の表示が真ん中からどれだけずれているかを求める
+float MissionTexIdToNumXGAP(int texid)
+{
+	switch (texid)
+	{
+	case 26:
+		return 0.0f;
+	case 27:
+		return 0.0f;
+	case 28:
+		return 0.0f;
+	case 29:
+		return 0.0f;
+	case 30:
+		return 0.0f;
+	case 31:
+		return 0.0f;
+	case 32:
+		return 0.0f;
+	case 33:
+		return 0.0f;
+	case 34:
+		return 0.0f;
+	case 35:
+		return 0.0f;
+	case 36:
+		return 0.0f;
+	case 37:
+		return 0.0f;
+	case 38:
+		return 0.0f;
+	case 39:
+		return 0.0f;
+	case 40:
+		return 0.0f;
+	case 41:
+		return 0.0f;
+	case 42:
+		return 0.0f;
+	case 43:
+		return 0.0f;
+	case 44:
+		return 44;
+	case 45:
+		return 0.0f;
+
+	default:
+		break;
+	}
+
+	exit(24);
+	return -1;
 }

@@ -14,6 +14,7 @@
 #include "predictionbullet.h"
 #include "placement.h"
 #include "gimmick_description.h"
+#include "stageselect.h"
 
 
 //*****************************************************************************
@@ -186,6 +187,8 @@ static int tex_base_wall_center = 0;		// 背景用テクスチャ情報
 static int tex_base_wall_left = 0;		// 背景用テクスチャ情報
 static int tex_base_wall_right = 0;		// 背景用テクスチャ情報
 
+static int g_BG_01 = 0;			// 背景用テクスチャ情報
+static int g_BG_02 = 0;			// 背景用テクスチャ情報
 static int g_BG_03 = 0;			// 背景用テクスチャ情報
 
 
@@ -212,6 +215,8 @@ HRESULT InitBG(void)
 	tex_base_wall_left = LoadTexture("data/TEXTURE/game/side/base_wall_left.png");
 	tex_base_wall_right = LoadTexture("data/TEXTURE/game/side/base_wall_right.png");
 
+	g_BG_01 = LoadTexture("data/TEXTURE/game/side/Back_image_1.png");
+	g_BG_02 = LoadTexture("data/TEXTURE/game/side/Back_image_2.png");
 	g_BG_03 = LoadTexture("data/TEXTURE/game/side/Back_image_3.png");
 
 	return S_OK;
@@ -247,8 +252,22 @@ void UpdateBG(void)
 //=============================================================================
 void DrawBG(void)
 {
-	// 雪原背景の表示
-	DrawSpriteLeftTop(g_BG_03, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
+
+	if (GetNowChoiceStageNum() <= 10)
+	{
+		// 平和背景の表示
+		DrawSpriteLeftTop(g_BG_01, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
+	}
+	else if (GetNowChoiceStageNum() <= 15)
+	{
+		// 雪原背景の表示
+		DrawSpriteLeftTop(g_BG_02, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
+	}
+	else if (GetNowChoiceStageNum() <= 20)
+	{
+		// 地獄背景の表示
+		DrawSpriteLeftTop(g_BG_03, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
+	}
 
 	STAGEDATA* p_Stagedata = GetStagedata();
 	CAMERA* p_Camera = GetCamera();
@@ -766,8 +785,21 @@ int LimitRange(int num, int min, int max)
 // プレイヤー配置フェーズ用上から視点
 void DrawBGaboveForPlacement(void)
 {
-	// 雪原背景の表示
-	DrawSpriteLeftTop(g_BG_03, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
+	if (GetNowChoiceStageNum() <= 10)
+	{
+		// 平和背景の表示
+		DrawSpriteLeftTop(g_BG_01, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
+	}
+	else if (GetNowChoiceStageNum() <= 15)
+	{
+		// 雪原背景の表示
+		DrawSpriteLeftTop(g_BG_02, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
+	}
+	else if (GetNowChoiceStageNum() <= 20)
+	{
+		// 地獄背景の表示
+		DrawSpriteLeftTop(g_BG_03, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
+	}
 
 	// ゲッターでポインタを受け取る
 	PLAYER* p_player = GetPlayer();

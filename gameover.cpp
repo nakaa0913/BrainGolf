@@ -396,6 +396,13 @@ void UpdateGameover(void)
 				D3DXVECTOR2(1400, 800), D3DXVECTOR2(1400, 800), 1,
 				0.0f, 1.0f, 100, 999, 0, 180,
 				0.0f, 0.0f, 0);
+
+			//キャラ絵
+			SetEffect(101, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+				D3DXVECTOR2(1400, 750), D3DXVECTOR2(1400, 750), 1,
+				0.0f, 1.0f, 100, 999, 0, 180,
+				0.0f, 0.0f, 0);
+
 			// ミッション(文章)を表示する
 			//DrawMissionResult();だとなぜか表示されない同じこと書いてるのに。。。
 			SAVEDATA* p_Savedata = GetSavedata();
@@ -507,22 +514,8 @@ void UpdateGameover(void)
 			}
 		}
 
-		/*if (g_Result.resulttime >= 120)
-		{
-			if (g_Result.resulttime <= 200)
-			{
-				if (GetKeyboardPress(DIK_RETURN))
-				{
-					g_Result.resulttime = 210;
-				}
-				if (mouse_Lclick)
-				{
-					g_Result.resulttime = 210;
-				}
-			}
-		}*/
 
-		if (g_Gameover.resulttime2 >= 160)
+		if (g_Gameover.resulttime2 == 160)
 		{
 			//明るくする暗くするなら4
 			/*SetEffect(48, D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(0.0f, 0.0f), 0,
@@ -530,26 +523,39 @@ void UpdateGameover(void)
 				0.0f, 0.5f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);*/
 
-				//next?次のステージへ的な
-			SetEffect(77, D3DXVECTOR2(1080.0f, 700.0f), D3DXVECTOR2(1080.0f, 700.0f), 1,
-				D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 1,
-				0.0f, 1.0f, 0, 1, 0, 1,
-				0.0f, 0.0f, 0);
+				//	//next?次のステージへ的な
+				//SetEffect(77, D3DXVECTOR2(1080.0f, 700.0f), D3DXVECTOR2(1080.0f, 700.0f), 1,
+				//	D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 1,
+				//	0.0f, 1.0f, 0, 1, 0, 1,
+				//	0.0f, 0.0f, 0);
 
-			//ワールド選択に戻る
+				//ワールド選択に戻る
 			SetEffect(75, D3DXVECTOR2(400.0f, 700.0f), D3DXVECTOR2(400.0f, 700.0f), 1,
 				D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(150.0f, 150.0f), 1,
-				0.0f, 1.0f, 0, 1, 0, 1,
+				0.0f, 1.0f, 0, 999, 0, 1,
 				0.0f, 0.0f, 0);
 
+			//リトライ
+			SetEffect(79, D3DXVECTOR2(1100.0f, 700.0f), D3DXVECTOR2(1100.0f, 700.0f), 1,
+				D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 1,
+				0.0f, 1.0f, 0, 999, 0, 1,
+				0.0f, 0.0f, 0);
+
+			//プレイヤー配置に戻る
+			SetEffect(99, D3DXVECTOR2(900.0f, 700.0f), D3DXVECTOR2(900.0f, 700.0f), 1,
+				D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 1,
+				0.0f, 1.0f, 0, 999, 0, 1,
+				0.0f, 0.0f, 0);
+		}
 			//横1440
 			//縦810
-
+		if (g_Gameover.resulttime2 >= 160)
+		{
 			if (g_Gameover.selectpush == 0)
 			{
-				//next?次のステージへ的な
-				SetEffect(78, D3DXVECTOR2(1080.0f, 700.0f), D3DXVECTOR2(1080.0f, 700.0f), 1,
-					D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 1,
+				//リトライ
+				SetEffect(80, D3DXVECTOR2(1100.0f, 700.0f), D3DXVECTOR2(1100.0f, 700.0f), 1,
+					D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 1,
 					0.0f, 1.0f, 0, 1, 0, 1,
 					0.0f, 0.0f, 0);
 
@@ -564,18 +570,19 @@ void UpdateGameover(void)
 					0.0f, 0.0f, 0);
 			}
 
-			/*if (g_Result.selectpush == 2)
+			if (g_Gameover.selectpush == 2)
 			{
-				SetEffect(3, D3DXVECTOR2(SCREEN_WIDTH / 2, 700.0f), D3DXVECTOR2(SCREEN_WIDTH / 2, 700.0f), 1,
-					D3DXVECTOR2(350.0f, 120.0f), D3DXVECTOR2(350.0f, 120.0f), 1,
+				//プレイヤー配置に戻る
+				SetEffect(100, D3DXVECTOR2(900.0f, 700.0f), D3DXVECTOR2(900.0f, 700.0f), 1,
+					D3DXVECTOR2(200.0f, 109.0f), D3DXVECTOR2(200.0f, 109.0f), 1,
 					0.0f, 1.0f, 0, 1, 0, 1,
 					0.0f, 0.0f, 0);
-			}*/
+			}
 
 		
 			// マウスの座標を使っての入力処理
 			//1 1200 700	300 300
-			if (mouse_pos_X > 930.0f && mouse_pos_X < 1230.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
+			if (mouse_pos_X > 1020.0f && mouse_pos_X < 1175.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
 			{
 				g_Gameover.selectpush = 0;
 				mouseuse = true;
@@ -586,15 +593,39 @@ void UpdateGameover(void)
 				g_Gameover.selectpush = 1;
 				mouseuse = true;
 			}
-
-			// マウスが押される位置にあって、左クリック押されていて、フェード処理中ではないとき
-			if (mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
+			else if (mouse_pos_X > 820.0f && mouse_pos_X < 975.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
 			{
-				//SetVolume(g_BGMNo, 0.1f);
-
-				//STAGE_SELECTへ移行する
-				SceneTransition(SCENE_GAME);
+				g_Gameover.selectpush = 2;
+				mouseuse = true;
 			}
+
+			if (mouseuse && mouse_Lclick)
+			{
+				if (g_Gameover.selectpush == 0)
+				{
+					SceneTransition(SCENE_GAME);
+				}
+
+				if (g_Gameover.selectpush == 1)
+				{
+					SceneTransition(SCENE_STAGE_SELECT);
+				}
+
+				if (g_Gameover.selectpush == 2)
+				{
+					SceneTransition(SCENE_PLACEMENT);
+				}
+				
+			}
+
+			//// マウスが押される位置にあって、左クリック押されていて、フェード処理中ではないとき
+			//if (mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
+			//{
+			//	//SetVolume(g_BGMNo, 0.1f);
+
+			//	//STAGE_SELECTへ移行する
+			//	SceneTransition(SCENE_GAME);
+			//}
 
 
 			// もし前のフレームから変化があった場合のみエフェクトなどを変化させる
@@ -620,7 +651,6 @@ void UpdateGameover(void)
 
 		// 毎フレームカウントを増やす
 		g_Gameover.resulttime2++;
-	
 	}
 }
 

@@ -144,6 +144,10 @@ static int haiti_99;
 static int haiti_2_100;
 static int chara_101;
 
+// ポーズ
+static int migi_102;
+static int hidari_103;
+
 void InitEffect(void)
 {
 	//テクスチャの名前
@@ -266,6 +270,9 @@ void InitEffect(void)
 	haiti_99 = LoadTexture("data/TEXTURE/result/haiti.png");
 	haiti_2_100 = LoadTexture("data/TEXTURE/result/haiti_2.png");
 	chara_101 = LoadTexture("data/TEXTURE/result/ribon_chara.png");
+
+	migi_102 = LoadTexture("data/TEXTURE/pause/migi.png");
+	hidari_103 = LoadTexture("data/TEXTURE/pause/hidari.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -1229,6 +1236,12 @@ int GetTextureData(int id)
 		break;
 	case 101:
 		return chara_101;
+		break;
+	case 102:
+		return migi_102;
+		break;
+	case 103:
+		return hidari_103;
 		break;
 	}
 	// どこにもたどり着かなかった場合

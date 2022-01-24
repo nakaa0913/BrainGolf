@@ -83,7 +83,7 @@ HRESULT InitPause(void)
 
 
 	//ポーズボタンの表示
-	SetEffect(62, D3DXVECTOR2(50, 50), D3DXVECTOR2(50, 50), 0,
+	SetEffect(102, D3DXVECTOR2(50, 50), D3DXVECTOR2(50, 50), 0,
 		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
 		0.0f, 1.0f, 30, 999, 0, 90,
 		0.0f, 0.0f, 0);
@@ -153,13 +153,19 @@ void UpdatePause(void)
 						0.0f, 0.5f, 0, 1, 0, 1,
 						0.0f, 0.0f, 0);
 
+				//ポーズボタンの表示
+				SetEffect(103, D3DXVECTOR2(50, 50), D3DXVECTOR2(50, 50), 0,
+					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+					0.0f, 1.0f, 0, 1, 0, 1,
+					0.0f, 0.0f, 0);
+
 				// 上からのマップ
 				SetEffect(64, D3DXVECTOR2(50, 150), D3DXVECTOR2(50, 150), 0,
 					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 					0.0f, 1.0f, 0, 1, 0, 1,
 					0.0f, 0.0f, 0);
 
-				// 配置からやり直す
+				// リトライ
 				SetEffect(65, D3DXVECTOR2(50, 250), D3DXVECTOR2(50, 250), 0,
 					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 					0.0f, 1.0f, 0, 1, 0, 1,
@@ -174,6 +180,12 @@ void UpdatePause(void)
 				// ステージ選択
 				SetEffect(67, D3DXVECTOR2(50, 450), D3DXVECTOR2(50, 450), 0,
 					D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+					0.0f, 1.0f, 0, 1, 0, 1,
+					0.0f, 0.0f, 0);
+
+				//プレイヤー配置に戻る
+				SetEffect(99, D3DXVECTOR2(100.0f, 550.0f), D3DXVECTOR2(100.0f, 550.0f), 1,
+					D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 1,
 					0.0f, 1.0f, 0, 1, 0, 1,
 					0.0f, 0.0f, 0);
 
@@ -211,7 +223,7 @@ void UpdatePause(void)
 						}
 					}
 
-					/////////////配置からやり直す//////////////////
+					/////////////リトライ//////////////////
 					if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 212.0f && mouse_pos_Y < 280.0f)
 					{
 
@@ -225,7 +237,7 @@ void UpdatePause(void)
 
 						if (pausemouseuse && mouse_Lclick)
 						{
-							SceneTransition(SCENE_PLACEMENT);
+							SceneTransition(SCENE_GAME);
 							pauseclickuse = false;
 							//上から視点かミッションを開いていたら閉じる
 							Abovemap = false;
@@ -299,6 +311,29 @@ void UpdatePause(void)
 						{
 							SceneTransition(SCENE_STAGE_SELECT);
 							pauseclickuse = false;
+						}
+
+					}
+
+					////////配置から/////////
+					if (mouse_pos_X > 10.0f && mouse_pos_X < 175.0f && mouse_pos_Y > 500.0f && mouse_pos_Y < 600.0f)
+					{
+						pausemouseuse = true;
+
+						// 選択しましたマーク
+						SetEffect(73, D3DXVECTOR2(100, 550), D3DXVECTOR2(100, 550), 0,
+							D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 0,
+							0.0f, 1.0f, 0, 1, 0, 1,
+							0.0f, 0.0f, 0);
+
+						if (pausemouseuse && mouse_Lclick)
+						{
+							SceneTransition(SCENE_PLACEMENT);
+							pauseclickuse = false;
+							//上から視点かミッションを開いていたら閉じる
+							Abovemap = false;
+							pausemission = false;
+							DeleteMissionPause();
 						}
 
 					}

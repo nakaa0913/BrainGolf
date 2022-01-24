@@ -25,6 +25,7 @@
 #include "keyboard.h"
 #include "gameover.h"
 #include "mouse.h"
+#include "gamedata.h"
 
 #define GOAL_H (50)
 #define GOAL_W (50)
@@ -100,6 +101,7 @@ void UpdateGameover(void)
 	}
 	SAVEDATA* p_Savedata = GetSavedata();
 	STAGEDATA* p_Stagedata = GetStagedata();
+	GAMEDATA* p_Gamedata = GetGamedata();
 	//マウスの座標を取得
 	float mouse_pos_X = GetMousePosX();
 	float mouse_pos_Y = GetMousePosY();
@@ -467,6 +469,20 @@ void UpdateGameover(void)
 			//星(影)
 			SetEffect(82, D3DXVECTOR2(800.0f, 440.0f), D3DXVECTOR2(800.0f, 440.0f), 0,
 				D3DXVECTOR2(90.0f, 90.0f), D3DXVECTOR2(90.0f, 90.0f), 1,
+				0.0f, 1.0f, 60, 999, 0, 60,
+				0.0f, 0.0f, 0);
+
+			// クリアタイムの表示 p_Gamedata  SetEffectTimeNumber
+			int Number_EffectArray[2] = { 0,0 };
+			int* p_Number_EffectArray = Number_EffectArray;
+			SetEffectTimeNumber(p_Gamedata->game_time, p_Number_EffectArray, D3DXVECTOR2(850.0f, 600.0f), D3DXVECTOR2(800.0f, 540.0f), 0,
+				D3DXVECTOR2(48.0f, 48.0f), D3DXVECTOR2(30.0f, 30.0f), 0,
+				0.0f, 1.0f, 60, 999, 0, 60,
+				0.0f, 0.0f, 0);
+
+			// 最速タイムの表示 p_Gamedata  SetEffectTimeNumber
+			SetEffectTimeNumber(p_Savedata[p_Stagedata->stagenum].clear_time, p_Number_EffectArray, D3DXVECTOR2(1112.0f, 600.0f), D3DXVECTOR2(1050.0f, 540.0f), 0,
+				D3DXVECTOR2(48.0f, 48.0f), D3DXVECTOR2(30.0f, 30.0f), 0,
 				0.0f, 1.0f, 60, 999, 0, 60,
 				0.0f, 0.0f, 0);
 

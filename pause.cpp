@@ -63,11 +63,14 @@ bool pauseonce = false;
 
 bool gameover_pause = false;
 bool goal2_pause = false;
+bool deleteonce = false;
 //=============================================================================
 // 初期化処理
 //=============================================================================
 HRESULT InitPause(void)
 {
+	deleteonce = false;
+
 	//テクスチャ読み込み
 
 	STAGEDATA* p_Stagedata = GetStagedata();
@@ -206,7 +209,7 @@ void UpdatePause(void)
 
 						if (pausemouseuse && mouse_Lclick)
 						{
-							Abovemap = !Abovemap;
+							//Abovemap = !Abovemap;
 							pause_cool = CLICK_COOLTIME;
 							if (Abovemap)
 							{
@@ -218,7 +221,7 @@ void UpdatePause(void)
 							}
 							else
 							{
-								Abovemap = false;
+								Abovemap = true;
 							}
 						}
 					}
@@ -374,12 +377,17 @@ void UpdatePause(void)
 		}
 	}
 	
-	if (gameover_pause == true || goal2_pause == true)
+	if (deleteonce == false)
 	{
-		pauseclickuse = false;
-		pausemission = false;
-		Abovemap = false;
-		DeleteMissionPause();
+		if (gameover_pause == true || goal2_pause == true)
+		{
+			deleteonce = true;
+
+			pauseclickuse = false;
+			pausemission = false;
+			Abovemap = false;
+			DeleteMissionPause();
+		}
 	}
 
 

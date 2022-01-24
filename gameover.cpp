@@ -56,6 +56,8 @@ int result2 = -1;			//	リザルト
 int placement2 = -1;			//	配置から
 bool result_over_once = false;
 int result_over_once_time = 0;
+
+int fefffff = 0;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -546,12 +548,14 @@ void UpdateGameover(void)
 				//	0.0f, 0.0f, 0);
 
 				//ワールド選択に戻る
-			SetEffect(75, D3DXVECTOR2(400.0f, 700.0f), D3DXVECTOR2(400.0f, 700.0f), 1,
-				D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(150.0f, 150.0f), 1,
-				0.0f, 1.0f, 0, 999, 0, 1,
+			int asdfeff = 
+			SetEffect(75, D3DXVECTOR2(400.0f, 700.0f), D3DXVECTOR2(400.0f, 700.0f), 0,
+				D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(150.0f, 150.0f), 0,
+				0.0f, 1.0f, 0, 999, 0, 0,
 				0.0f, 0.0f, 0);
 
 			//リトライ
+			int fefeff = 
 			SetEffect(79, D3DXVECTOR2(1100.0f, 700.0f), D3DXVECTOR2(1100.0f, 700.0f), 1,
 				D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 1,
 				0.0f, 1.0f, 0, 999, 0, 1,

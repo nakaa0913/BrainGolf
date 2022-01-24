@@ -433,59 +433,59 @@ EFFECT* GetEffect(void)
 
 // all_count == 999だったら無制限に表示
 int SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
-			   float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
-			   float rot_angle1, float rot_angle2, int rot_moving_pattern, float tx, float ty, float sx, float sy)
+	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
+	float rot_angle1, float rot_angle2, int rot_moving_pattern, float tx, float ty, float sx, float sy)
 {
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
 		if (g_Effect[i].isUse == false)
 		{
-		//g_Effect[i].id = id;	下で引数で入力した値によってテクスチャを変更している
-		g_Effect[i].pos = pos1;
-		g_Effect[i].pos1 = pos1;
-		g_Effect[i].pos2 = pos2;
-		g_Effect[i].pos_moving_pattern = pos_moving_pattern;
-		g_Effect[i].size = size1;
-		g_Effect[i].size1 = size1;
-		g_Effect[i].size2 = size2;
-		g_Effect[i].size_moving_pattern = size_moving_pattern;
-		g_Effect[i].Clarity_min = Clarity_min;
-		g_Effect[i].Clarity_max = Clarity_max;
-		g_Effect[i].Clarity = g_Effect[i].Clarity_min;
-		g_Effect[i].fadeIn_count = fadeIn_count;
-		g_Effect[i].all_count = all_count;
-		g_Effect[i].fadeOut_count = fadeOut_count;
-		g_Effect[i].now_count = 0;
-		g_Effect[i].moving_count = moving_count;
-		g_Effect[i].rot = AngleToRadian(rot_angle1);
-		g_Effect[i].rot_angle = rot_angle1;
-		g_Effect[i].rot_angle1 = rot_angle1;
-		g_Effect[i].rot_angle2 = rot_angle2;
-		g_Effect[i].rot_moving_pattern = rot_moving_pattern;
-		g_Effect[i].rot_count = 0;
+			//g_Effect[i].id = id;	下で引数で入力した値によってテクスチャを変更している
+			g_Effect[i].pos = pos1;
+			g_Effect[i].pos1 = pos1;
+			g_Effect[i].pos2 = pos2;
+			g_Effect[i].pos_moving_pattern = pos_moving_pattern;
+			g_Effect[i].size = size1;
+			g_Effect[i].size1 = size1;
+			g_Effect[i].size2 = size2;
+			g_Effect[i].size_moving_pattern = size_moving_pattern;
+			g_Effect[i].Clarity_min = Clarity_min;
+			g_Effect[i].Clarity_max = Clarity_max;
+			g_Effect[i].Clarity = g_Effect[i].Clarity_min;
+			g_Effect[i].fadeIn_count = fadeIn_count;
+			g_Effect[i].all_count = all_count;
+			g_Effect[i].fadeOut_count = fadeOut_count;
+			g_Effect[i].now_count = 0;
+			g_Effect[i].moving_count = moving_count;
+			g_Effect[i].rot = AngleToRadian(rot_angle1);
+			g_Effect[i].rot_angle = rot_angle1;
+			g_Effect[i].rot_angle1 = rot_angle1;
+			g_Effect[i].rot_angle2 = rot_angle2;
+			g_Effect[i].rot_moving_pattern = rot_moving_pattern;
+			g_Effect[i].rot_count = 0;
 
-		g_Effect[i].drawpos = g_Effect[i].pos1;
-		g_Effect[i].use_array_num = i;
+			g_Effect[i].drawpos = g_Effect[i].pos1;
+			g_Effect[i].use_array_num = i;
 
-		g_Effect[i].tx = tx;					// テクスチャ1マスの幅
-		g_Effect[i].ty = ty;					// テクスチャ1マスの高さ
-		g_Effect[i].sx = sx;					// テクスチャのスタート位置x
-		g_Effect[i].sy = sy;					// テクスチャのスタート位置y
+			g_Effect[i].tx = tx;					// テクスチャ1マスの幅
+			g_Effect[i].ty = ty;					// テクスチャ1マスの高さ
+			g_Effect[i].sx = sx;					// テクスチャのスタート位置x
+			g_Effect[i].sy = sy;					// テクスチャのスタート位置y
 
-		g_Effect[i].isUse = true;
-		
-		g_Effect[i].id = GetTextureData(id);
+			g_Effect[i].isUse = true;
 
-		// 透明度の変化の処理を行う。
-		Fadeprocess(i);
+			g_Effect[i].id = GetTextureData(id);
 
-		return i;
+			// 透明度の変化の処理を行う。
+			Fadeprocess(i);
+
+			return i;
 		}
 
 	}
 
 	// MAX_EFFECT を超えた数エフェクトを作成しようとするとゲームが落ちる
-	 exit(1);
+	exit(1);
 }
 
 
@@ -574,35 +574,41 @@ void SetEffectNumber(int num,int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2
 
 	int last_i = -1;
 
+	bool kakutei = false;
+
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
+
 		if (g_Effect[i].isUse == false)
 		{
-			if (i == nextnum)
-			{
-				// 連番だった場合
-				serial++;
-			}
-			else
-			{
-				// 連番でなかった場合
-				serial = 0;
-			}
+			last_i = i;		// 開いてるとこの最初を見つけたら保存する。
 
-			nextnum = i + 1;
-
-			// serialが桁数分連続していたらbreakして抜ける。
-			if (serial == digit - 1)
+			for (int j = last_i; j < last_i + digit; j++)
 			{
-				last_i = i;
-				break;
+				// 使われているものがあったらjのfor文を抜けて探しなおす
+				if (g_Effect[i].isUse == true)
+					break;
+
+				// 最後まで行ったら確定する。
+				if (j == last_i + digit - 1)
+				{
+					kakutei = true;
+					break;
+				}
 			}
 		}
-		// MAX_EFFECT を超えた数エフェクトを作成しようとするとゲームが落ちる
-		//exit(25);
+
+		if (kakutei == true)
+		{
+			break;
+		}
+
+		// 最後までいって開いてなかったらエラー
+		if (i == MAX_EFFECT - 1)
+			exit(25);
 	}
 
-	int sn = last_i - (digit - 1);		// startnum
+	int sn = last_i;
 	// 引数のnumを改めて入れておく
 	number = num;
 
@@ -702,36 +708,41 @@ void SetEffectTimeNumber(int num, int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2
 	int nextnum = -1;
 
 	int last_i = -1;
+	bool kakutei = false;
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
+
 		if (g_Effect[i].isUse == false)
 		{
-			if (i == nextnum)
-			{
-				// 連番だった場合
-				serial++;
-			}
-			else
-			{
-				// 連番でなかった場合
-				serial = 0;
-			}
+			last_i = i;		// 開いてるとこの最初を見つけたら保存する。
 
-			nextnum = i + 1;
-
-			// serialが桁数分連続していたらbreakして抜ける。
-			if (serial == digit - 1)
+			for (int j = last_i; j < last_i + digit; j++)
 			{
-				last_i = i;
-				break;
+				// 使われているものがあったらjのfor文を抜けて探しなおす
+				if (g_Effect[i].isUse == true)
+					break;
+
+				// 最後まで行ったら確定する。
+				if (j == last_i + digit - 1)
+				{
+					kakutei = true;
+					break;
+				}
 			}
 		}
-		// MAX_EFFECT を超えた数エフェクトを作成しようとするとゲームが落ちる
-		//exit(25);
+
+		if (kakutei == true)
+		{
+			break;
+		}
+
+		// 最後までいって開いてなかったらエラー
+		if (i == MAX_EFFECT - 1)
+			exit(25);
 	}
 
-	int sn = last_i - (digit - 1);		// startnum
+	int sn = last_i;		// startnum
 
 	// セットエフェクトする処理
 	for (int i = 0; i < digit; i++)
@@ -1584,6 +1595,9 @@ void EffectBreak(int use_array_num, int SerialNumber)
 	for (int i = 0; i < SerialNumber; i++)
 	{
 		int new_array_num = use_array_num + i;
+
+		if (use_array_num + i == 25)
+			int fdffef = 4;
 
 		g_Effect[use_array_num + i].isUse = false;
 		g_Effect[use_array_num + i].use_array_num = -1;

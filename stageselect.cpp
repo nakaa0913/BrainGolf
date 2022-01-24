@@ -251,6 +251,8 @@ void InitStageSelect(void)
 
 	Arrow_EffectArray[0] = -1;
 	Arrow_EffectArray[1] = -1;
+	now_stagenum_select_EffectArray[0] = -1;
+	now_stagenum_select_EffectArray[1] = -1;
 
 	change_cool = 30;
 

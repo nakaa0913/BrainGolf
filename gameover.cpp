@@ -366,6 +366,8 @@ void UpdateGameover(void)
 
 		if (g_Gameover.resulttime2 == 10)
 		{
+
+
 			////暗闇4 明かりなら48
 			//SetEffect(48, D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(0.0f, 0.0f), 0,
 			//	D3DXVECTOR2(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2), D3DXVECTOR2(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2), 1,
@@ -394,11 +396,54 @@ void UpdateGameover(void)
 				D3DXVECTOR2(1400, 800), D3DXVECTOR2(1400, 800), 1,
 				0.0f, 1.0f, 100, 999, 0, 180,
 				0.0f, 0.0f, 0);
-			//DrawMissionResult();
+			// ミッション(文章)を表示する
+			//DrawMissionResult();だとなぜか表示されない同じこと書いてるのに。。。
+			SAVEDATA* p_Savedata = GetSavedata();
+
+			// ステージデータからミッション内容などを読み取る
+			STAGEDATA* p_Stagedata = GetStagedata();
+
+			float size_x = 768.0f;
+			float size_y = 128.0f;
+
+			float interval_y = size_y;
+
+			float base_pos1_x = 1140.0f;
+			float base_pos1_y = 280.0f;
+
+			float base_pos2_x = base_pos1_x;
+			float base_pos2_y = base_pos1_y;
+
+			// 数字の設定
+			float num_size_x = 40.0f;
+			float num_size_y = 40.0f;
+
+			int move_frame = 12;
+
+			for (int i = 0; i < MAX_MISSION; i++)
+			{
+				// コンテンツのidを描写用に、エフェクトで設定されているidに変換
+				int Content_Texid = ContentsNumToTexid(p_Stagedata->mission_ContentsNum[i]);
+				// セットエフェクトで文字の描写
+				int Content_EffectArray =
+					SetEffect(Content_Texid, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 1,
+						D3DXVECTOR2(size_x, size_y), D3DXVECTOR2(size_x, size_y), 0,
+						0.0f, 1.0f, 0, 999, 0, move_frame,
+						0.0f, 0.0f, 0);
+
+				// 数字の描写		ミッションの番号ごとに数字を描く場所は決まってると思うので、それもswitch分で判別できると楽
+				int Number_EffectArray[2] = { 0,0 };
+				int* p_Number_EffectArray = Number_EffectArray;
+				SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 1,
+					D3DXVECTOR2(num_size_x, num_size_y), D3DXVECTOR2(num_size_x, num_size_y), 0,
+					0.0f, 1.0f, 0, 999, 0, move_frame,
+					0.0f, 0.0f, 0);
+			}
 		}
 
 		if (g_Gameover.resulttime2 == 30)
 		{
+
 			//星(影)
 			SetEffect(82, D3DXVECTOR2(800.0f, 280.0f), D3DXVECTOR2(800.0f, 280.0f), 0,
 				D3DXVECTOR2(90.0f, 90.0f), D3DXVECTOR2(90.0f, 90.0f), 1,
@@ -414,10 +459,12 @@ void UpdateGameover(void)
 				D3DXVECTOR2(90.0f, 90.0f), D3DXVECTOR2(90.0f, 90.0f), 1,
 				0.0f, 1.0f, 60, 999, 0, 60,
 				0.0f, 0.0f, 0);
+
 		}
 
 		if (g_Gameover.resulttime2 == 80)
 		{
+
 			// ミッションをクリアしているなら表示する
 			if (p_Savedata[p_Stagedata->stagenum].mission_clear[0] == 1)
 			{

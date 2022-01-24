@@ -12,6 +12,7 @@ typedef struct {
 	int mission_background_EffectArray;					// ”wŒi‚Í1ŒÂ‚È‚Ì‚Å1
 	int mission_ContentsNum_EffectArray[MAX_MISSION];
 	int mission_JudgeNum_EffectArray[MAX_MISSION][MAX_DIGIT];
+	int	mission_star_EffectArray[MAX_MISSION];
 
 }MISSION;
 

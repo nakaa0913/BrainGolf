@@ -1555,7 +1555,7 @@ void InitPage()
 
 
 
-
+// 1~20での現在のステージ番号
 int GetNowChoiceStageNum()
 {
 	return now_stagenum;

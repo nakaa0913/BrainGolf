@@ -690,8 +690,8 @@ void DrawBG(void)
 			// —\‘ª’e‚Ì•\Ž¦
 			for (int i = 0; i < PREDICTION_MAX; i++)
 			{
-				if (p_Prediction[i].isUse)
-				{
+				//if (p_Prediction[i].isUse)
+				//{
 					// ƒ}ƒbƒv‚Å‚ÌÀ•W‚É•ÏŠ·‚·‚é
 					D3DXVECTOR2 mappos = PosToMappos(p_Prediction[i].pos);
 					// •ÏŠ·‚µ‚½À•W‚Ì¬”“_‚ðØ‚èŽÌ‚Ä‚é
@@ -703,7 +703,7 @@ void DrawBG(void)
 					{
 						DrawPredictionSpecifyNum(i);			// i‚Ì—\‘ª’e‚ª•`‚©‚ê‚é‚©‚Ç‚¤‚©(Žg‚í‚ê‚Ä‚é‚©‚Ç‚¤‚©)‚ÍA‚±‚ê‚ç‚ÌŠÖ”‚Ì’†‚ÅŒŸõ‚³‚ê‚éB
 					}
-				}
+				//}
 			}
 			
 

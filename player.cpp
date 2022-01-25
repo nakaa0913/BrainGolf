@@ -62,6 +62,8 @@ int pause_cool2;		// ポーズ切り替えのクールタイム
 
 int shotwait = 0;
 
+bool now_have = false;
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -138,6 +140,8 @@ HRESULT InitPlayer(void)
 		}
 	}
 
+	now_have = true;
+
 	return S_OK;
 }
 
@@ -173,7 +177,7 @@ void UpdatePlayer(void)
 	GAMEDATA* p_Gamedata = GetGamedata();
 
 	// 誰か一人でも持っている状態かどうか
-	bool now_have = false;
+	now_have = false;
 
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
@@ -356,8 +360,10 @@ void UpdatePlayer(void)
 		g_Player[i].pos = g_Player[i].nextpos;
 
 		// この分だけ最終的な座標にプラスされる
-		static int finalgapx = -1.0f;
-		static int finalgapy = -18.0f;
+		//static int finalgapx = -1.0f;
+		//static int finalgapy = -18.0f;
+		static int finalgapx = 0.0f;
+		static int finalgapy = DRAW_GAP_FINAL_Y;
 
 		// pos を drawpos に変換		DRAW_GAP は、上から見た時の描写でのマップの描写はレフトトップで、プレイヤーはど真ん中でやってるから、そのずれ。
 		g_Player[i].drawpos.x = GAME_ORIGIN_POINT_X + ((g_Player[i].pos.x + DRAW_GAP_X) / MAP_CHIP_SIZE_X) * (DRAW_MAP_CHIP_SIZE_X / 2) - ((g_Player[i].pos.y - DRAW_GAP_X) / MAP_CHIP_SIZE_Y) * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x + finalgapx;
@@ -555,6 +561,7 @@ void UpdatePlayer(void)
 
 								D3DXVECTOR2 pos = g_Player[i].pos;
 								SetBullet(pos, g_Player[i].angle, g_Player[i].ShotPower, club_pattern);
+								now_have = false;
 							}
 
 						}
@@ -574,14 +581,14 @@ void UpdatePlayer(void)
 
 	}
 
-	if (now_have == true)
-	{
-		PredictionUseTrue();
-	}
-	else
-	{
-		PredictionUseFalse();
-	}
+	//if (now_have == true)
+	//{
+	//	//PredictionUseTrue();
+	//}
+	//else
+	//{
+	//	PredictionUseFalse();
+	//}
 
 	// クールタイムを減らす処理(それぞれのぷれいやーじゃないやつ(for文の外に書かないといけないやつ)
 	if (club_ChangeCool > 0)
@@ -597,6 +604,7 @@ void UpdatePlayer(void)
 //=============================================================================
 void DrawPlayer(void)
 {
+
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
 
@@ -643,7 +651,6 @@ void DrawPlayerSpecifyNum(int i)
 
 	//DrawSpriteColorRotate(g_Player[i].texNo, g_Player[i].pos.x, g_Player[i].pos.y, g_Player[i].w, g_Player[i].h,
 	//	g_AnimePtn * 0.33333f, directionUV, 0.3333f, 0.25f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-
 }
 
 
@@ -835,4 +842,29 @@ int returnHavePlayer()
 	}
 
 	return 0;
+}
+
+bool hassyazyunbi()
+{
+	if (now_have == true)
+	{
+		return true;
+		PredictionUseTrue();
+	}
+	else
+	{
+		return false;
+		PredictionUseFalse();
+	}
+
+	if(!now_have)
+		return true;
+
+	return false;
+}
+
+void Truenow_have()
+{
+	now_have = true;
+	return;
 }

@@ -96,3 +96,5 @@ int SetPlayerForPlacement(int mappos_x, int mappos_y);
 int returnHavePlayer();
 void DeletePlayer(int num);
 void DeletePlacementPlayer();
+bool hassyazyunbi();				// bg‚ªæ‚É“Ç‚Ü‚ê‚é‚Ì‚ÅA‚»‚Ì‚É”­Ë‚µ‚Ä‚é‚æ‚Á‚Ä“`‚¦‚Ä‚ ‚°‚é‚½‚ß
+void Truenow_have();

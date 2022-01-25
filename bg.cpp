@@ -175,6 +175,9 @@ int g_map_hitchk[2][MAP_Y][MAP_X] =
 };
 
 static int g_Ground = 0;		// 背景用テクスチャ情報
+static int g_Ground_ice = 0;		// 背景用テクスチャ情報
+static int g_Ground_hell = 0;		// 背景用テクスチャ情報
+
 static int tex_mapchip_3d = 0;		// 背景用テクスチャ情報
 
 static int tex_mapchip_3d_01 = 0;
@@ -185,6 +188,8 @@ static int tex_floor = 0;		// 背景用テクスチャ情報
 static int tex_floor_mozinasi = 0;		// 背景用テクスチャ情報
 static int tex_floor_huchinasi = 0;		// 背景用テクスチャ情報
 static int tex_yuka = 0;		        // 背景用テクスチャ情報
+static int tex_yuka_ice = 0;			// 背景用テクスチャ情報
+static int tex_yuka_hell = 0;			// 背景用テクスチャ情報
 
 static int tex_base_wall = 0;		// 背景用テクスチャ情報
 static int tex_base_wall_center = 0;		// 背景用テクスチャ情報
@@ -205,8 +210,10 @@ static int g_CurrentPos = 0;	// 現在のマップ座標
 HRESULT InitBG(void)
 {
 	//g_Ground = LoadTexture("data/TEXTURE/basechip.png");
-	g_Ground = LoadTexture("data/TEXTURE/game/above/basechip_test1.png");
-	tex_mapchip_3d = LoadTexture("data/TEXTURE/game/side/mapchip_3d1.png");
+	g_Ground = LoadTexture("data/TEXTURE/game/above/basechip_wood.png");
+	g_Ground_ice = LoadTexture("data/TEXTURE/game/above/basechip_ice.png");
+	g_Ground_hell = LoadTexture("data/TEXTURE/game/above/basechip_hell.png");
+	//tex_mapchip_3d = LoadTexture("data/TEXTURE/game/side/mapchip_3d1.png");
 
 	tex_mapchip_3d_01 = LoadTexture("data/TEXTURE/game/side/mapchip_3d_wood.png");
 	tex_mapchip_3d_02 = LoadTexture("data/TEXTURE/game/side/mapchip_3d_ice.png");
@@ -217,6 +224,8 @@ HRESULT InitBG(void)
 	tex_floor_huchinasi = LoadTexture("data/TEXTURE/game/side/floor_huchinasi.png");
 
 	tex_yuka = LoadTexture("data/TEXTURE/game/side/yuka.png");
+	tex_yuka_ice = LoadTexture("data/TEXTURE/game/side/yuka_ice.png");
+	tex_yuka_hell = LoadTexture("data/TEXTURE/game/side/yuka_hell.png");
 
 	tex_base_wall = LoadTexture("data/TEXTURE/game/side/base_wall.png");
 	tex_base_wall_center = LoadTexture("data/TEXTURE/game/side/base_wall_center.png");
@@ -315,7 +324,23 @@ void DrawBG(void)
 			if (x < MAP_X + 1 && y < MAP_Y + 1)
 			{
 				// 等角図での床の描写
-				DrawSpriteLeftTop(tex_yuka, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
+				//DrawSpriteLeftTop(tex_yuka, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
+				if (GetNowChoiceStageNum() <= 10)
+				{
+					// 平和背景の表示
+					DrawSpriteLeftTop(tex_yuka, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
+				}
+				else if (GetNowChoiceStageNum() <= 15)
+				{
+					// 雪原背景の表示
+					DrawSpriteLeftTop(tex_yuka_ice, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
+				}
+				else if (GetNowChoiceStageNum() <= 20)
+				{
+					// 地獄背景の表示
+					DrawSpriteLeftTop(tex_yuka_hell, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f);
+				}
+				
 				// DrawSpriteColorRotate(tex_floor_huchinasi, slanted_x, slanted_y, DRAW_MAP_CHIP_SIZE_X, DRAW_MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 
 
@@ -827,7 +852,22 @@ void DrawBGaboveForPlacement(void)
 			if (x < MAP_X && y < MAP_Y)
 			{
 				// 上から視点。今までの
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER_X, y * MAP_CHIP_SIZE_Y + TO_CENTER_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+				//DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER_X, y * MAP_CHIP_SIZE_Y + TO_CENTER_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+				if (GetNowChoiceStageNum() <= 10)
+				{
+					// 平和背景の表示
+					DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER_X, y * MAP_CHIP_SIZE_Y + TO_CENTER_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+				}
+				else if (GetNowChoiceStageNum() <= 15)
+				{
+					// 雪原背景の表示
+					DrawSpriteLeftTop(g_Ground_ice, 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER_X, y * MAP_CHIP_SIZE_Y + TO_CENTER_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+				}
+				else if (GetNowChoiceStageNum() <= 20)
+				{
+					// 地獄背景の表示
+					DrawSpriteLeftTop(g_Ground_hell, 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER_X, y * MAP_CHIP_SIZE_Y + TO_CENTER_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, 0.0f, 0.0f, 0.125f, 0.125f);
+				}
 			}
 		}
 	}
@@ -855,8 +895,23 @@ void DrawBGaboveForPlacement(void)
 			// マップのデータが0の場合何も表示しないし計算もしない。
 			if (mapchipdata != 0)
 			{
+				if (GetNowChoiceStageNum() <= 10)
+				{
+					// 平和背景の表示
+					DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER_X, y * MAP_CHIP_SIZE_Y + TO_CENTER_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
+				}
+				else if (GetNowChoiceStageNum() <= 15)
+				{
+					// 雪原背景の表示
+					DrawSpriteLeftTop(g_Ground_ice, 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER_X, y * MAP_CHIP_SIZE_Y + TO_CENTER_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
+				}
+				else if (GetNowChoiceStageNum() <= 20)
+				{
+					// 地獄背景の表示
+					DrawSpriteLeftTop(g_Ground_hell, 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER_X, y * MAP_CHIP_SIZE_Y + TO_CENTER_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
+				}
 				// 今までの上からの視点
-				DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER_X, y * MAP_CHIP_SIZE_Y + TO_CENTER_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
+				//DrawSpriteLeftTop(g_Ground, 0.0f + x * MAP_CHIP_SIZE_X + TO_CENTER_X, y * MAP_CHIP_SIZE_Y + TO_CENTER_Y, MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y, mapchip.uv.x, mapchip.uv.y, 0.125f, 0.125f);
 			}
 		}
 	}

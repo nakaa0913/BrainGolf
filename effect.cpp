@@ -165,6 +165,11 @@ static int home_botan_0_112;
 static int home_botan1_113;
 static int mob_placement_114;
 
+//É|Å[ÉYâÊñ í«â¡
+static int ue_115;
+static int ue_2_116;
+static int mission_117;
+static int mission_2_118;
 
 void InitEffect(void)
 {
@@ -305,6 +310,11 @@ void InitEffect(void)
 	home_botan_0_112 = LoadTexture("data/TEXTURE/placement/home_botan_0.png");
 	home_botan1_113 = LoadTexture("data/TEXTURE/placement/home_botan_1.png");
 	mob_placement_114 = LoadTexture("data/TEXTURE/placement/mob_placement.png");
+
+	ue_115 = LoadTexture("data/TEXTURE/pause/ue.png");
+	ue_2_116 = LoadTexture("data/TEXTURE/pause/ue_2.png");
+	mission_117 = LoadTexture("data/TEXTURE/pause/mission.png");
+	mission_2_118 = LoadTexture("data/TEXTURE/pause/mission_2.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -1467,7 +1477,20 @@ int GetTextureData(int id)
 	case 114:
 		return mob_placement_114;
 		break;
+	case 115:
+		return ue_115;
+		break;
+	case 116:
+		return ue_2_116;
+		break;
+	case 117:
+		return mission_117;
+		break;
+	case 118:
+		return mission_2_118;
+		break;
 	}
+	
 	// Ç«Ç±Ç…Ç‡ÇΩÇ«ÇËíÖÇ©Ç»Ç©Ç¡ÇΩèÍçá
 	exit(21);
 	return -1;

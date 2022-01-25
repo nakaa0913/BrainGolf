@@ -32,7 +32,8 @@ bool CollisionBC(D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, float size1, float size2);
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-
+int have_count = 0;
+int haveplayer = -1;
 
 //=============================================================================
 // 当たり判定処理
@@ -88,6 +89,7 @@ void UpdateCollision(void)
 	//	}
 	//}
 
+	
 
 	// プレイヤーと弾の判定
 	for (int i = 0; i < BULLET_MAX; i++)
@@ -108,6 +110,11 @@ void UpdateCollision(void)
 					bullet[i].use = false;		// 弾の消滅処理を行い
 					bullet[i].friction = 1.0f;
 					player[j].have = true;		// プレイヤーは弾を持つ
+					Truenow_have();
+					haveplayer = j;
+
+					have_count = 1;
+
 
 					SetShotPower(0);			// ショットパワーの表示を0にしておく
 
@@ -128,6 +135,18 @@ void UpdateCollision(void)
 			}
 		}
 	}
+
+	//if (have_count >= 1)
+	//{
+	//	if (have_count >= 2)
+	//	{
+	//		have_count = 0;
+	//		player[haveplayer].have = true;		// プレイヤーは弾を持つ
+	//		Truenow_have();
+	//	}
+	//	else
+	//		have_count++;
+	//}
 
 	// ボスと弾(BC)
 

@@ -41,7 +41,11 @@
 
 //#define DRAW_GAP	 (0 * CAMERA_MAGNIFICATION)			// 上画面をレフトトップでやってたせいで出たずれ
 #define DRAW_GAP_X	 (20 * CAMERA_MAGNIFICATION)			// 上画面をレフトトップでやってたせいで出たずれ
-#define DRAW_GAP_Y	 (20 * CAMERA_MAGNIFICATION)			// 上画面をレフトトップでやってたせいで出たずれ？
+#define DRAW_GAP_Y	 (40 * CAMERA_MAGNIFICATION)			// 上画面をレフトトップでやってたせいで出たずれ？
+
+#define DRAW_GAP_FINAL_Y	 (-18.0f)			// 最終調整
+
+
 									// ここいじって表示を足元に当たり判定が来るようにする。
 #define DRAW_GAP_BALL_X	 (-5 * CAMERA_MAGNIFICATION)			// 上のDRAW_GAPにさらにプラスする
 #define DRAW_GAP_BALL_Y	 (-5 * CAMERA_MAGNIFICATION)			// 当確図で見た時に、ボールが綺麗に見えるためのもの

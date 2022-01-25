@@ -265,10 +265,10 @@ void DrawMissionStageSelect()
 	}
 
 	// 数字の設定
-	float interval_magnification = 0.24f;	// 数字表示の間隔の倍率
+	float interval_magnification = 0.38f;	// 数字表示の間隔の倍率
 
-	float num_size_x = 80.0f;
-	float num_size_y = 80.0f;
+	float num_size_x = 60.0f;
+	float num_size_y = 60.0f;
 
 
 	// ミッションの背景を表示	Effectでのidは25		ミッションの中身を表示が3つあってそこの真ん中に来るように配置する->iのとこを1にかえるとOK
@@ -591,10 +591,10 @@ void DrawMissionPause()
 	base_pos1_y = BGbase_pos1_y;
 
 	// 数字の設定
-	float interval_magnification = 0.24f;	// 数字表示の間隔の倍率
+	float interval_magnification = 0.38f;	// 数字表示の間隔の倍率
 
-	float num_size_x = 80.0f;
-	float num_size_y = 80.0f;
+	float num_size_x = 60.0f;
+	float num_size_y = 60.0f;
 
 
 	// ミッションの背景を表示	Effectでのidは25		ミッションの中身を表示が3つあってそこの真ん中に来るように配置する->iのとこを1にかえるとOK

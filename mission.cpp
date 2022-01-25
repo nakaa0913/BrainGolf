@@ -616,7 +616,7 @@ void DrawMissionPause()
 		int Content_EffectArray =
 			SetEffect(Content_Texid, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 0,
 				D3DXVECTOR2(size_x * mozisizebairitu, size_y * mozisizebairitu), D3DXVECTOR2(size_x, size_y), 0,
-				0.0f, 1.0f, 0, 999, 0, move_frame,
+				0.0f, 1.0f, 20, 999, 0, 1,
 				0.0f, 0.0f, 0);
 
 		// ミッションのテクスチャIDから数字の座標がどれだけ真ん中からずれてるかをとってくる(xのみ)
@@ -627,7 +627,7 @@ void DrawMissionPause()
 		int* p_Number_EffectArray = Number_EffectArray;
 		SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x - number_gap_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - number_gap_x, base_pos2_y + interval_y * i), 0,
 			D3DXVECTOR2(num_size_x * mozisizebairitu, num_size_y * mozisizebairitu), D3DXVECTOR2(num_size_x, num_size_y), 0,
-			0.0f, 1.0f, 0, 999, 0, move_frame,
+			0.0f, 1.0f, 20, 999, 0, 1,
 			0.0f, 0.0f, 0, interval_magnification);
 
 		// エフェクトが生成された場所の番号の保存
@@ -660,6 +660,7 @@ void DeleteMissionPause()
 	for (int i = 0; i < MAX_MISSION; i++)
 	{
 		EffectBreak(g_Mission.mission_ContentsNum_EffectArray[i]);
+		EffectBreak(g_Mission.mission_star_EffectArray[i]);
 		EffectBreak(g_Mission.mission_JudgeNum_EffectArray[i][0], g_Mission.mission_JudgeNum_EffectArray[i][1]);	// 第2引数で連番の処理
 
 	}

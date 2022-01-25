@@ -177,6 +177,10 @@ int g_map_hitchk[2][MAP_Y][MAP_X] =
 static int g_Ground = 0;		// 背景用テクスチャ情報
 static int tex_mapchip_3d = 0;		// 背景用テクスチャ情報
 
+static int tex_mapchip_3d_01 = 0;
+static int tex_mapchip_3d_02 = 0;
+static int tex_mapchip_3d_03 = 0;
+
 static int tex_floor = 0;		// 背景用テクスチャ情報
 static int tex_floor_mozinasi = 0;		// 背景用テクスチャ情報
 static int tex_floor_huchinasi = 0;		// 背景用テクスチャ情報
@@ -203,6 +207,10 @@ HRESULT InitBG(void)
 	//g_Ground = LoadTexture("data/TEXTURE/basechip.png");
 	g_Ground = LoadTexture("data/TEXTURE/game/above/basechip_test1.png");
 	tex_mapchip_3d = LoadTexture("data/TEXTURE/game/side/mapchip_3d1.png");
+
+	tex_mapchip_3d_01 = LoadTexture("data/TEXTURE/game/side/mapchip_3d_wood.png");
+	tex_mapchip_3d_02 = LoadTexture("data/TEXTURE/game/side/mapchip_3d_ice.png");
+	tex_mapchip_3d_03 = LoadTexture("data/TEXTURE/game/side/mapchip_3d_hell.png");
 
 	tex_floor = LoadTexture("data/TEXTURE/game/side/floor.png");
 	tex_floor_mozinasi = LoadTexture("data/TEXTURE/game/side/floor_mozinasi.png");
@@ -257,16 +265,19 @@ void DrawBG(void)
 	{
 		// 平和背景の表示
 		DrawSpriteLeftTop(g_BG_01, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
+		tex_mapchip_3d = tex_mapchip_3d_01;
 	}
 	else if (GetNowChoiceStageNum() <= 15)
 	{
 		// 雪原背景の表示
 		DrawSpriteLeftTop(g_BG_02, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
+		tex_mapchip_3d = tex_mapchip_3d_02;
 	}
 	else if (GetNowChoiceStageNum() <= 20)
 	{
 		// 地獄背景の表示
 		DrawSpriteLeftTop(g_BG_03, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
+		tex_mapchip_3d = tex_mapchip_3d_03;
 	}
 
 	STAGEDATA* p_Stagedata = GetStagedata();
@@ -857,6 +868,24 @@ void DrawBGsideForPlacement(void)
 {
 	STAGEDATA* p_Stagedata = GetStagedata();
 	CAMERA* p_Camera = GetCamera();
+
+	if (GetNowChoiceStageNum() <= 10)
+	{
+		// 平和背景の表示
+		tex_mapchip_3d = tex_mapchip_3d_01;
+	}
+	else if (GetNowChoiceStageNum() <= 15)
+	{
+		// 雪原背景の表示
+		tex_mapchip_3d = tex_mapchip_3d_02;
+	}
+	else if (GetNowChoiceStageNum() <= 20)
+	{
+		// 地獄背景の表示
+		tex_mapchip_3d = tex_mapchip_3d_03;
+	}
+
+
 	//レイヤー０の表示
 	for (int x = 0; x < MAP_X + 1; x++)
 	{

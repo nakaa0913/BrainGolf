@@ -445,21 +445,25 @@ void DrawBG(void)
 						int mappos_y = mappos.y;
 
 						// ブロックの周りにプレイヤーがいた場合透明度を下げる
-						if (x - 1 == mappos_x && y == mappos_y - 1)
+						if (toumei(mapchipdata))
 						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-						}
-						if (x - 1 == mappos_x && y == mappos_y + 0)
-						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-						}
-						if (x - 1 == mappos_x && y == mappos_y + 1)
-						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-						}
-						if (x == mappos_x && y == mappos_y + 1)
-						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (x - 1 == mappos_x && y == mappos_y - 1)
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							}
+							if (x - 1 == mappos_x && y == mappos_y + 0)
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							}
+							if (x - 1 == mappos_x && y == mappos_y + 1)
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							}
+							if (x == mappos_x && y == mappos_y + 1)
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							}
+
 						}
 					}
 				}
@@ -477,22 +481,24 @@ void DrawBG(void)
 						// ブロックの周りに弾がいた場合透明度を下げる
 						if (x - 1 == mappos_x && y == mappos_y - 1)
 						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (toumei(mapchipdata))
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
 							{
 								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-								D3DXCOLOR Ncolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+								D3DXCOLOR Ncolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.6f);
 								float slanted_x = GAME_ORIGIN_POINT_X + x * (DRAW_MAP_CHIP_SIZE_X / 2) - y * (DRAW_MAP_CHIP_SIZE_X / 2) + p_Camera->pos.x;
 								float slanted_y = GAME_ORIGIN_POINT_Y + y * (DRAW_MAP_CHIP_SIZE_Y / 2) + x * (DRAW_MAP_CHIP_SIZE_Y / 2) + p_Camera->pos.y;
 								// とうかくず視点
 								//mapchip = g_MapInfo[1];
 								DrawSpriteLeftTopColor(tex_mapchip_3d, slanted_x - MAP_CHIP3D_GAP_X, slanted_y - MAP_CHIP3D_GAP_Y, MAP_CHIP3D_SIZE_X, MAP_CHIP3D_SIZE_Y, 0.125f, 0.125f, 0.125f, 0.125f, Ncolor);
 							}
-							
+
 						}
 						if (x - 1 == mappos_x && y == mappos_y + 0)
 						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (toumei(mapchipdata))
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
 							{
 								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -506,7 +512,8 @@ void DrawBG(void)
 						}
 						if (x - 1 == mappos_x && y == mappos_y + 1)
 						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (toumei(mapchipdata))
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
 							{
 								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -520,7 +527,8 @@ void DrawBG(void)
 						}
 						if (x == mappos_x && y == mappos_y + 1)
 						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (toumei(mapchipdata))
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
 							{
 								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -535,7 +543,8 @@ void DrawBG(void)
 						// ボールのみボールの近く全範囲
 						if (x == mappos_x && y == mappos_y + 0)
 						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (toumei(mapchipdata))
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
 							{
 								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -549,7 +558,8 @@ void DrawBG(void)
 						}
 						if (x == mappos_x && y == mappos_y - 1)
 						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (toumei(mapchipdata))
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
 							{
 								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -563,7 +573,8 @@ void DrawBG(void)
 						}
 						if (x + 1 == mappos_x && y == mappos_y + 1)
 						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (toumei(mapchipdata))
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
 							{
 								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -577,7 +588,8 @@ void DrawBG(void)
 						}
 						if (x + 1 == mappos_x && y == mappos_y + 0)
 						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (toumei(mapchipdata))
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
 							{
 								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -591,7 +603,8 @@ void DrawBG(void)
 						}
 						if (x + 1 == mappos_x && y == mappos_y - 1)
 						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (toumei(mapchipdata))
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 							if (mapchipdata == 1)							// ボールが当たった時壁ブロックを高く見せる処理
 							{
 								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -605,7 +618,7 @@ void DrawBG(void)
 
 						}
 
-						
+
 
 
 
@@ -622,21 +635,24 @@ void DrawBG(void)
 						int mappos_y = p_GimmickDescription[i].y;
 
 						// ブロックの周りに強調表示がいた場合透明度を下げる
-						if (x - 1 == mappos_x && y == mappos_y - 1)
+						if (toumei(mapchipdata))
 						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-						}
-						if (x - 1 == mappos_x && y == mappos_y + 0)
-						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-						}
-						if (x - 1 == mappos_x && y == mappos_y + 1)
-						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-						}
-						if (x == mappos_x && y == mappos_y + 1)
-						{
-							color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							if (x - 1 == mappos_x && y == mappos_y - 1)
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							}
+							if (x - 1 == mappos_x && y == mappos_y + 0)
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							}
+							if (x - 1 == mappos_x && y == mappos_y + 1)
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							}
+							if (x == mappos_x && y == mappos_y + 1)
+							{
+								color[10 * y + x] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+							}
 						}
 					}
 				}
@@ -1074,3 +1090,22 @@ void DrawBGsideForPlacement(void)
 }
 
 
+// プレイヤーやボールが近くにいたら透明になるもの。trueだと透明になるもの
+bool toumei(int mapchipdata)
+{
+	bool toumeinisuru = false;
+
+	if (mapchipdata == 11 || mapchipdata == 12)
+		toumeinisuru = true;
+
+	if (mapchipdata <= 24 && mapchipdata >= 33)
+		toumeinisuru = true;
+
+	if (mapchipdata == 19 || mapchipdata == 35)
+		toumeinisuru = true;
+
+	if (mapchipdata <= 38 && mapchipdata >= 41)
+		toumeinisuru = true;
+
+	return toumeinisuru;
+}

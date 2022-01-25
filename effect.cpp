@@ -171,6 +171,10 @@ static int ue_2_116;
 static int mission_117;
 static int mission_2_118;
 
+// number追加
+static int number_2_119;
+
+
 void InitEffect(void)
 {
 	//テクスチャの名前
@@ -315,6 +319,8 @@ void InitEffect(void)
 	ue_2_116 = LoadTexture("data/TEXTURE/pause/ue_2.png");
 	mission_117 = LoadTexture("data/TEXTURE/pause/mission.png");
 	mission_2_118 = LoadTexture("data/TEXTURE/pause/mission_2.png");
+
+	number_2_119 = LoadTexture("data/TEXTURE/other_effect/number_2.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -513,6 +519,14 @@ int SetEffect(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern
 
 			g_Effect[i].id = GetTextureData(id);
 
+			if (fadeIn_count == 0)
+			{
+				g_Effect[i].Clarity = g_Effect[i].Clarity_max;
+			}
+
+			// 最後にdrawposに直す
+			g_Effect[i].drawpos = g_Effect[i].pos;
+
 			// 透明度の変化の処理を行う。
 			Fadeprocess(i);
 
@@ -570,6 +584,14 @@ int SetEffectInReverse(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_movin
 			g_Effect[i].isUse = true;
 
 			g_Effect[i].id = GetTextureData(id);
+
+			if (fadeIn_count == 0)
+			{
+				g_Effect[i].Clarity = g_Effect[i].Clarity_max;
+			}
+
+			// 最後にdrawposに直す
+			g_Effect[i].drawpos = g_Effect[i].pos;
 
 			// 透明度の変化の処理を行う。
 			Fadeprocess(i);
@@ -680,7 +702,8 @@ void SetEffectNumber(int num,int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2
 		g_Effect[i + sn].use_array_num = i + sn;
 		g_Effect[i + sn].isUse = true;
 
-		g_Effect[i + sn].id = GetTextureData(46);		// Numberは46番に設定されてる
+		//g_Effect[i + sn].id = GetTextureData(46);		// Numberは46番に設定されてる
+		g_Effect[i + sn].id = GetTextureData(119);		// Numberは46番に設定されてる
 
 
 		// 桁が小さい方から描かれていく。右から左に向かって描いていく
@@ -707,10 +730,26 @@ void SetEffectNumber(int num,int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2
 			g_Effect[i + sn].pos2.x = pos2.x + (middle_digit - i) * size2.x * interval_magnification;
 		}
 
+		// ポジションの再調整(ポジションムービングカウントが0なら動かないので最初からpos2に調整する)
+		if (pos_moving_pattern == 0)
+		{
+			g_Effect[i + sn].pos.x = g_Effect[i + sn].pos2.x;
+			g_Effect[i + sn].pos1.x = g_Effect[i + sn].pos2.x;
+		}
+
 		g_Effect[i + sn].tx = 1.0f / 10;						// テクスチャ1マスの幅
 		g_Effect[i + sn].ty = 1.0f / 2;						// テクスチャ1マスの高さ
 		g_Effect[i + sn].sx = g_Effect[i + sn].tx * nownum;			// テクスチャのスタート位置x
 		g_Effect[i + sn].sy = 0.0f;							// テクスチャのスタート位置y
+
+		if (fadeIn_count == 0)
+		{
+			g_Effect[i + sn].Clarity = g_Effect[i + sn].Clarity_max;
+		}
+
+		// 最後にdrawposに直す
+		g_Effect[i + sn].drawpos = g_Effect[i + sn].pos;
+
 
 		// 透明度の変化の処理を行う。
 		Fadeprocess(i + sn);
@@ -812,7 +851,8 @@ void SetEffectTimeNumber(int num, int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2
 		g_Effect[i + sn].use_array_num = i + sn;
 		g_Effect[i + sn].isUse = true;
 
-		g_Effect[i + sn].id = GetTextureData(104);		// Numberは46番に設定されてる
+		//g_Effect[i + sn].id = GetTextureData(104);		// Numberは46番に設定されてる
+		g_Effect[i + sn].id = GetTextureData(119);		// Numberは46番に設定されてる
 
 
 		// 桁が小さい方から描かれていく。右から左に向かって描いていく
@@ -865,6 +905,14 @@ void SetEffectTimeNumber(int num, int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2
 
 		g_Effect[i + sn].sx = g_Effect[i + sn].tx * UVxNum;			// テクスチャのスタート位置x(ここでテクスチャのUV値設定)
 		g_Effect[i + sn].sy = g_Effect[i + sn].ty * UVyNum;							// テクスチャのスタート位置y
+
+		if (fadeIn_count == 0)
+		{
+			g_Effect[i + sn].Clarity = g_Effect[i + sn].Clarity_max;
+		}
+
+		// 最後にdrawposに直す
+		g_Effect[i + sn].drawpos = g_Effect[i + sn].pos;
 
 		// 透明度の変化の処理を行う。
 		Fadeprocess(i + sn);
@@ -1488,6 +1536,9 @@ int GetTextureData(int id)
 		break;
 	case 118:
 		return mission_2_118;
+		break;
+	case 119:
+		return number_2_119;
 		break;
 	}
 	

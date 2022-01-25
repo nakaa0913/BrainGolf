@@ -140,32 +140,55 @@ void UpdatePlacement(void)
 	float interval_x = MAP_CHIP_SIZE_X;
 	float interval_y = MAP_CHIP_SIZE_Y;
 
+
+	// プレイヤーあと何人配置できますよ
+	SetEffect(114, D3DXVECTOR2(SCREEN_WIDTH - 200.0f , 60.0f), D3DXVECTOR2(1200.0f, 700.0f), 0,
+		D3DXVECTOR2(120.0f, 120.0f), D3DXVECTOR2(400.0f, 400.0f), 0,
+		1.0f, 1.0f, 0, 1, 0, 0,
+		0.0f, 0.0f, 0);
+
+	// 数字
+	// まず何人表示できるかをもらう
+	int remaining = RemainingPlayer();
+	int Number_EffectArray[2] = { 0,0 };
+	int* p_Number_EffectArray = Number_EffectArray;
+	SetEffectNumber(remaining, p_Number_EffectArray, D3DXVECTOR2(SCREEN_WIDTH - 120.0f, 66.0f), D3DXVECTOR2(SCREEN_WIDTH - 120.0f, 66.0f), 0,
+		D3DXVECTOR2(70.0f, 70.0f), D3DXVECTOR2(70.0f, 70.0f), 0,
+		1.0f, 1.0f, 0, 0, 0, 0,
+		0.0f, 0.0f, 0, 0.3f);
+
 	// エンターキーでゲームスタート
 	/*if ((Keyboard_IsKeyDown(KK_ENTER)) && GetFadeState() == FADE_NONE)
 	{
 		SceneTransition(SCENE_GAME);
 	}*/
 
-	if (PushKeyCool <= 0)
-	{
-		// Mキーが押されたらマップ表示切替+上から視点での操作を完全に無効にする
-		if (Keyboard_IsKeyDown(KK_M))
-		{
-			ViewAbove = !ViewAbove;
-			if(ViewAbove)
-				ChangeEffectClarity(placement_pickup_EffectArray, 1.0f);
-			else
-				ChangeEffectClarity(placement_pickup_EffectArray, 0.0f);
-			PushKeyCool = PUSHKEY_COOLTIME;
-		}
-	}
+	//if (PushKeyCool <= 0)
+	//{
+	//	// Mキーが押されたらマップ表示切替+上から視点での操作を完全に無効にする
+	//	if (Keyboard_IsKeyDown(KK_M))
+	//	{
+	//		ViewAbove = !ViewAbove;
+	//		if(ViewAbove)
+	//			ChangeEffectClarity(placement_pickup_EffectArray, 1.0f);
+	//		else
+	//			ChangeEffectClarity(placement_pickup_EffectArray, 0.0f);
+	//		PushKeyCool = PUSHKEY_COOLTIME;
+	//	}
+	//}
 
+	float botan_size_x = 300.0f;
+	float botan_size_y = 130.0f;
+
+	float kyouchou = 1.5f;
+
+	D3DXVECTOR2 nextPos = D3DXVECTOR2(1200.0f, 700.0f);
 	//next表示と入力
-	if (mouse_pos_X > 1070.0f && mouse_pos_X < 1310.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 720.0f)
+	if (mouse_pos_X > nextPos.x - (botan_size_x / 2) && mouse_pos_X < nextPos.x + (botan_size_x / 2) && mouse_pos_Y > nextPos.y - (botan_size_y / 2) && mouse_pos_Y < nextPos.y + (botan_size_y / 2))
 	{
-		SetEffect(47, D3DXVECTOR2(1200.0f, 700.0f), D3DXVECTOR2(1200.0f, 700.0f), 1,
-			D3DXVECTOR2(400.0f, 400.0f), D3DXVECTOR2(400.0f, 400.0f), 1,
-			0.0f, 1.0f, 0, 1, 0, 1,
+		SetEffect(110, D3DXVECTOR2(1200.0f, 700.0f), D3DXVECTOR2(1200.0f, 700.0f), 0,
+			D3DXVECTOR2(botan_size_x * kyouchou, botan_size_y * kyouchou), D3DXVECTOR2(400.0f, 400.0f), 0,
+			0.0f, 1.0f, 0, 1, 0, 0,
 			0.0f, 0.0f, 0);
 		mouseuse = true;
 		if (mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
@@ -175,19 +198,20 @@ void UpdatePlacement(void)
 	}
 	else
 	{
-		SetEffect(47, D3DXVECTOR2(1200.0f, 700.0f), D3DXVECTOR2(1200.0f, 700.0f), 1,
-			D3DXVECTOR2(300.0f, 300.0f), D3DXVECTOR2(300.0f, 300.0f), 1,
-			0.0f, 1.0f, 0, 1, 0, 1,
+		SetEffect(110, D3DXVECTOR2(1200.0f, 700.0f), D3DXVECTOR2(1200.0f, 700.0f), 0,
+			D3DXVECTOR2(botan_size_x, botan_size_y), D3DXVECTOR2(300.0f, 300.0f), 0,
+			0.0f, 1.0f, 0, 1, 0, 0,
 			0.0f, 0.0f, 0);
 	}
 
+	D3DXVECTOR2 backPos = D3DXVECTOR2(150.0f, 700.0f);
 	//ステージ選択にいく
-	if (mouse_pos_X > 110.0f && mouse_pos_X < 185.0f && mouse_pos_Y > 662.0f && mouse_pos_Y < 730.0f)
+	if (mouse_pos_X > backPos.x - (botan_size_x/ 2) && mouse_pos_X < backPos.x + (botan_size_x/ 2) && mouse_pos_Y > backPos.y - (botan_size_y/ 2) && mouse_pos_Y < backPos.y + (botan_size_y/ 2))
 	{
 		// ステージ選択
-		SetEffect(67, D3DXVECTOR2(150.0f, 700.0f), D3DXVECTOR2(150.0f, 700.0f), 0,
-			D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(150.0f, 150.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 1,
+		SetEffect(112, D3DXVECTOR2(150.0f, 700.0f), D3DXVECTOR2(150.0f, 700.0f), 0,
+			D3DXVECTOR2(botan_size_x * kyouchou, botan_size_y * kyouchou), D3DXVECTOR2(150.0f, 150.0f), 0,
+			0.0f, 1.0f, 0, 1, 0, 0,
 			0.0f, 0.0f, 0);
 		mouseuse = true;
 		if (mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
@@ -198,35 +222,37 @@ void UpdatePlacement(void)
 	else
 	{
 		// ステージ選択
-		SetEffect(67, D3DXVECTOR2(150.0f, 700.0f), D3DXVECTOR2(150.0f, 700.0f), 0,
-			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 1,
+		SetEffect(112, D3DXVECTOR2(150.0f, 700.0f), D3DXVECTOR2(150.0f, 700.0f), 0,
+			D3DXVECTOR2(botan_size_x, botan_size_y), D3DXVECTOR2(100.0f, 100.0f), 0,
+			0.0f, 1.0f, 0, 1, 0, 0,
 			0.0f, 0.0f, 0);
 	}
 
 	if (ViewAbove == true)
 	{
 
-		// キー入力による移動
-		if (MoveKeyCool <= 0)
-		{
-			if (Keyboard_IsKeyDown(KK_RIGHT))
-			{
-				nowchoice.x++;
-			}
-			if (Keyboard_IsKeyDown(KK_LEFT))
-			{
-				nowchoice.x--;
-			}
-			if (Keyboard_IsKeyDown(KK_UP))
-			{
-				nowchoice.y--;
-			}
-			if (Keyboard_IsKeyDown(KK_DOWN))
-			{
-				nowchoice.y++;
-			}
-		}
+		//// キー入力による移動
+		//if (MoveKeyCool <= 0)
+		//{
+		//	if (Keyboard_IsKeyDown(KK_RIGHT))
+		//	{
+		//		nowchoice.x++;
+		//	}
+		//	if (Keyboard_IsKeyDown(KK_LEFT))
+		//	{
+		//		nowchoice.x--;
+		//	}
+		//	if (Keyboard_IsKeyDown(KK_UP))
+		//	{
+		//		nowchoice.y--;
+		//	}
+		//	if (Keyboard_IsKeyDown(KK_DOWN))
+		//	{
+		//		nowchoice.y++;
+		//	}
+		//}
+		// ブロックは一にマウスカードルがあっているか
+		bool mouseuseblock = false;
 
 		// マウスの座標からどのブロックに触れているかを調べる処理
 		for (int x = 0; x < MAP_X + 1; x++)
@@ -245,6 +271,8 @@ void UpdatePlacement(void)
 					{
 						nowchoice.x = x;
 						nowchoice.y = y;
+
+						mouseuseblock = true;
 
 						break;
 					}
@@ -297,7 +325,8 @@ void UpdatePlacement(void)
 		{
 			if (GetFadeState() == FADE_NONE)
 			{
-				if (/*Keyboard_IsKeyDown(KK_SPACE) ||*/ mouse_Lclick)
+				/*if (Keyboard_IsKeyDown(KK_SPACE) || mouse_Lclick)*/
+				if (mouse_Lclick && mouseuseblock)
 				{
 					g_SENo = LoadSound("data/SE/やさしいベルの上昇音.wav");
 					PlaySound(g_SENo, 0);
@@ -487,4 +516,22 @@ bool DontPlaceForNumberofPeople()
 	// もう最大まで配置していているなら配置できないのでtrueを返す
 	return true;
 
+}
+
+// 残りの配置可能なプレイヤー数を返す
+int RemainingPlayer()
+{
+	STAGEDATA* p_Stagedata = GetStagedata();
+
+	int backnum = 0;
+
+	for (int i = 0; i < p_Stagedata->NumberofPeople; i++)
+	{
+		if (g_Placement[i].isUse == false)
+		{
+			backnum++;
+		}
+	}
+
+	return backnum;
 }

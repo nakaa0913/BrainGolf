@@ -428,10 +428,10 @@ void UpdateGameover(void)
 			float base_pos2_y = base_pos1_y;
 
 			// ”š‚Ìİ’è
-			float interval_magnification = 0.24f;	// ”š•\¦‚ÌŠÔŠu‚Ì”{—¦
+			float interval_magnification = 0.35f;	// ”š•\¦‚ÌŠÔŠu‚Ì”{—¦
 
-			float num_size_x = 80.0f;
-			float num_size_y = 80.0f;
+			float num_size_x = 60.0f;
+			float num_size_y = 60.0f;
 
 			int move_frame = 12;
 

@@ -61,6 +61,7 @@ bool pausemission = false;	//ミッションのボタン
 
 bool pauseonce = false;
 bool stretching = false;
+bool stretching2 = false;
 
 bool gameover_pause = false;
 bool goal2_pause = false;
@@ -84,7 +85,8 @@ HRESULT InitPause(void)
 	pause_select_once = false;
 	now_pause_select_EffectArray = -1;
 	pause_select_once_time = 0;
-
+	stretching = false;
+	stretching2 = false;
 
 
 	//ポーズボタンの表示
@@ -151,7 +153,7 @@ void UpdatePause(void)
 			//ポーズ画面を開いている状態
 			if (pauseclickuse)
 			{
-				if (stretching == false) {
+				if (stretching == false && stretching2 == false) {
 					//明るくするなら48暗くするなら4
 					now_pause_select_EffectArray =
 						SetEffect(4, D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(0.0f, 0.0f), 0,
@@ -205,31 +207,35 @@ void UpdatePause(void)
 					{
 						pausemouseuse = true;
 
-						// 選択しましたマーク
-						SetEffect(73, D3DXVECTOR2(50, 150), D3DXVECTOR2(50, 150), 0,
-							D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-							0.0f, 1.0f, 0, 1, 0, 1,
-							0.0f, 0.0f, 0);
+						if (Abovemap == false)
+						{
+							// 選択しましたマーク
+							SetEffect(73, D3DXVECTOR2(50, 150), D3DXVECTOR2(50, 150), 0,
+								D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+								0.0f, 1.0f, 0, 1, 0, 1,
+								0.0f, 0.0f, 0);
+						}
 
 						if (pausemouseuse && mouse_Lclick)
 						{
-							//Abovemap = !Abovemap;
+							stretching = false;
+							pausemission = false;
+							DeleteMissionPause();
+							stretching2 = !stretching2;
+
+							Abovemap = !Abovemap;
 							pause_cool = CLICK_COOLTIME;
 							if (Abovemap)
 							{
-								pausemission = false;
-								DeleteMissionPause();
 
-
-								/*DrawBGaboveForPlacement();
-								DrawPlayerForPlacement();*/
 							}
 							else
 							{
-								Abovemap = true;
+								//stretching2 = false;
 							}
 						}
 					}
+
 
 					/////////////リトライ//////////////////
 					if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 212.0f && mouse_pos_Y < 280.0f)
@@ -273,6 +279,8 @@ void UpdatePause(void)
 						{
 							//aboveを開いてたら閉じる
 							Abovemap = false;
+							stretching2 = false;
+
 							stretching = !stretching;
 
 							pausemission = !pausemission;
@@ -288,8 +296,7 @@ void UpdatePause(void)
 							}
 							else
 							{
-								pausemission = false;
-								stretching = false;
+								//stretching = false;
 								DeleteMissionPause();
 							}
 
@@ -363,12 +370,14 @@ void UpdatePause(void)
 							Abovemap = false;
 							DeleteMissionPause();
 							stretching = false;
+							stretching2 = false;
 							pause_cool = CLICK_COOLTIME;
 						}
 					}
 
 					
 				}
+
 				//バツ印の表示
 				if (pausemission)
 				{
@@ -377,8 +386,16 @@ void UpdatePause(void)
 						0.0f, 1.0f, 0, 1, 0, 1,
 						0.0f, 0.0f, 0);
 				}
-
+				if (Abovemap)
+				{
+					SetEffect(70, D3DXVECTOR2(50, 150), D3DXVECTOR2(50, 150), 0,
+						D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+						0.0f, 1.0f, 0, 1, 0, 1,
+						0.0f, 0.0f, 0);
+				}
 				
+	
+
 					//画面の360より右を押したらポーズ画面をすべて閉じる
 					if (mouse_pos_X > 360.0f)
 					{
@@ -390,11 +407,10 @@ void UpdatePause(void)
 							Abovemap = false;
 							DeleteMissionPause();
 							stretching = false;
+							stretching2 = false;
 							//pause_cool = CLICK_COOLTIME;
 						}
 					}
-				
-
 			}
 		}
 	}
@@ -412,7 +428,7 @@ void UpdatePause(void)
 		}
 	}
 
-
+	
 
 	if (pause_cool > 0)
 		pause_cool--;
@@ -431,17 +447,19 @@ void DrawPause(void)
 	//上から視点の表示
 	if (Abovemap)
 	{
-		//明るくするなら48暗くするなら4
-		ChangeEffect(now_pause_select_EffectArray, 4, D3DXVECTOR2(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2), 0,
-			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
-			0.0f, 0.5f, 0, 1, 0, 1,
-			0.0f, 0.0f, 0);
+		if (stretching == true || stretching2 == true) {
+			//明るくするなら48暗くするなら4
+			ChangeEffect(now_pause_select_EffectArray, 4, D3DXVECTOR2(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2), 0,
+				D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+				0.0f, 0.5f, 0, 1, 0, 1,
+				0.0f, 0.0f, 0);
+		}
 
-		//バツ印の表示
-		SetEffect(70, D3DXVECTOR2(50, 150), D3DXVECTOR2(50, 150), 0,
-			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 1,
-			0.0f, 0.0f, 0);
+		////バツ印の表示
+		//SetEffect(70, D3DXVECTOR2(50, 150), D3DXVECTOR2(50, 150), 0,
+		//	D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+		//	0.0f, 1.0f, 0, 1, 0, 1,
+		//	0.0f, 0.0f, 0);
 
 		SetBackground();
 		DrawBGaboveForPlacement();
@@ -451,7 +469,7 @@ void DrawPause(void)
 	//ミッション
 	if (pausemission)
 	{
-		if (stretching == true) {
+		if (stretching == true || stretching2 == true) {
 			//明るくするなら48暗くするなら4
 			ChangeEffect(now_pause_select_EffectArray, 4, D3DXVECTOR2(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2), 0,
 				D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,

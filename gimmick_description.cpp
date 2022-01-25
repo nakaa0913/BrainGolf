@@ -292,6 +292,10 @@ float CheckGimmickDescriptionChipPos(int block_data, int XorY)
 	case 31:
 	case 32:
 	case 33:
+	case 38:
+	case 39:
+	case 40:
+	case 41:
 		sx = tx * 3;
 		sy = ty * 0;
 		break;
@@ -299,7 +303,13 @@ float CheckGimmickDescriptionChipPos(int block_data, int XorY)
 		sx = tx * 1;
 		sy = ty * 2;
 		break;
-
+	case 19:					// ê‘ê¬ÉuÉçÉbÉN
+	case 20:
+	case 35:
+	case 36:
+		sx = tx * 2;
+		sy = ty * 2;
+		break;
 	default:
 		break;
 	}

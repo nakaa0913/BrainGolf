@@ -273,6 +273,12 @@ void UpdateBG(void)
 void DrawBG(void)
 {
 
+	bool draw[PREDICTION_MAX];
+	for (int i = 0; i < PREDICTION_MAX; i++)
+	{
+		draw[i] = false;
+	}
+
 	if (GetNowChoiceStageNum() <= 10)
 	{
 		// •½˜a”wŒi‚Ì•\Ž¦
@@ -693,24 +699,29 @@ void DrawBG(void)
 			// —\‘ª’e‚Ì•\Ž¦
 			for (int i = 0; i < PREDICTION_MAX; i++)
 			{
-				//if (p_Prediction[i].isUse)
-				//{
-					// ƒ}ƒbƒv‚Å‚ÌÀ•W‚É•ÏŠ·‚·‚é
-					D3DXVECTOR2 mappos = PosToMappos(p_Prediction[i].pos);
-					// •ÏŠ·‚µ‚½À•W‚Ì¬”“_‚ðØ‚èŽÌ‚Ä‚é
-					int mappos_x = mappos.x;
-					int mappos_y = mappos.y;
+				// ƒ}ƒbƒv‚Å‚ÌÀ•W‚É•ÏŠ·‚·‚é
+				D3DXVECTOR2 mappos = PosToMappos(p_Prediction[i].pos);
+				// •ÏŠ·‚µ‚½À•W‚Ì¬”“_‚ðØ‚èŽÌ‚Ä‚é
+				int mappos_x = mappos.x;
+				int mappos_y = mappos.y;
 
-					// •`ŽÊ‚·‚éƒ^ƒCƒ~ƒ“ƒO‚¾‚Á‚½‚ç•`ŽÊ‚·‚é
-					if (x == mappos_x && y == mappos_y)
-					{
-						DrawPredictionSpecifyNum(i);			// i‚Ì—\‘ª’e‚ª•`‚©‚ê‚é‚©‚Ç‚¤‚©(Žg‚í‚ê‚Ä‚é‚©‚Ç‚¤‚©)‚ÍA‚±‚ê‚ç‚ÌŠÖ”‚Ì’†‚ÅŒŸõ‚³‚ê‚éB
-					}
-				//}
+				// •`ŽÊ‚·‚éƒ^ƒCƒ~ƒ“ƒO‚¾‚Á‚½‚ç•`ŽÊ‚·‚é
+				if (x == mappos_x && y == mappos_y)
+				{
+					draw[i] = true;
+					DrawPredictionSpecifyNum(i);			// i‚Ì—\‘ª’e‚ª•`‚©‚ê‚é‚©‚Ç‚¤‚©(Žg‚í‚ê‚Ä‚é‚©‚Ç‚¤‚©)‚ÍA‚±‚ê‚ç‚ÌŠÖ”‚Ì’†‚ÅŒŸõ‚³‚ê‚éB
+				}
 			}
 			
 
 		}
+	}
+
+	// —\‘ª’e‚Ì•\Ž¦(ŠO‚Ü‚Å‚Í‚Ýo‚Ä•\Ž¦‚Å‚«‚Ä‚È‚¢‚â‚Â)
+	for (int i = 0; i < PREDICTION_MAX; i++)
+	{
+		if(draw[i] == false)
+			DrawPredictionSpecifyNum(i);			// i‚Ì—\‘ª’e‚ª•`‚©‚ê‚é‚©‚Ç‚¤‚©(Žg‚í‚ê‚Ä‚é‚©‚Ç‚¤‚©)‚ÍA‚±‚ê‚ç‚ÌŠÖ”‚Ì’†‚ÅŒŸõ‚³‚ê‚éB
 	}
 
 

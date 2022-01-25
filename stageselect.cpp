@@ -742,16 +742,17 @@ void UpdateStageSelect(void)
 										{
 											int now_select_stage = NowWorld * 10 - 10 + x + y * SELECT_MAX_X + (now_page * 10);	// 0~19
 
-											// ƒsƒ“
-											now_stage_select_EffectArray =
-												SetEffect(87, D3DXVECTOR2(now_x, now_y - 120), D3DXVECTOR2(now_x, now_y - 40), 1,
-													D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(150.0f, 150.0f), 1,
-													0.0f, 1.0f, 30, 999, 0, 30,
-													0.0f, 0.0f, 0);
 											// ”’˜g
 											now_stage_selectWaku_EffectArray =
 												SetEffect(88, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
 													D3DXVECTOR2(220.0f, 220.0f), D3DXVECTOR2(220.0f, 220.0f), 0,
+													0.0f, 1.0f, 30, 999, 0, 30,
+													0.0f, 0.0f, 0);
+
+											// ƒsƒ“
+											now_stage_select_EffectArray =
+												SetEffect(87, D3DXVECTOR2(now_x, now_y - 120), D3DXVECTOR2(now_x, now_y - 40), 1,
+													D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(150.0f, 150.0f), 1,
 													0.0f, 1.0f, 30, 999, 0, 30,
 													0.0f, 0.0f, 0);
 

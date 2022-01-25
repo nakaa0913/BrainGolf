@@ -151,6 +151,14 @@ static int hidari_103;
 // リザルトのクリアタイムの表示の時の数字
 static int number_104;
 
+// ポーズとマウス操作のやつ
+static int pozu_105;
+static int pozu_2_106;
+static int utu_107;
+static int wejji_108;
+static int doraiba_109;
+
+
 void InitEffect(void)
 {
 	//テクスチャの名前
@@ -278,6 +286,13 @@ void InitEffect(void)
 	hidari_103 = LoadTexture("data/TEXTURE/pause/hidari.png");
 
 	number_104 = LoadTexture("data/TEXTURE/other_effect/number.png");
+
+	pozu_105 = LoadTexture("data/TEXTURE/pause/pozu.png");
+	pozu_2_106 = LoadTexture("data/TEXTURE/pause/pozu_2.png");
+	utu_107 = LoadTexture("data/TEXTURE/pause/utu.png");
+	wejji_108 = LoadTexture("data/TEXTURE/pause/wejji.png");
+	doraiba_109 = LoadTexture("data/TEXTURE/pause/doraiba.png");
+
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -1409,6 +1424,21 @@ int GetTextureData(int id)
 		break;
 	case 104:
 		return number_104;
+		break;
+	case 105:
+		return pozu_105;
+		break;
+	case 106:
+		return pozu_2_106;
+		break;
+	case 107:
+		return utu_107;
+		break;
+	case 108:
+		return wejji_108;
+		break;
+	case 109:
+		return doraiba_109;
 		break;
 	}
 	// どこにもたどり着かなかった場合

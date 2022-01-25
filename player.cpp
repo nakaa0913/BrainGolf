@@ -527,18 +527,24 @@ void UpdatePlayer(void)
 				//ƒNƒ‰ƒu‚ÌŽí—Þ‚Ì•\Ž¦
 				if (club_pattern == 0)
 				{
-					SetEffect(71, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 0,
-						D3DXVECTOR2(200.0f, 150.0f), D3DXVECTOR2(200.0f, 150.0f), 0,
+					SetEffect(108, D3DXVECTOR2(1200.0f, 750.0f), D3DXVECTOR2(1200.0f, 750.0f), 0,
+						D3DXVECTOR2(500.0f, 140.0f), D3DXVECTOR2(500.0f, 140.0f), 0,
 						0.0f, 1.0f, 0, 1, 0, 0,
 						0.0f, 0.0f, 0);
 				}
 				if (club_pattern == 1)
 				{
-					SetEffect(72, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 0,
-						D3DXVECTOR2(200.0f, 150.0f), D3DXVECTOR2(200.0f, 150.0f), 0,
+					SetEffect(109, D3DXVECTOR2(1200.0f, 750.0f), D3DXVECTOR2(1200.0f, 750.0f), 0,
+						D3DXVECTOR2(500.0f, 140.0f), D3DXVECTOR2(500.0f, 140.0f), 0,
 						0.0f, 1.0f, 0, 1, 0, 0,
 						0.0f, 0.0f, 0);
+
 				}
+
+				SetEffect(107, D3DXVECTOR2(1250.0f, 620.0f), D3DXVECTOR2(1250.0f, 620.0f), 0,
+					D3DXVECTOR2(380.0f, 140.0f), D3DXVECTOR2(380.0f, 140.0f), 0,
+					0.0f, 1.0f, 0, 1, 0, 0,
+					0.0f, 0.0f, 0);
 
 				if (pauseclickuse2 == false)
 				{

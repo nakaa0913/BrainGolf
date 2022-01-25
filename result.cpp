@@ -371,9 +371,9 @@ void UpdateResult(void)
 				int Content_Texid = ContentsNumToTexid(p_Stagedata->mission_ContentsNum[i]);
 				// セットエフェクトで文字の描写
 				int Content_EffectArray =
-					SetEffect(Content_Texid, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 0,
+					SetEffect(Content_Texid, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 1,
 						D3DXVECTOR2(size_x, size_y), D3DXVECTOR2(size_x, size_y), 0,
-						0.0f, 1.0f, 0, 999, 0, move_frame,
+						0.0f, 1.0f, 100, 999, 0, 1,
 						0.0f, 0.0f, 0);
 
 				// ミッションのテクスチャIDから数字の座標がどれだけ真ん中からずれてるかをとってくる(xのみ)
@@ -382,9 +382,9 @@ void UpdateResult(void)
 				// 数字の描写		ミッションの番号ごとに数字を描く場所は決まってると思うので、それもswitch分で判別できると楽
 				int Number_EffectArray[2] = { 0,0 };
 				int* p_Number_EffectArray = Number_EffectArray;
-				SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x - number_gap_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - number_gap_x, base_pos2_y + interval_y * i), 0,
+				SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x - number_gap_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - number_gap_x, base_pos2_y + interval_y * i), 1,
 					D3DXVECTOR2(num_size_x * sizebairitu, num_size_y * sizebairitu), D3DXVECTOR2(num_size_x, num_size_y), 0,
-					0.0f, 1.0f, 0, 999, 0, move_frame,
+					0.0f, 1.0f, 100, 999, 0, 1,
 					0.0f, 0.0f, 0, interval_magnification);
 			}
 

@@ -158,6 +158,13 @@ static int utu_107;
 static int wejji_108;
 static int doraiba_109;
 
+// 配置画面の時使うもの
+static int play_botan_0_110;
+static int play_botan_1_111;
+static int home_botan_0_112;
+static int home_botan1_113;
+static int mob_placement_114;
+
 
 void InitEffect(void)
 {
@@ -293,6 +300,11 @@ void InitEffect(void)
 	wejji_108 = LoadTexture("data/TEXTURE/pause/wejji.png");
 	doraiba_109 = LoadTexture("data/TEXTURE/pause/doraiba.png");
 
+	play_botan_0_110 = LoadTexture("data/TEXTURE/placement/play_botan_0.png");
+	play_botan_1_111 = LoadTexture("data/TEXTURE/placement/play_botan_1.png");
+	home_botan_0_112 = LoadTexture("data/TEXTURE/placement/home_botan_0.png");
+	home_botan1_113 = LoadTexture("data/TEXTURE/placement/home_botan_1.png");
+	mob_placement_114 = LoadTexture("data/TEXTURE/placement/mob_placement.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -1440,12 +1452,26 @@ int GetTextureData(int id)
 	case 109:
 		return doraiba_109;
 		break;
+	case 110:
+		return play_botan_0_110;
+		break;
+	case 111:
+		return play_botan_1_111;
+		break;
+	case 112:
+		return home_botan_0_112;
+		break;
+	case 113:
+		return home_botan1_113;
+		break;
+	case 114:
+		return mob_placement_114;
+		break;
 	}
 	// どこにもたどり着かなかった場合
 	exit(21);
 	return -1;
 }
-
 
 // id = -1 でテクスチャそのまま。最初にuse_array_numが必要だが、そのuse_array_numのエフェクトを途中でも変更できる,SerialNumberはデフォルト関数でデフォ=1, 引き数のpos1が99999ならば、今のエフェクトの座標からpos2の分だけ移動する設定。
 void ChangeEffect(int use_array_num, int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,

@@ -60,6 +60,7 @@ bool Abovemap = false;			//上から視点のボタン
 bool pausemission = false;	//ミッションのボタン
 
 bool pauseonce = false;
+bool stretching = false;
 
 bool gameover_pause = false;
 bool goal2_pause = false;
@@ -149,12 +150,14 @@ void UpdatePause(void)
 			//ポーズ画面を開いている状態
 			if (pauseclickuse)
 			{
-				//明るくするなら48暗くするなら4
-				now_pause_select_EffectArray =
-					SetEffect(4, D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(0.0f, 0.0f), 0,
-						D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), 0,
-						0.0f, 0.5f, 0, 1, 0, 1,
-						0.0f, 0.0f, 0);
+				if (stretching == false) {
+					//明るくするなら48暗くするなら4
+					now_pause_select_EffectArray =
+						SetEffect(4, D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(0.0f, 0.0f), 0,
+							D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 2), 0,
+							0.0f, 0.5f, 0, 1, 0, 1,
+							0.0f, 0.0f, 0);
+				}
 
 				//ポーズボタンの表示
 				SetEffect(103, D3DXVECTOR2(50, 50), D3DXVECTOR2(50, 50), 0,
@@ -267,6 +270,7 @@ void UpdatePause(void)
 						{
 							//aboveを開いてたら閉じる
 							Abovemap = false;
+							stretching = true;
 
 							pausemission = !pausemission;
 							pause_cool = CLICK_COOLTIME;
@@ -283,6 +287,7 @@ void UpdatePause(void)
 							else
 							{
 								pausemission = false;
+								stretching = false;
 								DeleteMissionPause();
 							}
 
@@ -428,11 +433,13 @@ void DrawPause(void)
 	//ミッション
 	if (pausemission)
 	{
-		//明るくするなら48暗くするなら4
-		ChangeEffect(now_pause_select_EffectArray, 4, D3DXVECTOR2(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2), 0,
-			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
-			0.0f, 0.5f, 0, 1, 0, 1,
-			0.0f, 0.0f, 0);
+		if (stretching == true) {
+			//明るくするなら48暗くするなら4
+			ChangeEffect(now_pause_select_EffectArray, 4, D3DXVECTOR2(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2), 0,
+				D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+				0.0f, 0.5f, 0, 1, 0, 1,
+				0.0f, 0.0f, 0);
+		}
 
 		//バツ印の表示
 		SetEffect(70, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,

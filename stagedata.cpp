@@ -100,10 +100,10 @@ void SetStageData(int stagenum)
 	strcat(stagename, stagenameend);
 
 	// とりあえずテスト
-	LoadMapdataMain("data/STAGEDATA/iwadera 2.txt");
+	//LoadMapdataMain("data/STAGEDATA/iwadera 2.txt");
 	
 	// 本番はこっち
-	//LoadMapdataMain(stagename);
+	LoadMapdataMain(stagename);
 
 	return;
 }

@@ -258,19 +258,20 @@ void UpdatePause(void)
 					if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 312.0f && mouse_pos_Y < 380.0f)
 					{
 						pausemouseuse = true;
-
-						// 選択しましたマーク
-						SetEffect(73, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,
-							D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-							0.0f, 1.0f, 0, 1, 0, 1,
-							0.0f, 0.0f, 0);
-
+						if (pausemission == false)
+						{
+							// 選択しましたマーク
+							SetEffect(73, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,
+								D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+								0.0f, 1.0f, 0, 1, 0, 1,
+								0.0f, 0.0f, 0);
+						}
 						//ミッションを表示する
 						if (pausemouseuse && mouse_Lclick)
 						{
 							//aboveを開いてたら閉じる
 							Abovemap = false;
-							stretching = true;
+							stretching = !stretching;
 
 							pausemission = !pausemission;
 							pause_cool = CLICK_COOLTIME;
@@ -278,10 +279,10 @@ void UpdatePause(void)
 							if (pausemission)
 							{
 								Abovemap = false;
-								SetEffect(70, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,
+								/*SetEffect(70, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,
 									D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 									0.0f, 1.0f, 0, 1, 0, 1,
-									0.0f, 0.0f, 0);
+									0.0f, 0.0f, 0);*/
 								DrawMissionPause();
 							}
 							else
@@ -439,13 +440,14 @@ void DrawPause(void)
 				D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
 				0.0f, 0.5f, 0, 1, 0, 1,
 				0.0f, 0.0f, 0);
+			//バツ印の表示
+			SetEffect(70, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,
+				D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+				0.0f, 1.0f, 0, 1, 0, 1,
+				0.0f, 0.0f, 0);
 		}
 
-		//バツ印の表示
-		SetEffect(70, D3DXVECTOR2(50, 350), D3DXVECTOR2(50, 350), 0,
-			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-			0.0f, 1.0f, 0, 1, 0, 1,
-			0.0f, 0.0f, 0);	
+		
 	}
 }
 

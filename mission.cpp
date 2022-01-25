@@ -294,7 +294,7 @@ void DrawMissionStageSelect()
 				0.0f, 0.0f, 0);
 
 		// ミッションのテクスチャIDから数字の座標がどれだけ真ん中からずれてるかをとってくる(xのみ)
-		float number_gap_x = MissionTexIdToNumXGAP(Content_Texid);
+		float number_gap_x = MissionTexIdToNumXGAP(Content_Texid) * mozisizebairitu;
 
 		// 数字の描写		ミッションの番号ごとに数字を描く場所は決まってると思うので、それもswitch分で判別できると楽
 		int Number_EffectArray[2] = { 0,0 };
@@ -308,7 +308,6 @@ void DrawMissionStageSelect()
 		g_Mission.mission_ContentsNum_EffectArray[i] = Content_EffectArray;
 		g_Mission.mission_JudgeNum_EffectArray[i][0] = Number_EffectArray[0];
 		g_Mission.mission_JudgeNum_EffectArray[i][1] = Number_EffectArray[1];		// 連番の保存
-		int asd = 0;
 
 
 		// ミッションをクリアしているなら表示する
@@ -403,47 +402,84 @@ void DrawMissionResult()
 	// ステージデータからミッション内容などを読み取る
 	STAGEDATA* p_Stagedata = GetStagedata();
 
+	float mozisizebairitu = 0.7f;
+
 	float size_x = 768.0f;
 	float size_y = 128.0f;
 
 	float background_size_y = size_y * 3;
 
-	float interval_y = size_y;
+	float interval_y = size_y * mozisizebairitu;
 
-	//float base_pos1_x = SCREEN_WIDTH / 2;
-	//float base_pos1_y = SCREEN_HEIGHT + background_size_y;
+	float base_pos1_x = SCREEN_WIDTH / 2;
+	float base_pos1_y = SCREEN_HEIGHT + background_size_y;
 
-	//float base_pos2_x = SCREEN_WIDTH / 2;
-	//float base_pos2_y = SCREEN_HEIGHT / 2;
+	float base_pos2_x = SCREEN_WIDTH / 2;
+	float base_pos2_y = SCREEN_HEIGHT / 2;
+
+	float BGbase_pos1_x = SCREEN_WIDTH / 2;
+	float BGbase_pos1_y = SCREEN_HEIGHT + background_size_y;
+
+	float BGbase_pos2_x = SCREEN_WIDTH / 2;
+	float BGbase_pos2_y = SCREEN_HEIGHT / 2;
 
 	float star_pos1_x = 0.0f;
-	float star_pos2_x = 0.0f;
+	float star_pos2_x= 0.0f;
 
-	float star_gap = 250.0f;
+	float star_gap = 420.0f * mozisizebairitu;
 
 	int move_frame = 14;
 
+	float textGapX = 190.0f * mozisizebairitu;
 
-	float base_pos1_x = SCREEN_WIDTH - 300.0f;
-	float base_pos1_y = 150.0f;
+	// 現在のステージから右と左どちらにミッションを表示させるか
+	int LeftOrRight = DisplayLeftOrRight(GetNowChoiceStageNum());
 
-	float base_pos2_x = base_pos1_x;
-	float base_pos2_y = base_pos1_y;
+	if (LeftOrRight == 0)
+	{
+		BGbase_pos2_x = 0.0f + 300.0f;
+		BGbase_pos2_y = 450.0f;
+
+		BGbase_pos1_x = BGbase_pos2_x - 500.0f;
+		BGbase_pos1_y = BGbase_pos2_y;
+
+		base_pos2_x = BGbase_pos2_x + textGapX;
+		base_pos2_y = BGbase_pos2_y;
+
+		base_pos1_x = BGbase_pos1_x + textGapX;
+		base_pos1_y = BGbase_pos1_y;
+	}
+	else
+	{
+		BGbase_pos2_x = SCREEN_WIDTH - 300.0f;
+		BGbase_pos2_y = 450.0f;
+
+		BGbase_pos1_x = BGbase_pos2_x + 500.0f;
+		BGbase_pos1_y = BGbase_pos2_y;
+
+		base_pos2_x = BGbase_pos2_x + textGapX;
+		base_pos2_y = BGbase_pos2_y;
+
+		base_pos1_x = BGbase_pos1_x + textGapX;
+		base_pos1_y = BGbase_pos1_y;
+	}
 
 	// 数字の設定
-	float num_size_x = 40.0f;
-	float num_size_y = 40.0f;
+	float interval_magnification = 0.24f;	// 数字表示の間隔の倍率
+
+	float num_size_x = 80.0f;
+	float num_size_y = 80.0f;
 
 
-	//// ミッションの背景を表示	Effectでのidは25		ミッションの中身を表示が3つあってそこの真ん中に来るように配置する->iのとこを1にかえるとOK
-	//int Background_EffectArray =
-	//	SetEffect(86, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * 1), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * 1), 1,
-	//		D3DXVECTOR2(size_x, background_size_y), D3DXVECTOR2(size_x, background_size_y), 0,
-	//		0.0f, 1.0f, 0, 999, 0, move_frame,
-	//		0.0f, 0.0f, 0);
+	// ミッションの背景を表示	Effectでのidは25		ミッションの中身を表示が3つあってそこの真ん中に来るように配置する->iのとこを1にかえるとOK
+	int Background_EffectArray =
+		SetEffect(86, D3DXVECTOR2(BGbase_pos1_x, BGbase_pos1_y + interval_y * 1), D3DXVECTOR2(BGbase_pos2_x, BGbase_pos2_y + interval_y * 1), 1,
+			D3DXVECTOR2(537.6f, background_size_y), D3DXVECTOR2(537.6f, background_size_y), 0,
+			0.0f, 1.0f, 0, 999, 0, move_frame,
+			0.0f, 0.0f, 0);
 
-	//// エフェクトが生成された場所の番号の保存 SetEffectInReverse
-	//g_Mission.mission_background_EffectArray = Background_EffectArray;
+	// エフェクトが生成された場所の番号の保存
+	g_Mission.mission_background_EffectArray = Background_EffectArray;
 
 	// ミッションの中身を表示
 	for (int i = 0; i < MAX_MISSION; i++)
@@ -453,17 +489,20 @@ void DrawMissionResult()
 		// セットエフェクトで文字の描写
 		int Content_EffectArray =
 			SetEffect(Content_Texid, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 1,
-				D3DXVECTOR2(size_x * 100, size_y * 100), D3DXVECTOR2(size_x, size_y), 0,
+				D3DXVECTOR2(size_x * mozisizebairitu, size_y * mozisizebairitu), D3DXVECTOR2(size_x, size_y), 0,
 				0.0f, 1.0f, 0, 999, 0, move_frame,
 				0.0f, 0.0f, 0);
+
+		// ミッションのテクスチャIDから数字の座標がどれだけ真ん中からずれてるかをとってくる(xのみ)
+		float number_gap_x = MissionTexIdToNumXGAP(Content_Texid) * mozisizebairitu;
 
 		// 数字の描写		ミッションの番号ごとに数字を描く場所は決まってると思うので、それもswitch分で判別できると楽
 		int Number_EffectArray[2] = { 0,0 };
 		int* p_Number_EffectArray = Number_EffectArray;
-		SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 1,
-			D3DXVECTOR2(num_size_x, num_size_y), D3DXVECTOR2(num_size_x, num_size_y), 0,
+		SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x - number_gap_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - number_gap_x, base_pos2_y + interval_y * i), 1,
+			D3DXVECTOR2(num_size_x * mozisizebairitu, num_size_y * mozisizebairitu), D3DXVECTOR2(num_size_x, num_size_y), 0,
 			0.0f, 1.0f, 0, 999, 0, move_frame,
-			0.0f, 0.0f, 0);
+			0.0f, 0.0f, 0, interval_magnification);
 
 		// エフェクトが生成された場所の番号の保存
 		g_Mission.mission_ContentsNum_EffectArray[i] = Content_EffectArray;
@@ -471,16 +510,16 @@ void DrawMissionResult()
 		g_Mission.mission_JudgeNum_EffectArray[i][1] = Number_EffectArray[1];		// 連番の保存
 
 
-		//// ミッションをクリアしているなら表示する
-		//if (p_Savedata[GetNowChoiceStageNum() - 1].mission_clear[i] == 1)
-		//{
-		//	//星
-		//	g_Mission.mission_star_EffectArray[i] =
-		//		SetEffect(83 + i, D3DXVECTOR2(base_pos1_x - star_gap, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - star_gap, base_pos2_y + interval_y * i), 1,
-		//			D3DXVECTOR2(80.0f, 80.0f), D3DXVECTOR2(80.0f, 80.0f), 0,
-		//			0.0f, 1.0f, 0, 999, 0, move_frame,
-		//			0.0f, 0.0f, 0);
-		//}
+		// ミッションをクリアしているなら表示する
+		if (p_Savedata[GetNowChoiceStageNum() - 1].mission_clear[i] == 1)
+		{
+			//星
+			g_Mission.mission_star_EffectArray[i] =
+				SetEffect(83 + i, D3DXVECTOR2(base_pos1_x - star_gap, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - star_gap, base_pos2_y + interval_y * i), 1,
+					D3DXVECTOR2(90.0f * mozisizebairitu, 90.0f * mozisizebairitu), D3DXVECTOR2(80.0f, 80.0f), 0,
+					0.0f, 1.0f, 0, 999, 0, move_frame,
+					0.0f, 0.0f, 0);
+		}
 
 
 
@@ -504,15 +543,19 @@ void DeleteMissionResult()
 
 void DrawMissionPause()
 {
+	SAVEDATA* p_Savedata = GetSavedata();
+
 	// ステージデータからミッション内容などを読み取る
 	STAGEDATA* p_Stagedata = GetStagedata();
+
+	float mozisizebairitu = 0.7f;
 
 	float size_x = 768.0f;
 	float size_y = 128.0f;
 
 	float background_size_y = size_y * 3;
 
-	float interval_y = size_y;
+	float interval_y = size_y * mozisizebairitu;
 
 	float base_pos1_x = SCREEN_WIDTH / 2;
 	float base_pos1_y = SCREEN_HEIGHT + background_size_y;
@@ -520,16 +563,45 @@ void DrawMissionPause()
 	float base_pos2_x = SCREEN_WIDTH / 2;
 	float base_pos2_y = SCREEN_HEIGHT / 2;
 
+	float BGbase_pos1_x = SCREEN_WIDTH / 2;
+	float BGbase_pos1_y = SCREEN_HEIGHT + background_size_y;
+
+	float BGbase_pos2_x = SCREEN_WIDTH / 2;
+	float BGbase_pos2_y = SCREEN_HEIGHT / 2;
+
+	float star_pos1_x = 0.0f;
+	float star_pos2_x = 0.0f;
+
+	float star_gap = 420.0f * mozisizebairitu;
+
+	int move_frame = 14;
+
+	float textGapX = 190.0f * mozisizebairitu;
+
+	BGbase_pos2_x = SCREEN_WIDTH / 2;
+	BGbase_pos2_y = SCREEN_HEIGHT / 2 - 200.0f;
+
+	BGbase_pos1_x = BGbase_pos2_x;
+	BGbase_pos1_y = BGbase_pos2_y;
+
+	base_pos2_x = BGbase_pos2_x + textGapX;
+	base_pos2_y = BGbase_pos2_y;
+
+	base_pos1_x = BGbase_pos1_x + textGapX;
+	base_pos1_y = BGbase_pos1_y;
+
 	// 数字の設定
-	float num_size_x = 40.0f;
-	float num_size_y = 40.0f;
+	float interval_magnification = 0.24f;	// 数字表示の間隔の倍率
+
+	float num_size_x = 80.0f;
+	float num_size_y = 80.0f;
 
 
 	// ミッションの背景を表示	Effectでのidは25		ミッションの中身を表示が3つあってそこの真ん中に来るように配置する->iのとこを1にかえるとOK
 	int Background_EffectArray =
-		SetEffect(25, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * 1), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * 1), 1,
-			D3DXVECTOR2(size_x, background_size_y), D3DXVECTOR2(size_x, background_size_y), 0,
-			0.0f, 1.0f, 0, 999, 0, 20,
+		SetEffect(86, D3DXVECTOR2(BGbase_pos1_x, BGbase_pos1_y + interval_y * 1), D3DXVECTOR2(BGbase_pos2_x, BGbase_pos2_y + interval_y * 1), 0,
+			D3DXVECTOR2(537.6f, background_size_y), D3DXVECTOR2(537.6f, background_size_y), 0,
+			0.0f, 1.0f, 0, 999, 0, move_frame,
 			0.0f, 0.0f, 0);
 
 	// エフェクトが生成された場所の番号の保存
@@ -542,23 +614,41 @@ void DrawMissionPause()
 		int Content_Texid = ContentsNumToTexid(p_Stagedata->mission_ContentsNum[i]);
 		// セットエフェクトで文字の描写
 		int Content_EffectArray =
-			SetEffect(Content_Texid, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 1,
-				D3DXVECTOR2(size_x, size_y), D3DXVECTOR2(size_x, size_y), 0,
-				0.0f, 1.0f, 0, 999, 0, 20,
+			SetEffect(Content_Texid, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 0,
+				D3DXVECTOR2(size_x * mozisizebairitu, size_y * mozisizebairitu), D3DXVECTOR2(size_x, size_y), 0,
+				0.0f, 1.0f, 0, 999, 0, move_frame,
 				0.0f, 0.0f, 0);
+
+		// ミッションのテクスチャIDから数字の座標がどれだけ真ん中からずれてるかをとってくる(xのみ)
+		float number_gap_x = MissionTexIdToNumXGAP(Content_Texid) * mozisizebairitu;
 
 		// 数字の描写		ミッションの番号ごとに数字を描く場所は決まってると思うので、それもswitch分で判別できると楽
 		int Number_EffectArray[2] = { 0,0 };
 		int* p_Number_EffectArray = Number_EffectArray;
-		SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 1,
-			D3DXVECTOR2(num_size_x, num_size_y), D3DXVECTOR2(num_size_x, num_size_y), 0,
-			0.0f, 1.0f, 0, 999, 0, 20,
-			0.0f, 0.0f, 0);
+		SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x - number_gap_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - number_gap_x, base_pos2_y + interval_y * i), 0,
+			D3DXVECTOR2(num_size_x * mozisizebairitu, num_size_y * mozisizebairitu), D3DXVECTOR2(num_size_x, num_size_y), 0,
+			0.0f, 1.0f, 0, 999, 0, move_frame,
+			0.0f, 0.0f, 0, interval_magnification);
 
 		// エフェクトが生成された場所の番号の保存
 		g_Mission.mission_ContentsNum_EffectArray[i] = Content_EffectArray;
 		g_Mission.mission_JudgeNum_EffectArray[i][0] = Number_EffectArray[0];
 		g_Mission.mission_JudgeNum_EffectArray[i][1] = Number_EffectArray[1];		// 連番の保存
+
+
+		// ミッションをクリアしているなら表示する
+		if (p_Savedata[GetNowChoiceStageNum() - 1].mission_clear[i] == 1)
+		{
+			//星
+			g_Mission.mission_star_EffectArray[i] =
+				SetEffect(83 + i, D3DXVECTOR2(base_pos1_x - star_gap, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - star_gap, base_pos2_y + interval_y * i), 1,
+					D3DXVECTOR2(90.0f * mozisizebairitu, 90.0f * mozisizebairitu), D3DXVECTOR2(80.0f, 80.0f), 0,
+					0.0f, 1.0f, 0, 999, 0, move_frame,
+					0.0f, 0.0f, 0);
+		}
+
+
+
 	}
 	return;
 }
@@ -656,7 +746,7 @@ float MissionTexIdToNumXGAP(int texid)
 	case 27:
 		return 0.0f;
 	case 28:
-		return 240.0f;
+		return 342.0f;
 	case 29:
 		return 0.0f;
 	case 30:

@@ -24,6 +24,7 @@
 #include "keyboard.h"
 #include "sound.h"
 #include "mouse.h"
+#include "gamedata.h"
 
 #define GOAL_H (50)
 #define GOAL_W (50)
@@ -98,6 +99,7 @@ void UpdateResult(void)
 {
 	SAVEDATA* p_Savedata = GetSavedata();
 	STAGEDATA* p_Stagedata = GetStagedata();
+	GAMEDATA* p_Gamedata = GetGamedata();
 
 	//マウスの座標を取得
 	float mouse_pos_X = GetMousePosX();
@@ -335,7 +337,62 @@ void UpdateResult(void)
 				0.0f, 1.0f, 100, 999, 0, 180,
 				0.0f, 0.0f, 0);
 
-			//DrawMissionResult();
+			// ミッション(文章)を表示する
+			//DrawMissionResult();だとなぜか表示されない同じこと書いてるのに。。。
+			SAVEDATA* p_Savedata = GetSavedata();
+
+			// ステージデータからミッション内容などを読み取る
+			STAGEDATA* p_Stagedata = GetStagedata();
+
+			float sizebairitu = 0.7f;		// ステージセレクトの時の殻の倍率
+
+			float size_x = 768.0f * sizebairitu;
+			float size_y = 128.0f * sizebairitu;
+
+			float interval_y = size_y;
+
+			float base_pos1_x = 1110.0f;
+			float base_pos1_y = 265.0f;
+
+			float base_pos2_x = base_pos1_x;
+			float base_pos2_y = base_pos1_y;
+
+			// 数字の設定
+			float interval_magnification = 0.24f;	// 数字表示の間隔の倍率
+
+			float num_size_x = 80.0f;
+			float num_size_y = 80.0f;
+
+			int move_frame = 12;
+
+			for (int i = 0; i < MAX_MISSION; i++)
+			{
+				// コンテンツのidを描写用に、エフェクトで設定されているidに変換
+				int Content_Texid = ContentsNumToTexid(p_Stagedata->mission_ContentsNum[i]);
+				// セットエフェクトで文字の描写
+				int Content_EffectArray =
+					SetEffect(Content_Texid, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 0,
+						D3DXVECTOR2(size_x, size_y), D3DXVECTOR2(size_x, size_y), 0,
+						0.0f, 1.0f, 0, 999, 0, move_frame,
+						0.0f, 0.0f, 0);
+
+				// ミッションのテクスチャIDから数字の座標がどれだけ真ん中からずれてるかをとってくる(xのみ)
+				float number_gap_x = MissionTexIdToNumXGAP(Content_Texid) * sizebairitu;
+
+				// 数字の描写		ミッションの番号ごとに数字を描く場所は決まってると思うので、それもswitch分で判別できると楽
+				int Number_EffectArray[2] = { 0,0 };
+				int* p_Number_EffectArray = Number_EffectArray;
+				SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x - number_gap_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - number_gap_x, base_pos2_y + interval_y * i), 0,
+					D3DXVECTOR2(num_size_x * sizebairitu, num_size_y * sizebairitu), D3DXVECTOR2(num_size_x, num_size_y), 0,
+					0.0f, 1.0f, 0, 999, 0, move_frame,
+					0.0f, 0.0f, 0, interval_magnification);
+			}
+
+
+
+
+
+
 		}
 
 		if (g_Result.resulttime == 30)
@@ -353,6 +410,20 @@ void UpdateResult(void)
 			//星(影)
 			SetEffect(82, D3DXVECTOR2(800.0f, 440.0f), D3DXVECTOR2(800.0f, 440.0f), 0,
 				D3DXVECTOR2(90.0f, 90.0f), D3DXVECTOR2(90.0f, 90.0f), 1,
+				0.0f, 1.0f, 60, 999, 0, 60,
+				0.0f, 0.0f, 0);
+
+			// クリアタイムの表示 p_Gamedata  SetEffectTimeNumber
+			int Number_EffectArray[2] = { 0,0 };
+			int* p_Number_EffectArray = Number_EffectArray;
+			SetEffectTimeNumber(p_Gamedata->game_time, p_Number_EffectArray, D3DXVECTOR2(850.0f, 600.0f), D3DXVECTOR2(800.0f, 540.0f), 0,
+				D3DXVECTOR2(48.0f, 48.0f), D3DXVECTOR2(30.0f, 30.0f), 0,
+				0.0f, 1.0f, 60, 999, 0, 60,
+				0.0f, 0.0f, 0);
+
+			// 最速タイムの表示 p_Gamedata  SetEffectTimeNumber
+			SetEffectTimeNumber(p_Savedata[p_Stagedata->stagenum].clear_time, p_Number_EffectArray, D3DXVECTOR2(1112.0f, 600.0f), D3DXVECTOR2(1050.0f, 540.0f), 0,
+				D3DXVECTOR2(48.0f, 48.0f), D3DXVECTOR2(30.0f, 30.0f), 0,
 				0.0f, 1.0f, 60, 999, 0, 60,
 				0.0f, 0.0f, 0);
 		}

@@ -74,19 +74,20 @@ void UpdateLogo(void)
 {
 	bool mouse_Lclick = GetMouseLClick();
 
-	if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
+	/*if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
 	{
 		SceneTransition(SCENE_Prologue);
-	}
+	}*/
+
 	if (mouse_Lclick && GetFadeState() == FADE_NONE)
 	{
 		SceneTransition(SCENE_STAGE_SELECT);
 	}
 	//
-	if (Keyboard_IsKeyDown(KK_G) && GetFadeState() == FADE_NONE)
+	/*if (Keyboard_IsKeyDown(KK_G) && GetFadeState() == FADE_NONE)
 	{
 		SceneTransition(SCENE_GAME);
-	}
+	}*/
 }
 
 //=============================================================================

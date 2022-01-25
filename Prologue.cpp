@@ -73,10 +73,10 @@ void UpdatePrologue(void)
 {
 	bool mouse_Lclick = GetMouseLClick();
 
-	if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
+	/*if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
 	{
 		SceneTransition(SCENE_TITLE);
-	}
+	}*/
 	if (mouse_Lclick && GetFadeState() == FADE_NONE)
 	{
 		SceneTransition(SCENE_TITLE);

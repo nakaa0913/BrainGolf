@@ -1566,8 +1566,11 @@ void ChangeEffectColor(int use_array_num, float r, float g, float b, int SerialN
 // “§–¾“x‚¾‚¯‚ğ•Ï‚¦‚ê‚é,min‚Æmax‚à•Ï‚í‚é‚Ì‚Å’ˆÓ
 void ChangeEffectClarity(int use_array_num, float clarity, int SerialNumber)
 {
+	/*if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
+		exit(34);*/
+
 	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
-		exit(34);
+		return;
 
 	for (int i = 0; i < SerialNumber; i++)
 	{

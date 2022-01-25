@@ -285,7 +285,6 @@ void UpdateStageSelect(void)
 	// タイトルへ戻る中じゃないときだけ動く
 	if (BackTitle == false)
 	{
-
 		if (title_display == false)
 		{
 			if (title_display_once == false)
@@ -779,12 +778,12 @@ void UpdateStageSelect(void)
 										else if (x == 5)		// ページ変更の矢印の左
 										{
 											now_stage_select_EffectArray =
-												SetEffect(61, D3DXVECTOR2(120.0f, 320.0f), D3DXVECTOR2(120.0f, 320.0f), 0,
+												SetEffect(103, D3DXVECTOR2(120.0f, 320.0f), D3DXVECTOR2(120.0f, 320.0f), 0,
 													D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
 													0.0f, 1.0f, 0, 999, 0, 60,
 													0.0f, 0.0f, 0);
 											now_stage_selectWaku_EffectArray =
-												SetEffect(61, D3DXVECTOR2(120.0f, 320.0f), D3DXVECTOR2(120.0f, 320.0f), 0,
+												SetEffect(103, D3DXVECTOR2(120.0f, 320.0f), D3DXVECTOR2(120.0f, 320.0f), 0,
 													D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
 													0.0f, 0.0f, 0, 999, 0, 60,
 													0.0f, 0.0f, 0);
@@ -792,12 +791,12 @@ void UpdateStageSelect(void)
 										else if (x == 6)		// ページ変更の矢印の右
 										{
 											now_stage_select_EffectArray =
-												SetEffect(61, D3DXVECTOR2(1320.0f, 320.0f), D3DXVECTOR2(1320.0f, 320.0f), 0,
+												SetEffect(102, D3DXVECTOR2(1320.0f, 320.0f), D3DXVECTOR2(1320.0f, 320.0f), 0,
 													D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
 													0.0f, 1.0f, 0, 999, 0, 60,
 													0.0f, 0.0f, 0);
 											now_stage_selectWaku_EffectArray =
-												SetEffect(61, D3DXVECTOR2(1320.0f, 320.0f), D3DXVECTOR2(1320.0f, 320.0f), 0,
+												SetEffect(102, D3DXVECTOR2(1320.0f, 320.0f), D3DXVECTOR2(1320.0f, 320.0f), 0,
 													D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
 													0.0f, 0.0f, 0, 999, 0, 60,
 													0.0f, 0.0f, 0);
@@ -901,34 +900,34 @@ void UpdateStageSelect(void)
 							//////////	0.0f, 0.0f, 0, stageNumber_EffectArray[NowWorld_stagenum][1]);
 
 							// ミッションをクリアしているなら表示する p_stageNumber_EffectArray[NowWorld_stagenum]
-							if (p_Savedata[NowWorld_stagenum].mission_clear[0] == 1)
-							{
-								//星
-								ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][0], 83, now_stage_starPos[0], D3DXVECTOR2(now_stage_starPos[0].x + change_page_interval, now_stage_starPos[0].y), 1,
-									D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-									0.0f, 1.0f, 120, 999, 0, cahngetime,
-									0.0f, 0.0f, 0);
-							}
+							//if (p_Savedata[NowWorld_stagenum].mission_clear[0] == 1)
+							//{
+							//	//星
+							//	ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][0], 83, now_stage_starPos[0], D3DXVECTOR2(now_stage_starPos[0].x + change_page_interval, now_stage_starPos[0].y), 1,
+							//		D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+							//		0.0f, 1.0f, 120, 999, 0, cahngetime,
+							//		0.0f, 0.0f, 0);
+							//}
 
-							// ミッションをクリアしているなら表示する
-							if (p_Savedata[NowWorld_stagenum].mission_clear[1] == 1)
-							{
-								//星
-								ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][1], 84, now_stage_starPos[1], D3DXVECTOR2(now_stage_starPos[1].x + change_page_interval, now_stage_starPos[1].y), 1,
-									D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-									0.0f, 1.0f, 120, 999, 0, cahngetime,
-									0.0f, 0.0f, 0);
-							}
+							//// ミッションをクリアしているなら表示する
+							//if (p_Savedata[NowWorld_stagenum].mission_clear[1] == 1)
+							//{
+							//	//星
+							//	ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][1], 84, now_stage_starPos[1], D3DXVECTOR2(now_stage_starPos[1].x + change_page_interval, now_stage_starPos[1].y), 1,
+							//		D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+							//		0.0f, 1.0f, 120, 999, 0, cahngetime,
+							//		0.0f, 0.0f, 0);
+							//}
 
-							// ミッションをクリアしているなら表示する
-							if (p_Savedata[NowWorld_stagenum].mission_clear[2] == 1)
-							{
-								//星
-								ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][2], 85, now_stage_starPos[2], D3DXVECTOR2(now_stage_starPos[2].x + change_page_interval, now_stage_starPos[2].y), 1,
-									D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-									0.0f, 1.0f, 120, 999, 0, cahngetime,
-									0.0f, 0.0f, 0);
-							}
+							//// ミッションをクリアしているなら表示する
+							//if (p_Savedata[NowWorld_stagenum].mission_clear[2] == 1)
+							//{
+							//	//星
+							//	ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][2], 85, now_stage_starPos[2], D3DXVECTOR2(now_stage_starPos[2].x + change_page_interval, now_stage_starPos[2].y), 1,
+							//		D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+							//		0.0f, 1.0f, 120, 999, 0, cahngetime,
+							//		0.0f, 0.0f, 0);
+							//}
 						}
 					}
 				}
@@ -955,6 +954,7 @@ void UpdateStageSelect(void)
 		if (BackTitlecount == 36)
 		{
 			InitPage();
+			//StopSoundAll();
 		}
 
 		// 戻る時間が終わったら戻す
@@ -964,6 +964,7 @@ void UpdateStageSelect(void)
 			InitStageSelectForTitle();
 			BackTitle = false;
 			BackTitlecount = -1;
+			//SetVolume(g_BGMNo, 0.8f);
 		}
 
 		BackTitlecount++;
@@ -1077,37 +1078,37 @@ void StartStageSelectScreen()
 				stageNumber_EffectArray[NowWorld_stagenum][1] = 1;*/
 
 				// ミッションをクリアしているなら表示する
-				if (p_Savedata[NowWorld_stagenum].mission_clear[0] == 1)
-				{
-					//星
-					stage_star_EffectArray[NowWorld_stagenum][0] =
-						SetEffect(83, D3DXVECTOR2(now_x - 40 + plusA, now_y), D3DXVECTOR2(now_x - 40, now_y), 0,
-							D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-							0.0f, toumeido, 120, 999, 0, 60,
-							0.0f, 0.0f, 0);
-				}
+				//if (p_Savedata[NowWorld_stagenum].mission_clear[0] == 1)
+				//{
+				//	//星
+				//	stage_star_EffectArray[NowWorld_stagenum][0] =
+				//		SetEffect(83, D3DXVECTOR2(now_x - 40 + plusA, now_y), D3DXVECTOR2(now_x - 40, now_y), 0,
+				//			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+				//			0.0f, toumeido, 120, 999, 0, 60,
+				//			0.0f, 0.0f, 0);
+				//}
 
-				// ミッションをクリアしているなら表示する
-				if (p_Savedata[NowWorld_stagenum].mission_clear[1] == 1)
-				{
-					//星
-					stage_star_EffectArray[NowWorld_stagenum][1] =
-						SetEffect(84, D3DXVECTOR2(now_x - 0 + plusA, now_y), D3DXVECTOR2(now_x - 0, now_y), 0,
-							D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-							0.0f, toumeido, 120, 999, 0, 60,
-							0.0f, 0.0f, 0);
-				}
+				//// ミッションをクリアしているなら表示する
+				//if (p_Savedata[NowWorld_stagenum].mission_clear[1] == 1)
+				//{
+				//	//星
+				//	stage_star_EffectArray[NowWorld_stagenum][1] =
+				//		SetEffect(84, D3DXVECTOR2(now_x - 0 + plusA, now_y), D3DXVECTOR2(now_x - 0, now_y), 0,
+				//			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+				//			0.0f, toumeido, 120, 999, 0, 60,
+				//			0.0f, 0.0f, 0);
+				//}
 
-				// ミッションをクリアしているなら表示する
-				if (p_Savedata[NowWorld_stagenum].mission_clear[2] == 1)
-				{
-					//星
-					stage_star_EffectArray[NowWorld_stagenum][2] =
-						SetEffect(85, D3DXVECTOR2(now_x + 50 + plusA, now_y), D3DXVECTOR2(now_x + 50, now_y), 0,
-							D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-							0.0f, toumeido, 120, 999, 0, 60,
-							0.0f, 0.0f, 0);
-				}
+				//// ミッションをクリアしているなら表示する
+				//if (p_Savedata[NowWorld_stagenum].mission_clear[2] == 1)
+				//{
+				//	//星
+				//	stage_star_EffectArray[NowWorld_stagenum][2] =
+				//		SetEffect(85, D3DXVECTOR2(now_x + 50 + plusA, now_y), D3DXVECTOR2(now_x + 50, now_y), 0,
+				//			D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+				//			0.0f, toumeido, 120, 999, 0, 60,
+				//			0.0f, 0.0f, 0);
+				//}
 			}
 		}
 	}
@@ -1121,14 +1122,14 @@ void StartStageSelectScreen()
 
 	// ページ変更の矢印の左
 	Arrow_EffectArray[0] =
-		SetEffect(61, D3DXVECTOR2(120.0f + plusA, 320.0f), D3DXVECTOR2(120.0f, 320.0f), 0,
+		SetEffect(103, D3DXVECTOR2(120.0f + plusA, 320.0f), D3DXVECTOR2(120.0f, 320.0f), 0,
 			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 			0.0f, toumeido, 0, 999, 0, 60,
 			0.0f, 0.0f, 0);
 
 	// ページ変更の矢印の右
 	Arrow_EffectArray[1] =
-		SetEffect(61, D3DXVECTOR2(1320.0f + plusA, 320.0f), D3DXVECTOR2(1320.0f, 320.0f), 0,
+		SetEffect(102, D3DXVECTOR2(1320.0f + plusA, 320.0f), D3DXVECTOR2(1320.0f, 320.0f), 0,
 			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 			0.0f, toumeido, 0, 999, 0, 60,
 			0.0f, 0.0f, 0);
@@ -1159,10 +1160,10 @@ void StartStageSelectScreen()
 
 	// 矢印の透明度を下げる処理
 	if (now_page == 0)
-		ChangeEffectClarity(Arrow_EffectArray[0], 0.3f);
+		ChangeEffectClarity(Arrow_EffectArray[0], 0.0f);
 
 	if (now_page == 1)
-		ChangeEffectClarity(Arrow_EffectArray[1], 0.3f);
+		ChangeEffectClarity(Arrow_EffectArray[1], 0.0f);
 
 	//// ピンのエフェクトを作っておく
 	//tex_Pin_EffectArray =
@@ -1435,38 +1436,38 @@ void InitPage()
 				/*stageNumber_EffectArray[NowWorld_stagenum][0] = 1;
 				stageNumber_EffectArray[NowWorld_stagenum][1] = 1;*/
 
-				// ミッションをクリアしているなら表示する
-				if (p_Savedata[NowWorld_stagenum].mission_clear[0] == 1)
-				{
-					//星
+				//// ミッションをクリアしているなら表示する
+				//if (p_Savedata[NowWorld_stagenum].mission_clear[0] == 1)
+				//{
+				//	//星
 
-					ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][0], 83, D3DXVECTOR2(now_x - 40 + plusA, now_y), D3DXVECTOR2(now_x - 40, now_y), 0,
-						D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-						0.0f, toumeido, 120, 999, 0, 60,
-						0.0f, 0.0f, 0);
-				}
+				//	ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][0], 83, D3DXVECTOR2(now_x - 40 + plusA, now_y), D3DXVECTOR2(now_x - 40, now_y), 0,
+				//		D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+				//		0.0f, toumeido, 120, 999, 0, 60,
+				//		0.0f, 0.0f, 0);
+				//}
 
-				// ミッションをクリアしているなら表示する
-				if (p_Savedata[NowWorld_stagenum].mission_clear[1] == 1)
-				{
-					//星
+				//// ミッションをクリアしているなら表示する
+				//if (p_Savedata[NowWorld_stagenum].mission_clear[1] == 1)
+				//{
+				//	//星
 
-					ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][1], 84, D3DXVECTOR2(now_x - 0 + plusA, now_y), D3DXVECTOR2(now_x - 0, now_y), 0,
-						D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-						0.0f, toumeido, 120, 999, 0, 60,
-						0.0f, 0.0f, 0);
-				}
+				//	ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][1], 84, D3DXVECTOR2(now_x - 0 + plusA, now_y), D3DXVECTOR2(now_x - 0, now_y), 0,
+				//		D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+				//		0.0f, toumeido, 120, 999, 0, 60,
+				//		0.0f, 0.0f, 0);
+				//}
 
-				// ミッションをクリアしているなら表示する
-				if (p_Savedata[NowWorld_stagenum].mission_clear[2] == 1)
-				{
-					//星
+				//// ミッションをクリアしているなら表示する
+				//if (p_Savedata[NowWorld_stagenum].mission_clear[2] == 1)
+				//{
+				//	//星
 
-					ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][2], 85, D3DXVECTOR2(now_x + 50 + plusA, now_y), D3DXVECTOR2(now_x + 50, now_y), 0,
-						D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-						0.0f, toumeido, 120, 999, 0, 60,
-						0.0f, 0.0f, 0);
-				}
+				//	ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][2], 85, D3DXVECTOR2(now_x + 50 + plusA, now_y), D3DXVECTOR2(now_x + 50, now_y), 0,
+				//		D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+				//		0.0f, toumeido, 120, 999, 0, 60,
+				//		0.0f, 0.0f, 0);
+				//}
 			}
 		}
 	}

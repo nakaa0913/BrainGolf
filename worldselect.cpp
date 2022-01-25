@@ -287,15 +287,15 @@ void UpdateWorldSelect(void)
 	//	// 次のSCENE_STAGE_SELECTへ行く処理
 
 	//スペースキーが押されていて、フェード処理中ではないとき
-		if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
-		{
-			SetVolume(g_BGMNo, 0.1f);
+		//if (Keyboard_IsKeyDown(KK_ENTER) && GetFadeState() == FADE_NONE)
+		//{
+		//	SetVolume(g_BGMNo, 0.1f);
 
-			WorldDecision = true;
+		//	WorldDecision = true;
 
-			//STAGE_SELECTへ移行する
-			SceneTransition(SCENE_STAGE_SELECT);
-		}
+		//	//STAGE_SELECTへ移行する
+		//	SceneTransition(SCENE_STAGE_SELECT);
+		//}
 
 		// マウスが押される位置にあって、左クリック押されていて、フェード処理中ではないとき
 		if (mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)

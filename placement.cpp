@@ -141,10 +141,10 @@ void UpdatePlacement(void)
 	float interval_y = MAP_CHIP_SIZE_Y;
 
 	// エンターキーでゲームスタート
-	if ((Keyboard_IsKeyDown(KK_ENTER)) && GetFadeState() == FADE_NONE)
+	/*if ((Keyboard_IsKeyDown(KK_ENTER)) && GetFadeState() == FADE_NONE)
 	{
 		SceneTransition(SCENE_GAME);
-	}
+	}*/
 
 	if (PushKeyCool <= 0)
 	{
@@ -297,7 +297,7 @@ void UpdatePlacement(void)
 		{
 			if (GetFadeState() == FADE_NONE)
 			{
-				if (Keyboard_IsKeyDown(KK_SPACE) || mouse_Lclick)
+				if (/*Keyboard_IsKeyDown(KK_SPACE) ||*/ mouse_Lclick)
 				{
 					g_SENo = LoadSound("data/SE/やさしいベルの上昇音.wav");
 					PlaySound(g_SENo, 0);

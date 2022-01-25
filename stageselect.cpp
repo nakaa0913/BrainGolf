@@ -955,6 +955,7 @@ void UpdateStageSelect(void)
 		{
 			InitPage();
 			//StopSoundAll();
+			UninitStageSelect();
 		}
 
 		// ñﬂÇÈéûä‘Ç™èIÇÌÇ¡ÇΩÇÁñﬂÇ∑
@@ -964,7 +965,7 @@ void UpdateStageSelect(void)
 			InitStageSelectForTitle();
 			BackTitle = false;
 			BackTitlecount = -1;
-			//SetVolume(g_BGMNo, 0.8f);
+			InitStageSelect();
 		}
 
 		BackTitlecount++;

@@ -214,7 +214,7 @@ HRESULT InitBG(void)
 
 	//g_Ground = LoadTexture("data/TEXTURE/basechip.png");
 	g_Ground = LoadTexture("data/TEXTURE/game/above/basechip_wood.png");
-	g_Ground_ice = LoadTexture("data/TEXTURE/game/above/basechip_ice.png");
+	g_Ground_ice = LoadTexture("data/TEXTURE/game/above/basechip_ice_kai.png");
 	g_Ground_hell = LoadTexture("data/TEXTURE/game/above/basechip_hell.png");
 	//tex_mapchip_3d = LoadTexture("data/TEXTURE/game/side/mapchip_3d1.png");
 
@@ -227,7 +227,7 @@ HRESULT InitBG(void)
 	tex_floor_huchinasi = LoadTexture("data/TEXTURE/game/side/floor_huchinasi.png");
 
 	tex_yuka = LoadTexture("data/TEXTURE/game/side/yuka.png");
-	tex_yuka_ice = LoadTexture("data/TEXTURE/game/side/yuka_ice.png");
+	tex_yuka_ice = LoadTexture("data/TEXTURE/game/side/yuka_ice_kai.png");
 	tex_yuka_hell = LoadTexture("data/TEXTURE/game/side/yuka_hell.png");
 
 	tex_base_wall = LoadTexture("data/TEXTURE/game/side/base_wall.png");

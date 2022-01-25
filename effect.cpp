@@ -549,7 +549,7 @@ int SetEffectInReverse(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_movin
 // 正の整数のみ対応
 void SetEffectNumber(int num,int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
-	float rot_angle1, float rot_angle2, int rot_moving_pattern)
+	float rot_angle1, float rot_angle2, int rot_moving_pattern, float interval_magnification)
 {
 
 	// 貰った数字は実際には使わずにクローンを使って計算
@@ -650,7 +650,7 @@ void SetEffectNumber(int num,int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2
 		// 今回表示する桁の数字
 		int nownum = number % 10;
 
-		float interval_magnification = 0.7f;		// 数字の感覚の倍率
+		// 数字の感覚の倍率 interval_magnification でふぉだと0.7f
 
 		// 桁数が奇数の場合と偶数の場合で表示方法を場合分けする
 		if (digit % 2 == 0)

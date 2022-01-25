@@ -414,13 +414,15 @@ void UpdateGameover(void)
 			// ステージデータからミッション内容などを読み取る
 			STAGEDATA* p_Stagedata = GetStagedata();
 
-			float size_x = 768.0f;
-			float size_y = 128.0f;
+			float sizebairitu = 0.7f;		// ステージセレクトの時の殻の倍率
+
+			float size_x = 768.0f * sizebairitu;
+			float size_y = 128.0f * sizebairitu;
 
 			float interval_y = size_y;
 
-			float base_pos1_x = 1140.0f;
-			float base_pos1_y = 280.0f;
+			float base_pos1_x = 1090.0f;
+			float base_pos1_y = 265.0f;
 
 			float base_pos2_x = base_pos1_x;
 			float base_pos2_y = base_pos1_y;

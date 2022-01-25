@@ -437,14 +437,15 @@ void DrawPause(void)
 			0.0f, 0.5f, 0, 1, 0, 1,
 			0.0f, 0.0f, 0);
 
-			//バツ印の表示
-			SetEffect(70, D3DXVECTOR2(50, 150), D3DXVECTOR2(50, 150), 0,
-				D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-				0.0f, 1.0f, 0, 1, 0, 1,
-				0.0f, 0.0f, 0);
+		//バツ印の表示
+		SetEffect(70, D3DXVECTOR2(50, 150), D3DXVECTOR2(50, 150), 0,
+			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+			0.0f, 1.0f, 0, 1, 0, 1,
+			0.0f, 0.0f, 0);
 
-			DrawBGaboveForPlacement();
-			DrawPlayerForPlacement();
+		SetBackground();
+		DrawBGaboveForPlacement();
+		DrawPlayerForPlacement();
 	}
 
 	//ミッション

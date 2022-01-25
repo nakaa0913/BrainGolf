@@ -204,11 +204,14 @@ static int g_BG_03 = 0;			// 背景用テクスチャ情報
 
 static int g_CurrentPos = 0;	// 現在のマップ座標
 
+static bool Background_Unuse = false;
 //=============================================================================
 // 初期化処理
 //=============================================================================
 HRESULT InitBG(void)
 {
+	Background_Unuse = false;
+
 	//g_Ground = LoadTexture("data/TEXTURE/basechip.png");
 	g_Ground = LoadTexture("data/TEXTURE/game/above/basechip_wood.png");
 	g_Ground_ice = LoadTexture("data/TEXTURE/game/above/basechip_ice.png");
@@ -769,6 +772,13 @@ void SetCurrentMap(int next)
 	g_CurrentPos = next;
 }
 
+void SetBackground()
+{
+	Background_Unuse = true;
+
+	return;
+}
+
 int CheckBlockdata(int BlockX, int BlockY)
 {
 	//int BlockData = 0;
@@ -824,7 +834,10 @@ void DrawBGaboveForPlacement(void)
 	if (GetNowChoiceStageNum() <= 10)
 	{
 		// 平和背景の表示
-		DrawSpriteLeftTop(g_BG_01, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
+		if (Background_Unuse == false)
+		{
+			DrawSpriteLeftTop(g_BG_01, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
+		}
 	}
 	else if (GetNowChoiceStageNum() <= 15)
 	{

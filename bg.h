@@ -79,6 +79,7 @@ void DrawBGsideForPlacement(void);
 
 int GetMapEnter(D3DXVECTOR2 pos);
 void SetCurrentMap(int next);
+void SetBackground();
 
 int CheckBlockdata(int BlockX, int BlockY);
 

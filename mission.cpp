@@ -749,7 +749,7 @@ float MissionTexIdToNumXGAP(int texid)
 	case 26:
 		return 342;
 	case 27:
-		return 342;
+		return 360;
 	case 28:
 		return 342.0f;
 	case 29:

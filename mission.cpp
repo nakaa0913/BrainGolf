@@ -14,6 +14,7 @@
 #include "effect.h"
 #include "savedata.h"
 #include "stageselect.h"
+#include "placement.h"
 
 MISSION g_Mission;
 
@@ -60,45 +61,48 @@ bool ClearorFailure(int ContentsNum, int JudgeNum)
 {
 	GAMEDATA p_Gamedata = *GetGamedata();
 
+	// まず何人配置してるかをもらう
+	int PlacementNum = PlacementPlayerNum();
+
 	switch (ContentsNum)
 	{
-	case 0:		// JudgeNum回以内のパスでクリア
+	case 0:		// 0:〇パス以内！
 		if (p_Gamedata.pass_count <= JudgeNum)
 			return true;
 		else
 			return false;
-	case 1:		// 壁にJudgeNum回以上反射させてからクリア
+	case 1:		// 1:〇人配置以内！
+		if (PlacementNum <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 2:		// 2:〇秒以内！
+		if (p_Gamedata.game_time <= JudgeNum)
+			return true;
+		else
+			return false;
+	case 3:		// 3:加速版使ってクリア(1回以上使ってクリア)
+		if (p_Gamedata.acc_count >= 1)
+			return true;
+		else
+			return false;
+	case 4:		// 4:ワープを使ってクリア(1回以上使ってクリア)
+		if (p_Gamedata.warp_count >= 1)
+			return true;
+		else
+			return false;
+	case 5:		// 5:スイッチを使ってクリア(1回以上使ってクリア)
+		if (p_Gamedata.switch_count >= 1)
+			return true;
+		else
+			return false;
+	case 6:		// 6:床を割らずにクリア(0回以下でクリア)
+		if (p_Gamedata.break_floor_count <= 0)
+			return true;
+		else
+			return false;
+	case 7:		// 7:壁に〇回以上当ててからクリア(使わないから画像はいらない)
 		if (p_Gamedata.hit_wall_count >= JudgeNum)
-			return true;
-		else
-			return false;
-	case 2:		// JudgeNum秒以内でクリア
-		if (p_Gamedata.game_time <= JudgeNum)
-			return true;
-		else
-			return false;
-	case 3:		// JudgeNum秒以内でクリア
-		if (p_Gamedata.game_time <= JudgeNum)
-			return true;
-		else
-			return false;
-	case 4:		// JudgeNum秒以内でクリア
-		if (p_Gamedata.game_time <= JudgeNum)
-			return true;
-		else
-			return false;
-	case 5:		// JudgeNum秒以内でクリア
-		if (p_Gamedata.game_time <= JudgeNum)
-			return true;
-		else
-			return false;
-	case 6:		// JudgeNum秒以内でクリア
-		if (p_Gamedata.game_time <= JudgeNum)
-			return true;
-		else
-			return false;
-	case 7:		// JudgeNum秒以内でクリア
-		if (p_Gamedata.game_time <= JudgeNum)
 			return true;
 		else
 			return false;

@@ -542,3 +542,24 @@ int RemainingPlayer()
 
 	return backnum;
 }
+
+// 配置しているプレイヤーの数を返す
+int PlacementPlayerNum()
+{
+	STAGEDATA* p_Stagedata = GetStagedata();
+
+	int backnum = 0;
+
+	for (int i = 0; i < p_Stagedata->NumberofPeople; i++)
+	{
+		if (g_Placement[i].isUse == true)
+		{
+			backnum++;
+		}
+	}
+
+	// 主人公の分引かなくてよかった。
+	//backnum -= 1;
+
+	return backnum;
+}

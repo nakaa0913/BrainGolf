@@ -46,3 +46,4 @@ bool DontPlaceForCharacter(int x, int y);
 bool DontPlaceForBlock(int x, int y);
 bool DontPlaceForNumberofPeople();
 int RemainingPlayer();
+int PlacementPlayerNum();

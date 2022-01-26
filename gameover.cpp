@@ -26,6 +26,7 @@
 #include "gameover.h"
 #include "mouse.h"
 #include "gamedata.h"
+#include "game.h"
 
 #define GOAL_H (50)
 #define GOAL_W (50)
@@ -329,6 +330,8 @@ void UpdateGameover(void)
 				{
 					if (g_Gameover.selectpush == 0)
 					{
+						// InitƒQ[ƒ€‚ÅBGM‚ğ—¬‚·‚½‚ßtrue‚É‚µ‚Ä‚¨‚­
+						BGMonceTrue();
 						SceneTransition(SCENE_GAME);
 					}
 
@@ -627,6 +630,8 @@ void UpdateGameover(void)
 			{
 				if (g_Gameover.selectpush == 0)
 				{
+					// InitƒQ[ƒ€‚ÅBGM‚ğ—¬‚·‚½‚ßtrue‚É‚µ‚Ä‚¨‚­
+					BGMonceTrue();
 					SceneTransition(SCENE_GAME);
 				}
 

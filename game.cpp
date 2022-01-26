@@ -52,6 +52,8 @@ int sound_once = 0;
 
 RESULT* p_GetResult = GetResult();
 
+bool BGMonce = false;
+
 /*------------------------------------------------------------------------------
    ‰Šú‰»ŠÖ”
 ------------------------------------------------------------------------------*/
@@ -78,8 +80,13 @@ void InitGame(void)
 
 	g_BGMNo = LoadSound("data/BGM/ƒ†ƒLƒmƒCƒƒhƒŠ.wav");
 
-	//SetVolume(g_BGMNo, 0.5f);
-	//PlaySound(g_BGMNo, -1);
+	if (BGMonce)
+	{
+		SetVolume(g_BGMNo, 0.5f);
+		PlaySound(g_BGMNo, -1);
+	}
+
+	BGMonce = false;
 	sound_once = 0;
 }
 
@@ -254,3 +261,10 @@ void GameoverTrue()
 //
 //	return;
 //}
+
+// BGMonce‚ğtrue‚É‚·‚é‚¾‚¯
+void BGMonceTrue()
+{
+	BGMonce = true;
+	return;
+}

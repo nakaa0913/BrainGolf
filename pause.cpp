@@ -243,6 +243,8 @@ void UpdatePause(void)
 
 						if (pausemouseuse && mouse_Lclick)
 						{
+							// InitゲームでBGMを流すためtrueにしておく
+							BGMonceTrue();
 							SceneTransition(SCENE_GAME);
 							//pauseclickuse = false;
 							////上から視点かミッションを開いていたら閉じる

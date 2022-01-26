@@ -25,6 +25,7 @@
 #include "sound.h"
 #include "mouse.h"
 #include "gamedata.h"
+#include "game.h"
 
 #define GOAL_H (50)
 #define GOAL_W (50)
@@ -259,6 +260,8 @@ void UpdateResult(void)
 			{
 				if (g_Result.selectpush == 0)
 				{
+					// InitƒQ[ƒ€‚ÅBGM‚ğ—¬‚·‚½‚ßtrue‚É‚µ‚Ä‚¨‚­
+					BGMonceTrue();
 					SceneTransition(SCENE_GAME);
 				}
 
@@ -568,6 +571,8 @@ void UpdateResult(void)
 				{
 					if (g_Result.selectpush == 0)
 					{
+						// InitƒQ[ƒ€‚ÅBGM‚ğ—¬‚·‚½‚ßtrue‚É‚µ‚Ä‚¨‚­
+						BGMonceTrue();
 						SceneTransition(SCENE_GAME);
 					}
 
@@ -578,6 +583,8 @@ void UpdateResult(void)
 
 					if (g_Result.selectpush == 2)
 					{
+						// InitƒQ[ƒ€‚ÅBGM‚ğ—¬‚·‚½‚ßtrue‚É‚µ‚Ä‚¨‚­
+						BGMonceTrue();
 						SceneTransition(SCENE_GAME);
 					}
 					if (g_Result.selectpush == 3)

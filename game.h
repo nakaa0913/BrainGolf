@@ -8,3 +8,4 @@ void DrawGame(void);
 void GoalTrue();
 void GameoverTrue();
 //void PauseTrue()
+void BGMonceTrue();

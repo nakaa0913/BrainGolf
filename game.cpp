@@ -118,6 +118,7 @@ void InitGameForPlacement(void)
 
 	SetVolume(g_BGMNo, 0.5f);
 	PlaySound(g_BGMNo, -1);
+
 	sound_once = 0;
 }
 
@@ -187,14 +188,18 @@ void UpdateGame(void)
 		}
 		else {
 			UpdateResult();
-			if (checkresult() == false)
+			if (pushnextstage == false)
 			{
 				if (sound_once == 0)
 				{
-					StopSoundAll();
-					g_BGMNo = LoadSound("data/SE/funnyelectrosingle.wav");
-					PlaySound(g_BGMNo, 0);
-					sound_once = 1;
+					if (p_GetResult->goaltime == 1)
+					{
+						StopSoundAll();
+						g_BGMNo = LoadSound("data/SE/funnyelectrosingle.wav");
+						PlaySound(g_BGMNo, 0);
+						sound_once = 1;
+					}
+					
 				}
 				if (sound_once == 1)
 				{

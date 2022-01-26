@@ -286,7 +286,7 @@ void UpdateResult(void)
 					{
 						// 次のステージへ
 						resultfin = true;
-						GoalFalse();
+						//GoalFalse();
 						NextstageTrue();
 						PushNextstage();
 						NextNowChoiceStageNum();
@@ -587,7 +587,7 @@ void UpdateResult(void)
 					{
 						// 次のステージへ
 						resultfin = true;
-						GoalFalse();
+						//GoalFalse();
 						NextstageTrue();
 						PushNextstage();
 						NextNowChoiceStageNum();

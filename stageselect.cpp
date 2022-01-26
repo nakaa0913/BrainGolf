@@ -1577,7 +1577,7 @@ void ChangeNowChoiceStageNum(int num)
 void NextNowChoiceStageNum()
 {
 	now_stagenum = now_stagenum + 1;
-	InitGame();
+	//InitGame();
 	return;
 }
 

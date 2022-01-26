@@ -1020,7 +1020,7 @@ void UpdateBullet(void)
 					// 加速板（上）に乗った時の処理
 					if (g_Bullet[i].accboardcool <= 0)
 					{
-						//p_Gamedata.acc_count++;
+						p_Gamedata->acc_count++;
 
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 90.0f;									// 角度を設定
@@ -1037,6 +1037,8 @@ void UpdateBullet(void)
 					// 加速板（下）に乗った時の処理
 					if (g_Bullet[i].accboardcool <= 0)
 					{
+						p_Gamedata->acc_count++;
+
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 270.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
@@ -1052,6 +1054,8 @@ void UpdateBullet(void)
 					// 加速板（右）に乗った時の処理
 					if (g_Bullet[i].accboardcool <= 0)
 					{
+						p_Gamedata->acc_count++;
+
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 0.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
@@ -1066,6 +1070,8 @@ void UpdateBullet(void)
 					// 加速板（左）に乗った時の処理
 					if (g_Bullet[i].accboardcool <= 0)
 					{
+						p_Gamedata->acc_count++;
+
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 180.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
@@ -1080,6 +1086,8 @@ void UpdateBullet(void)
 					// 加速板（右上）に乗った時の処理
 					if (g_Bullet[i].accboardcool <= 0)
 					{
+						p_Gamedata->acc_count++;
+
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 45.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
@@ -1094,6 +1102,8 @@ void UpdateBullet(void)
 					// 加速板（右下）に乗った時の処理
 					if (g_Bullet[i].accboardcool <= 0)
 					{
+						p_Gamedata->acc_count++;
+
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 315.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
@@ -1108,6 +1118,8 @@ void UpdateBullet(void)
 					// 加速板（左下）に乗った時の処理
 					if (g_Bullet[i].accboardcool <= 0)
 					{
+						p_Gamedata->acc_count++;
+
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 225.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
@@ -1122,6 +1134,8 @@ void UpdateBullet(void)
 					// 加速板（左上）に乗った時の処理
 					if (g_Bullet[i].accboardcool <= 0)
 					{
+						p_Gamedata->acc_count++;
+
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 135.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
@@ -1139,6 +1153,8 @@ void UpdateBullet(void)
 				{
 					if (g_Bullet[i].switchcool <= 0)
 					{
+						p_Gamedata->switch_count++;
+
 						g_Bullet[i].onswitch = !g_Bullet[i].onswitch;
 						g_Bullet[i].switchcool = 120.0f;
 
@@ -1151,6 +1167,8 @@ void UpdateBullet(void)
 				{
 					if (g_Bullet[i].switchcool <= 0)
 					{
+						p_Gamedata->switch_count++;
+
 						g_Bullet[i].onswitch = !g_Bullet[i].onswitch;
 						g_Bullet[i].switchcool = 120.0f;
 
@@ -1231,6 +1249,8 @@ void UpdateBullet(void)
 
 					if (p_Stagedata->maparray[axis_y][axis_x] == 21)
 					{
+						p_Gamedata->break_floor_count++;
+
 						g_SENo = LoadSound("data/SE/ガラスにひびが入る.wav");
 						PlaySound(g_SENo, 0);
 						p_Stagedata->maparray[axis_y][axis_x] = 37;
@@ -1297,6 +1317,8 @@ void UpdateBullet(void)
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 							if (BlockData == 12)
 							{
+								p_Gamedata->warp_count++;
+
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
@@ -1316,6 +1338,8 @@ void UpdateBullet(void)
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 							if (BlockData == 11)
 							{
+								p_Gamedata->warp_count++;
+
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
@@ -1336,6 +1360,8 @@ void UpdateBullet(void)
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 							if (BlockData == 25)
 							{
+								p_Gamedata->warp_count++;
+
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
@@ -1355,6 +1381,8 @@ void UpdateBullet(void)
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 							if (BlockData == 24)
 							{
+								p_Gamedata->warp_count++;
+
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
@@ -1376,6 +1404,8 @@ void UpdateBullet(void)
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 							if (BlockData == 27)
 							{
+								p_Gamedata->warp_count++;
+
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
@@ -1395,6 +1425,8 @@ void UpdateBullet(void)
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 							if (BlockData == 26)
 							{
+								p_Gamedata->warp_count++;
+
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
@@ -1416,6 +1448,8 @@ void UpdateBullet(void)
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 							if (BlockData == 29)
 							{
+								p_Gamedata->warp_count++;
+
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
@@ -1435,6 +1469,8 @@ void UpdateBullet(void)
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 							if (BlockData == 28)
 							{
+								p_Gamedata->warp_count++;
+
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
@@ -1456,6 +1492,8 @@ void UpdateBullet(void)
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 							if (BlockData == 31)
 							{
+								p_Gamedata->warp_count++;
+
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
@@ -1475,6 +1513,8 @@ void UpdateBullet(void)
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 							if (BlockData == 30)
 							{
+								p_Gamedata->warp_count++;
+
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
@@ -1496,6 +1536,8 @@ void UpdateBullet(void)
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 							if (BlockData == 33)
 							{
+								p_Gamedata->warp_count++;
+
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
@@ -1515,6 +1557,8 @@ void UpdateBullet(void)
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 							if (BlockData == 32)
 							{
+								p_Gamedata->warp_count++;
+
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
@@ -1536,6 +1580,8 @@ void UpdateBullet(void)
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 							if (BlockData == 39)
 							{
+								p_Gamedata->warp_count++;
+
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
@@ -1555,6 +1601,8 @@ void UpdateBullet(void)
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 							if (BlockData == 38)
 							{
+								p_Gamedata->warp_count++;
+
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
@@ -1576,6 +1624,8 @@ void UpdateBullet(void)
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 							if (BlockData == 41)
 							{
+								p_Gamedata->warp_count++;
+
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 
@@ -1595,6 +1645,8 @@ void UpdateBullet(void)
 							// そのブロックデータが 1 だったら当たり判定があるので中で当たり判定の計算し、当たっている面を1面に決める
 							if (BlockData == 40)
 							{
+								p_Gamedata->warp_count++;
+
 								g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
 								g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 

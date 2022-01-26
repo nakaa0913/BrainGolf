@@ -149,7 +149,7 @@ void UpdateBullet(void)
 				if (p_Stagedata->maparray[y][x] == 16)
 				{
 					//240以下の時に当たるとボールを止める
-					if (needletime <= 240)
+					if (needletime <= 120)
 					{
 						p_Stagedata->maparray[y][x] = 17;
 					}
@@ -157,7 +157,7 @@ void UpdateBullet(void)
 				if (p_Stagedata->maparray[y][x] == 17)
 				{
 					//241以上の時に当たるとボールを止める
-					if (needletime > 240)
+					if (needletime > 120)
 					{
 						g_NeedleSENo = LoadSound("data/SE/SwordHit.wav");
 						SetVolume(g_NeedleSENo, 0.4f);
@@ -169,7 +169,7 @@ void UpdateBullet(void)
 				if (p_Stagedata->maparray[y][x] == 37)
 				{
 					//241以上の時に当たるとボールを止める
-					if (hole_changetime > 120)
+					if (hole_changetime > 60)
 					{
 						p_Stagedata->maparray[y][x] = 22;
 					}
@@ -179,7 +179,7 @@ void UpdateBullet(void)
 		}
 
 		//480以上になったらneedletimeを0にしてループさせる
-		if (needletime >= 480)
+		if (needletime >= 240)
 		{
 			needletime = 0;
 		}
@@ -1204,7 +1204,7 @@ void UpdateBullet(void)
 						p_Gamedata->switch_count++;
 
 						g_Bullet[i].onswitch = !g_Bullet[i].onswitch;
-						g_Bullet[i].switchcool = 120.0f;
+						g_Bullet[i].switchcool = 25.0f;
 
 						g_SENo = LoadSound("data/SE/ポコッ.wav");
 						PlaySound(g_SENo, 0);
@@ -1218,7 +1218,7 @@ void UpdateBullet(void)
 						p_Gamedata->switch_count++;
 
 						g_Bullet[i].onswitch = !g_Bullet[i].onswitch;
-						g_Bullet[i].switchcool = 120.0f;
+						g_Bullet[i].switchcool = 25.0f;
 
 						g_SENo = LoadSound("data/SE/ポコッ.wav");
 						PlaySound(g_SENo, 0);

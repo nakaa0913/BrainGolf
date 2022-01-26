@@ -95,7 +95,7 @@ void EffectBreak(int use_array_num, int SerialNumber = 1);		// #include<iostream
 // セットエフェクトの数字バージョン。複数を同時に生成するからint型の配列を返すよ。スタート位置と何個連番してるか。
 void SetEffectNumber(int num, int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
-	float rot_angle1, float rot_angle2, int rot_moving_patternfloat, float interval_magnification = 0.7f, int id = 119);
+	float rot_angle1, float rot_angle2, int rot_moving_patternfloat, bool vertical, float interval_magnification = 0.7f, int id = 119);
 
 void SetEffectTimeNumber(int num, int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,

@@ -473,46 +473,46 @@ void StartWorldSelectScreen()
 	SetEffectNumber(AllWorldStar, p_Number_EffectArray, D3DXVECTOR2(250.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
 		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
 		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
+		0.0f, 0.0f, 0, false);
 
 	// 全ての星の数(150)の表示
 	SetEffectNumber(150, p_Number_EffectArray, D3DXVECTOR2(400.0f, 50.0f), D3DXVECTOR2(280.0f, 50.0f), 0,
 		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
 		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
+		0.0f, 0.0f, 0, false);
 
 	// ステージ1の現在獲得している星の数の表示
 	SetEffectNumber(World1Star, p_Number_EffectArray, D3DXVECTOR2(200.0f, 320.0f), D3DXVECTOR2(200.0f, 320.0f), 0,
 		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
 		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
+		0.0f, 0.0f, 0, false);
 	// ステージ2の現在獲得している星の数の表示
 	SetEffectNumber(World2Star, p_Number_EffectArray, D3DXVECTOR2(480.0f, 600.0f), D3DXVECTOR2(480.0f, 600.0f), 0,
 		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
 		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
+		0.0f, 0.0f, 0, false);
 	// ステージ3の現在獲得している星の数の表示
 	SetEffectNumber(World3Star, p_Number_EffectArray, D3DXVECTOR2(720.0f, 350.0f), D3DXVECTOR2(720.0f, 350.0f), 0,
 		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
 		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
+		0.0f, 0.0f, 0, false);
 	// ステージ4の現在獲得している星の数の表示
 	SetEffectNumber(World4Star, p_Number_EffectArray, D3DXVECTOR2(970.0f, 660.0f), D3DXVECTOR2(970.0f, 660.0f), 0,
 		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
 		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
+		0.0f, 0.0f, 0, false);
 	// ステージ5の現在獲得している星の数の表示
 	SetEffectNumber(World5Star, p_Number_EffectArray, D3DXVECTOR2(1200.0f, 500.0f), D3DXVECTOR2(1200.0f, 500.0f), 0,
 		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
 		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
+		0.0f, 0.0f, 0, false);
 
 
 	// ステージ1の全ての星の数(30)の表示 ///(相談)///
 	SetEffectNumber(30, p_Number_EffectArray, D3DXVECTOR2(300.0f, 320.0f), D3DXVECTOR2(300.0f, 320.0f), 0,
 		D3DXVECTOR2(60.0f, 50.0f), D3DXVECTOR2(60.0f, 50.0f), 0,
 		0.0f, 1.0f, 0, 999, 0, 0,
-		0.0f, 0.0f, 0);
+		0.0f, 0.0f, 0, false);
 
 	// 選ばれてないときの表示
 	SetEffect(6, D3DXVECTOR2(240.0f, 200.0f), D3DXVECTOR2(240.0f, 200.0f), 0,

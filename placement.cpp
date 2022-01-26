@@ -16,6 +16,7 @@
 #include "mouse.h"
 #include "effect.h"
 #include "stagedata.h"
+#include "stageselect.h"
 
 /*------------------------------------------------------------------------------
    定数定義
@@ -152,10 +153,38 @@ void UpdatePlacement(void)
 	int remaining = RemainingPlayer();
 	int Number_EffectArray[2] = { 0,0 };
 	int* p_Number_EffectArray = Number_EffectArray;
-	SetEffectNumber(remaining, p_Number_EffectArray, D3DXVECTOR2(SCREEN_WIDTH - 120.0f, 66.0f), D3DXVECTOR2(SCREEN_WIDTH - 120.0f, 66.0f), 0,
+	SetEffectNumber(remaining, p_Number_EffectArray, D3DXVECTOR2(SCREEN_WIDTH - 115.0f, 66.0f), D3DXVECTOR2(SCREEN_WIDTH - 115.0f, 66.0f), 0,
 		D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
 		1.0f, 1.0f, 0, 0, 0, 0,
-		0.0f, 0.0f, 0, 0.3f, 120);
+		0.0f, 0.0f, 0, false, 0.45f, 120);
+
+	D3DXVECTOR2 SNBP = D3DXVECTOR2(120.0f, 66.0f);	// stagenumbasepos
+	D3DXVECTOR2 stagenumbasesize = D3DXVECTOR2(105.0f, 105.0f);
+	float interval = stagenumbasesize.x;
+	// ステージの番号を左上に表示する
+	// ステージの番号をもらって桁を分ける
+	int nowstagenum = GetNowChoiceStageNum();
+	int hitoketame;
+	int hutaketame;
+	hitoketame = ((nowstagenum - 1) / 10) + 1;
+	hutaketame = nowstagenum % 10;
+	if (hutaketame == 0)
+		hutaketame = 10;
+	// 一桁目
+	SetEffectNumber(hitoketame, p_Number_EffectArray, D3DXVECTOR2(SNBP.x + interval * 0, SNBP.y), D3DXVECTOR2(SNBP.x + interval * 0, SNBP.y), 0,
+		stagenumbasesize, stagenumbasesize, 0,
+		1.0f, 1.0f, 0, 1, 0, 0,
+		0.0f, 0.0f, 0, false, 0.7f, 120);
+	// のばしぼう
+	SetEffect(121, D3DXVECTOR2(SNBP.x + interval * 1, SNBP.y), D3DXVECTOR2(SNBP.x + interval * 1, SNBP.y), 0,
+		stagenumbasesize, stagenumbasesize, 0,
+		1.0f, 1.0f, 0, 1, 0, 0,
+		0.0f, 0.0f, 0);
+	// 二桁目
+	SetEffectNumber(hutaketame, p_Number_EffectArray, D3DXVECTOR2(SNBP.x + interval * 2, SNBP.y), D3DXVECTOR2(SNBP.x + interval * 2, SNBP.y), 0,
+		stagenumbasesize, stagenumbasesize, 0,
+		1.0f, 1.0f, 0, 1, 0, 0,
+		0.0f, 0.0f, 0, false, 0.7f, 120);
 
 	// エンターキーでゲームスタート
 	/*if ((Keyboard_IsKeyDown(KK_ENTER)) && GetFadeState() == FADE_NONE)

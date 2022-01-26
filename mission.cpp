@@ -753,13 +753,13 @@ float MissionTexIdToNumXGAP(int texid)
 	case 28:
 		return 342.0f;
 	case 29:
-		return 0.0f;
+		return SCREEN_WIDTH;
 	case 30:
-		return 0.0f;
+		return SCREEN_WIDTH;
 	case 31:
-		return 0.0f;
+		return SCREEN_WIDTH;
 	case 32:
-		return 0.0f;
+		return SCREEN_WIDTH;
 	case 33:
 		return 0.0f;
 	case 34:

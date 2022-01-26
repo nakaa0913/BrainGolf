@@ -324,7 +324,15 @@ void DrawMissionStageSelect()
 					0.0f, 1.0f, 0, 999, 0, move_frame,
 					0.0f, 0.0f, 0);
 		}
-
+		else
+		{
+			//êØ(ìßñæ)
+			g_Mission.mission_star_EffectArray[i] =
+				SetEffect(82, D3DXVECTOR2(base_pos1_x - star_gap, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - star_gap, base_pos2_y + interval_y * i), 1,
+					D3DXVECTOR2(90.0f * mozisizebairitu, 90.0f * mozisizebairitu), D3DXVECTOR2(80.0f, 80.0f), 0,
+					0.0f, 1.0f, 0, 999, 0, move_frame,
+					0.0f, 0.0f, 0);
+		}
 
 
 	}
@@ -524,7 +532,15 @@ void DrawMissionResult()
 					0.0f, 1.0f, 0, 999, 0, move_frame,
 					0.0f, 0.0f, 0);
 		}
-
+		else
+		{
+			//êØ(ìßñæ)
+			g_Mission.mission_star_EffectArray[i] =
+				SetEffect(82, D3DXVECTOR2(base_pos1_x - star_gap, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - star_gap, base_pos2_y + interval_y * i), 1,
+					D3DXVECTOR2(90.0f * mozisizebairitu, 90.0f * mozisizebairitu), D3DXVECTOR2(80.0f, 80.0f), 0,
+					0.0f, 1.0f, 0, 999, 0, move_frame,
+					0.0f, 0.0f, 0);
+		}
 
 
 	}
@@ -646,6 +662,15 @@ void DrawMissionPause()
 			//êØ
 			g_Mission.mission_star_EffectArray[i] =
 				SetEffect(83 + i, D3DXVECTOR2(base_pos1_x - star_gap, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - star_gap, base_pos2_y + interval_y * i), 1,
+					D3DXVECTOR2(90.0f * mozisizebairitu, 90.0f * mozisizebairitu), D3DXVECTOR2(80.0f, 80.0f), 0,
+					0.0f, 1.0f, 0, 999, 0, move_frame,
+					0.0f, 0.0f, 0);
+		}
+		else
+		{
+			//êØ(ìßñæ)
+			g_Mission.mission_star_EffectArray[i] =
+				SetEffect(82, D3DXVECTOR2(base_pos1_x - star_gap, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - star_gap, base_pos2_y + interval_y * i), 1,
 					D3DXVECTOR2(90.0f * mozisizebairitu, 90.0f * mozisizebairitu), D3DXVECTOR2(80.0f, 80.0f), 0,
 					0.0f, 1.0f, 0, 999, 0, move_frame,
 					0.0f, 0.0f, 0);

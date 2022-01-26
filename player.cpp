@@ -403,7 +403,7 @@ void UpdatePlayer(void)
 			{
 
 				//ポーズボタン 1200 700	300 300
-				if (mouse_pos_X > 10.0f && mouse_pos_X < 85.0f && mouse_pos_Y > 15.0f && mouse_pos_Y < 85.0f)
+				if (mouse_pos_X > 10.0f && mouse_pos_X < 175.0f && mouse_pos_Y > 15.0f && mouse_pos_Y < 85.0f)
 				{
 					//g_Pause.selectpush = 0;
 					pausemouseuse2 = true;

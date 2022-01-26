@@ -153,9 +153,9 @@ void UpdatePlacement(void)
 	int Number_EffectArray[2] = { 0,0 };
 	int* p_Number_EffectArray = Number_EffectArray;
 	SetEffectNumber(remaining, p_Number_EffectArray, D3DXVECTOR2(SCREEN_WIDTH - 120.0f, 66.0f), D3DXVECTOR2(SCREEN_WIDTH - 120.0f, 66.0f), 0,
-		D3DXVECTOR2(70.0f, 70.0f), D3DXVECTOR2(70.0f, 70.0f), 0,
+		D3DXVECTOR2(50.0f, 50.0f), D3DXVECTOR2(50.0f, 50.0f), 0,
 		1.0f, 1.0f, 0, 0, 0, 0,
-		0.0f, 0.0f, 0, 0.3f);
+		0.0f, 0.0f, 0, 0.3f, 120);
 
 	// エンターキーでゲームスタート
 	/*if ((Keyboard_IsKeyDown(KK_ENTER)) && GetFadeState() == FADE_NONE)

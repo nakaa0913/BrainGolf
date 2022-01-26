@@ -156,37 +156,37 @@ void UpdatePause(void)
 				}
 
 				//ポーズボタンの表示
-				SetEffect(105, D3DXVECTOR2(100, 50), D3DXVECTOR2(100, 50), 0,
+				SetEffect(105, D3DXVECTOR2(100.0f, 50.0f), D3DXVECTOR2(100.0f, 50.0f), 0,
 					D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 1,
 					0.0f, 1.0f, 0, 1, 0, 1,
 					0.0f, 0.0f, 0);
 
 				// 上からのマップ
-				SetEffect(115, D3DXVECTOR2(100, 220), D3DXVECTOR2(100, 270), 0,
+				SetEffect(115, D3DXVECTOR2(100.0f, 220.0f), D3DXVECTOR2(100.0f, 220.0f), 0,
 					D3DXVECTOR2(170.0f, 170.0f), D3DXVECTOR2(170.0f, 170.0f), 0,
 					0.0f, 1.0f, 0, 1, 0, 1,
 					0.0f, 0.0f, 0);
 
 				// リトライ
-				SetEffect(79, D3DXVECTOR2(100, 340), D3DXVECTOR2(100, 390), 0,
+				SetEffect(79, D3DXVECTOR2(100.0f, 460.0f), D3DXVECTOR2(100.0f, 460.0f), 0,
 					D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 0,
 					0.0f, 1.0f, 0, 1, 0, 1,
 					0.0f, 0.0f, 0);
 
 				// ミッション
-				SetEffect(117, D3DXVECTOR2(100, 460), D3DXVECTOR2(100, 510), 0,
+				SetEffect(117, D3DXVECTOR2(100.0f, 340.0f), D3DXVECTOR2(100.0f, 340.0f), 0,
 					D3DXVECTOR2(170.0f, 150.0f), D3DXVECTOR2(170.0f, 150.0f), 0,
 					0.0f, 1.0f, 0, 1, 0, 1,
 					0.0f, 0.0f, 0);
 
 				// ステージ選択
-				SetEffect(112, D3DXVECTOR2(100, 580), D3DXVECTOR2(100, 630), 0,
+				SetEffect(112, D3DXVECTOR2(100.0f, 700.0f), D3DXVECTOR2(100.0f, 700.0f), 0,
 					D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 0,
 					0.0f, 1.0f, 0, 1, 0, 1,
 					0.0f, 0.0f, 0);
 
 				//プレイヤー配置に戻る
-				SetEffect(99, D3DXVECTOR2(100.0f, 700.0f), D3DXVECTOR2(100.0f, 700.0f), 1,
+				SetEffect(99, D3DXVECTOR2(100.0f, 580.0f), D3DXVECTOR2(100.0f, 580.0f), 1,
 					D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 1,
 					0.0f, 1.0f, 0, 1, 0, 1,
 					0.0f, 0.0f, 0);
@@ -202,7 +202,7 @@ void UpdatePause(void)
 
 
 						// 選択しましたマーク
-						SetEffect(73, D3DXVECTOR2(100, 220), D3DXVECTOR2(300, 220), 0,
+						SetEffect(73, D3DXVECTOR2(100.0f, 220.0f), D3DXVECTOR2(300.0f, 220.0f), 0,
 							D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 0,
 							0.0f, 1.0f, 0, 1, 0, 1,
 							0.0f, 0.0f, 0);
@@ -230,13 +230,13 @@ void UpdatePause(void)
 
 
 					/////////////リトライ//////////////////
-					if (mouse_pos_X > 10.0f && mouse_pos_X < 175.0f && mouse_pos_Y > 297.0f && mouse_pos_Y < 376.0f)
+					if (mouse_pos_X > 10.0f && mouse_pos_X < 175.0f && mouse_pos_Y > 426.0f && mouse_pos_Y < 490.0f)
 					{
-
+						
 						pausemouseuse = true;
 
 						// 選択しましたマーク
-						SetEffect(73, D3DXVECTOR2(100, 340), D3DXVECTOR2(100, 340), 0,
+						SetEffect(73, D3DXVECTOR2(100.0f, 460.0f), D3DXVECTOR2(100.0f, 460.0f), 0,
 							D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 0,
 							0.0f, 1.0f, 0, 1, 0, 1,
 							0.0f, 0.0f, 0);
@@ -255,12 +255,12 @@ void UpdatePause(void)
 					}
 
 					////////ミッション/////////
-					if (mouse_pos_X > 10.0f && mouse_pos_X < 175.0f && mouse_pos_Y > 426.0f && mouse_pos_Y < 490.0f)
+					if (mouse_pos_X > 10.0f && mouse_pos_X < 175.0f && mouse_pos_Y > 297.0f && mouse_pos_Y < 376.0f)
 					{
 						pausemouseuse = true;
 
 						// 選択しましたマーク
-						SetEffect(73, D3DXVECTOR2(100, 460), D3DXVECTOR2(100, 460), 0,
+						SetEffect(73, D3DXVECTOR2(100.0f, 340.0f), D3DXVECTOR2(100.0f, 340.0f), 0,
 							D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 0,
 							0.0f, 1.0f, 0, 1, 0, 1,
 							0.0f, 0.0f, 0);
@@ -295,13 +295,13 @@ void UpdatePause(void)
 
 					}
 
-					////////ステージ選択/////////
-					if (mouse_pos_X > 10.0f && mouse_pos_X < 175.0f && mouse_pos_Y > 540.0f && mouse_pos_Y < 613.0f)
+					////////ステージ選択///////////
+					if (mouse_pos_X > 10.0f && mouse_pos_X < 175.0f && mouse_pos_Y > 658.0f && mouse_pos_Y < 733.0f)
 					{
 						pausemouseuse = true;
 
 						// 選択しましたマーク
-						SetEffect(73, D3DXVECTOR2(100, 580), D3DXVECTOR2(100, 580), 0,
+						SetEffect(73, D3DXVECTOR2(100.0f, 700.0f), D3DXVECTOR2(100.0f, 700.0f), 0,
 							D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 0,
 							0.0f, 1.0f, 0, 1, 0, 1,
 							0.0f, 0.0f, 0);
@@ -324,12 +324,12 @@ void UpdatePause(void)
 					}
 
 					////////配置から/////////
-					if (mouse_pos_X > 10.0f && mouse_pos_X < 175.0f && mouse_pos_Y > 658.0f && mouse_pos_Y < 733.0f)
+					if (mouse_pos_X > 10.0f && mouse_pos_X < 175.0f && mouse_pos_Y > 540.0f && mouse_pos_Y < 613.0f)
 					{
 						pausemouseuse = true;
 
 						// 選択しましたマーク
-						SetEffect(73, D3DXVECTOR2(100, 700), D3DXVECTOR2(100, 700), 0,
+						SetEffect(73, D3DXVECTOR2(100.0f, 580.0f), D3DXVECTOR2(100.0f, 580.0f), 0,
 							D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 0,
 							0.0f, 1.0f, 0, 1, 0, 1,
 							0.0f, 0.0f, 0);
@@ -349,7 +349,7 @@ void UpdatePause(void)
 					//ポーズボタン閉じる 1200 700	300 300
 					if (mouse_pos_X > 10.0f && mouse_pos_X < 175.0f && mouse_pos_Y > 15.0f && mouse_pos_Y < 85.0f)
 					{
-						SetEffect(106, D3DXVECTOR2(103, 50.0f), D3DXVECTOR2(103, 50.0f), 0,
+						SetEffect(106, D3DXVECTOR2(103.0f, 50.0f), D3DXVECTOR2(103.0f, 50.0f), 0,
 							D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 0,
 							0.0f, 1.0f, 0, 1, 0, 0,
 							0.0f, 0.0f, 0);
@@ -380,14 +380,14 @@ void UpdatePause(void)
 				//バツ印の表示
 				if (pausemission)
 				{
-					SetEffect(118, D3DXVECTOR2(100, 460), D3DXVECTOR2(100, 460), 0,
+					SetEffect(118, D3DXVECTOR2(100.0f, 340.0f), D3DXVECTOR2(100.0f, 340.0f), 0,
 						D3DXVECTOR2(170.0f, 170.0f), D3DXVECTOR2(170.0f, 170.0f), 0,
 						0.0f, 1.0f, 0, 1, 0, 1,
 						0.0f, 0.0f, 0);
 				}
 				if (Abovemap)
 				{
-					SetEffect(116, D3DXVECTOR2(100, 220), D3DXVECTOR2(100, 220), 0,
+					SetEffect(116, D3DXVECTOR2(100.0f, 220.0f), D3DXVECTOR2(100.0f, 220.0f), 0,
 						D3DXVECTOR2(170.0f, 170.0f), D3DXVECTOR2(170.0f, 170.0f), 0,
 						0.0f, 1.0f, 0, 1, 0, 1,
 						0.0f, 0.0f, 0);
@@ -423,7 +423,7 @@ void UpdatePause(void)
 					//ポーズボタン 1200 700	300 300
 					if (mouse_pos_X > 10.0f && mouse_pos_X < 175.0f && mouse_pos_Y > 15.0f && mouse_pos_Y < 85.0f)
 					{
-						SetEffect(106, D3DXVECTOR2(103, 50.0f), D3DXVECTOR2(103, 50.0f), 0,
+						SetEffect(106, D3DXVECTOR2(103.0f, 50.0f), D3DXVECTOR2(103.0f, 50.0f), 0,
 							D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 0,
 							0.0f, 1.0f, 0, 1, 0, 0,
 							0.0f, 0.0f, 0);

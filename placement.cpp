@@ -193,8 +193,7 @@ void UpdatePlacement(void)
 		mouseuse = true;
 		if (mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
 		{
-			// InitƒQ[ƒ€‚ÅBGM‚ğ—¬‚·‚½‚ßtrue‚É‚µ‚Ä‚¨‚­
-			BGMonceTrue();
+
 			SceneTransition(SCENE_GAME);
 		}
 	}

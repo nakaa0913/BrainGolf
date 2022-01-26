@@ -1003,6 +1003,7 @@ void UpdateBullet(void)
 				//連続して当たってたらtrueになる
 				if (collision_accboard == true)
 				{
+
 					g_Bullet[i].collisiontime++;
 				}
 				else
@@ -1019,6 +1020,8 @@ void UpdateBullet(void)
 					// 加速板（上）に乗った時の処理
 					if (g_Bullet[i].accboardcool <= 0)
 					{
+						//p_Gamedata.acc_count++;
+
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 90.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定

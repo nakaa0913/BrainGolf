@@ -78,6 +78,34 @@ void InitGame(void)
 
 	g_BGMNo = LoadSound("data/BGM/ユキノイロドリ.wav");
 
+	//SetVolume(g_BGMNo, 0.5f);
+	//PlaySound(g_BGMNo, -1);
+	sound_once = 0;
+}
+
+void InitGameForPlacement(void)
+{
+	goal = false;
+	gameover = false;
+
+	game_frame_time = 0;
+
+	InitPlayer();
+	InitEnemy();
+	InitEnemyEmitter();
+	InitBullet();
+	InitScore();
+	InitBG();
+	InitResult();
+	InitGameover();
+	InitCamera();
+	InitPrediction();
+	InitGamedata();
+
+	InitGimmickDescription();
+
+	g_BGMNo = LoadSound("data/BGM/ユキノイロドリ.wav");
+
 	SetVolume(g_BGMNo, 0.5f);
 	PlaySound(g_BGMNo, -1);
 	sound_once = 0;

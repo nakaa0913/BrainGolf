@@ -92,7 +92,7 @@ void InitScene(SCENE index)
 
 	case SCENE_PLACEMENT:
 		InitEffect();
-		InitGame();
+		InitGameForPlacement();
 		InitStagedata();
 		SetStageData(GetNowChoiceStageNum());
 		InitPlacement(); 

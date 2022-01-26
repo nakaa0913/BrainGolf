@@ -868,19 +868,13 @@ void DrawBGaboveForPlacement(void)
 	}
 	else if (GetNowChoiceStageNum() <= 15)
 	{
-		if (Background_Unuse == false)
-		{
-			// áŒ´”wŒi‚Ì•\Ž¦
-			DrawSpriteLeftTop(g_BG_02, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
-		}
+		// áŒ´”wŒi‚Ì•\Ž¦
+		DrawSpriteLeftTop(g_BG_02, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
 	}
 	else if (GetNowChoiceStageNum() <= 20)
 	{
-		if (Background_Unuse == false)
-		{
-			// ’n–”wŒi‚Ì•\Ž¦
-			DrawSpriteLeftTop(g_BG_03, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
-		}
+		// ’n–”wŒi‚Ì•\Ž¦
+		DrawSpriteLeftTop(g_BG_03, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f, 1.0f);
 	}
 
 	// ƒQƒbƒ^[‚Åƒ|ƒCƒ“ƒ^‚ðŽó‚¯Žæ‚é

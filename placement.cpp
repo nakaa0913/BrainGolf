@@ -328,20 +328,14 @@ void UpdatePlacement(void)
 				/*if (Keyboard_IsKeyDown(KK_SPACE) || mouse_Lclick)*/
 				if (mouse_Lclick && mouseuseblock)
 				{
+					g_SENo = LoadSound("data/SE/やさしいベルの上昇音.wav");
+					PlaySound(g_SENo, 0);
+
 					PushKeyCool = PUSHKEY_COOLTIME;
 					// プレイヤーの配置するときに被っていなければそのまま配置、被っていたら取り除く処理
 					// SetPlacementAndPlayerの中でさらにブロックがあったり主人公がいたりで配置できないときの処理。
 					if (!SamePlacement(nowchoice.x, nowchoice.y))
-					{
 						SetPlacementAndPlayer(nowchoice.x, nowchoice.y);
-						g_SENo = LoadSound("data/SE/やさしいベルの上昇音.wav");
-						PlaySound(g_SENo, 0);
-					}
-					else
-					{
-						g_SENo = LoadSound("data/SE/システム決定音_6.wav");
-						PlaySound(g_SENo, 0);
-					}
 				}
 			}
 		}

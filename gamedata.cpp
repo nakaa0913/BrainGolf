@@ -18,6 +18,10 @@ void InitGamedata()
 	g_Gamedata.pass_count = 0;
 	g_Gamedata.hit_wall_count = 0;
 	g_Gamedata.game_time = 0;
+	g_Gamedata.warp_count = 0;
+	g_Gamedata.acc_count = 0;
+	g_Gamedata.switch_count = 0;
+	g_Gamedata.break_floor_count = 0;
 
 	return;
 }

@@ -1566,6 +1566,21 @@ int GetNowChoiceStageNum()
 	return now_stagenum;
 }
 
+// 1~20での現在のステージ番号
+void ChangeNowChoiceStageNum(int num)
+{
+	now_stagenum = num;
+	return;
+}
+
+// 1~20での現在のステージ番号
+void NextNowChoiceStageNum()
+{
+	now_stagenum = now_stagenum + 1;
+	InitGame();
+	return;
+}
+
 
 D3DXVECTOR2 GetStagePos(int num)
 {

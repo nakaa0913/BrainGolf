@@ -36,6 +36,8 @@ STAGESELECT* GetStageSelect();
 void StartStageSelectScreen();
 void ChangePage(int ToGoPage);
 int GetNowChoiceStageNum();
+void ChangeNowChoiceStageNum(int num);
+void NextNowChoiceStageNum();
 D3DXVECTOR2 GetStagePos(int num);
 void InitStageSelectForTitle();
 void InitPage();

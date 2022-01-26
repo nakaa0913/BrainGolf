@@ -66,3 +66,4 @@ RESULT* GetResult(void);
 
 //void DrawMissionResult();
 //void DeleteMissionResult();
+bool checkresult();

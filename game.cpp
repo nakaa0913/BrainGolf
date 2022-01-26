@@ -54,11 +54,14 @@ RESULT* p_GetResult = GetResult();
 
 bool BGMonce = false;
 
+bool pushnextstage = false;
+
 /*------------------------------------------------------------------------------
    初期化関数
 ------------------------------------------------------------------------------*/
 void InitGame(void)
 {
+	pushnextstage = false;
 	goal = false;
 	gameover = false;
 
@@ -146,57 +149,63 @@ void UninitGame()
 ------------------------------------------------------------------------------*/
 void UpdateGame(void)
 {
-	if (goal == false)
+	if (pushnextstage == false)
 	{
-		if (gameover == false)
+		if (goal == false)
 		{
-			UpdateCamera();
-			UpdateBG();
-			UpdatePlayer();
-			UpdateEnemy();
-			UpdateBullet();
-			UpdateScore();
-
-			UpdateEnemyEmitter();
-
-			UpdateCollision();
-			UpdatePrediction();
-			UpdateGamedata();
-
-			UpdateGimmickDescription_Game();
-			// ゲームスタートしてからのフレーム時間を+1する
-			game_frame_time++;
-
-			// ゲームスタートしてからの時間(秒)を+1する,60フレームごとに+1
-			if (game_frame_time % 60 == 0)
+			if (gameover == false)
 			{
-				GAMEDATA* p_Gamedata = GetGamedata();
-				p_Gamedata->game_time++;
+				UpdateCamera();
+				UpdateBG();
+				UpdatePlayer();
+				UpdateEnemy();
+				UpdateBullet();
+				UpdateScore();
+
+				UpdateEnemyEmitter();
+
+				UpdateCollision();
+				UpdatePrediction();
+				UpdateGamedata();
+
+				UpdateGimmickDescription_Game();
+				// ゲームスタートしてからのフレーム時間を+1する
+				game_frame_time++;
+
+				// ゲームスタートしてからの時間(秒)を+1する,60フレームごとに+1
+				if (game_frame_time % 60 == 0)
+				{
+					GAMEDATA* p_Gamedata = GetGamedata();
+					p_Gamedata->game_time++;
+				}
 			}
-		}
-		else
-		{
-			UpdateGameover();
-		}
-
-	}
-	else {
-		UpdateResult();
-		if (sound_once == 0)
-		{
-			StopSoundAll();
-			g_BGMNo = LoadSound("data/SE/funnyelectrosingle.wav");
-			PlaySound(g_BGMNo, 0);
-			sound_once = 1;
-		}
-		if (sound_once == 1)
-		{
-			if (p_GetResult->goaltime == 200)
+			else
 			{
-				StopSoundAll();
-				g_BGMNo = LoadSound("data/BGM/wish_m329.wav");
-				PlaySound(g_BGMNo, -1);
-				sound_once = 2;
+				UpdateGameover();
+			}
+
+		}
+		else {
+			UpdateResult();
+			if (checkresult() == false)
+			{
+				if (sound_once == 0)
+				{
+					StopSoundAll();
+					g_BGMNo = LoadSound("data/SE/funnyelectrosingle.wav");
+					PlaySound(g_BGMNo, 0);
+					sound_once = 1;
+				}
+				if (sound_once == 1)
+				{
+					if (p_GetResult->goaltime == 200)
+					{
+						StopSoundAll();
+						g_BGMNo = LoadSound("data/BGM/wish_m329.wav");
+						PlaySound(g_BGMNo, -1);
+						sound_once = 2;
+					}
+				}
 			}
 		}
 	}
@@ -247,6 +256,13 @@ void GoalTrue()
 	return;
 }
 
+void GoalFalse()
+{
+	goal = false;
+
+	return;
+}
+
 
 void GameoverTrue()
 {
@@ -266,5 +282,19 @@ void GameoverTrue()
 void BGMonceTrue()
 {
 	BGMonce = true;
+	return;
+}
+
+// pushnextstageをtrueにするだけ
+void NextstageTrue()
+{
+	pushnextstage = true;
+	return;
+}
+
+// sound_onceを-60にして音を鳴らさないようにするにするだけ
+void PushNextstage()
+{
+	sound_once = -60;
 	return;
 }

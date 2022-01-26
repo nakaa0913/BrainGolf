@@ -860,7 +860,7 @@ void UpdateStageSelect(void)
 			if (change_count == 24 || changeOneTime)
 			{
 				changeOneTime = false;
-				//ステージ選択
+				//ステージ選択aa
 				for (int page = 0; page < PAGE_MAX; page++)
 				{
 

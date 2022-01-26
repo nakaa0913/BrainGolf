@@ -306,7 +306,7 @@ void DrawMissionStageSelect()
 		SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x - number_gap_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - number_gap_x, base_pos2_y + interval_y * i), 1,
 			D3DXVECTOR2(num_size_x * mozisizebairitu, num_size_y * mozisizebairitu), D3DXVECTOR2(num_size_x, num_size_y), 0,
 			0.0f, 1.0f, 0, 999, 0, move_frame,
-			0.0f, 0.0f, 0, interval_magnification);
+			0.0f, 0.0f, 0, false, interval_magnification);
 
 		// エフェクトが生成された場所の番号の保存
 		g_Mission.mission_ContentsNum_EffectArray[i] = Content_EffectArray;
@@ -506,7 +506,7 @@ void DrawMissionResult()
 		SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x - number_gap_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - number_gap_x, base_pos2_y + interval_y * i), 1,
 			D3DXVECTOR2(num_size_x * mozisizebairitu, num_size_y * mozisizebairitu), D3DXVECTOR2(num_size_x, num_size_y), 0,
 			0.0f, 1.0f, 0, 999, 0, move_frame,
-			0.0f, 0.0f, 0, interval_magnification);
+			0.0f, 0.0f, 0, false, interval_magnification);
 
 		// エフェクトが生成された場所の番号の保存
 		g_Mission.mission_ContentsNum_EffectArray[i] = Content_EffectArray;
@@ -632,7 +632,7 @@ void DrawMissionPause()
 		SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x - number_gap_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - number_gap_x, base_pos2_y + interval_y * i), 0,
 			D3DXVECTOR2(num_size_x * mozisizebairitu, num_size_y * mozisizebairitu), D3DXVECTOR2(num_size_x, num_size_y), 0,
 			0.0f, 1.0f, 20, 999, 0, 1,
-			0.0f, 0.0f, 0, interval_magnification);
+			0.0f, 0.0f, 0, false, interval_magnification);
 
 		// エフェクトが生成された場所の番号の保存
 		g_Mission.mission_ContentsNum_EffectArray[i] = Content_EffectArray;

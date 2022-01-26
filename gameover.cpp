@@ -410,6 +410,8 @@ void UpdateGameover(void)
 				0.0f, 1.0f, 100, 999, 0, 180,
 				0.0f, 0.0f, 0);
 
+			DrawNoteStageNum();
+
 			// ミッション(文章)を表示する
 			//DrawMissionResult();だとなぜか表示されない同じこと書いてるのに。。。
 			SAVEDATA* p_Savedata = GetSavedata();
@@ -458,7 +460,7 @@ void UpdateGameover(void)
 				SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x - number_gap_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - number_gap_x, base_pos2_y + interval_y * i), 1,
 					D3DXVECTOR2(num_size_x* sizebairitu, num_size_y* sizebairitu), D3DXVECTOR2(num_size_x, num_size_y), 0,
 					0.0f, 1.0f, 100, 999, 0, 1,
-					0.0f, 0.0f, 0, interval_magnification);
+					0.0f, 0.0f, 0, false, interval_magnification);
 			}
 		}
 

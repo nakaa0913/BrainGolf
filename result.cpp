@@ -354,6 +354,8 @@ void UpdateResult(void)
 					0.0f, 1.0f, 100, 999, 0, 180,
 					0.0f, 0.0f, 0);
 
+				DrawNoteStageNum();
+
 				// ミッション(文章)を表示する
 				//DrawMissionResult();だとなぜか表示されない同じこと書いてるのに。。。
 				SAVEDATA* p_Savedata = GetSavedata();
@@ -402,7 +404,7 @@ void UpdateResult(void)
 					SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x - number_gap_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - number_gap_x, base_pos2_y + interval_y * i), 1,
 						D3DXVECTOR2(num_size_x * sizebairitu, num_size_y * sizebairitu), D3DXVECTOR2(num_size_x, num_size_y), 0,
 						0.0f, 1.0f, 100, 999, 0, 1,
-						0.0f, 0.0f, 0, interval_magnification);
+						0.0f, 0.0f, 0, false, interval_magnification);
 				}
 
 
@@ -676,4 +678,46 @@ void SetResult(D3DXVECTOR2 pos)
 bool checkresult()
 {
 	return resultfin;
+}
+
+
+// ノートの表示の右上のとこでステージ番号を表示する
+void DrawNoteStageNum()
+{
+	int Number_EffectArray[2] = { 0,0 };
+	int* p_Number_EffectArray = Number_EffectArray;
+
+	D3DXVECTOR2 SNBP = D3DXVECTOR2(SCREEN_WIDTH - 170.0f, 66.0f);	// stagenumbasepos
+	D3DXVECTOR2 stagenumbasesize = D3DXVECTOR2(70.0f, 70.0f);
+	float interval = 50.0f;
+
+	// ステージの番号を左上に表示する
+	// ステージの番号をもらって桁を分ける
+	int nowstagenum = GetNowChoiceStageNum();
+	int hitoketame;
+	int hutaketame;
+	hitoketame = ((nowstagenum - 1) / 10) + 1;
+	hutaketame = nowstagenum % 10;
+	if (hutaketame == 0)
+		hutaketame = 10;
+	float angle = 90.0f;
+	// 一桁目
+	SetEffectNumber(hitoketame, p_Number_EffectArray, D3DXVECTOR2(SNBP.x, SNBP.y + interval * 0), D3DXVECTOR2(SNBP.x, SNBP.y + interval * 0), 0,
+		stagenumbasesize, stagenumbasesize, 0,
+		0.0f, 1.0f, 100, 999, 0, 0,
+		angle, angle, 0, true, 0.35f, 46);
+	// のばしぼう
+	SetEffect(46, D3DXVECTOR2(SNBP.x, SNBP.y + interval * 1 + 10.0f), D3DXVECTOR2(SNBP.x, SNBP.y + interval * 1), 0,
+		stagenumbasesize, stagenumbasesize, 0,
+		0.0f, 1.0f, 100, 999, 0, 0,
+		angle, angle, 0,
+		0.125f, 0.5f, 0.0f, 0.5f);
+	// 二桁目
+	SetEffectNumber(hutaketame, p_Number_EffectArray, D3DXVECTOR2(SNBP.x, SNBP.y + interval * 2), D3DXVECTOR2(SNBP.x, SNBP.y + interval * 2), 0,
+		stagenumbasesize, stagenumbasesize, 0,
+		0.0f, 1.0f, 100, 999, 0, 0,
+		angle, angle, 0, true, 0.35f, 46);
+
+
+	return;
 }

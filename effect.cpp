@@ -174,6 +174,7 @@ static int mission_2_118;
 // number追加
 static int number_2_119;
 static int number_3_120;
+static int nobasibou_121;
 
 
 void InitEffect(void)
@@ -323,6 +324,7 @@ void InitEffect(void)
 
 	number_2_119 = LoadTexture("data/TEXTURE/other_effect/number_2.png");
 	number_3_120 = LoadTexture("data/TEXTURE/other_effect/number_3.png");
+	nobasibou_121 = LoadTexture("data/TEXTURE/other_effect/nobasibou.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -610,7 +612,7 @@ int SetEffectInReverse(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_movin
 // 正の整数のみ対応
 void SetEffectNumber(int num,int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
-	float rot_angle1, float rot_angle2, int rot_moving_pattern, float interval_magnification, int id)
+	float rot_angle1, float rot_angle2, int rot_moving_pattern, bool vertical, float interval_magnification, int id)
 {
 
 	// 貰った数字は実際には使わずにクローンを使って計算
@@ -717,22 +719,45 @@ void SetEffectNumber(int num,int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2
 
 		// 数字の感覚の倍率 interval_magnification でふぉだと0.7f
 
-		// 桁数が奇数の場合と偶数の場合で表示方法を場合分けする
-		if (digit % 2 == 0)
+		// 縦書き表示出ないならxをいじる。縦書き表示ならyをいじる
+		if (!vertical)
 		{
-			// 偶数の場合			真ん中の桁数と次の数の間に真ん中が来る
-			// スコアの位置やテクスチャー座標を反映
-			g_Effect[i + sn].pos.x = pos1.x + (middle_digit - i) * size1.x * interval_magnification - (size1.x * interval_magnification / 2);
-			g_Effect[i + sn].pos1.x = pos1.x + (middle_digit - i) * size1.x * interval_magnification - (size1.x * interval_magnification / 2);
-			g_Effect[i + sn].pos2.x = pos2.x + (middle_digit - i) * size2.x * interval_magnification - (size2.x * interval_magnification / 2);
+			// 桁数が奇数の場合と偶数の場合で表示方法を場合分けする
+			if (digit % 2 == 0)
+			{
+				// 偶数の場合			真ん中の桁数と次の数の間に真ん中が来る
+				// スコアの位置やテクスチャー座標を反映
+				g_Effect[i + sn].pos.x = pos1.x + (middle_digit - i) * size1.x * interval_magnification - (size1.x * interval_magnification / 2);
+				g_Effect[i + sn].pos1.x = pos1.x + (middle_digit - i) * size1.x * interval_magnification - (size1.x * interval_magnification / 2);
+				g_Effect[i + sn].pos2.x = pos2.x + (middle_digit - i) * size2.x * interval_magnification - (size2.x * interval_magnification / 2);
+			}
+			else
+			{
+				// 奇数の場合		指定した座標が真ん中の桁数の中心に来る
+				// スコアの位置やテクスチャー座標を反映
+				g_Effect[i + sn].pos.x = pos1.x + (middle_digit - i) * size1.x * interval_magnification;
+				g_Effect[i + sn].pos1.x = pos1.x + (middle_digit - i) * size1.x * interval_magnification;
+				g_Effect[i + sn].pos2.x = pos2.x + (middle_digit - i) * size2.x * interval_magnification;
+			}
 		}
 		else
 		{
-			// 奇数の場合		指定した座標が真ん中の桁数の中心に来る
-			// スコアの位置やテクスチャー座標を反映
-			g_Effect[i + sn].pos.x = pos1.x + (middle_digit - i) * size1.x * interval_magnification;
-			g_Effect[i + sn].pos1.x = pos1.x + (middle_digit - i) * size1.x * interval_magnification;
-			g_Effect[i + sn].pos2.x = pos2.x + (middle_digit - i) * size2.x * interval_magnification;
+			if (digit % 2 == 0)
+			{
+				// 偶数の場合			真ん中の桁数と次の数の間に真ん中が来る
+				// スコアの位置やテクスチャー座標を反映
+				g_Effect[i + sn].pos.y = pos1.y + (middle_digit - i) * size1.y * interval_magnification - (size1.y * interval_magnification / 2);
+				g_Effect[i + sn].pos1.y = pos1.y + (middle_digit - i) * size1.y * interval_magnification - (size1.y * interval_magnification / 2);
+				g_Effect[i + sn].pos2.y = pos2.y + (middle_digit - i) * size2.y * interval_magnification - (size2.y * interval_magnification / 2);
+			}
+			else
+			{
+				// 奇数の場合		指定した座標が真ん中の桁数の中心に来る
+				// スコアの位置やテクスチャー座標を反映
+				g_Effect[i + sn].pos.y = pos1.y + (middle_digit - i) * size1.y * interval_magnification;
+				g_Effect[i + sn].pos1.y = pos1.y + (middle_digit - i) * size1.y * interval_magnification;
+				g_Effect[i + sn].pos2.y = pos2.y + (middle_digit - i) * size2.y * interval_magnification;
+			}
 		}
 
 		// ポジションの再調整(ポジションムービングカウントが0なら動かないので最初からpos2に調整する)
@@ -740,6 +765,9 @@ void SetEffectNumber(int num,int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2
 		{
 			g_Effect[i + sn].pos.x = g_Effect[i + sn].pos2.x;
 			g_Effect[i + sn].pos1.x = g_Effect[i + sn].pos2.x;
+
+			g_Effect[i + sn].pos.y = g_Effect[i + sn].pos2.y;
+			g_Effect[i + sn].pos1.y = g_Effect[i + sn].pos2.y;
 		}
 
 		g_Effect[i + sn].tx = 1.0f / 10;						// テクスチャ1マスの幅
@@ -1547,6 +1575,9 @@ int GetTextureData(int id)
 		break;
 	case 120:
 		return number_3_120;
+		break;
+	case 121:
+		return nobasibou_121;
 		break;
 	}
 	

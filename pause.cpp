@@ -349,7 +349,7 @@ void UpdatePause(void)
 					//ポーズボタン閉じる 1200 700	300 300
 					if (mouse_pos_X > 10.0f && mouse_pos_X < 175.0f && mouse_pos_Y > 15.0f && mouse_pos_Y < 85.0f)
 					{
-						SetEffect(106, D3DXVECTOR2(100, 50.0f), D3DXVECTOR2(100, 50.0f), 0,
+						SetEffect(106, D3DXVECTOR2(103, 50.0f), D3DXVECTOR2(103, 50.0f), 0,
 							D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 0,
 							0.0f, 1.0f, 0, 1, 0, 0,
 							0.0f, 0.0f, 0);
@@ -380,14 +380,14 @@ void UpdatePause(void)
 				//バツ印の表示
 				if (pausemission)
 				{
-					SetEffect(118, D3DXVECTOR2(100, 350), D3DXVECTOR2(100, 350), 0,
+					SetEffect(118, D3DXVECTOR2(100, 460), D3DXVECTOR2(100, 460), 0,
 						D3DXVECTOR2(170.0f, 170.0f), D3DXVECTOR2(170.0f, 170.0f), 0,
 						0.0f, 1.0f, 0, 1, 0, 1,
 						0.0f, 0.0f, 0);
 				}
 				if (Abovemap)
 				{
-					SetEffect(116, D3DXVECTOR2(100, 150), D3DXVECTOR2(100, 150), 0,
+					SetEffect(116, D3DXVECTOR2(100, 220), D3DXVECTOR2(100, 220), 0,
 						D3DXVECTOR2(170.0f, 170.0f), D3DXVECTOR2(170.0f, 170.0f), 0,
 						0.0f, 1.0f, 0, 1, 0, 1,
 						0.0f, 0.0f, 0);
@@ -423,7 +423,7 @@ void UpdatePause(void)
 					//ポーズボタン 1200 700	300 300
 					if (mouse_pos_X > 10.0f && mouse_pos_X < 175.0f && mouse_pos_Y > 15.0f && mouse_pos_Y < 85.0f)
 					{
-						SetEffect(106, D3DXVECTOR2(100, 50.0f), D3DXVECTOR2(100, 50.0f), 0,
+						SetEffect(106, D3DXVECTOR2(103, 50.0f), D3DXVECTOR2(103, 50.0f), 0,
 							D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 0,
 							0.0f, 1.0f, 0, 1, 0, 0,
 							0.0f, 0.0f, 0);
@@ -454,6 +454,7 @@ void UpdatePause(void)
 			pausemission = false;
 			Abovemap = false;
 			DeleteMissionPause();
+
 		}
 	}
 

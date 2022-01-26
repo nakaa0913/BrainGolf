@@ -1022,6 +1022,12 @@ void UpdateBullet(void)
 					{
 						p_Gamedata->acc_count++;
 
+						int x, y;
+						x = (int)(g_Bullet[i].nextpos.x / MAP_CHIP_SIZE_X);//座標をマップチップ一つの大きさで割る
+						y = (int)(g_Bullet[i].nextpos.y / MAP_CHIP_SIZE_Y);
+
+						g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+						g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 90.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
@@ -1039,6 +1045,12 @@ void UpdateBullet(void)
 					{
 						p_Gamedata->acc_count++;
 
+						int x, y;
+						x = (int)(g_Bullet[i].nextpos.x / MAP_CHIP_SIZE_X);//座標をマップチップ一つの大きさで割る
+						y = (int)(g_Bullet[i].nextpos.y / MAP_CHIP_SIZE_Y);
+
+						g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+						g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 270.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
@@ -1056,6 +1068,12 @@ void UpdateBullet(void)
 					{
 						p_Gamedata->acc_count++;
 
+						int x, y;
+						x = (int)(g_Bullet[i].nextpos.x / MAP_CHIP_SIZE_X);//座標をマップチップ一つの大きさで割る
+						y = (int)(g_Bullet[i].nextpos.y / MAP_CHIP_SIZE_Y);
+
+						g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+						g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 0.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
@@ -1072,6 +1090,12 @@ void UpdateBullet(void)
 					{
 						p_Gamedata->acc_count++;
 
+						int x, y;
+						x = (int)(g_Bullet[i].nextpos.x / MAP_CHIP_SIZE_X);//座標をマップチップ一つの大きさで割る
+						y = (int)(g_Bullet[i].nextpos.y / MAP_CHIP_SIZE_Y);
+
+						g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+						g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 180.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
@@ -1088,6 +1112,12 @@ void UpdateBullet(void)
 					{
 						p_Gamedata->acc_count++;
 
+						int x, y;
+						x = (int)(g_Bullet[i].nextpos.x / MAP_CHIP_SIZE_X);//座標をマップチップ一つの大きさで割る
+						y = (int)(g_Bullet[i].nextpos.y / MAP_CHIP_SIZE_Y);
+
+						g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+						g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 45.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
@@ -1104,6 +1134,12 @@ void UpdateBullet(void)
 					{
 						p_Gamedata->acc_count++;
 
+						int x, y;
+						x = (int)(g_Bullet[i].nextpos.x / MAP_CHIP_SIZE_X);//座標をマップチップ一つの大きさで割る
+						y = (int)(g_Bullet[i].nextpos.y / MAP_CHIP_SIZE_Y);
+
+						g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+						g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 315.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
@@ -1120,6 +1156,12 @@ void UpdateBullet(void)
 					{
 						p_Gamedata->acc_count++;
 
+						int x, y;
+						x = (int)(g_Bullet[i].nextpos.x / MAP_CHIP_SIZE_X);//座標をマップチップ一つの大きさで割る
+						y = (int)(g_Bullet[i].nextpos.y / MAP_CHIP_SIZE_Y);
+
+						g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+						g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 225.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
@@ -1136,6 +1178,12 @@ void UpdateBullet(void)
 					{
 						p_Gamedata->acc_count++;
 
+						int x, y;
+						x = (int)(g_Bullet[i].nextpos.x / MAP_CHIP_SIZE_X);//座標をマップチップ一つの大きさで割る
+						y = (int)(g_Bullet[i].nextpos.y / MAP_CHIP_SIZE_Y);
+
+						g_Bullet[i].nextpos.x = x * MAP_CHIP_SIZE_X + (MAP_CHIP_SIZE_X / 2);
+						g_Bullet[i].nextpos.y = y * MAP_CHIP_SIZE_Y + (MAP_CHIP_SIZE_Y / 2);
 						g_Bullet[i].shotpower = 2.0f;								// ショットパワーを設定
 						g_Bullet[i].angle = 135.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定

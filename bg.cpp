@@ -661,6 +661,8 @@ void DrawBG(void)
 					warp = true;
 				if (mapchipdata == 11 || mapchipdata == 12)
 					warp = true;
+				if (mapchipdata >= 38 && mapchipdata <= 41)
+					warp = true;
 				float sizebairitu = 0.5f;
 				float GAP_X = MAP_CHIP3D_GAP_X * sizebairitu - 18.0f;
 				float GAP_Y = MAP_CHIP3D_GAP_Y * sizebairitu - 10.0f;

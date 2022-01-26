@@ -1032,7 +1032,7 @@ void UpdateBullet(void)
 						g_Bullet[i].angle = 90.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
-						g_Bullet[i].accboardcool = 10;
+						g_Bullet[i].accboardcool = 5;
 
 						g_SENo = LoadSound("data/SE/Shortbridge29-4.wav");
 						PlaySound(g_SENo, 0);
@@ -1056,7 +1056,7 @@ void UpdateBullet(void)
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
 
-						g_Bullet[i].accboardcool = 10;
+						g_Bullet[i].accboardcool = 5;
 						g_SENo = LoadSound("data/SE/Shortbridge29-4.wav");
 						PlaySound(g_SENo, 0);
 					}
@@ -1078,7 +1078,7 @@ void UpdateBullet(void)
 						g_Bullet[i].angle = 0.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
-						g_Bullet[i].accboardcool = 10;
+						g_Bullet[i].accboardcool = 5;
 						g_SENo = LoadSound("data/SE/Shortbridge29-4.wav");
 						PlaySound(g_SENo, 0);
 					}
@@ -1100,7 +1100,7 @@ void UpdateBullet(void)
 						g_Bullet[i].angle = 180.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
-						g_Bullet[i].accboardcool = 10;
+						g_Bullet[i].accboardcool = 5;
 						g_SENo = LoadSound("data/SE/Shortbridge29-4.wav");
 						PlaySound(g_SENo, 0);
 					}
@@ -1122,7 +1122,7 @@ void UpdateBullet(void)
 						g_Bullet[i].angle = 45.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
-						g_Bullet[i].accboardcool = 10;
+						g_Bullet[i].accboardcool = 5;
 						g_SENo = LoadSound("data/SE/Shortbridge29-4.wav");
 						PlaySound(g_SENo, 0);
 					}
@@ -1144,7 +1144,7 @@ void UpdateBullet(void)
 						g_Bullet[i].angle = 315.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
-						g_Bullet[i].accboardcool = 10;
+						g_Bullet[i].accboardcool = 5;
 						g_SENo = LoadSound("data/SE/Shortbridge29-4.wav");
 						PlaySound(g_SENo, 0);
 					}
@@ -1166,7 +1166,7 @@ void UpdateBullet(void)
 						g_Bullet[i].angle = 225.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
-						g_Bullet[i].accboardcool = 10;
+						g_Bullet[i].accboardcool = 5;
 						g_SENo = LoadSound("data/SE/Shortbridge29-4.wav");
 						PlaySound(g_SENo, 0);
 					}
@@ -1188,7 +1188,7 @@ void UpdateBullet(void)
 						g_Bullet[i].angle = 135.0f;									// 角度を設定
 						g_Bullet[i].vector = AngleToVector2(g_Bullet[i].angle);		// 角度からベクトルを設定
 
-						g_Bullet[i].accboardcool = 10;
+						g_Bullet[i].accboardcool = 5;
 						g_SENo = LoadSound("data/SE/Shortbridge29-4.wav");
 						PlaySound(g_SENo, 0);
 					}

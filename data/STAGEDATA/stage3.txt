@@ -30,7 +30,7 @@ pos,6,19,
 PlayerdataEnd
 
 MissiondataStart
-0,3,
+0,33,
 1,2,
 2,120,
 MissiondataEnd

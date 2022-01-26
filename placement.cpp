@@ -215,8 +215,8 @@ void UpdatePlacement(void)
 	//next表示と入力
 	if (mouse_pos_X > nextPos.x - (botan_size_x / 2) && mouse_pos_X < nextPos.x + (botan_size_x / 2) && mouse_pos_Y > nextPos.y - (botan_size_y / 2) && mouse_pos_Y < nextPos.y + (botan_size_y / 2))
 	{
-		SetEffect(110, D3DXVECTOR2(1200.0f, 700.0f), D3DXVECTOR2(1200.0f, 700.0f), 0,
-			D3DXVECTOR2(botan_size_x * kyouchou, botan_size_y * kyouchou), D3DXVECTOR2(400.0f, 400.0f), 0,
+		SetEffect(111, D3DXVECTOR2(1200.0f, 700.0f), D3DXVECTOR2(1200.0f, 700.0f), 0,
+			D3DXVECTOR2(botan_size_x, botan_size_y), D3DXVECTOR2(300.0f, 300.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 0,
 			0.0f, 0.0f, 0);
 		mouseuse = true;
@@ -239,8 +239,8 @@ void UpdatePlacement(void)
 	if (mouse_pos_X > backPos.x - (botan_size_x/ 2) && mouse_pos_X < backPos.x + (botan_size_x/ 2) && mouse_pos_Y > backPos.y - (botan_size_y/ 2) && mouse_pos_Y < backPos.y + (botan_size_y/ 2))
 	{
 		// ステージ選択
-		SetEffect(112, D3DXVECTOR2(150.0f, 700.0f), D3DXVECTOR2(150.0f, 700.0f), 0,
-			D3DXVECTOR2(botan_size_x * kyouchou, botan_size_y * kyouchou), D3DXVECTOR2(150.0f, 150.0f), 0,
+		SetEffect(113, D3DXVECTOR2(150.0f, 700.0f), D3DXVECTOR2(150.0f, 700.0f), 0,
+			D3DXVECTOR2(botan_size_x, botan_size_y), D3DXVECTOR2(100.0f, 100.0f), 0,
 			0.0f, 1.0f, 0, 1, 0, 0,
 			0.0f, 0.0f, 0);
 		mouseuse = true;

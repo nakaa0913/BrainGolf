@@ -176,6 +176,9 @@ static int number_2_119;
 static int number_3_120;
 static int nobasibou_121;
 
+//タイトルに戻るボタン
+static int title_botan_122;
+static int title_botan2_123;
 
 void InitEffect(void)
 {
@@ -325,6 +328,10 @@ void InitEffect(void)
 	number_2_119 = LoadTexture("data/TEXTURE/other_effect/number_2.png");
 	number_3_120 = LoadTexture("data/TEXTURE/other_effect/number_3.png");
 	nobasibou_121 = LoadTexture("data/TEXTURE/other_effect/nobasibou.png");
+
+
+	title_botan_122 = LoadTexture("data/TEXTURE/select/title_botan.png");
+	title_botan2_123 = LoadTexture("data/TEXTURE/select/title_botan_2.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -1578,6 +1585,12 @@ int GetTextureData(int id)
 		break;
 	case 121:
 		return nobasibou_121;
+		break;
+	case 122:
+		return title_botan_122;
+		break;
+	case 123:
+		return title_botan2_123;
 		break;
 	}
 	

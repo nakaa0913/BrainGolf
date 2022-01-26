@@ -173,6 +173,7 @@ static int mission_2_118;
 
 // number追加
 static int number_2_119;
+static int number_3_120;
 
 
 void InitEffect(void)
@@ -321,6 +322,7 @@ void InitEffect(void)
 	mission_2_118 = LoadTexture("data/TEXTURE/pause/mission_2.png");
 
 	number_2_119 = LoadTexture("data/TEXTURE/other_effect/number_2.png");
+	number_3_120 = LoadTexture("data/TEXTURE/other_effect/number_3.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -608,7 +610,7 @@ int SetEffectInReverse(int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_movin
 // 正の整数のみ対応
 void SetEffectNumber(int num,int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, int pos_moving_pattern, D3DXVECTOR2 size1, D3DXVECTOR2 size2, int size_moving_pattern,
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
-	float rot_angle1, float rot_angle2, int rot_moving_pattern, float interval_magnification)
+	float rot_angle1, float rot_angle2, int rot_moving_pattern, float interval_magnification, int id)
 {
 
 	// 貰った数字は実際には使わずにクローンを使って計算
@@ -703,7 +705,10 @@ void SetEffectNumber(int num,int* back_array, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2
 		g_Effect[i + sn].isUse = true;
 
 		//g_Effect[i + sn].id = GetTextureData(46);		// Numberは46番に設定されてる
-		g_Effect[i + sn].id = GetTextureData(119);		// Numberは46番に設定されてる
+		//g_Effect[i + sn].id = GetTextureData(119);		// Numberは46番に設定されてる
+
+		g_Effect[i + sn].id = GetTextureData(id);		// でふぉだと119に設定されてる
+
 
 
 		// 桁が小さい方から描かれていく。右から左に向かって描いていく
@@ -1539,6 +1544,9 @@ int GetTextureData(int id)
 		break;
 	case 119:
 		return number_2_119;
+		break;
+	case 120:
+		return number_3_120;
 		break;
 	}
 	

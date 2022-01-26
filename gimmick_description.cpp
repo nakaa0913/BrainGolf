@@ -173,7 +173,7 @@ void UpdateGimmickDescription_Game()
 
 
 		// ブロックデータが0(床)or壁ブロック(1)だった場合クールタイムを0にして終わる
-		if (block_data == 0 || block_data == 1)
+		if (block_data == 0 || block_data == 1 || block_data == 23)
 		{
 			GimmickDescriptionCool = 0;
 		}

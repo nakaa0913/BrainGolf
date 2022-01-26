@@ -35,6 +35,7 @@ STAGESELECT* GetStageSelect();
 //void SetStageSelect(int stagenum);
 void StartStageSelectScreen();
 void ChangePage(int ToGoPage);
+void ChangePageOneTime(int ToGoPage);
 int GetNowChoiceStageNum();
 void ChangeNowChoiceStageNum(int num);
 void NextNowChoiceStageNum();

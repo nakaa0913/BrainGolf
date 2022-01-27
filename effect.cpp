@@ -180,9 +180,10 @@ static int nobasibou_121;
 static int title_botan_122;
 static int title_botan2_123;
 
-//ゲームオーバーの時のジュエリー
+//ゲームオーバー
 static int batu_124;
 static int highscore_125;
+static int husen_126;
 
 void InitEffect(void)
 {
@@ -338,6 +339,7 @@ void InitEffect(void)
 
 	batu_124 = LoadTexture("data/TEXTURE/result/gameover/batu.png");
 	highscore_125 = LoadTexture("data/TEXTURE/result/highscore.png");
+	husen_126 = LoadTexture("data/TEXTURE/result/husen_02.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -1611,6 +1613,9 @@ int GetTextureData(int id)
 		break;
 	case 125:
 		return highscore_125;
+		break;
+	case 126:
+		return husen_126;
 		break;
 	}
 	

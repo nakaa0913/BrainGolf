@@ -470,22 +470,22 @@ void UpdateGameover(void)
 				// コンテンツのidを描写用に、エフェクトで設定されているidに変換
 				int Content_Texid = ContentsNumToTexid(p_Stagedata->mission_ContentsNum[i]);
 				// セットエフェクトで文字の描写
-				int Content_EffectArray =
+			/*	int Content_EffectArray =
 					SetEffect(Content_Texid, D3DXVECTOR2(base_pos1_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x, base_pos2_y + interval_y * i), 1,
 						D3DXVECTOR2(size_x, size_y), D3DXVECTOR2(size_x, size_y), 0,
 						0.0f, 1.0f, 100, 999, 0, 1,
-						0.0f, 0.0f, 0);
+						0.0f, 0.0f, 0);*/
 
 				// ミッションのテクスチャIDから数字の座標がどれだけ真ん中からずれてるかをとってくる(xのみ)
 				float number_gap_x = MissionTexIdToNumXGAP(Content_Texid) * sizebairitu;
 
 				// 数字の描写		ミッションの番号ごとに数字を描く場所は決まってると思うので、それもswitch分で判別できると楽
-				int Number_EffectArray[2] = { 0,0 };
+			/*	int Number_EffectArray[2] = { 0,0 };
 				int* p_Number_EffectArray = Number_EffectArray;
 				SetEffectNumber(p_Stagedata->mission_JudgeNum[i], p_Number_EffectArray, D3DXVECTOR2(base_pos1_x - number_gap_x, base_pos1_y + interval_y * i), D3DXVECTOR2(base_pos2_x - number_gap_x, base_pos2_y + interval_y * i), 1,
 					D3DXVECTOR2(num_size_x* sizebairitu, num_size_y* sizebairitu), D3DXVECTOR2(num_size_x, num_size_y), 0,
 					0.0f, 1.0f, 100, 999, 0, 1,
-					0.0f, 0.0f, 0, false, interval_magnification);
+					0.0f, 0.0f, 0, false, interval_magnification);*/
 			}
 		}
 
@@ -526,15 +526,19 @@ void UpdateGameover(void)
 
 		if (g_Gameover.resulttime2 == 80)
 		{
-		
+			//ふせん
+			SetEffect(126, D3DXVECTOR2(1020.0f, 360.0f), D3DXVECTOR2(1020.0f, 360.0f), 0,
+				D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(435.0f, 260.0f), 1,
+				0.0f, 1.0f, 120, 999, 0, 60,
+				0.0f, 0.0f, 0);
 			// ミッションをクリアしているなら表示する
 			if (p_Savedata[p_Stagedata->stagenum].mission_clear[0] == 1)
 			{
-				//星
-				SetEffect(83, D3DXVECTOR2(800.0f, 280.0f), D3DXVECTOR2(800.0f, 280.0f), 0,
-					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-					0.0f, 1.0f, 120, 999, 0, 60,
-					0.0f, 0.0f, 0);
+				////星
+				//SetEffect(83, D3DXVECTOR2(800.0f, 280.0f), D3DXVECTOR2(800.0f, 280.0f), 0,
+				//	D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+				//	0.0f, 1.0f, 120, 999, 0, 60,
+				//	0.0f, 0.0f, 0);
 				////バツ印
 				//SetEffect(124, D3DXVECTOR2(795.0f, 380.0f), D3DXVECTOR2(800.0f, 380.0f), 0,
 				//	D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
@@ -550,11 +554,11 @@ void UpdateGameover(void)
 			// ミッションをクリアしているなら表示する
 			if (p_Savedata[p_Stagedata->stagenum].mission_clear[1] == 1)
 			{
-				//星
-				SetEffect(84, D3DXVECTOR2(800.0f, 360.0f), D3DXVECTOR2(800.0f, 360.0f), 0,
-					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-					0.0f, 1.0f, 120, 999, 0, 60,
-					0.0f, 0.0f, 0);
+				////星
+				//SetEffect(84, D3DXVECTOR2(800.0f, 360.0f), D3DXVECTOR2(800.0f, 360.0f), 0,
+				//	D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+				//	0.0f, 1.0f, 120, 999, 0, 60,
+				//	0.0f, 0.0f, 0);
 				////バツ印
 				//SetEffect(124, D3DXVECTOR2(795.0f, 360.0f), D3DXVECTOR2(800.0f, 360.0f), 0,
 				//	D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
@@ -565,30 +569,22 @@ void UpdateGameover(void)
 
 		if (g_Gameover.resulttime2 == 120)
 		{
-			// ミッションをクリアしているなら表示する
-			if (p_Savedata[p_Stagedata->stagenum].mission_clear[2] == 1)
-			{
-				//星
-				SetEffect(85, D3DXVECTOR2(800.0f, 440.0f), D3DXVECTOR2(800.0f, 440.0f), 0,
-					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-					0.0f, 1.0f, 120, 999, 0, 60,
-					0.0f, 0.0f, 0);
-				////バツ印
-				//SetEffect(124, D3DXVECTOR2(795.0f, 440.0f), D3DXVECTOR2(800.0f, 440.0f), 0,
-				//	D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-				//	0.0f, 1.0f, 120, 999, 0, 60,
-				//	0.0f, 0.0f, 0);
-			}
+			//// ミッションをクリアしているなら表示する
+			//if (p_Savedata[p_Stagedata->stagenum].mission_clear[2] == 1)
+			//{
+			//	//星
+			//	SetEffect(85, D3DXVECTOR2(800.0f, 440.0f), D3DXVECTOR2(800.0f, 440.0f), 0,
+			//		D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+			//		0.0f, 1.0f, 120, 999, 0, 60,
+			//		0.0f, 0.0f, 0);
+			//	////バツ印
+			//	//SetEffect(124, D3DXVECTOR2(795.0f, 440.0f), D3DXVECTOR2(800.0f, 440.0f), 0,
+			//	//	D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+			//	//	0.0f, 1.0f, 120, 999, 0, 60,
+			//	//	0.0f, 0.0f, 0);
+			//}
 		}
 
-		if (g_Gameover.resulttime2 == 120)
-		{
-			//バツ印
-			SetEffect(124, D3DXVECTOR2(970.0f, 380.0f), D3DXVECTOR2(970.0f, 380.0f), 0,
-				D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(600.0f, 600.0f), 1,
-				0.0f, 1.0f, 120, 999, 0, 60,
-				0.0f, 0.0f, 0);
-		}
 
 		if (g_Gameover.resulttime2 == 140)
 		{

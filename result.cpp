@@ -552,11 +552,12 @@ void UpdateResult(void)
 
 			if (g_Result.resulttime == 160)
 			{
+				// ハイスコアを出したらハイスコアって文字が出る
 				bool highscore = GetNewScore();
 				if (highscore == true)
 				{
-					SetEffect(125, D3DXVECTOR2(810.0f, 580.0f), D3DXVECTOR2(780.0f, 510.0f), 1,
-						D3DXVECTOR2(480.0f * 0.3f, 120.0f * 0.3f), D3DXVECTOR2(50.0f, 50.0f), 0,
+					SetEffect(125, D3DXVECTOR2(750.0f, 530.0f), D3DXVECTOR2(720.0f, 460.0f), 1,
+						D3DXVECTOR2(480.0f * 0.4f, 120.0f * 0.4f), D3DXVECTOR2(50.0f, 50.0f), 0,
 						0.0f, 1.0f, 40, 20, 30, 90,
 						350.0f, 0.0f, 0);
 				}

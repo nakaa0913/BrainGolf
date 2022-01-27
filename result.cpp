@@ -75,7 +75,7 @@ HRESULT InitResult(void)
 
 
 	g_Result.goaltime = 0;
-	g_Result.selectpush = 0;
+	//g_Result.selectpush = 0;
 	g_Result.resulttime = 0;
 
 	//初期化
@@ -236,7 +236,7 @@ void UpdateResult(void)
 				//マウス操作
 				if (mouse_pos_X > 715.0f && mouse_pos_X < 870.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 730.0f)
 				{
-					g_Result.selectpush = 0;
+					//g_Result.selectpush = 0;
 					//next?次のステージへ的な
 					SetEffect(80, D3DXVECTOR2(800.0f, 700.0f), D3DXVECTOR2(800.0f, 700.0f), 1,
 						D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 1,
@@ -247,7 +247,7 @@ void UpdateResult(void)
 				//ワールド選択		100, 700
 				if (mouse_pos_X > 22.0f && mouse_pos_X < 150.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 730.0f)
 				{
-					g_Result.selectpush = 1;
+					//g_Result.selectpush = 1;
 					//ワールド選択に戻る
 					SetEffect(76, D3DXVECTOR2(90.0f, 700.0f), D3DXVECTOR2(90.0f, 700.0f), 1,
 						D3DXVECTOR2(227.0f, 202.0f), D3DXVECTOR2(227.0f, 202.0f), 1,
@@ -258,7 +258,7 @@ void UpdateResult(void)
 				//プレイヤー配置	600, 700
 				if (mouse_pos_X > 520.0f && mouse_pos_X < 675.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 730.0f)
 				{
-					g_Result.selectpush = 2;
+					//g_Result.selectpush = 2;
 					//プレイヤー配置に戻る
 					SetEffect(100, D3DXVECTOR2(600.0f, 700.0f), D3DXVECTOR2(600.0f, 700.0f), 1,
 						D3DXVECTOR2(200.0f, 109.0f), D3DXVECTOR2(200.0f, 109.0f), 1,
@@ -269,7 +269,7 @@ void UpdateResult(void)
 				//リザルトにいく
 				if (mouse_pos_X > 400.0f && mouse_pos_X < 950.0f && mouse_pos_Y > 500.0f && mouse_pos_Y < 600.0f)
 				{
-					g_Result.selectpush = 3;
+					//g_Result.selectpush = 3;
 					//リザルトに行く
 					SetEffect(98, D3DXVECTOR2(700.0f, 545.0f), D3DXVECTOR2(700.0f, 545.0f), 1,
 						D3DXVECTOR2(725.0f, 85.0f), D3DXVECTOR2(725.0f, 85.0f), 1,
@@ -280,7 +280,7 @@ void UpdateResult(void)
 				//次のステージ
 				if (mouse_pos_X > 1170.0f && mouse_pos_X < 1420.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 730.0f)
 				{
-					g_Result.selectpush = 4;
+					//g_Result.selectpush = 4;
 					//次のステージ
 					SetEffect(78, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 1,
 						D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 1,
@@ -295,24 +295,25 @@ void UpdateResult(void)
 					{
 						g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
 						PlaySound(g_SENo, 0);
-						if (g_Result.selectpush == 0)
+
+						if (mouse_pos_X > 715.0f && mouse_pos_X < 870.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 730.0f)
 						{
 							// InitゲームでBGMを流すためtrueにしておく
 							BGMonceTrue();
 							SceneTransition(SCENE_GAME);
 						}
 
-						if (g_Result.selectpush == 1)
+						if (mouse_pos_X > 22.0f && mouse_pos_X < 150.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 730.0f)
 						{
 							SceneTransition(SCENE_STAGE_SELECT);
 						}
 
-						if (g_Result.selectpush == 2)
+						if (mouse_pos_X > 520.0f && mouse_pos_X < 675.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 730.0f)
 						{
 							SceneTransition(SCENE_PLACEMENT);
 						}
 
-						if (g_Result.selectpush == 4)
+						if (mouse_pos_X > 1170.0f && mouse_pos_X < 1420.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 730.0f)
 						{
 							// 次のステージへ
 							resultfin = true;
@@ -326,7 +327,7 @@ void UpdateResult(void)
 					}
 				}
 
-				if (g_Result.selectpush == 3)
+				if (mouse_pos_X > 400.0f && mouse_pos_X < 950.0f && mouse_pos_Y > 500.0f && mouse_pos_Y < 600.0f)
 				{
 					if (mouseuse && mouse_Lclick)
 					{
@@ -594,7 +595,7 @@ void UpdateResult(void)
 				//1 1200 700	300 300
 				if (mouse_pos_X > 950.0f && mouse_pos_X < 1200.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
 				{
-					g_Result.selectpush = 0;
+					//g_Result.selectpush = 0;
 					//next?次のステージへ的な
 					SetEffect(78, D3DXVECTOR2(1080.0f, 700.0f), D3DXVECTOR2(1080.0f, 700.0f), 1,
 						D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 1,
@@ -605,7 +606,7 @@ void UpdateResult(void)
 				//2 100 700		200 200
 				if (mouse_pos_X > 340.0f && mouse_pos_X < 460.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
 				{
-					g_Result.selectpush = 1;
+					//g_Result.selectpush = 1;
 					//ワールド選択に戻る
 					SetEffect(76, D3DXVECTOR2(393.0f, 702.0f), D3DXVECTOR2(393.0f, 702.0f), 1,
 						D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(150.0f, 150.0f), 1,
@@ -615,7 +616,7 @@ void UpdateResult(void)
 				}
 				if (mouse_pos_X > 770.0f && mouse_pos_X < 930.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
 				{
-					g_Result.selectpush = 2;
+					//g_Result.selectpush = 2;
 					//リトライ
 					SetEffect(80, D3DXVECTOR2(800.0f, 700.0f), D3DXVECTOR2(800.0f, 700.0f), 1,
 						D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 1,
@@ -625,7 +626,7 @@ void UpdateResult(void)
 				}
 				if (mouse_pos_X > 480.0f && mouse_pos_X < 690.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
 				{
-					g_Result.selectpush = 3;
+					//g_Result.selectpush = 3;
 					//プレイヤー配置に戻る
 					SetEffect(100, D3DXVECTOR2(600.0f, 700.0f), D3DXVECTOR2(600.0f, 700.0f), 1,
 						D3DXVECTOR2(200.0f, 109.0f), D3DXVECTOR2(200.0f, 109.0f), 1,
@@ -638,10 +639,11 @@ void UpdateResult(void)
 				{
 					if (resultmouseuse && mouse_Lclick)
 					{
-						g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
-						PlaySound(g_SENo, 0);
-						if (g_Result.selectpush == 0)
+						if (mouse_pos_X > 950.0f && mouse_pos_X < 1200.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
 						{
+
+							g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
+							PlaySound(g_SENo, 0);
 							// 次のステージへ
 							resultfin = true;
 							//GoalFalse();
@@ -652,19 +654,28 @@ void UpdateResult(void)
 							SceneTransition(SCENE_PLACEMENT);
 						}
 
-						if (g_Result.selectpush == 1)
+						if (mouse_pos_X > 340.0f && mouse_pos_X < 460.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
 						{
+
+							g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
+							PlaySound(g_SENo, 0);
 							SceneTransition(SCENE_STAGE_SELECT);
 						}
 
-						if (g_Result.selectpush == 2)
+						if (mouse_pos_X > 770.0f && mouse_pos_X < 930.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
 						{
+
+							g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
+							PlaySound(g_SENo, 0);
 							// InitゲームでBGMを流すためtrueにしておく
 							BGMonceTrue();
 							SceneTransition(SCENE_GAME);
 						}
-						if (g_Result.selectpush == 3)
+						if (mouse_pos_X > 480.0f && mouse_pos_X < 690.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
 						{
+
+							g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
+							PlaySound(g_SENo, 0);
 							SceneTransition(SCENE_PLACEMENT);
 						}
 					}

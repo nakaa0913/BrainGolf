@@ -1315,17 +1315,18 @@ void UpdateBullet(void)
 				{
 					if (g_Bullet[i].holecool <= 0)
 					{
-						if (Holeonetime <= 0)
-						{
+						//if (Holeonetime <= 0)
+						//{
 							g_SENo = LoadSound("data/SE/fall02.wav");
 							PlaySound(g_SENo, 0);
 							Holeonetime = 365.0f;
-						}
-						g_Bullet[i].shotpower = 0.0f;
+						//}
+					
 						g_Bullet[i].nextpos.x = 1000.0f;
 						g_Bullet[i].nextpos.y = 1000.0f;
 				
 					}
+					g_Bullet[i].shotpower = 0.5f;
 				}
 
 				//’r

@@ -222,7 +222,8 @@ void UpdatePlacement(void)
 		mouseuse = true;
 		if (mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
 		{
-
+			g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
+			PlaySound(g_SENo, 0);
 			SceneTransition(SCENE_GAME);
 		}
 	}
@@ -246,6 +247,8 @@ void UpdatePlacement(void)
 		mouseuse = true;
 		if (mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
 		{
+			g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
+			PlaySound(g_SENo, 0);
 			SceneTransition(SCENE_STAGE_SELECT);
 		}
 	}

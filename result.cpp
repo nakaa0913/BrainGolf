@@ -521,33 +521,45 @@ void UpdateResult(void)
 			}
 
 
-			if (g_Result.resulttime == 160)
+			if (g_Result.resulttime == 140)
 			{
 
 
 				//next?次のステージへ的な
-				SetEffect(77, D3DXVECTOR2(1080.0f, 700.0f), D3DXVECTOR2(1080.0f, 700.0f), 1,
-					D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 1,
-					0.0f, 1.0f, 0, 999, 0, 1,
+				SetEffect(77, D3DXVECTOR2(1080.0f, 700.0f), D3DXVECTOR2(1080.0f, 700.0f), 0,
+					D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 0,
+					0.0f, 1.0f, 40, 999, 0, 0,
 					0.0f, 0.0f, 0);
 
 				//ワールド選択に戻る
-				SetEffect(75, D3DXVECTOR2(400.0f, 700.0f), D3DXVECTOR2(400.0f, 700.0f), 1,
-					D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(150.0f, 150.0f), 1,
-					0.0f, 1.0f, 0, 999, 0, 1,
+				SetEffect(75, D3DXVECTOR2(400.0f, 700.0f), D3DXVECTOR2(400.0f, 700.0f), 0,
+					D3DXVECTOR2(150.0f, 150.0f), D3DXVECTOR2(150.0f, 150.0f), 0,
+					0.0f, 1.0f, 40, 999, 0, 0,
 					0.0f, 0.0f, 0);
 
 				//リトライ
-				SetEffect(79, D3DXVECTOR2(800.0f, 700.0f), D3DXVECTOR2(800.0f, 700.0f), 1,
-					D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 1,
-					0.0f, 1.0f, 0, 999, 0, 1,
+				SetEffect(79, D3DXVECTOR2(800.0f, 700.0f), D3DXVECTOR2(800.0f, 700.0f), 0,
+					D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 0,
+					0.0f, 1.0f, 40, 999, 0, 0,
 					0.0f, 0.0f, 0);
 
 				//プレイヤー配置に戻る
-				SetEffect(99, D3DXVECTOR2(600.0f, 700.0f), D3DXVECTOR2(600.0f, 700.0f), 1,
+				SetEffect(99, D3DXVECTOR2(600.0f, 700.0f), D3DXVECTOR2(600.0f, 700.0f), 0,
 					D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 1,
-					0.0f, 1.0f, 0, 999, 0, 1,
+					0.0f, 1.0f, 40, 999, 0, 0,
 					0.0f, 0.0f, 0);
+			}
+
+			if (g_Result.resulttime == 160)
+			{
+				bool highscore = GetNewScore();
+				if (highscore == true)
+				{
+					SetEffect(125, D3DXVECTOR2(810.0f, 580.0f), D3DXVECTOR2(780.0f, 510.0f), 1,
+						D3DXVECTOR2(480.0f * 0.3f, 120.0f * 0.3f), D3DXVECTOR2(50.0f, 50.0f), 0,
+						0.0f, 1.0f, 40, 20, 30, 90,
+						350.0f, 0.0f, 0);
+				}
 			}
 			//横1440
 			//縦810

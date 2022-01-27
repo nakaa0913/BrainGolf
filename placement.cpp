@@ -341,13 +341,22 @@ void UpdatePlacement(void)
 			MoveKeyCool = MOVEKEY_COOLTIME;
 		}
 
+		bool positional = false;		// 配置可能かどうか
 		// 選択しているところが置けないところの場合テクスチャを変える
-		if (DontPlaceForCharacter(nowchoice.x, nowchoice.y) || 
-			DontPlaceForBlock(nowchoice.x, nowchoice.y)		||
-			DontPlaceForNumberofPeople()						)
+		if (DontPlaceForCharacter(nowchoice.x, nowchoice.y) ||
+			DontPlaceForBlock(nowchoice.x, nowchoice.y) ||
+			DontPlaceForNumberofPeople())
+		{
+			// 配置できないところならred
+			positional = false;
 			ChangeEffectTexture(placement_pickup_EffectArray, 53);
+		}
 		else
+		{
+			// 配置できるところならgreen
+			positional = true;
 			ChangeEffectTexture(placement_pickup_EffectArray, 52);
+		}
 
 
 		// スペースキーが押されたらプレイヤーを配置する
@@ -363,12 +372,24 @@ void UpdatePlacement(void)
 					// SetPlacementAndPlayerの中でさらにブロックがあったり主人公がいたりで配置できないときの処理。
 					if (!SamePlacement(nowchoice.x, nowchoice.y))
 					{
+						// 配置する
 						SetPlacementAndPlayer(nowchoice.x, nowchoice.y);
-						g_SENo = LoadSound("data/SE/やさしいベルの上昇音.wav");
-						PlaySound(g_SENo, 0);
+						if (positional)
+						{
+							// 配置できるエリアに配置しようとした
+							g_SENo = LoadSound("data/SE/やさしいベルの上昇音.wav");
+							PlaySound(g_SENo, 0);
+						}
+						else
+						{
+							// 配置できないエリアに配置しようとした
+							g_SENo = LoadSound("data/SE/システム決定音_6.wav");
+							PlaySound(g_SENo, 0);
+						}
 					}
 					else
 					{
+						// 取り除く
 						g_SENo = LoadSound("data/SE/システム決定音_6.wav");
 						PlaySound(g_SENo, 0);
 					}

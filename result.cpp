@@ -63,6 +63,7 @@ int retry = -1;
 
 bool resultfin = false;		// 全て終わったら何もしないように
 
+static int g_SENo = 0;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -288,35 +289,40 @@ void UpdateResult(void)
 					mouseuse = true;
 				}
 
-				if (mouseuse && mouse_Lclick)
+				if (GetFadeState() == FADE_NONE)
 				{
-					if (g_Result.selectpush == 0)
+					if (mouseuse && mouse_Lclick)
 					{
-						// InitゲームでBGMを流すためtrueにしておく
-						BGMonceTrue();
-						SceneTransition(SCENE_GAME);
-					}
+						g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
+						PlaySound(g_SENo, 0);
+						if (g_Result.selectpush == 0)
+						{
+							// InitゲームでBGMを流すためtrueにしておく
+							BGMonceTrue();
+							SceneTransition(SCENE_GAME);
+						}
 
-					if (g_Result.selectpush == 1)
-					{
-						SceneTransition(SCENE_STAGE_SELECT);
-					}
+						if (g_Result.selectpush == 1)
+						{
+							SceneTransition(SCENE_STAGE_SELECT);
+						}
 
-					if (g_Result.selectpush == 2)
-					{
-						SceneTransition(SCENE_PLACEMENT);
-					}
+						if (g_Result.selectpush == 2)
+						{
+							SceneTransition(SCENE_PLACEMENT);
+						}
 
-					if (g_Result.selectpush == 4)
-					{
-						// 次のステージへ
-						resultfin = true;
-						//GoalFalse();
-						NextstageTrue();
-						PushNextstage();
-						NextNowChoiceStageNum();
-						ResetPlacementArray();
-						SceneTransition(SCENE_PLACEMENT);
+						if (g_Result.selectpush == 4)
+						{
+							// 次のステージへ
+							resultfin = true;
+							//GoalFalse();
+							NextstageTrue();
+							PushNextstage();
+							NextNowChoiceStageNum();
+							ResetPlacementArray();
+							SceneTransition(SCENE_PLACEMENT);
+						}
 					}
 				}
 
@@ -628,37 +634,41 @@ void UpdateResult(void)
 					resultmouseuse = true;
 				}
 
-				if (resultmouseuse && mouse_Lclick)
+				if (GetFadeState() == FADE_NONE)
 				{
-					if (g_Result.selectpush == 0)
+					if (resultmouseuse && mouse_Lclick)
 					{
-						// 次のステージへ
-						resultfin = true;
-						//GoalFalse();
-						NextstageTrue();
-						PushNextstage();
-						NextNowChoiceStageNum();
-						ResetPlacementArray();
-						SceneTransition(SCENE_PLACEMENT);
-					}
+						g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
+						PlaySound(g_SENo, 0);
+						if (g_Result.selectpush == 0)
+						{
+							// 次のステージへ
+							resultfin = true;
+							//GoalFalse();
+							NextstageTrue();
+							PushNextstage();
+							NextNowChoiceStageNum();
+							ResetPlacementArray();
+							SceneTransition(SCENE_PLACEMENT);
+						}
 
-					if (g_Result.selectpush == 1)
-					{
-						SceneTransition(SCENE_STAGE_SELECT);
-					}
+						if (g_Result.selectpush == 1)
+						{
+							SceneTransition(SCENE_STAGE_SELECT);
+						}
 
-					if (g_Result.selectpush == 2)
-					{
-						// InitゲームでBGMを流すためtrueにしておく
-						BGMonceTrue();
-						SceneTransition(SCENE_GAME);
-					}
-					if (g_Result.selectpush == 3)
-					{
-						SceneTransition(SCENE_PLACEMENT);
+						if (g_Result.selectpush == 2)
+						{
+							// InitゲームでBGMを流すためtrueにしておく
+							BGMonceTrue();
+							SceneTransition(SCENE_GAME);
+						}
+						if (g_Result.selectpush == 3)
+						{
+							SceneTransition(SCENE_PLACEMENT);
+						}
 					}
 				}
-
 				//// マウスが押される位置にあって、左クリック押されていて、フェード処理中ではないとき
 				//if (resultmouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
 				//{

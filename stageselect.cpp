@@ -2290,45 +2290,52 @@ void UpdateStageSelect2(void)
 
 			if (title_display != false)
 			{
+
 				// 変更を確認する処理
 				if (pushTitleCount > STAGE_SELECT_COOL)
 				{
-					// もし前のフレームから変化があった場合のみエフェクトなどを変化させる
-					bool Change = false;
-					if (OldStageSelectX != g_StageSelect.select_x ||
-						OldStageSelectY != g_StageSelect.select_y)
-						Change = true;
-
-					// マウスがステージなどににあってない場合表示しない。
-					if (!mouseuse)
+					// 確定されていた場合変更を認めない
+					if (SentakuKakutei == false)
 					{
-						if (now_stage_select_EffectArray != -1)
-						{
-							// もし消した場合は変更があったとする。
+						// もし前のフレームから変化があった場合のみエフェクトなどを変化させる
+						bool Change = false;
+						if (OldStageSelectX != g_StageSelect.select_x ||
+							OldStageSelectY != g_StageSelect.select_y)
 							Change = true;
+
+						// マウスがステージなどににあってない場合表示しない。
+						if (!mouseuse)
+						{
+							if (now_stage_select_EffectArray != -1)
+							{
+								// もし消した場合は変更があったとする。
+								Change = true;
+								EffectBreak(now_stage_select_EffectArray);
+								EffectBreak(now_stage_selectWaku_EffectArray);
+								DeleteMissionStageSelect();
+							}
+						}
+
+						// 変更があった場合、初期化と新しいもののセット
+						if (Change == true)
+						{
+							g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
 							EffectBreak(now_stage_select_EffectArray);
 							EffectBreak(now_stage_selectWaku_EffectArray);
 							DeleteMissionStageSelect();
+							stage_select_once = false;
+							stage_select_once_time = 0;
 						}
+
 					}
 
-					// 変更があった場合、初期化と新しいもののセット
-					if (Change == true)
-					{
-						g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
-						EffectBreak(now_stage_select_EffectArray);
-						EffectBreak(now_stage_selectWaku_EffectArray);
-						DeleteMissionStageSelect();
-						stage_select_once = false;
-						stage_select_once_time = 0;
-					}
+						bool mouseclick = false;
+						if (mouseuse && mouse_Lclick)
+							mouseclick = true;
 
-					bool mouseclick = false;
-					if (mouseuse && mouse_Lclick)
-						mouseclick = true;
+					
 
-
-
+					
 
 
 					// 移動キーが押された時の処理
@@ -2584,6 +2591,7 @@ void UpdateStageSelect2(void)
 
 		if (ChangeCount > 25)
 		{
+			SentakuKakutei = false;
 			ChangeCount = 0;
 			ChangePageRequest = false;
 		}

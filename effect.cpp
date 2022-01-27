@@ -182,6 +182,7 @@ static int title_botan2_123;
 
 //ゲームオーバーの時のジュエリー
 static int batu_124;
+static int highscore_125;
 
 void InitEffect(void)
 {
@@ -336,6 +337,7 @@ void InitEffect(void)
 	title_botan2_123 = LoadTexture("data/TEXTURE/select/title_botan_2.png");
 
 	batu_124 = LoadTexture("data/TEXTURE/result/gameover/batu.png");
+	highscore_125 = LoadTexture("data/TEXTURE/result/highscore.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -1606,6 +1608,9 @@ int GetTextureData(int id)
 		break;
 	case 124:
 		return batu_124;
+		break;
+	case 125:
+		return highscore_125;
 		break;
 	}
 	

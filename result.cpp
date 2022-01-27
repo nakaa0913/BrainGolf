@@ -167,12 +167,17 @@ void UpdateResult(void)
 						0.0f, 1.0f, 0, 999, 0, 1,
 						0.0f, 0.0f, 0);
 
-				next =
-					//次のステージ
-					SetEffect(77, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 1,
-						D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 1,
-						0.0f, 1.0f, 0, 999, 0, 1,
-						0.0f, 0.0f, 0);
+				// ステージが最期20ならおさせない
+				int nowstage = GetNowChoiceStageNum();
+				if (nowstage != 20)
+				{
+					next =
+						//次のステージ
+						SetEffect(77, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 1,
+							D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 1,
+							0.0f, 1.0f, 0, 999, 0, 1,
+							0.0f, 0.0f, 0);
+				}
 			}
 
 			if (g_Result.goaltime >= 90)
@@ -236,13 +241,14 @@ void UpdateResult(void)
 				//マウス操作
 				if (mouse_pos_X > 715.0f && mouse_pos_X < 870.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 730.0f)
 				{
-					//g_Result.selectpush = 0;
-					//next?次のステージへ的な
-					SetEffect(80, D3DXVECTOR2(800.0f, 700.0f), D3DXVECTOR2(800.0f, 700.0f), 1,
-						D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 1,
-						0.0f, 1.0f, 0, 1, 0, 1,
-						0.0f, 0.0f, 0);
-					mouseuse = true;
+
+						//g_Result.selectpush = 0;
+						//next?次のステージへ的な
+						SetEffect(80, D3DXVECTOR2(800.0f, 700.0f), D3DXVECTOR2(800.0f, 700.0f), 1,
+							D3DXVECTOR2(200.0f, 100.0f), D3DXVECTOR2(200.0f, 100.0f), 1,
+							0.0f, 1.0f, 0, 1, 0, 1,
+							0.0f, 0.0f, 0);
+						mouseuse = true;
 				}
 				//ワールド選択		100, 700
 				if (mouse_pos_X > 22.0f && mouse_pos_X < 150.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 730.0f)
@@ -280,13 +286,18 @@ void UpdateResult(void)
 				//次のステージ
 				if (mouse_pos_X > 1170.0f && mouse_pos_X < 1420.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 730.0f)
 				{
-					//g_Result.selectpush = 4;
-					//次のステージ
-					SetEffect(78, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 1,
-						D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 1,
-						0.0f, 1.0f, 0, 1, 0, 1,
-						0.0f, 0.0f, 0);
-					mouseuse = true;
+					// ステージが最期20ならおさせない
+					int nowstage = GetNowChoiceStageNum();
+					if (nowstage != 20)
+					{
+						//g_Result.selectpush = 4;
+						//次のステージ
+						SetEffect(78, D3DXVECTOR2(1300.0f, 700.0f), D3DXVECTOR2(1300.0f, 700.0f), 1,
+							D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 1,
+							0.0f, 1.0f, 0, 1, 0, 1,
+							0.0f, 0.0f, 0);
+						mouseuse = true;
+					}
 				}
 
 				if (GetFadeState() == FADE_NONE)
@@ -524,12 +535,16 @@ void UpdateResult(void)
 			if (g_Result.resulttime == 140)
 			{
 
-
-				//next?次のステージへ的な
-				SetEffect(77, D3DXVECTOR2(1080.0f, 700.0f), D3DXVECTOR2(1080.0f, 700.0f), 0,
-					D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 0,
-					0.0f, 1.0f, 40, 999, 0, 0,
-					0.0f, 0.0f, 0);
+				// ステージが最期20ならおさせない
+				int nowstage = GetNowChoiceStageNum();
+				if (nowstage != 20)
+				{
+					//next?次のステージへ的な
+					SetEffect(77, D3DXVECTOR2(1080.0f, 700.0f), D3DXVECTOR2(1080.0f, 700.0f), 0,
+						D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 0,
+						0.0f, 1.0f, 40, 999, 0, 0,
+						0.0f, 0.0f, 0);
+				}
 
 				//ワールド選択に戻る
 				SetEffect(75, D3DXVECTOR2(400.0f, 700.0f), D3DXVECTOR2(400.0f, 700.0f), 0,
@@ -608,13 +623,18 @@ void UpdateResult(void)
 				//1 1200 700	300 300
 				if (mouse_pos_X > 950.0f && mouse_pos_X < 1200.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
 				{
-					//g_Result.selectpush = 0;
-					//next?次のステージへ的な
-					SetEffect(78, D3DXVECTOR2(1080.0f, 700.0f), D3DXVECTOR2(1080.0f, 700.0f), 1,
-						D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 1,
-						0.0f, 1.0f, 0, 1, 0, 1,
-						0.0f, 0.0f, 0);
-					resultmouseuse = true;
+					// ステージが最期20ならおさせない
+					int nowstage = GetNowChoiceStageNum();
+					if (nowstage != 20)
+					{
+						//g_Result.selectpush = 0;
+						//next?次のステージへ的な
+						SetEffect(78, D3DXVECTOR2(1080.0f, 700.0f), D3DXVECTOR2(1080.0f, 700.0f), 1,
+							D3DXVECTOR2(300.0f, 150.0f), D3DXVECTOR2(300.0f, 150.0f), 1,
+							0.0f, 1.0f, 0, 1, 0, 1,
+							0.0f, 0.0f, 0);
+						resultmouseuse = true;
+					}
 				}
 				//2 100 700		200 200
 				if (mouse_pos_X > 340.0f && mouse_pos_X < 460.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
@@ -654,17 +674,21 @@ void UpdateResult(void)
 					{
 						if (mouse_pos_X > 950.0f && mouse_pos_X < 1200.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)
 						{
-
-							g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
-							PlaySound(g_SENo, 0);
-							// 次のステージへ
-							resultfin = true;
-							//GoalFalse();
-							NextstageTrue();
-							PushNextstage();
-							NextNowChoiceStageNum();
-							ResetPlacementArray();
-							SceneTransition(SCENE_PLACEMENT);
+							// ステージが最期20ならおさせない
+							int nowstage = GetNowChoiceStageNum();
+							if (nowstage != 20)
+							{
+								g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
+								PlaySound(g_SENo, 0);
+								// 次のステージへ
+								resultfin = true;
+								//GoalFalse();
+								NextstageTrue();
+								PushNextstage();
+								NextNowChoiceStageNum();
+								ResetPlacementArray();
+								SceneTransition(SCENE_PLACEMENT);
+							}
 						}
 
 						if (mouse_pos_X > 340.0f && mouse_pos_X < 460.0f && mouse_pos_Y > 660.0f && mouse_pos_Y < 740.0f)

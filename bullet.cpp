@@ -1315,17 +1315,18 @@ void UpdateBullet(void)
 				{
 					if (g_Bullet[i].holecool <= 0)
 					{
-						if (Holeonetime <= 0)
-						{
+						//if (Holeonetime <= 0)
+						//{
 							g_SENo = LoadSound("data/SE/fall02.wav");
 							PlaySound(g_SENo, 0);
 							Holeonetime = 365.0f;
-						}
-						g_Bullet[i].shotpower = 0.0f;
+						//}
+					
 						g_Bullet[i].nextpos.x = 1000.0f;
 						g_Bullet[i].nextpos.y = 1000.0f;
 				
 					}
+					g_Bullet[i].shotpower = 0.5f;
 				}
 
 				//’r
@@ -1334,17 +1335,17 @@ void UpdateBullet(void)
 					// ƒpƒ[‚ðŒ¸Š‚³‚¹‚é
 					if (g_Bullet[i].shotpower > 0.0f)
 					{
-						if (Holeonetime <= 0)
-						{
+						//if (Holeonetime <= 0)
+						//{
 							g_SENo = LoadSound("data/SE/…–Ê‚ÉÎ“Š‚°2.wav");
 							PlaySound(g_SENo, 0);
 							Holeonetime = 365.0f;
-						}
-						g_Bullet[i].shotpower = 0.0f;
-						g_Bullet[i].nextpos.x = 1000.0f;
-						g_Bullet[i].nextpos.y = 1000.0f;
+						//}
+						
+						g_Bullet[i].nextpos.x = 10000.0f;
+						g_Bullet[i].nextpos.y = 10000.0f;
 					}
-
+					g_Bullet[i].shotpower = 0.5f;
 				}
 
 			}////////’n–Ê‚É‚ ‚éŽž‚¾‚¯‚Ìˆ—‚ÌI‚í‚è///////////
@@ -1720,7 +1721,7 @@ void UpdateBullet(void)
 			//////////j‚Ìˆ—////////
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 16)
 			{
-				g_Bullet[i].shotpower = 0.0f;
+				g_Bullet[i].shotpower = 0.5f;
 				g_Bullet[i].nextpos.x = 1000.0f;
 				g_Bullet[i].nextpos.y = 1000.0f;
 				g_SENo = LoadSound("data/SE/defend000.wav");

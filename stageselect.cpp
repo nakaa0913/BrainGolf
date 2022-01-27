@@ -170,8 +170,8 @@ void InitStageSelect(void)
 
 	changing = false;
 
-	g_StageSelect.select_x = 0;
-	g_StageSelect.select_y = 0;
+	g_StageSelect.select_x = -1;
+	g_StageSelect.select_y = -1;
 
 	StageDecision = false;
 
@@ -1282,22 +1282,22 @@ void StartStageSelectScreen()
 
 	// タイトルに戻る処理
 	BackTitle_EffectArray =
-		SetEffect(61, D3DXVECTOR2(240.0f + plusA, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
-			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+		SetEffect(122, D3DXVECTOR2(240.0f + plusA, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
+			D3DXVECTOR2(280.0f, 135.0f), D3DXVECTOR2(280.0f, 135.0f), 0,
 			0.0f, toumeido, FadeInTime, 999, 0, 0,
 			0.0f, 0.0f, 0);
 
 	// ページ変更の矢印の左
 	Arrow_EffectArray[0] =
-		SetEffect(103, D3DXVECTOR2(120.0f + plusA, 320.0f), D3DXVECTOR2(120.0f, 320.0f), 0,
-			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+		SetEffect(103, D3DXVECTOR2(90.0f + plusA, 370.0f), D3DXVECTOR2(90.0f, 360.0f), 0,
+			D3DXVECTOR2(90.0f, 90.0f), D3DXVECTOR2(90.0f, 90.0f), 0,
 			0.0f, toumeido, FadeInTime, 999, 0, 0,
 			0.0f, 0.0f, 0);
 
 	// ページ変更の矢印の右
 	Arrow_EffectArray[1] =
-		SetEffect(102, D3DXVECTOR2(1320.0f + plusA, 320.0f), D3DXVECTOR2(1320.0f, 320.0f), 0,
-			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+		SetEffect(102, D3DXVECTOR2(1350.0f + plusA, 370.0f), D3DXVECTOR2(1350.0f, 360.0f), 0,
+			D3DXVECTOR2(90.0f, 90.0f), D3DXVECTOR2(90.0f, 90.0f), 0,
 			0.0f, toumeido, FadeInTime, 999, 0, 0,
 			0.0f, 0.0f, 0);
 
@@ -1813,22 +1813,22 @@ void InitPage()
 	}
 
 	// タイトルに戻る処理
-	ChangeEffect(BackTitle_EffectArray, 61, D3DXVECTOR2(240.0f + plusA, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
+	ChangeEffect(BackTitle_EffectArray, 122, D3DXVECTOR2(240.0f + plusA, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
 		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
 		0.0f, toumeido, 0, 999, 0, 0,
 		0.0f, 0.0f, 0);
 
 	// ページ変更の矢印の左
 
-	ChangeEffect(Arrow_EffectArray[0], 61, D3DXVECTOR2(120.0f + plusA, 320.0f), D3DXVECTOR2(120.0f, 320.0f), 0,
-		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+	ChangeEffect(Arrow_EffectArray[0], 103, D3DXVECTOR2(90.0f + plusA, 370.0f), D3DXVECTOR2(90.0f, 370.0f), 0,
+		D3DXVECTOR2(90.0f, 90.0f), D3DXVECTOR2(90.0f, 90.0f), 0,
 		0.0f, toumeido, 0, 999, 0, 60,
 		0.0f, 0.0f, 0);
 
 	// ページ変更の矢印の右
 
-	ChangeEffect(Arrow_EffectArray[1], 61, D3DXVECTOR2(1320.0f + plusA, 320.0f), D3DXVECTOR2(1320.0f, 320.0f), 0,
-		D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+	ChangeEffect(Arrow_EffectArray[1], 102, D3DXVECTOR2(1350.0f + plusA, 370.0f), D3DXVECTOR2(1350.0f, 370.0f), 0,
+		D3DXVECTOR2(90.0f, 90.0f), D3DXVECTOR2(90.0f, 90.0f), 0,
 		0.0f, toumeido, 0, 999, 0, 60,
 		0.0f, 0.0f, 0);
 
@@ -2210,7 +2210,7 @@ void UpdateStageSelect2(void)
 
 
 
-
+			
 
 			// 1フレーム前のポジションの保存。この後キー操作などで変更があった場合のみエフェクトを更新させる
 			int OldStageSelectX = g_StageSelect.select_x;
@@ -2227,59 +2227,64 @@ void UpdateStageSelect2(void)
 
 			SetScore2(now_page);
 
-			//ステージ選択
-			for (int x = 0; x < SELECT_MAX_X; x++)
+			if (pushTitleCount > STAGE_SELECT_COOL)
 			{
-				for (int y = 0; y < SELECT_MAX_Y; y++)
-				{
-					// ステージの座標を求める
-					int now_stage = x + y * SELECT_MAX_X + (now_page * 10);	// 0~19
-					D3DXVECTOR2 Stage_Pos = GetStagePos(now_stage + 1);
-					// 現在の座標を求める
-					/*float effectnow_x = effectpos_x + while_x * x;
-					float effectnow_y = effectpos_y + while_y * y;*/
-					float effectnow_x = Stage_Pos.x;
-					float effectnow_y = Stage_Pos.y;
 
-					if (mouse_pos_X > effectnow_x - 50.0f && mouse_pos_X < effectnow_x + 50.0f && mouse_pos_Y > effectnow_y - 50.0f && mouse_pos_Y < effectnow_y + 50.0f)
+				//ステージ選択
+				for (int x = 0; x < SELECT_MAX_X; x++)
+				{
+					for (int y = 0; y < SELECT_MAX_Y; y++)
 					{
-						g_StageSelect.select_x = x;
-						g_StageSelect.select_y = y;
+						// ステージの座標を求める
+						int now_stage = x + y * SELECT_MAX_X + (now_page * 10);	// 0~19
+						D3DXVECTOR2 Stage_Pos = GetStagePos(now_stage + 1);
+						// 現在の座標を求める
+						/*float effectnow_x = effectpos_x + while_x * x;
+						float effectnow_y = effectpos_y + while_y * y;*/
+						float effectnow_x = Stage_Pos.x;
+						float effectnow_y = Stage_Pos.y;
+
+						if (mouse_pos_X > effectnow_x - 50.0f && mouse_pos_X < effectnow_x + 50.0f && mouse_pos_Y > effectnow_y - 50.0f && mouse_pos_Y < effectnow_y + 50.0f)
+						{
+							g_StageSelect.select_x = x;
+							g_StageSelect.select_y = y;
+							mouseuse = true;
+						}
+
+					}
+				}
+				//ワールド選択へ戻る 240 700
+				if (mouse_pos_X > 180.0f && mouse_pos_X < 280.0f && mouse_pos_Y > 650.0f && mouse_pos_Y < 750.0f)
+				{
+					g_StageSelect.select_x = 0;
+					g_StageSelect.select_y = 2;
+					mouseuse = true;
+				}
+				//左矢印
+				D3DXVECTOR2 yazipos = D3DXVECTOR2(90.0f, 370.0f);
+				D3DXVECTOR2 yazisize = D3DXVECTOR2(100.0f, 100.0f);
+				D3DXVECTOR2 harf = yazisize / 2;
+				if (now_page == 1)
+				{
+					if (mouse_pos_X > yazipos.x - harf.x && mouse_pos_X < yazipos.x + harf.x && mouse_pos_Y > yazipos.y - harf.y && mouse_pos_Y < yazipos.y + harf.y)
+					{
+						g_StageSelect.select_x = 5;
+						if (g_StageSelect.select_y == 2)
+							g_StageSelect.select_y = 0;
 						mouseuse = true;
 					}
-
 				}
-			}
-			//ワールド選択へ戻る 240 700
-			if (mouse_pos_X > 180.0f && mouse_pos_X < 280.0f && mouse_pos_Y > 650.0f && mouse_pos_Y < 750.0f)
-			{
-				g_StageSelect.select_x = 0;
-				g_StageSelect.select_y = 2;
-				mouseuse = true;
-			}
-			//左矢印
-			D3DXVECTOR2 yazipos = D3DXVECTOR2(120.0f, 320.0f);
-			D3DXVECTOR2 yazisize = D3DXVECTOR2(50.0f, 50.0f);
-			if (now_page == 1)
-			{
-				if (mouse_pos_X > yazipos.x - yazisize.x && mouse_pos_X < yazipos.x + yazisize.x && mouse_pos_Y > yazipos.y - yazisize.y && mouse_pos_Y < yazipos.y + yazisize.y)
+				//右矢印
+				yazipos = D3DXVECTOR2(1350.0f, 370.0f);
+				if (now_page == 0)
 				{
-					g_StageSelect.select_x = 5;
-					if (g_StageSelect.select_y == 2)
-						g_StageSelect.select_y = 0;
-					mouseuse = true;
-				}
-			}
-			//右矢印
-			yazipos = D3DXVECTOR2(1320.0f, 320.0f);
-			if (now_page == 0)
-			{
-				if (mouse_pos_X > yazipos.x - yazisize.x && mouse_pos_X < yazipos.x + yazisize.x && mouse_pos_Y > yazipos.y - yazisize.y && mouse_pos_Y < yazipos.y + yazisize.y)
-				{
-					g_StageSelect.select_x = 6;
-					if (g_StageSelect.select_y == 2)
-						g_StageSelect.select_y = 0;
-					mouseuse = true;
+					if (mouse_pos_X > yazipos.x - harf.x && mouse_pos_X < yazipos.x + harf.x && mouse_pos_Y > yazipos.y - harf.y && mouse_pos_Y < yazipos.y + harf.y)
+					{
+						g_StageSelect.select_x = 6;
+						if (g_StageSelect.select_y == 2)
+							g_StageSelect.select_y = 0;
+						mouseuse = true;
+					}
 				}
 			}
 
@@ -2327,7 +2332,7 @@ void UpdateStageSelect2(void)
 
 
 					// 移動キーが押された時の処理
-					if (g_StageSelect.selectcooltime <= 0)
+					if (g_StageSelect.selectcooltime <= STAGE_SELECT_COOL)
 					{
 
 						// マウスが表示にあっている状態で左クリックもしくはエンターキーをしたら
@@ -2462,21 +2467,21 @@ void UpdateStageSelect2(void)
 												else if (y == 2)		// タイトルに戻る処理 (ワールド選択に戻るボタンの表示)
 												{
 													now_stage_select_EffectArray =
-														SetEffect(61, D3DXVECTOR2(240.0f, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
-															D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
+														SetEffect(123, D3DXVECTOR2(240.0f, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
+															D3DXVECTOR2(280.0f * 1.2f, 135.0f * 1.2f), D3DXVECTOR2(280.0f * 1.3f, 135.0f * 1.3f), 0,
 															0.0f, 1.0f, 0, 999, 0, 60,
 															0.0f, 0.0f, 0);
 													now_stage_selectWaku_EffectArray =
-														SetEffect(61, D3DXVECTOR2(240.0f, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
-															D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
+														SetEffect(123, D3DXVECTOR2(240.0f, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
+															D3DXVECTOR2(280.0f * 1.3f, 135.0f * 1.3f), D3DXVECTOR2(280.0f * 1.3f, 135.0f * 1.3f), 0,
 															0.0f, 0.0f, 0, 999, 0, 60,
 															0.0f, 0.0f, 0);			// 透明だけど出しておく
 												}
 												else if (x == 5)		// ページ変更の矢印の左
 												{
 													now_stage_select_EffectArray =
-														SetEffect(103, D3DXVECTOR2(120.0f, 320.0f), D3DXVECTOR2(120.0f, 320.0f), 0,
-															D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
+														SetEffect(103, D3DXVECTOR2(90.0f, 370.0f), D3DXVECTOR2(90.0f, 370.0f), 0,
+															D3DXVECTOR2(90.0f * 1.2f, 90.0f * 1.2f), D3DXVECTOR2(90.0f, 90.0f), 0,
 															0.0f, 1.0f, 0, 999, 0, 60,
 															0.0f, 0.0f, 0);
 													now_stage_selectWaku_EffectArray =
@@ -2488,8 +2493,8 @@ void UpdateStageSelect2(void)
 												else if (x == 6)		// ページ変更の矢印の右
 												{
 													now_stage_select_EffectArray =
-														SetEffect(102, D3DXVECTOR2(1320.0f, 320.0f), D3DXVECTOR2(1320.0f, 320.0f), 0,
-															D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
+														SetEffect(102, D3DXVECTOR2(1350.0f, 370.0f), D3DXVECTOR2(1350.0f, 370.0f), 0,
+															D3DXVECTOR2(90.0f * 1.2f, 90.0f * 1.2f), D3DXVECTOR2(90.0f, 90.0f), 0,
 															0.0f, 1.0f, 0, 999, 0, 60,
 															0.0f, 0.0f, 0);
 													now_stage_selectWaku_EffectArray =

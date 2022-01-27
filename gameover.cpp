@@ -59,6 +59,7 @@ bool result_over_once = false;
 int result_over_once_time = 0;
 
 int fefffff = 0;
+static int g_SENo = 0;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -346,26 +347,30 @@ void UpdateGameover(void)
 					mouseuse = true;
 				}
 
-				if (mouseuse && mouse_Lclick)
+				if (GetFadeState() == FADE_NONE)
 				{
-					if (g_Gameover.selectpush == 0)
+					if (mouseuse && mouse_Lclick)
 					{
-						// InitゲームでBGMを流すためtrueにしておく
-						BGMonceTrue();
-						SceneTransition(SCENE_GAME);
-					}
+						g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
+						PlaySound(g_SENo, 0);
+						if (g_Gameover.selectpush == 0)
+						{
+							// InitゲームでBGMを流すためtrueにしておく
+							BGMonceTrue();
+							SceneTransition(SCENE_GAME);
+						}
 
-					if (g_Gameover.selectpush == 1)
-					{
-						SceneTransition(SCENE_STAGE_SELECT);
-					}
+						if (g_Gameover.selectpush == 1)
+						{
+							SceneTransition(SCENE_STAGE_SELECT);
+						}
 
-					if (g_Gameover.selectpush == 2)
-					{
-						SceneTransition(SCENE_PLACEMENT);
+						if (g_Gameover.selectpush == 2)
+						{
+							SceneTransition(SCENE_PLACEMENT);
+						}
 					}
 				}
-
 				if (g_Gameover.selectpush == 3)
 				{
 					if (mouseuse && mouse_Lclick)
@@ -678,27 +683,31 @@ void UpdateGameover(void)
 				mouseuse = true;
 			}
 
-			if (mouseuse && mouse_Lclick)
+			if (GetFadeState() == FADE_NONE)
 			{
-				if (g_Gameover.selectpush == 0)
+				if (mouseuse && mouse_Lclick)
 				{
-					// InitゲームでBGMを流すためtrueにしておく
-					BGMonceTrue();
-					SceneTransition(SCENE_GAME);
-				}
+					g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
+					PlaySound(g_SENo, 0);
+					if (g_Gameover.selectpush == 0)
+					{
+						// InitゲームでBGMを流すためtrueにしておく
+						BGMonceTrue();
+						SceneTransition(SCENE_GAME);
+					}
 
-				if (g_Gameover.selectpush == 1)
-				{
-					SceneTransition(SCENE_STAGE_SELECT);
-				}
+					if (g_Gameover.selectpush == 1)
+					{
+						SceneTransition(SCENE_STAGE_SELECT);
+					}
 
-				if (g_Gameover.selectpush == 2)
-				{
-					SceneTransition(SCENE_PLACEMENT);
+					if (g_Gameover.selectpush == 2)
+					{
+						SceneTransition(SCENE_PLACEMENT);
+					}
+
 				}
-				
 			}
-
 			//// マウスが押される位置にあって、左クリック押されていて、フェード処理中ではないとき
 			//if (mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
 			//{

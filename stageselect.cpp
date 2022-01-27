@@ -2269,6 +2269,7 @@ void UpdateStageSelect2(void)
 					if (mouse_pos_X > yazipos.x - harf.x && mouse_pos_X < yazipos.x + harf.x && mouse_pos_Y > yazipos.y - harf.y && mouse_pos_Y < yazipos.y + harf.y)
 					{
 						g_StageSelect.select_x = 5;
+						g_StageSelect.select_y = 0;		// 使わないけど、初期値が-1なので、変更してることを伝えるために。
 						if (g_StageSelect.select_y == 2)
 							g_StageSelect.select_y = 0;
 						mouseuse = true;
@@ -2281,6 +2282,7 @@ void UpdateStageSelect2(void)
 					if (mouse_pos_X > yazipos.x - harf.x && mouse_pos_X < yazipos.x + harf.x && mouse_pos_Y > yazipos.y - harf.y && mouse_pos_Y < yazipos.y + harf.y)
 					{
 						g_StageSelect.select_x = 6;
+						g_StageSelect.select_y = 0;		// 使わないけど、初期値が-1なので、変更してることを伝えるために。
 						if (g_StageSelect.select_y == 2)
 							g_StageSelect.select_y = 0;
 						mouseuse = true;

@@ -1334,17 +1334,17 @@ void UpdateBullet(void)
 					// パワーを減衰させる
 					if (g_Bullet[i].shotpower > 0.0f)
 					{
-						if (Holeonetime <= 0)
-						{
+						//if (Holeonetime <= 0)
+						//{
 							g_SENo = LoadSound("data/SE/水面に石投げ2.wav");
 							PlaySound(g_SENo, 0);
 							Holeonetime = 365.0f;
-						}
-						g_Bullet[i].shotpower = 0.0f;
-						g_Bullet[i].nextpos.x = 1000.0f;
-						g_Bullet[i].nextpos.y = 1000.0f;
+						//}
+						
+						g_Bullet[i].nextpos.x = 10000.0f;
+						g_Bullet[i].nextpos.y = 10000.0f;
 					}
-
+					g_Bullet[i].shotpower = 0.5f;
 				}
 
 			}////////地面にある時だけの処理の終わり///////////
@@ -1720,7 +1720,7 @@ void UpdateBullet(void)
 			//////////針の処理////////
 			if (GetMapEnter(D3DXVECTOR2(g_Bullet[i].pos.x, g_Bullet[i].pos.y)) == 16)
 			{
-				g_Bullet[i].shotpower = 0.0f;
+				g_Bullet[i].shotpower = 0.5f;
 				g_Bullet[i].nextpos.x = 1000.0f;
 				g_Bullet[i].nextpos.y = 1000.0f;
 				g_SENo = LoadSound("data/SE/defend000.wav");

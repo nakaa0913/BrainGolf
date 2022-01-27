@@ -526,7 +526,7 @@ void UpdateGameover(void)
 
 		if (g_Gameover.resulttime2 == 80)
 		{
-
+		
 			// ミッションをクリアしているなら表示する
 			if (p_Savedata[p_Stagedata->stagenum].mission_clear[0] == 1)
 			{
@@ -535,11 +535,11 @@ void UpdateGameover(void)
 					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
 					0.0f, 1.0f, 120, 999, 0, 60,
 					0.0f, 0.0f, 0);
-				//バツ印
-				SetEffect(124, D3DXVECTOR2(795.0f, 280.0f), D3DXVECTOR2(800.0f, 280.0f), 0,
-					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-					0.0f, 1.0f, 120, 999, 0, 60,
-					0.0f, 0.0f, 0);
+				////バツ印
+				//SetEffect(124, D3DXVECTOR2(795.0f, 380.0f), D3DXVECTOR2(800.0f, 380.0f), 0,
+				//	D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+				//	0.0f, 1.0f, 120, 999, 0, 60,
+				//	0.0f, 0.0f, 0);
 			}
 			//横1440
 			//縦810
@@ -555,11 +555,11 @@ void UpdateGameover(void)
 					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
 					0.0f, 1.0f, 120, 999, 0, 60,
 					0.0f, 0.0f, 0);
-				//バツ印
-				SetEffect(124, D3DXVECTOR2(795.0f, 360.0f), D3DXVECTOR2(800.0f, 360.0f), 0,
-					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-					0.0f, 1.0f, 120, 999, 0, 60,
-					0.0f, 0.0f, 0);
+				////バツ印
+				//SetEffect(124, D3DXVECTOR2(795.0f, 360.0f), D3DXVECTOR2(800.0f, 360.0f), 0,
+				//	D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+				//	0.0f, 1.0f, 120, 999, 0, 60,
+				//	0.0f, 0.0f, 0);
 			}
 		}
 
@@ -573,14 +573,22 @@ void UpdateGameover(void)
 					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
 					0.0f, 1.0f, 120, 999, 0, 60,
 					0.0f, 0.0f, 0);
-				//バツ印
-				SetEffect(124, D3DXVECTOR2(795.0f, 440.0f), D3DXVECTOR2(800.0f, 440.0f), 0,
-					D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
-					0.0f, 1.0f, 120, 999, 0, 60,
-					0.0f, 0.0f, 0);
+				////バツ印
+				//SetEffect(124, D3DXVECTOR2(795.0f, 440.0f), D3DXVECTOR2(800.0f, 440.0f), 0,
+				//	D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(100.0f, 100.0f), 1,
+				//	0.0f, 1.0f, 120, 999, 0, 60,
+				//	0.0f, 0.0f, 0);
 			}
 		}
 
+		if (g_Gameover.resulttime2 == 120)
+		{
+			//バツ印
+			SetEffect(124, D3DXVECTOR2(970.0f, 380.0f), D3DXVECTOR2(970.0f, 380.0f), 0,
+				D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(600.0f, 600.0f), 1,
+				0.0f, 1.0f, 120, 999, 0, 60,
+				0.0f, 0.0f, 0);
+		}
 
 		if (g_Gameover.resulttime2 == 160)
 		{

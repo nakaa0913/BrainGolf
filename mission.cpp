@@ -772,9 +772,9 @@ float MissionTexIdToNumXGAP(int texid)
 	switch (texid)
 	{
 	case 26:
-		return 342;
-	case 27:
 		return 360;
+	case 27:
+		return 380;
 	case 28:
 		return 342.0f;
 	case 29:

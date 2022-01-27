@@ -8,7 +8,7 @@
 #define SELECT_MAX_X (5)       // select_xのMAX
 #define SELECT_MAX_Y (2)       // select_yのMAX
 
-#define STAGE_SELECT_COOL (0)       // ステージセレクトの時のクールタイム
+#define STAGE_SELECT_COOL (18)       // ステージセレクトの時のクールタイム
 
 // プレイヤー構造体
 struct STAGESELECT
@@ -27,8 +27,10 @@ struct STAGESELECT
 };
 
 void InitStageSelect(void);
+void InitStageSelect2(void);
 void UninitStageSelect(void);
 void UpdateStageSelect(void);
+void UpdateStageSelect2(void);
 void DrawStageSelect(void);
 
 STAGESELECT* GetStageSelect();
@@ -42,3 +44,4 @@ void NextNowChoiceStageNum();
 D3DXVECTOR2 GetStagePos(int num);
 void InitStageSelectForTitle();
 void InitPage();
+void SetPage();

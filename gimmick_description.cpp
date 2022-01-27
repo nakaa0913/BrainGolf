@@ -128,9 +128,6 @@ void UpdateGimmickDescription_Game()
 		GimmickDescription_y = -1;
 	}
 
-	//SetScore2(GimmickDescription_x);
-	//SetScore3(GimmickDescription_y);
-
 	bool DrawRequest = false;
 
 	// 右クリックでその座標を使って表示など GimmickDescriptionCool

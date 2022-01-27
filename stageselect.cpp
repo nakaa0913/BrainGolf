@@ -131,10 +131,15 @@ static int title_fade_count = 40;
 
 bool BackTitle = false;
 int BackTitlecount = 00;
-static int BackTitleTime = 70;
+static int BackTitleTime = 50;
+static int BackTitleFadeIn = 20;
 
 bool changeOneTime = false;
 
+bool SentakuKakutei = false;
+int pushTitleCount = 0;				// タイトルクリックしてからの時間
+bool ChangePageRequest = false;
+int ChangeCount = 0;
 /*------------------------------------------------------------------------------
    初期化関数
 ------------------------------------------------------------------------------*/
@@ -158,6 +163,7 @@ void InitStageSelect(void)
 	StopSoundAll();
 
 	now_page = 0;
+	//now_stagenum = 1;
 	change_page_interval = 0.0f;
 
 	change_count = 0;
@@ -247,23 +253,82 @@ void InitStageSelect(void)
 	//	0.0f, 1.0f, 0, 999, 0, 0,
 	//	0.0f, 0.0f, 0);
 
-	stage_select_once = false;
-	now_stage_select_EffectArray = -1;
-	now_stage_selectWaku_EffectArray = -1;
 	stage_select_once_time = 0;
-
-	Arrow_EffectArray[0] = -1;
-	Arrow_EffectArray[1] = -1;
-	now_stagenum_select_EffectArray[0] = -1;
-	now_stagenum_select_EffectArray[1] = -1;
+	stage_select_once = false;
 
 	change_cool = 30;
-
-	StartStageSelectScreen();
 
 	if (now_stagenum >= 11)
 		ChangePageOneTime(1);
 
+
+
+
+
+
+
+	now_stage_select_EffectArray = -1;
+	now_stage_selectWaku_EffectArray = -1;
+	tex_Page_background_EffectArray[0] = -1;
+	tex_Page_background_EffectArray[1] = -1;
+	tex_StageNum_background_EffectArray[0] = -1;
+	tex_StageNum_background_EffectArray[1] = -1;
+	Arrow_EffectArray[0] = -1;
+	Arrow_EffectArray[1] = -1;
+	BackTitle_EffectArray = -1;
+
+	now_stagenum_select_EffectArray[0] = -1;
+	now_stagenum_select_EffectArray[1] = -1;
+
+
+	StartStageSelectScreen();
+
+	return;
+}
+
+
+
+
+void InitStageSelect2(void)
+{
+
+
+	// 配置シーンから戻ってきたときに音楽が二重にならないように。
+	StopSoundAll();
+
+	g_BGMNo = LoadSound("data/BGM/飛んでバタフライ.wav");
+	SetVolume(g_BGMNo, 0.8f);
+	//255(-1)をループ指定すると無限ループ
+	PlaySound(g_BGMNo, -1);
+
+	now_page = 0;
+	//now_stagenum = 1;
+
+
+	if (now_stagenum >= 11 && now_stagenum <= 20)
+		now_page = 1;
+
+	SentakuKakutei = false;
+	pushTitleCount = 0;
+	ChangePageRequest = false;
+	ChangeCount = 0;
+
+	now_stage_select_EffectArray = -1;
+	now_stage_selectWaku_EffectArray = -1;
+	tex_Page_background_EffectArray[0] = -1;
+	tex_Page_background_EffectArray[1] = -1;
+	tex_StageNum_background_EffectArray[0] = -1;
+	tex_StageNum_background_EffectArray[1] = -1;
+	Arrow_EffectArray[0] = -1;
+	Arrow_EffectArray[1] = -1;
+	BackTitle_EffectArray = -1;
+
+	now_stagenum_select_EffectArray[0] = -1;
+	now_stagenum_select_EffectArray[1] = -1;
+
+	ClearEffect();
+
+	StartStageSelectScreen();
 
 	return;
 }
@@ -275,6 +340,25 @@ void UninitStageSelect()
 {
 	UnloadTexture("data/TEXTURE/select/stage_select.png");
 	StopSoundAll();
+
+	InitMission();		// ミッションの板とかの配列を-1に初期化しておく
+
+	EffectBreak(now_stage_select_EffectArray);		// ピン
+	EffectBreak(now_stage_selectWaku_EffectArray);	// 白枠
+
+	EffectBreak(tex_Page_background_EffectArray[0]);	// ページ１背景
+	EffectBreak(tex_Page_background_EffectArray[1]);	//
+	EffectBreak(tex_StageNum_background_EffectArray[0]);// ページ１ステージ番号
+	EffectBreak(tex_StageNum_background_EffectArray[1]);//
+	EffectBreak(Arrow_EffectArray[0]);					// 左右の矢印
+	EffectBreak(Arrow_EffectArray[1]);					// 
+	EffectBreak(BackTitle_EffectArray);					// タイトルへ戻る
+	DeleteMissionStageSelect();							// ミッション
+
+	InitEffect();
+
+	SentakuKakutei = false;
+
 }
 
 /*------------------------------------------------------------------------------
@@ -425,24 +509,24 @@ void UpdateStageSelect(void)
 		{
 			change_count = 0;		// チェンジ中の時のみ増える。ここでリセットしておく
 
-			if (Keyboard_IsKeyDown(KK_E))
-			{
-				if (change_cool <= 0)
-				{
-					change_cool = 60;
-					ChangePage(1);
-					return;
-				}
-			}
-			if (Keyboard_IsKeyDown(KK_Q))
-			{
-				if (change_cool <= 0)
-				{
-					change_cool = 60;
-					ChangePage(-1);
-					return;
-				}
-			}
+			//if (Keyboard_IsKeyDown(KK_E))
+			//{
+			//	if (change_cool <= 0)
+			//	{
+			//		change_cool = 60;
+			//		ChangePage(1);
+			//		return;
+			//	}
+			//}
+			//if (Keyboard_IsKeyDown(KK_Q))
+			//{
+			//	if (change_cool <= 0)
+			//	{
+			//		change_cool = 60;
+			//		ChangePage(-1);
+			//		return;
+			//	}
+			//}
 
 			////マウスの座標を取得
 			//float mouse_pos_X = GetMousePosX();
@@ -543,6 +627,8 @@ void UpdateStageSelect(void)
 				// ステージ選択の時1個離れたらこれだけ離れるよってやつ
 				float while_x = 240.0f;
 				float while_y = 240.0f;
+
+				SetScore2(now_page);
 
 				//ステージ選択
 				for (int x = 0; x < SELECT_MAX_X; x++)
@@ -847,7 +933,7 @@ void UpdateStageSelect(void)
 
 
 
-			SetScore2(now_page);
+
 		}
 		else
 		{
@@ -864,81 +950,143 @@ void UpdateStageSelect(void)
 				for (int page = 0; page < PAGE_MAX; page++)
 				{
 
-					// ページの背景
-					ChangeEffect(tex_Page_background_EffectArray[page], -1, D3DXVECTOR2(99999, 99999), D3DXVECTOR2(change_page_interval, 0.0f), 1,
-						D3DXVECTOR2(99999, 99999), D3DXVECTOR2(0.0f, 0.0f), 0,
-						0.0f, 1.0f, 0, 999, 0, cahngetime,
-						0.0f, 0.0f, 0);
+					//// ページの背景
+					//ChangeEffect(tex_Page_background_EffectArray[page], -1, D3DXVECTOR2(99999, 99999), D3DXVECTOR2(change_page_interval, 0.0f), 1,
+					//	D3DXVECTOR2(99999, 99999), D3DXVECTOR2(0.0f, 0.0f), 0,
+					//	0.0f, 1.0f, 0, 999, 0, cahngetime,
+					//	0.0f, 0.0f, 0);
 
-					// ステージ番号
-					ChangeEffect(tex_StageNum_background_EffectArray[page], -1, D3DXVECTOR2(99999, 99999), D3DXVECTOR2(change_page_interval, 0.0f), 1,
-						D3DXVECTOR2(99999, 99999), D3DXVECTOR2(0.0f, 0.0f), 0,
-						0.0f, 1.0f, 0, 999, 0, cahngetime,
-						0.0f, 0.0f, 0);
+					//// ステージ番号
+					//ChangeEffect(tex_StageNum_background_EffectArray[page], -1, D3DXVECTOR2(99999, 99999), D3DXVECTOR2(change_page_interval, 0.0f), 1,
+					//	D3DXVECTOR2(99999, 99999), D3DXVECTOR2(0.0f, 0.0f), 0,
+					//	0.0f, 1.0f, 0, 999, 0, cahngetime,
+					//	0.0f, 0.0f, 0);
 
 					// tex_Page_background_EffectArray[page]
 					// tex_StageNum_background_EffectArray
+				}
+
+				if (now_page == 0)
+				{
+					float toumeido = 1.0f;
+					float plusA = 0.0f;
+
+					//背景表示
+					// 1ページ目
+					ChangeEffect(tex_Page_background_EffectArray[0], 89, D3DXVECTOR2(SCREEN_WIDTH / 2 + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+						D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+						0.0f, toumeido, 0, 999, 0, cahngetime,
+						0.0f, 0.0f, 0);
+					// 2ページ目
+					ChangeEffect(tex_Page_background_EffectArray[1], 90, D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH, SCREEN_HEIGHT / 2), 0,
+						D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+						0.0f, toumeido, 0, 999, 0, cahngetime,
+						0.0f, 0.0f, 0);
+
+					// 1ページ目
+					ChangeEffect(tex_StageNum_background_EffectArray[0], 91, D3DXVECTOR2(SCREEN_WIDTH / 2 + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+						D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+						0.0f, toumeido, 0, 999, 0, cahngetime,
+						0.0f, 0.0f, 0);
+
+					// 2ページ目
+					ChangeEffect(tex_StageNum_background_EffectArray[1], 92, D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH, SCREEN_HEIGHT / 2), 0,
+						D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+						0.0f, toumeido, 0, 999, 0, cahngetime,
+						0.0f, 0.0f, 0);
+
+				}
+				else if (now_page == 1)
+				{
+					float toumeido = 1.0f;
+					float plusA = -SCREEN_WIDTH;
+
+					//背景表示
+					// 1ページ目
+					ChangeEffect(tex_Page_background_EffectArray[0], 89, D3DXVECTOR2(SCREEN_WIDTH / 2 + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+						D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+						0.0f, toumeido, 0, 999, 0, cahngetime,
+						0.0f, 0.0f, 0);
+					// 2ページ目
+					ChangeEffect(tex_Page_background_EffectArray[1], 90, D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH, SCREEN_HEIGHT / 2), 0,
+						D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+						0.0f, toumeido, 0, 999, 0, cahngetime,
+						0.0f, 0.0f, 0);
+
+					// 1ページ目
+					ChangeEffect(tex_StageNum_background_EffectArray[0], 91, D3DXVECTOR2(SCREEN_WIDTH / 2 + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+						D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+						0.0f, toumeido, 0, 999, 0, cahngetime,
+						0.0f, 0.0f, 0);
+
+					// 2ページ目
+					ChangeEffect(tex_StageNum_background_EffectArray[1], 92, D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH, SCREEN_HEIGHT / 2), 0,
+						D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+						0.0f, toumeido, 0, 999, 0, cahngetime,
+						0.0f, 0.0f, 0);
+
+				}
 
 
-					for (int x = 0; x < SELECT_MAX_X; x++)
+				for (int x = 0; x < SELECT_MAX_X; x++)
+				{
+					for (int y = 0; y < SELECT_MAX_Y; y++)
 					{
-						for (int y = 0; y < SELECT_MAX_Y; y++)
-						{
-							//int now_num = x + y * SELECT_MAX_X + (page * 10);
-							int NowWorld_stagenum = NowWorld * 10 - 10 + x + y * SELECT_MAX_X + (page * 10);	// 0~19
+						//int now_num = x + y * SELECT_MAX_X + (page * 10);
+						int NowWorld_stagenum = NowWorld * 10 - 10 + x + y * SELECT_MAX_X + (now_page * 10);	// 0~19
 
-							D3DXVECTOR2 now_stagePos = GetEffectPos(stage_EffectArray[NowWorld_stagenum]);
-							D3DXVECTOR2 now_stage_starPos[3];
-							now_stage_starPos[0] = GetEffectPos(stage_star_EffectArray[NowWorld_stagenum][0]);
-							now_stage_starPos[1] = GetEffectPos(stage_star_EffectArray[NowWorld_stagenum][1]);
-							now_stage_starPos[2] = GetEffectPos(stage_star_EffectArray[NowWorld_stagenum][2]);
+						D3DXVECTOR2 now_stagePos = GetEffectPos(stage_EffectArray[NowWorld_stagenum]);
+						D3DXVECTOR2 now_stage_starPos[3];
+						now_stage_starPos[0] = GetEffectPos(stage_star_EffectArray[NowWorld_stagenum][0]);
+						now_stage_starPos[1] = GetEffectPos(stage_star_EffectArray[NowWorld_stagenum][1]);
+						now_stage_starPos[2] = GetEffectPos(stage_star_EffectArray[NowWorld_stagenum][2]);
 
-							// 選択されてないときの表示を出す(ステージすべて)
-							//////////ChangeEffect(stage_EffectArray[NowWorld_stagenum], tex_NowWorld_stagechoice, now_stagePos, D3DXVECTOR2(now_stagePos.x + change_page_interval, now_stagePos.y), 1,
-							//////////	D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-							//////////	0.0f, 1.0f, 0, 999, 0, cahngetime,
-							//////////	0.0f, 0.0f, 0);
+						// 選択されてないときの表示を出す(ステージすべて)
+						//////////ChangeEffect(stage_EffectArray[NowWorld_stagenum], tex_NowWorld_stagechoice, now_stagePos, D3DXVECTOR2(now_stagePos.x + change_page_interval, now_stagePos.y), 1,
+						//////////	D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+						//////////	0.0f, 1.0f, 0, 999, 0, cahngetime,
+						//////////	0.0f, 0.0f, 0);
 
-							//////////// 数字
-							//////////// 現在の座標を求める
-							//////////
-							//////////ChangeEffect(stageNumber_EffectArray[NowWorld_stagenum][0], -1, D3DXVECTOR2(99999,99999), D3DXVECTOR2(change_page_interval, 0.0f), 1,
-							//////////	D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-							//////////	0.0f, 1.0f, 0, 999, 0, cahngetime,
-							//////////	0.0f, 0.0f, 0, stageNumber_EffectArray[NowWorld_stagenum][1]);
+						//////////// 数字
+						//////////// 現在の座標を求める
+						//////////
+						//////////ChangeEffect(stageNumber_EffectArray[NowWorld_stagenum][0], -1, D3DXVECTOR2(99999,99999), D3DXVECTOR2(change_page_interval, 0.0f), 1,
+						//////////	D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
+						//////////	0.0f, 1.0f, 0, 999, 0, cahngetime,
+						//////////	0.0f, 0.0f, 0, stageNumber_EffectArray[NowWorld_stagenum][1]);
 
-							// ミッションをクリアしているなら表示する p_stageNumber_EffectArray[NowWorld_stagenum]
-							//if (p_Savedata[NowWorld_stagenum].mission_clear[0] == 1)
-							//{
-							//	//星
-							//	ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][0], 83, now_stage_starPos[0], D3DXVECTOR2(now_stage_starPos[0].x + change_page_interval, now_stage_starPos[0].y), 1,
-							//		D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-							//		0.0f, 1.0f, 120, 999, 0, cahngetime,
-							//		0.0f, 0.0f, 0);
-							//}
+						// ミッションをクリアしているなら表示する p_stageNumber_EffectArray[NowWorld_stagenum]
+						//if (p_Savedata[NowWorld_stagenum].mission_clear[0] == 1)
+						//{
+						//	//星
+						//	ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][0], 83, now_stage_starPos[0], D3DXVECTOR2(now_stage_starPos[0].x + change_page_interval, now_stage_starPos[0].y), 1,
+						//		D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+						//		0.0f, 1.0f, 120, 999, 0, cahngetime,
+						//		0.0f, 0.0f, 0);
+						//}
 
-							//// ミッションをクリアしているなら表示する
-							//if (p_Savedata[NowWorld_stagenum].mission_clear[1] == 1)
-							//{
-							//	//星
-							//	ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][1], 84, now_stage_starPos[1], D3DXVECTOR2(now_stage_starPos[1].x + change_page_interval, now_stage_starPos[1].y), 1,
-							//		D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-							//		0.0f, 1.0f, 120, 999, 0, cahngetime,
-							//		0.0f, 0.0f, 0);
-							//}
+						//// ミッションをクリアしているなら表示する
+						//if (p_Savedata[NowWorld_stagenum].mission_clear[1] == 1)
+						//{
+						//	//星
+						//	ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][1], 84, now_stage_starPos[1], D3DXVECTOR2(now_stage_starPos[1].x + change_page_interval, now_stage_starPos[1].y), 1,
+						//		D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+						//		0.0f, 1.0f, 120, 999, 0, cahngetime,
+						//		0.0f, 0.0f, 0);
+						//}
 
-							//// ミッションをクリアしているなら表示する
-							//if (p_Savedata[NowWorld_stagenum].mission_clear[2] == 1)
-							//{
-							//	//星
-							//	ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][2], 85, now_stage_starPos[2], D3DXVECTOR2(now_stage_starPos[2].x + change_page_interval, now_stage_starPos[2].y), 1,
-							//		D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
-							//		0.0f, 1.0f, 120, 999, 0, cahngetime,
-							//		0.0f, 0.0f, 0);
-							//}
-						}
+						//// ミッションをクリアしているなら表示する
+						//if (p_Savedata[NowWorld_stagenum].mission_clear[2] == 1)
+						//{
+						//	//星
+						//	ChangeEffect(stage_star_EffectArray[NowWorld_stagenum][2], 85, now_stage_starPos[2], D3DXVECTOR2(now_stage_starPos[2].x + change_page_interval, now_stage_starPos[2].y), 1,
+						//		D3DXVECTOR2(10.0f, 10.0f), D3DXVECTOR2(50.0f, 50.0f), 1,
+						//		0.0f, 1.0f, 120, 999, 0, cahngetime,
+						//		0.0f, 0.0f, 0);
+						//}
 					}
 				}
+
 				// 矢印の処理
 				ChangeEffectClarity(Arrow_EffectArray[0], 1.0f);
 				ChangeEffectClarity(Arrow_EffectArray[1], 1.0f);
@@ -956,26 +1104,35 @@ void UpdateStageSelect(void)
 	}
 	else
 	{
-		// タイトルへ戻る中なら
+		// タイトルへ戻る中なら BackTitle == true なら
 
 		// 画面が全部真っ暗なった時にいろいろ戻す
 		if (BackTitlecount == 36)
 		{
-			InitPage();
+			//InitPage();
 			//StopSoundAll();
-			UninitStageSelect();
+			UninitStageSelect();		// 音止めてるだけ
+			//InitStageSelect();
 		}
 
 		// 戻る時間が終わったら戻す
 		if (BackTitlecount > BackTitleTime - 30)
 		{
-			title_display = false;
+			//title_display = false;
 			InitStageSelectForTitle();
+			title_display = false;			// タイトルのぼかしをもっかいやる
+			title_display_once = false;			// タイトルのぼかしをもっかいやる
+			title_click = false;
+			title_clickcount = 0;
+			title_count = 0;
+			now_stagenum = 1;
+
 			BackTitle = false;
 			BackTitlecount = -1;
 			InitStageSelect();
 		}
 
+		SetScore3(BackTitlecount);
 		BackTitlecount++;
 	}
 }
@@ -1011,33 +1168,34 @@ void StartStageSelectScreen()
 	// テスト用
 	float toumeido = 1.0f;
 	float plusA = 0.0f;
+	float FadeInTime = 150;
 
 	//背景表示
 	// 1ページ目
 	tex_Page_background_EffectArray[0] =
 		SetEffect(89, D3DXVECTOR2(SCREEN_WIDTH / 2 + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
 			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
-			0.0f, toumeido, 100, 999, 0, 60,
+			0.0f, toumeido, FadeInTime, 999, 0, 60,
 			0.0f, 0.0f, 0);
 	// 2ページ目
 	tex_Page_background_EffectArray[1] =
 		SetEffect(90, D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH, SCREEN_HEIGHT / 2), 0,
 			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
-			0.0f, toumeido, 100, 999, 0, 60,
+			0.0f, toumeido, FadeInTime, 999, 0, 60,
 			0.0f, 0.0f, 0);
 
 	// 1ページ目
 	tex_StageNum_background_EffectArray[0] =
 		SetEffect(91, D3DXVECTOR2(SCREEN_WIDTH / 2 + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
 			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
-			0.0f, toumeido, 100, 999, 0, 60,
+			0.0f, toumeido, FadeInTime, 999, 0, 60,
 			0.0f, 0.0f, 0);
 
 	// 2ページ目
 	tex_StageNum_background_EffectArray[1] =
 		SetEffect(92, D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH, SCREEN_HEIGHT / 2), 0,
 			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
-			0.0f, toumeido, 100, 999, 0, 60,
+			0.0f, toumeido, FadeInTime, 999, 0, 60,
 			0.0f, 0.0f, 0);
 
 	// ステージ選択の時の原点となる場所
@@ -1126,21 +1284,21 @@ void StartStageSelectScreen()
 	BackTitle_EffectArray =
 		SetEffect(61, D3DXVECTOR2(240.0f + plusA, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
 			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-			0.0f, toumeido, 0, 999, 0, 0,
+			0.0f, toumeido, FadeInTime, 999, 0, 0,
 			0.0f, 0.0f, 0);
 
 	// ページ変更の矢印の左
 	Arrow_EffectArray[0] =
 		SetEffect(103, D3DXVECTOR2(120.0f + plusA, 320.0f), D3DXVECTOR2(120.0f, 320.0f), 0,
 			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-			0.0f, toumeido, 0, 999, 0, 60,
+			0.0f, toumeido, FadeInTime, 999, 0, 0,
 			0.0f, 0.0f, 0);
 
 	// ページ変更の矢印の右
 	Arrow_EffectArray[1] =
 		SetEffect(102, D3DXVECTOR2(1320.0f + plusA, 320.0f), D3DXVECTOR2(1320.0f, 320.0f), 0,
 			D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(100.0f, 100.0f), 0,
-			0.0f, toumeido, 0, 999, 0, 60,
+			0.0f, toumeido, FadeInTime, 999, 0, 0,
 			0.0f, 0.0f, 0);
 
 	////どのこの星？
@@ -1518,7 +1676,7 @@ void ChangePageOneTime(int ToGoPage)
 	change_cool = 1;
 	now_page += ToGoPage;
 
-	changeOneTime = true;
+	//changeOneTime = true;
 
 	/*ChangeEffectClarity(Arrow_EffectArray[0], 1.0f);
 	ChangeEffectClarity(Arrow_EffectArray[1], 1.0f);
@@ -1540,6 +1698,7 @@ void InitPage()
 	changing = true;
 	change_cool = 10;
 	now_page = 0;
+	now_stagenum = 1;
 	SAVEDATA* p_Savedata = GetSavedata();
 	STAGEDATA* p_Stagedata = GetStagedata();
 
@@ -1731,6 +1890,7 @@ void InitPage()
 
 	change_cool = 0;
 	now_page = 0;
+	now_stagenum = 1;
 	change_page_interval = 0.0f;
 
 	return;
@@ -1832,11 +1992,598 @@ D3DXVECTOR2 GetStagePos(int num)
 // タイトルのぼかしのための初期化
 void InitStageSelectForTitle()
 {
-	title_display = false;			// タイトルのぼかしをもっかいやる
-	title_display_once = false;			// タイトルのぼかしをもっかいやる
-	title_click = false;
-	title_clickcount = 0;
-	title_count = 0;
+	//title_display = false;			// タイトルのぼかしをもっかいやる
+	//title_display_once = false;			// タイトルのぼかしをもっかいやる
+	//title_click = false;
+	//title_clickcount = 0;
+	//title_count = 0;
 
+	//now_page = 0;
+	//now_stagenum = 1;
 	return;
+}
+
+
+
+
+
+
+
+
+
+void SetPage()
+{
+	if (now_page == 0)
+	{
+		float toumeido = 1.0f;
+		float plusA = 0.0f;
+
+		//背景表示
+		// 1ページ目
+		ChangeEffect(tex_Page_background_EffectArray[0], 89, D3DXVECTOR2(SCREEN_WIDTH / 2 + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+			0.0f, toumeido, 0, 999, 0, cahngetime,
+			0.0f, 0.0f, 0);
+		// 2ページ目
+		ChangeEffect(tex_Page_background_EffectArray[1], 90, D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH, SCREEN_HEIGHT / 2), 0,
+			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+			0.0f, toumeido, 0, 999, 0, cahngetime,
+			0.0f, 0.0f, 0);
+
+		// 1ページ目
+		ChangeEffect(tex_StageNum_background_EffectArray[0], 91, D3DXVECTOR2(SCREEN_WIDTH / 2 + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+			0.0f, toumeido, 0, 999, 0, cahngetime,
+			0.0f, 0.0f, 0);
+
+		// 2ページ目
+		ChangeEffect(tex_StageNum_background_EffectArray[1], 92, D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH, SCREEN_HEIGHT / 2), 0,
+			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+			0.0f, toumeido, 0, 999, 0, cahngetime,
+			0.0f, 0.0f, 0);
+
+	}
+	else if (now_page == 1)
+	{
+		float toumeido = 1.0f;
+		float plusA = -SCREEN_WIDTH;
+
+		//背景表示
+		// 1ページ目
+		ChangeEffect(tex_Page_background_EffectArray[0], 89, D3DXVECTOR2(SCREEN_WIDTH / 2 + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+			0.0f, toumeido, 0, 999, 0, cahngetime,
+			0.0f, 0.0f, 0);
+		// 2ページ目
+		ChangeEffect(tex_Page_background_EffectArray[1], 90, D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH, SCREEN_HEIGHT / 2), 0,
+			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+			0.0f, toumeido, 0, 999, 0, cahngetime,
+			0.0f, 0.0f, 0);
+
+		// 1ページ目
+		ChangeEffect(tex_StageNum_background_EffectArray[0], 91, D3DXVECTOR2(SCREEN_WIDTH / 2 + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+			0.0f, toumeido, 0, 999, 0, cahngetime,
+			0.0f, 0.0f, 0);
+
+		// 2ページ目
+		ChangeEffect(tex_StageNum_background_EffectArray[1], 92, D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH + plusA, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2 + SCREEN_WIDTH, SCREEN_HEIGHT / 2), 0,
+			D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+			0.0f, toumeido, 0, 999, 0, cahngetime,
+			0.0f, 0.0f, 0);
+
+	}
+
+	// 矢印の処理
+	ChangeEffectClarity(Arrow_EffectArray[0], 1.0f);
+	ChangeEffectClarity(Arrow_EffectArray[1], 1.0f);
+
+	if (now_page == 0)
+		ChangeEffectClarity(Arrow_EffectArray[0], 0.0f);
+
+	if (now_page == 1)
+		ChangeEffectClarity(Arrow_EffectArray[1], 0.0f);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// aaa
+
+
+
+
+
+void UpdateStageSelect2(void)
+{
+	//マウスの座標を取得
+	float mouse_pos_X = GetMousePosX();
+	float mouse_pos_Y = GetMousePosY();
+	bool mouse_Lclick = GetMouseLClick();
+	bool mouseuse = false;
+
+
+	if (ChangePageRequest == false)
+	{
+		SetPage();
+
+		// タイトルへ戻る中じゃないときだけ動く
+		if (BackTitle == false)
+		{
+
+			if (title_display == false)
+			{
+				// クールタイムをずっと更新してステージ番号などに触れなくする
+				g_StageSelect.selectcooltime = 30;
+
+				if (title_display_once == false)
+				{
+					title_display_once = true;
+
+					// タイトルロゴ
+					title_display_EffectAray[3] =
+						SetEffectInReverse(94, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+							D3DXVECTOR2(1000.0f, 500.0f), D3DXVECTOR2(1000.0f, 500.0f), 0,
+							0.0f, 1.0f, 30, 999, 0, 1,
+							0.0f, 0.0f, 0);
+
+					// タイトルクリック指示
+					title_display_EffectAray[2] =
+						SetEffectInReverse(93, D3DXVECTOR2(720, 300), D3DXVECTOR2(720, 300), 0,
+							D3DXVECTOR2(1200.0f, 1200.0f), D3DXVECTOR2(1200.0f, 1200.0f), 0,
+							0.0f, 1.0f, 30, 999, 0, 1,
+							0.0f, 0.0f, 0);
+
+					// 明るくするなら48暗くするなら4
+					title_display_EffectAray[1] =
+						SetEffectInReverse(4, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+							D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+							0.0f, 0.4f, 0, 999, 0, 1,
+							0.0f, 0.0f, 0);
+
+					// ステージぼかし
+					title_display_EffectAray[0] =
+						SetEffectInReverse(95, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+							D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+							0.0f, 1.0f, 0, 999, 0, 1,
+							0.0f, 0.0f, 0);
+				}
+
+				if (mouse_Lclick && title_count > 60 && !title_click)
+				{
+					title_click = true;
+
+					for (int i = 0; i < 4; i++)
+					{
+						if (i == 1)
+						{
+							ChangeEffect(title_display_EffectAray[i], -1, D3DXVECTOR2(99999, 99999), D3DXVECTOR2(0, 0), 0,
+								D3DXVECTOR2(99999, 99999), D3DXVECTOR2(0, 0), 0,
+								0.0f, 0.4f, 0, 1, title_fade_count, title_fade_count + 1,
+								0.0f, 0.0f, 0);
+						}
+						else
+						{
+							ChangeEffect(title_display_EffectAray[i], -1, D3DXVECTOR2(99999, 99999), D3DXVECTOR2(0, 0), 0,
+								D3DXVECTOR2(99999, 99999), D3DXVECTOR2(0, 0), 0,
+								0.0f, 1.0f, 0, 1, title_fade_count, title_fade_count + 1,
+								0.0f, 0.0f, 0);
+						}
+					}
+				}
+
+				title_count++;
+
+				if (title_click)
+				{
+					if (title_clickcount > title_fade_count)
+						title_display = true;
+
+					title_clickcount++;
+				}
+			}
+			else
+			{
+
+				if (pushTitleCount < STAGE_SELECT_COOL)
+				{
+					// タイトルしてからステージが押せるようになるまで-1にしておく。これで変化を読み取れる
+					g_StageSelect.select_x = -1;
+					g_StageSelect.select_y = -1;
+				}
+
+				pushTitleCount++;
+			}
+
+
+
+
+
+
+
+			// 1フレーム前のポジションの保存。この後キー操作などで変更があった場合のみエフェクトを更新させる
+			int OldStageSelectX = g_StageSelect.select_x;
+			int OldStageSelectY = g_StageSelect.select_y;
+
+			// マウスでの操作
+			// ステージ選択の時の原点となる場所
+			float	effectpos_x = 240.0f;			    // xの原点(0,0を選択しているとき)
+			float	effectpos_y = 200.0f;			    // yの原点(0,0を選択しているとき)
+
+			// ステージ選択の時1個離れたらこれだけ離れるよってやつ
+			float while_x = 240.0f;
+			float while_y = 240.0f;
+
+			SetScore2(now_page);
+
+			//ステージ選択
+			for (int x = 0; x < SELECT_MAX_X; x++)
+			{
+				for (int y = 0; y < SELECT_MAX_Y; y++)
+				{
+					// ステージの座標を求める
+					int now_stage = x + y * SELECT_MAX_X + (now_page * 10);	// 0~19
+					D3DXVECTOR2 Stage_Pos = GetStagePos(now_stage + 1);
+					// 現在の座標を求める
+					/*float effectnow_x = effectpos_x + while_x * x;
+					float effectnow_y = effectpos_y + while_y * y;*/
+					float effectnow_x = Stage_Pos.x;
+					float effectnow_y = Stage_Pos.y;
+
+					if (mouse_pos_X > effectnow_x - 50.0f && mouse_pos_X < effectnow_x + 50.0f && mouse_pos_Y > effectnow_y - 50.0f && mouse_pos_Y < effectnow_y + 50.0f)
+					{
+						g_StageSelect.select_x = x;
+						g_StageSelect.select_y = y;
+						mouseuse = true;
+					}
+
+				}
+			}
+			//ワールド選択へ戻る 240 700
+			if (mouse_pos_X > 180.0f && mouse_pos_X < 280.0f && mouse_pos_Y > 650.0f && mouse_pos_Y < 750.0f)
+			{
+				g_StageSelect.select_x = 0;
+				g_StageSelect.select_y = 2;
+				mouseuse = true;
+			}
+			//左矢印
+			D3DXVECTOR2 yazipos = D3DXVECTOR2(120.0f, 320.0f);
+			D3DXVECTOR2 yazisize = D3DXVECTOR2(50.0f, 50.0f);
+			if (now_page == 1)
+			{
+				if (mouse_pos_X > yazipos.x - yazisize.x && mouse_pos_X < yazipos.x + yazisize.x && mouse_pos_Y > yazipos.y - yazisize.y && mouse_pos_Y < yazipos.y + yazisize.y)
+				{
+					g_StageSelect.select_x = 5;
+					if (g_StageSelect.select_y == 2)
+						g_StageSelect.select_y = 0;
+					mouseuse = true;
+				}
+			}
+			//右矢印
+			yazipos = D3DXVECTOR2(1320.0f, 320.0f);
+			if (now_page == 0)
+			{
+				if (mouse_pos_X > yazipos.x - yazisize.x && mouse_pos_X < yazipos.x + yazisize.x && mouse_pos_Y > yazipos.y - yazisize.y && mouse_pos_Y < yazipos.y + yazisize.y)
+				{
+					g_StageSelect.select_x = 6;
+					if (g_StageSelect.select_y == 2)
+						g_StageSelect.select_y = 0;
+					mouseuse = true;
+				}
+			}
+
+			if (title_display != false)
+			{
+				// 変更を確認する処理
+				if (pushTitleCount > STAGE_SELECT_COOL)
+				{
+					// もし前のフレームから変化があった場合のみエフェクトなどを変化させる
+					bool Change = false;
+					if (OldStageSelectX != g_StageSelect.select_x ||
+						OldStageSelectY != g_StageSelect.select_y)
+						Change = true;
+
+					// マウスがステージなどににあってない場合表示しない。
+					if (!mouseuse)
+					{
+						if (now_stage_select_EffectArray != -1)
+						{
+							// もし消した場合は変更があったとする。
+							Change = true;
+							EffectBreak(now_stage_select_EffectArray);
+							EffectBreak(now_stage_selectWaku_EffectArray);
+							DeleteMissionStageSelect();
+						}
+					}
+
+					// 変更があった場合、初期化と新しいもののセット
+					if (Change == true)
+					{
+						g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
+						EffectBreak(now_stage_select_EffectArray);
+						EffectBreak(now_stage_selectWaku_EffectArray);
+						DeleteMissionStageSelect();
+						stage_select_once = false;
+						stage_select_once_time = 0;
+					}
+
+					bool mouseclick = false;
+					if (mouseuse && mouse_Lclick)
+						mouseclick = true;
+
+
+
+
+
+					// 移動キーが押された時の処理
+					if (g_StageSelect.selectcooltime <= 0)
+					{
+
+						// マウスが表示にあっている状態で左クリックもしくはエンターキーをしたら
+						if (GetFadeState() == FADE_NONE)
+						{
+							if (mouseclick)
+							{
+								g_SENo = LoadSound("data/SE/「ピロリ」決定のボタン音・アクセント音.wav");
+								PlaySound(g_SENo, 0);
+
+								StageDecision = true;
+								// 移動入力のとこですでにステージデータはもらっているのでこのままいってOK
+								g_StageSelect.selectcooltime = STAGE_SELECT_COOL;
+								// プレイヤー配置フェーズに行く前に前回の配置情報をリセットする
+								ResetPlacementArray();
+								if (g_StageSelect.select_y == 2)
+								{
+									// タイトルへ戻る
+									SentakuKakutei = true;
+									// フェードさせる(黒い背景を出す)SetEffectInReverse
+									SetEffectInReverse(4, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+										D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+										0.0f, 1.0f, BackTitleFadeIn, 40, 30, 0,
+										0.0f, 0.0f, 0);
+									BackTitle = true;
+
+
+								}
+								else if (g_StageSelect.select_x == 5)
+								{
+									// 左矢印
+									SentakuKakutei = true;
+									g_StageSelect.select_x = 4;
+									now_page--;
+									ChangePageRequest = true;
+									return;
+								}
+								else if (g_StageSelect.select_x == 6)
+								{
+									// 右矢印
+									SentakuKakutei = true;
+									g_StageSelect.select_x = 0;
+									now_page++;
+									ChangePageRequest = true;
+									return;
+								}
+								else
+								{
+									SentakuKakutei = true;
+									SceneTransition(SCENE_PLACEMENT);
+								}
+							}
+						}
+
+					}
+					else
+						g_StageSelect.selectcooltime--;
+
+
+
+
+					// ステージ選択の時の原点となる場所
+					float	stage_origin_x = 240.0f;			    // xの原点(0,0を選択しているとき)
+					float	stage_origin_y = 200.0f;			    // yの原点(0,0を選択しているとき)
+
+					// ステージ選択の時1個離れたらこれだけ離れるよってやつ
+					float interval_x = 240.0f;
+					float interval_y = 240.0f;
+					if (pushTitleCount > STAGE_SELECT_COOL)
+					{
+						if (mouseuse)
+						{
+
+							if (stage_select_once == false)
+							{
+								stage_select_once = true;
+
+								// ステージのとこだけステージデータを受け取る。
+								if (g_StageSelect.select_x < SELECT_MAX_X && g_StageSelect.select_y < SELECT_MAX_Y)
+								{
+									// ステージデータを受け取る,ミッションやマップの表示で使うため。
+									// xとyからマップの番号を計算する
+									int stagenum = (now_page * 10) + (SELECT_MAX_X * g_StageSelect.select_y) + (g_StageSelect.select_x + 1);
+									now_stagenum = stagenum;
+									SetStageData(stagenum);		// 1~20の値を入れる
+
+									// ステージデータを受け取った(更新された)のでミッションを表示させる
+									DrawMissionStageSelect();
+								}
+
+
+
+								//ステージ選択
+								for (int x = 0; x < SELECT_MAX_X + 2; x++)
+								{
+									for (int y = 0; y < SELECT_MAX_Y + 1; y++)
+									{
+										// ステージの座標を求める
+										int now_stage = x + y * SELECT_MAX_X + (now_page * 10);	// 0~19
+										D3DXVECTOR2 Stage_Pos = GetStagePos(now_stage + 1);
+
+										// 現在の座標を求める
+										/*float now_x = stage_origin_x + interval_x * x;
+										float now_y = stage_origin_y + interval_y * y;*/
+										float now_x = Stage_Pos.x;
+										float now_y = Stage_Pos.y;
+
+										// 検索。選択しているとこを見つけて大きいサイズで表示。
+										if (g_StageSelect.select_x == x)
+										{
+											if (g_StageSelect.select_y == y)
+											{
+												if (x < SELECT_MAX_X && y < SELECT_MAX_Y)
+												{
+													int now_select_stage = NowWorld * 10 - 10 + x + y * SELECT_MAX_X + (now_page * 10);	// 0~19
+
+													// 白枠
+													now_stage_selectWaku_EffectArray =
+														SetEffect(88, D3DXVECTOR2(now_x, now_y), D3DXVECTOR2(now_x, now_y), 0,
+															D3DXVECTOR2(220.0f, 220.0f), D3DXVECTOR2(220.0f, 220.0f), 0,
+															0.0f, 1.0f, 30, 999, 0, 30,
+															0.0f, 0.0f, 0);
+
+													// ピン
+													now_stage_select_EffectArray =
+														SetEffect(87, D3DXVECTOR2(now_x, now_y - 120), D3DXVECTOR2(now_x, now_y - 40), 1,
+															D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(150.0f, 150.0f), 1,
+															0.0f, 1.0f, 30, 999, 0, 30,
+															0.0f, 0.0f, 0);
+
+												}
+												else if (y == 2)		// タイトルに戻る処理 (ワールド選択に戻るボタンの表示)
+												{
+													now_stage_select_EffectArray =
+														SetEffect(61, D3DXVECTOR2(240.0f, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
+															D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
+															0.0f, 1.0f, 0, 999, 0, 60,
+															0.0f, 0.0f, 0);
+													now_stage_selectWaku_EffectArray =
+														SetEffect(61, D3DXVECTOR2(240.0f, 700.0f), D3DXVECTOR2(240.0f, 700.0f), 0,
+															D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
+															0.0f, 0.0f, 0, 999, 0, 60,
+															0.0f, 0.0f, 0);			// 透明だけど出しておく
+												}
+												else if (x == 5)		// ページ変更の矢印の左
+												{
+													now_stage_select_EffectArray =
+														SetEffect(103, D3DXVECTOR2(120.0f, 320.0f), D3DXVECTOR2(120.0f, 320.0f), 0,
+															D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
+															0.0f, 1.0f, 0, 999, 0, 60,
+															0.0f, 0.0f, 0);
+													now_stage_selectWaku_EffectArray =
+														SetEffect(103, D3DXVECTOR2(120.0f, 320.0f), D3DXVECTOR2(120.0f, 320.0f), 0,
+															D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
+															0.0f, 0.0f, 0, 999, 0, 60,
+															0.0f, 0.0f, 0);
+												}
+												else if (x == 6)		// ページ変更の矢印の右
+												{
+													now_stage_select_EffectArray =
+														SetEffect(102, D3DXVECTOR2(1320.0f, 320.0f), D3DXVECTOR2(1320.0f, 320.0f), 0,
+															D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
+															0.0f, 1.0f, 0, 999, 0, 60,
+															0.0f, 0.0f, 0);
+													now_stage_selectWaku_EffectArray =
+														SetEffect(102, D3DXVECTOR2(1320.0f, 320.0f), D3DXVECTOR2(1320.0f, 320.0f), 0,
+															D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 0,
+															0.0f, 0.0f, 0, 999, 0, 60,
+															0.0f, 0.0f, 0);
+												}
+
+												g_SENo = LoadSound("data/SE/Accent03-1.wav");
+												PlaySound(g_SENo, 0);
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+
+			// 選択した状態が続いてる場合trueなのでここをとおる
+			if (stage_select_once == true)
+			{
+				if (stage_select_once_time % 60 == 0)
+				{
+					ChangeEffectCount(now_stage_select_EffectArray, 0);
+				}
+
+
+				// 選択されてからの時間が増えていく
+				stage_select_once_time++;
+			}
+
+		}
+		else
+		{
+			// タイトルへ戻る中なら BackTitle == true なら
+
+			// 画面が全部真っ暗なった時にいろいろ戻す
+			if (BackTitlecount == BackTitleFadeIn + 36)
+			{
+				//InitPage();
+				//StopSoundAll();
+				UninitStageSelect();		// 音止めてるだけ
+				//InitStageSelect();
+			}
+
+			if (BackTitlecount > BackTitleTime)	// 戻る時間が終わったら戻す
+			{
+				//title_display = false;
+				//InitStageSelectForTitle();
+				title_display = false;			// タイトルのぼかしをもっかいやる
+				title_display_once = false;			// タイトルのぼかしをもっかいやる
+				title_click = false;
+				title_clickcount = 0;
+				title_count = 0;
+				now_stagenum = 1;
+
+				BackTitle = false;
+				BackTitlecount = 0;
+				InitStageSelect2();
+				SentakuKakutei = false;
+			}
+
+			if (BackTitle != false)
+			{
+				BackTitlecount++;
+			}
+			SetScore3(BackTitlecount);
+		}
+	}
+	else
+	{
+
+		// チェンジリクエストがtrueなら
+		if (ChangeCount == 0)
+		{
+			// フェードさせる(黒い背景を出す)SetEffectInReverse
+			SetEffectInReverse(4, D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), 0,
+				D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+				0.0f, 1.0f, 15, 15, 15, 0,
+				0.0f, 0.0f, 0);
+
+		}
+
+		if (ChangeCount > 25)
+		{
+			ChangeCount = 0;
+			ChangePageRequest = false;
+		}
+		else
+			ChangeCount++;
+	}
+
 }

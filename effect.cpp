@@ -378,6 +378,14 @@ void InitEffect(void)
 	InitScore();
 }
 
+void ClearEffect(void)
+{
+	for (int i = 0; i < MAX_EFFECT; i++)
+	{
+		g_Effect[i].isUse = false;
+	}
+}
+
 void UninitEffect(void)
 {
 	for (int i = 0; i < MAX_EFFECT; i++)
@@ -1604,8 +1612,10 @@ void ChangeEffect(int use_array_num, int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2,
 	float Clarity_min, float Clarity_max, int fadeIn_count, int all_count, int fadeOut_count, int moving_count,
 	float rot_angle1, float rot_angle2, int rot_moving_pattern, int SerialNumber)
 {
+	/*if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
+		exit(29);*/
 	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
-		exit(29);
+		return;
 
 
 	int PlaySerial = 0;			// 連番をちゃんと数えているかどうか
@@ -1687,8 +1697,10 @@ void ChangeEffect(int use_array_num, int id, D3DXVECTOR2 pos1, D3DXVECTOR2 pos2,
 // use_array_numのエフェクトのnow_countだけを設定できる,SerialNumberはデフォルト関数でデフォ=1
 void ChangeEffectCount(int use_array_num, int setcount, int SerialNumber)
 {
+	/*if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
+		exit(30);*/
 	if (use_array_num < 0 || use_array_num >= MAX_EFFECT)
-		exit(30);
+		return;
 
 	for (int i = 0; i < SerialNumber; i++)
 	{

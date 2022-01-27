@@ -53,6 +53,7 @@ typedef struct
 }EFFECT;
 
 void InitEffect(void);
+void ClearEffect(void);
 void UninitEffect(void);
 void UpdateEffect(void);
 void DrawEffect(void);

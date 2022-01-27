@@ -87,7 +87,8 @@ void InitScene(SCENE index)
 
 	case SCENE_STAGE_SELECT:
 		InitEffect(); 
-		InitStageSelect();
+		//InitStageSelect();
+		InitStageSelect2();
 		break;
 
 	case SCENE_PLACEMENT:
@@ -199,7 +200,8 @@ void UpdateScene(void)
 
 	case SCENE_STAGE_SELECT:
 		UpdateEffect();
-		UpdateStageSelect();
+		//UpdateStageSelect();
+		UpdateStageSelect2();
 		
 		break;
 

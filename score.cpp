@@ -78,115 +78,115 @@ void UpdateScore(void)
 //=============================================================================
 void DrawScore(void)
 {
-	//有効化フラグがONなら描画する
-	if (g_Use)
-	{
-		// テクスチャ設定
-		GetDeviceContext()->PSSetShaderResources(0, 1, GetTexture(g_TexNo));
+	////有効化フラグがONなら描画する
+	//if (g_Use)
+	//{
+	//	// テクスチャ設定
+	//	GetDeviceContext()->PSSetShaderResources(0, 1, GetTexture(g_TexNo));
 
-		// 桁数分処理する
-		int number = g_Score;
-		for (int i = 0; i < SCORE_DIGIT; i++)
-		{
-			// 今回表示する桁の数字
-			float x = (float)(number % 10);
+	//	// 桁数分処理する
+	//	int number = g_Score;
+	//	for (int i = 0; i < SCORE_DIGIT; i++)
+	//	{
+	//		// 今回表示する桁の数字
+	//		float x = (float)(number % 10);
 
-			// スコアの位置やテクスチャー座標を反映
-			float px = g_Pos.x - g_w * i;	// プレイヤーの表示位置X
-			float py = g_Pos.y;			// プレイヤーの表示位置Y
-			float pw = g_w;				// プレイヤーの表示幅
-			float ph = g_h;				// プレイヤーの表示高さ
+	//		// スコアの位置やテクスチャー座標を反映
+	//		float px = g_Pos.x - g_w * i;	// プレイヤーの表示位置X
+	//		float py = g_Pos.y;			// プレイヤーの表示位置Y
+	//		float pw = g_w;				// プレイヤーの表示幅
+	//		float ph = g_h;				// プレイヤーの表示高さ
 
-			float tw = 1.0f / 10;		// テクスチャの幅
-			float th = 1.0f / 1;		// テクスチャの高さ
-			float tx = x * tw;			// テクスチャの左上X座標
-			float ty = 0.0f;			// テクスチャの左上Y座標
+	//		float tw = 1.0f / 10;		// テクスチャの幅
+	//		float th = 1.0f / 1;		// テクスチャの高さ
+	//		float tx = x * tw;			// テクスチャの左上X座標
+	//		float ty = 0.0f;			// テクスチャの左上Y座標
 
-			// １枚のポリゴンの頂点とテクスチャ座標を設定
-			DrawSprite(g_TexNo, px, py, pw, ph, tx, ty, tw, th);
+	//		// １枚のポリゴンの頂点とテクスチャ座標を設定
+	//		DrawSprite(g_TexNo, px, py, pw, ph, tx, ty, tw, th);
 
-			// 次の桁へ
-			number /= 10;
-		}
+	//		// 次の桁へ
+	//		number /= 10;
+	//	}
 
-		// 桁数分処理する
-		int number2 = g_Score2;
-		for (int i = 0; i < SCORE_DIGIT; i++)
-		{
-			// 今回表示する桁の数字
-			float x = (float)(number2 % 10);
+	//	// 桁数分処理する
+	//	int number2 = g_Score2;
+	//	for (int i = 0; i < SCORE_DIGIT; i++)
+	//	{
+	//		// 今回表示する桁の数字
+	//		float x = (float)(number2 % 10);
 
-			// スコアの位置やテクスチャー座標を反映
-			float px = g_Pos.x - g_w * i;	// プレイヤーの表示位置X
-			float py = g_Pos.y + 40.0f * 2;			// プレイヤーの表示位置Y
-			float pw = g_w;				// プレイヤーの表示幅
-			float ph = g_h;				// プレイヤーの表示高さ
+	//		// スコアの位置やテクスチャー座標を反映
+	//		float px = g_Pos.x - g_w * i;	// プレイヤーの表示位置X
+	//		float py = g_Pos.y + 40.0f * 2;			// プレイヤーの表示位置Y
+	//		float pw = g_w;				// プレイヤーの表示幅
+	//		float ph = g_h;				// プレイヤーの表示高さ
 
-			float tw = 1.0f / 10;		// テクスチャの幅
-			float th = 1.0f / 1;		// テクスチャの高さ
-			float tx = x * tw;			// テクスチャの左上X座標
-			float ty = 0.0f;			// テクスチャの左上Y座標
+	//		float tw = 1.0f / 10;		// テクスチャの幅
+	//		float th = 1.0f / 1;		// テクスチャの高さ
+	//		float tx = x * tw;			// テクスチャの左上X座標
+	//		float ty = 0.0f;			// テクスチャの左上Y座標
 
-			// １枚のポリゴンの頂点とテクスチャ座標を設定
-			DrawSprite(g_TexNo, px, py, pw, ph, tx, ty, tw, th);
+	//		// １枚のポリゴンの頂点とテクスチャ座標を設定
+	//		DrawSprite(g_TexNo, px, py, pw, ph, tx, ty, tw, th);
 
-			// 次の桁へ
-			number2 /= 10;
-		}
-
-
-		// 桁数分処理する
-		int number3 = g_Score3;
-		for (int i = 0; i < SCORE_DIGIT; i++)
-		{
-			// 今回表示する桁の数字
-			float x = (float)(number3 % 10);
-
-			// スコアの位置やテクスチャー座標を反映
-			float px = g_Pos.x - g_w * i;	// プレイヤーの表示位置X
-			float py = g_Pos.y + 40.0f * 3;			// プレイヤーの表示位置Y
-			float pw = g_w;				// プレイヤーの表示幅
-			float ph = g_h;				// プレイヤーの表示高さ
-
-			float tw = 1.0f / 10;		// テクスチャの幅
-			float th = 1.0f / 1;		// テクスチャの高さ
-			float tx = x * tw;			// テクスチャの左上X座標
-			float ty = 0.0f;			// テクスチャの左上Y座標
-
-			// １枚のポリゴンの頂点とテクスチャ座標を設定
-			DrawSprite(g_TexNo, px, py, pw, ph, tx, ty, tw, th);
-
-			// 次の桁へ
-			number3 /= 10;
-		}
+	//		// 次の桁へ
+	//		number2 /= 10;
+	//	}
 
 
-		// 打ち出すパワーの表示
-		// 桁数分処理する
-		int ShotPowerNumber = g_ShotPower;
-		for (int i = 0; i < SCORE_DIGIT; i++)
-		{
-			// 今回表示する桁の数字
-			float x = (float)(ShotPowerNumber % 10);
+	//	// 桁数分処理する
+	//	int number3 = g_Score3;
+	//	for (int i = 0; i < SCORE_DIGIT; i++)
+	//	{
+	//		// 今回表示する桁の数字
+	//		float x = (float)(number3 % 10);
 
-			// スコアの位置やテクスチャー座標を反映
-			float px = g_Pos.x - g_w * i + 40.0f;	// プレイヤーの表示位置X
-			float py = g_Pos.y + 40.0f;			// プレイヤーの表示位置Y
-			float pw = g_w;				// プレイヤーの表示幅
-			float ph = g_h;				// プレイヤーの表示高さ
+	//		// スコアの位置やテクスチャー座標を反映
+	//		float px = g_Pos.x - g_w * i;	// プレイヤーの表示位置X
+	//		float py = g_Pos.y + 40.0f * 3;			// プレイヤーの表示位置Y
+	//		float pw = g_w;				// プレイヤーの表示幅
+	//		float ph = g_h;				// プレイヤーの表示高さ
 
-			float tw = 1.0f / 10;		// テクスチャの幅
-			float th = 1.0f / 1;		// テクスチャの高さ
-			float tx = x * tw;			// テクスチャの左上X座標
-			float ty = 0.0f;			// テクスチャの左上Y座標
+	//		float tw = 1.0f / 10;		// テクスチャの幅
+	//		float th = 1.0f / 1;		// テクスチャの高さ
+	//		float tx = x * tw;			// テクスチャの左上X座標
+	//		float ty = 0.0f;			// テクスチャの左上Y座標
 
-			// １枚のポリゴンの頂点とテクスチャ座標を設定
-			DrawSprite(g_TexNo, px, py, pw, ph, tx, ty, tw, th);
+	//		// １枚のポリゴンの頂点とテクスチャ座標を設定
+	//		DrawSprite(g_TexNo, px, py, pw, ph, tx, ty, tw, th);
 
-			// 次の桁へ
-			ShotPowerNumber /= 10;
-		}
-	}
+	//		// 次の桁へ
+	//		number3 /= 10;
+	//	}
+
+
+	//	// 打ち出すパワーの表示
+	//	// 桁数分処理する
+	//	int ShotPowerNumber = g_ShotPower;
+	//	for (int i = 0; i < SCORE_DIGIT; i++)
+	//	{
+	//		// 今回表示する桁の数字
+	//		float x = (float)(ShotPowerNumber % 10);
+
+	//		// スコアの位置やテクスチャー座標を反映
+	//		float px = g_Pos.x - g_w * i + 40.0f;	// プレイヤーの表示位置X
+	//		float py = g_Pos.y + 40.0f;			// プレイヤーの表示位置Y
+	//		float pw = g_w;				// プレイヤーの表示幅
+	//		float ph = g_h;				// プレイヤーの表示高さ
+
+	//		float tw = 1.0f / 10;		// テクスチャの幅
+	//		float th = 1.0f / 1;		// テクスチャの高さ
+	//		float tx = x * tw;			// テクスチャの左上X座標
+	//		float ty = 0.0f;			// テクスチャの左上Y座標
+
+	//		// １枚のポリゴンの頂点とテクスチャ座標を設定
+	//		DrawSprite(g_TexNo, px, py, pw, ph, tx, ty, tw, th);
+
+	//		// 次の桁へ
+	//		ShotPowerNumber /= 10;
+	//	}
+	//}
 }
 
 //=============================================================================

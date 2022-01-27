@@ -927,6 +927,7 @@ void UpdateBullet(void)
 						{
 							// クリアしていて更新があった場合セーブデータ構造体を変更する
 							p_Savedata[stageminus1].mission_clear[missionnum] = 1;
+							NewStarTrue(missionnum);		// 初ゲット状態を保存
 							updata_savedata = true;
 						}
 					}
@@ -935,6 +936,7 @@ void UpdateBullet(void)
 					{
 						// クリアしていて更新があった場合セーブデータ構造体を変更する
 						p_Savedata[stageminus1].clear_time = p_Gamedata->game_time;
+						NewScoreTrue();
 						updata_savedata = true;
 					}
 					// セーブデータの更新があったならば、テキストも更新する

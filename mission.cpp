@@ -18,6 +18,8 @@
 
 MISSION g_Mission;
 
+bool NewScore = false;
+
 void InitMission()
 {
 	g_Mission.mission_background_EffectArray = -1;
@@ -30,7 +32,9 @@ void InitMission()
 		}
 
 		g_Mission.mission_star_EffectArray[i] = -1;
+		g_Mission.NewStar[i] = false;
 	}
+	NewScore = false;
 
 	return;
 }
@@ -818,4 +822,46 @@ float MissionTexIdToNumXGAP(int texid)
 
 	exit(24);
 	return -1;
+}
+
+// 引き数でもらった番号ミッションを初ゲット状態にする
+void NewStarTrue(int missionnum)
+{
+	g_Mission.NewStar[missionnum] = true;
+	return;
+}
+
+// 引き数でもらった番号ミッションの初ゲット状態かどうかをもらう。
+bool GetNewStar(int missionnum)
+{
+	return g_Mission.NewStar[missionnum];
+}
+
+// 初ゲット状態をリセットする
+void ClearNewStar()
+{
+	for (int i = 0; i < MAX_MISSION; i++)
+	{
+		g_Mission.NewStar[i] = false;
+	}
+}
+
+// ハイスコアが出た状態にする
+void NewScoreTrue()
+{
+	NewScore = true;
+	return;
+}
+
+// ハイスコアが出てるかどうかをもらう
+bool GetNewScore()
+{
+	return NewScore;
+}
+
+// ハイスコア状態をリセットする
+void ClearNewScore()
+{
+	NewScore = false;
+	return;
 }

@@ -13,6 +13,7 @@ typedef struct {
 	int mission_ContentsNum_EffectArray[MAX_MISSION];
 	int mission_JudgeNum_EffectArray[MAX_MISSION][MAX_DIGIT];
 	int	mission_star_EffectArray[MAX_MISSION];
+	bool NewStar[MAX_MISSION];
 
 }MISSION;
 
@@ -36,3 +37,12 @@ int ContentsNumToTexid(int mission_ContentsNum);
 bool JudgeClearMission(int missionnum);
 int DisplayLeftOrRight(int stagenum);
 float MissionTexIdToNumXGAP(int texid);
+
+
+void NewStarTrue(int missionnum);
+bool GetNewStar(int missionnum);
+void ClearNewStar();
+
+void NewScoreTrue();
+bool GetNewScore();
+void ClearNewScore();

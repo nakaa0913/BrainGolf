@@ -169,7 +169,7 @@ void UpdateBullet(void)
 				if (p_Stagedata->maparray[y][x] == 37)
 				{
 					//241ˆÈã‚Ì‚É“–‚½‚é‚Æƒ{[ƒ‹‚ğ~‚ß‚é
-					if (hole_changetime > 60)
+					if (hole_changetime > 30)
 					{
 						p_Stagedata->maparray[y][x] = 22;
 					}

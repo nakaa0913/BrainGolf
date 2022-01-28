@@ -30,9 +30,9 @@ pos,13,19,
 PlayerdataEnd
 
 MissiondataStart
-0,3,
-1,2,
-2,120,
+0,9,
+1,8,
+2,40,
 MissiondataEnd
 
 EndLoadFile

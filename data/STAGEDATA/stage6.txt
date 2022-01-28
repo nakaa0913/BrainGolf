@@ -23,7 +23,7 @@ MapdataEnd
 
 
 NumberofPeopleStart
-7,
+8,
 NumberofPeopleEnd
 
 PlayerdataStart
@@ -31,9 +31,9 @@ pos,13,0,
 PlayerdataEnd
 
 MissiondataStart
-0,3,
-1,2,
-2,120,
+0,8,
+1,7,
+2,40,
 MissiondataEnd
 
 EndLoadFile

@@ -121,19 +121,21 @@ void InitGameForPlacement(void)
 	{
 		// •½˜a”wŒi‚Ì•\Ž¦
 		g_BGMNo = LoadSound("data/BGM/•—‚É—h‚ç‚ê‚Ä.wav");
+		SetVolume(g_BGMNo, 1.0f);
 	}
 	else if (GetNowChoiceStageNum() <= 15)
 	{
 		// áŒ´”wŒi‚Ì•\Ž¦
 		g_BGMNo = LoadSound("data/BGM/ƒ†ƒLƒmƒCƒƒhƒŠ.wav");
+		SetVolume(g_BGMNo, 0.5f);
 	}
 	else if (GetNowChoiceStageNum() <= 20)
 	{
 		// ’n–”wŒi‚Ì•\Ž¦
 		g_BGMNo = LoadSound("data/BGM/—ù–“¹.wav");
+		SetVolume(g_BGMNo, 0.6f);
 	}
 
-	SetVolume(g_BGMNo, 0.5f);
 	PlaySound(g_BGMNo, -1);
 
 	sound_once = 0;

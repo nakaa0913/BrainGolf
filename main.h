@@ -11,6 +11,9 @@
 #define MAP_X (14)
 #define MAP_Y (20)
 
+#define CURSOR_SIZE (120)
+#define CURSOR_ID (127)
+
 #pragma warning(push)
 #pragma warning(disable:4005)
 
@@ -66,3 +69,5 @@ int GetMouseRClickNum(void);
 bool GetMouseScroll(void);
 int  GetMouseScrollNum(void);
 bool GetMouseScrollFalse(void);
+void SetCursorState(bool isUse, int fade_state, int fadetime);
+void UpdataCursor(void);

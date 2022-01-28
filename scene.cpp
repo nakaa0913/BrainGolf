@@ -25,6 +25,8 @@
 #include "Prologue.h"
 #include "pause.h"
 #include "stageselect.h"
+#include "sprite.h"
+#include "Texture.h"
 
 /*------------------------------------------------------------------------------
    定数定義
@@ -47,6 +49,13 @@ static SCENE g_SceneNextIndex = g_SceneIndex;
 bool	change_once = false;		// シーン変えてってお願い
 
 int gas = 0;
+
+static int g_Tex_cursorS;	// マウスカーソルのテクスチャ用
+bool cursor_isUseS = true;	// マウスカーソルの表示用
+int cursor_fade_stateS = 0;	// マウスカーソルのフェードイン中がどうか,0:フェード中じゃない,1:フェードイン中,2フェードアウト中
+int cursor_fade_countS = 0;	// マウスカーソルのフェード中の場合のカウント
+int cursor_fadetimeS = 0;	// フェードする場合これだけかけてフェードする
+float cursor_ClarityS = 1.0f;		// カーソルの透明度
 
 
 /*------------------------------------------------------------------------------
@@ -112,6 +121,19 @@ void InitScene(SCENE index)
 		//	InitResult();
 		//	break;
 	}
+
+	// マウスの初期化
+	g_Tex_cursorS = LoadTexture("data/TEXTURE/other_effect/cursor.png");
+
+	cursor_isUseS = true;	// マウスカーソルの表示用
+	cursor_fade_stateS = 0;	// マウスカーソルのフェードイン中がどうか,0:フェード中じゃない,1:フェードイン中,2フェードアウト中
+	cursor_fade_countS = 0;	// マウスカーソルのフェード中の場合のカウント
+	cursor_fadetimeS = 0;	// フェードする場合これだけかけてフェードする
+	cursor_ClarityS = 1.0f;
+
+	// 初期設定
+	//SetCursorState(true, 2, 180);	// いきなり透明にしておく
+
 }
 
 /*------------------------------------------------------------------------------
@@ -278,6 +300,21 @@ void DrawScene(void)
 		//	DrawEffect();
 		//	break;
 	}
+
+	//// カーソルの処理
+	//if (cursor_isUseS == true)
+	//{
+	//	float mouse_pos_X = GetMousePosX();
+	//	float mouse_pos_Y = GetMousePosY();
+
+	//	//D3DXCOLOR Ccolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, cursor_Clarity);
+	//	D3DXCOLOR Ccolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	//	float sizeX = 120.0f;
+	//	float sizeY = 120.0f;
+	//	float posX = mouse_pos_X;
+	//	float posY = mouse_pos_Y;
+	//	DrawSpriteLeftTopColor(g_Tex_cursorS, posX, posY, sizeX, sizeY, 0.0f, 0.0f, 0.0f, 1.0f, Ccolor);
+	//}
 
 	DrawFade();
 }

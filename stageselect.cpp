@@ -140,6 +140,9 @@ bool SentakuKakutei = false;
 int pushTitleCount = 0;				// タイトルクリックしてからの時間
 bool ChangePageRequest = false;
 int ChangeCount = 0;
+
+static int cursor_stageselect_EffectArray = -1;
+
 /*------------------------------------------------------------------------------
    初期化関数
 ------------------------------------------------------------------------------*/
@@ -280,6 +283,8 @@ void InitStageSelect(void)
 	now_stagenum_select_EffectArray[0] = -1;
 	now_stagenum_select_EffectArray[1] = -1;
 
+	cursor_stageselect_EffectArray = -1;
+
 
 	StartStageSelectScreen();
 
@@ -372,6 +377,12 @@ void UpdateStageSelect(void)
 	bool mouse_Lclick = GetMouseLClick();
 	bool mouseuse = false;
 
+	//// カーソルの表示
+	//ChangeEffect(cursor_stageselect_EffectArray, CURSOR_ID, D3DXVECTOR2(mouse_pos_X, mouse_pos_Y), D3DXVECTOR2(mouse_pos_X, mouse_pos_Y), 0,
+	//	D3DXVECTOR2(CURSOR_SIZE, CURSOR_SIZE), D3DXVECTOR2(CURSOR_SIZE, CURSOR_SIZE), 0,
+	//	0.0f, 0.0f, 0, 999, 0, 60,
+	//	0.0f, 0.0f, 0);
+
 	// タイトルへ戻る中じゃないときだけ動く
 	if (BackTitle == false)
 	{
@@ -436,6 +447,10 @@ void UpdateStageSelect(void)
 						D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
 						0.0f, 1.0f, 0, 999, 0, 1,
 						0.0f, 0.0f, 0);
+
+				// マウスの表示をする
+				SetCursorState(true, 1, 30);
+
 			}
 
 			if (mouse_Lclick && title_count > 60 && !title_click)
@@ -1169,6 +1184,16 @@ void StartStageSelectScreen()
 	float toumeido = 1.0f;
 	float plusA = 0.0f;
 	float FadeInTime = 150;
+
+	float mouse_pos_X = GetMousePosX();
+	float mouse_pos_Y = GetMousePosY();
+	
+	//// カーソルの表示
+	//cursor_stageselect_EffectArray =
+	//	SetEffectInReverse(CURSOR_ID, D3DXVECTOR2(mouse_pos_X, mouse_pos_Y), D3DXVECTOR2(mouse_pos_X, mouse_pos_Y), 0,
+	//		D3DXVECTOR2(CURSOR_SIZE, CURSOR_SIZE), D3DXVECTOR2(CURSOR_SIZE, CURSOR_SIZE), 0,
+	//		0.0f, toumeido, FadeInTime, 999, 0, 60,
+	//		0.0f, 0.0f, 0);
 
 	//背景表示
 	// 1ページ目

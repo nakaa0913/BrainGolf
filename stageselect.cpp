@@ -377,11 +377,7 @@ void UpdateStageSelect(void)
 	bool mouse_Lclick = GetMouseLClick();
 	bool mouseuse = false;
 
-	//// カーソルの表示
-	//ChangeEffect(cursor_stageselect_EffectArray, CURSOR_ID, D3DXVECTOR2(mouse_pos_X, mouse_pos_Y), D3DXVECTOR2(mouse_pos_X, mouse_pos_Y), 0,
-	//	D3DXVECTOR2(CURSOR_SIZE, CURSOR_SIZE), D3DXVECTOR2(CURSOR_SIZE, CURSOR_SIZE), 0,
-	//	0.0f, 0.0f, 0, 999, 0, 60,
-	//	0.0f, 0.0f, 0);
+	int fefef = 4;
 
 	// タイトルへ戻る中じゃないときだけ動く
 	if (BackTitle == false)
@@ -448,8 +444,7 @@ void UpdateStageSelect(void)
 						0.0f, 1.0f, 0, 999, 0, 1,
 						0.0f, 0.0f, 0);
 
-				// マウスの表示をする
-				SetCursorState(true, 1, 30);
+				
 
 			}
 
@@ -2183,6 +2178,9 @@ void UpdateStageSelect2(void)
 							D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT), 0,
 							0.0f, 1.0f, 0, 999, 0, 1,
 							0.0f, 0.0f, 0);
+
+					// マウスの表示をする
+					SetCursorState(true, 1, 40);
 				}
 
 				if (mouse_Lclick && title_count > 60 && !title_click)

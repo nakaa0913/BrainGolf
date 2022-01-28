@@ -185,6 +185,9 @@ static int batu_124;
 static int highscore_125;
 static int husen_126;
 
+// カーソル
+static int cursor_127;
+
 void InitEffect(void)
 {
 	//テクスチャの名前
@@ -340,6 +343,8 @@ void InitEffect(void)
 	batu_124 = LoadTexture("data/TEXTURE/result/gameover/batu.png");
 	highscore_125 = LoadTexture("data/TEXTURE/result/highscore.png");
 	husen_126 = LoadTexture("data/TEXTURE/result/husen_02.png");
+
+	cursor_127 = LoadTexture("data/TEXTURE/other_effect/cursor.png");
 
 	for (int i = 0; i < MAX_EFFECT; i++)
 	{
@@ -1616,6 +1621,9 @@ int GetTextureData(int id)
 		break;
 	case 126:
 		return husen_126;
+		break;
+	case 127:
+		return cursor_127;
 		break;
 	}
 	

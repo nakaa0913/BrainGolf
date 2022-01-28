@@ -50,6 +50,13 @@ bool g_MouseLClick = false;
 bool g_MouseRClick = false;
 bool g_MouseScroll = false;
 
+static int g_Tex_cursor;	// マウスカーソルのテクスチャ用
+bool cursor_isUse = true;	// マウスカーソルの表示用
+int cursor_fade_state = 0;	// マウスカーソルのフェードイン中がどうか,0:フェード中じゃない,1:フェードイン中,2フェードアウト中
+int cursor_fade_count = 0;	// マウスカーソルのフェード中の場合のカウント
+int cursor_fadetime = 0;	// フェードする場合これだけかけてフェードする
+float cursor_Clarity = 1.0f;		// カーソルの透明度
+
 #ifdef _DEBUG
 int		g_CountFPS;							// FPSカウンタ
 char	g_DebugStr[2048] = WINDOW_CAPTION;	// デバッグ文字表示用
@@ -265,9 +272,24 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	// スプライトの初期化
 	InitSprite();
 
-	//シーンの初期化（チームロゴからスタート）
+	//シーンの初期化（チームロゴからスタート
 	SetFadeColor(0.0f, 0.0f, 0.0f);
 	SceneFadeIn(SCENE_LOGO);
+
+	// マウスの初期化
+	//g_Tex_cursor = LoadTexture("data/TEXTURE/other_effect/cursor.png");
+	g_Tex_cursor = LoadTexture("data/TEXTURE/other_effect/cursor2.png");
+	//g_Tex_cursor = LoadTexture("data/TEXTURE/other_effect/black.png");
+
+	cursor_isUse = true;	// マウスカーソルの表示用
+	cursor_fade_state = 0;	// マウスカーソルのフェードイン中がどうか,0:フェード中じゃない,1:フェードイン中,2フェードアウト中
+	cursor_fade_count = 0;	// マウスカーソルのフェード中の場合のカウント
+	cursor_fadetime = 0;	// フェードする場合これだけかけてフェードする
+	cursor_Clarity = 1.0f;
+
+	// 初期設定
+	//SetCursorState(true, 2, 180);	// いきなり透明にしておく
+
 
 	return S_OK;
 }
@@ -306,6 +328,9 @@ void Update(void)
 	//入力系の更新処理
 	UpdateInput();
 
+	// マウスカーソルのアップデート処理
+	//UpdataCursor();
+
 	//シーンの更新
 	UpdateScene();
 }
@@ -326,6 +351,21 @@ void Draw(void)
 
 	// シーンの描画処理
 	DrawScene();
+
+	// カーソルの処理
+	if (cursor_isUse == true)
+	{
+		float mouse_pos_X = GetMousePosX();
+		float mouse_pos_Y = GetMousePosY();
+
+		//D3DXCOLOR Ccolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, cursor_Clarity);
+		D3DXCOLOR Ccolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		float sizeX = 120.0f;
+		float sizeY = 120.0f;
+		float posX = mouse_pos_X;
+		float posY = mouse_pos_Y;
+		DrawSpriteLeftTopColor(g_Tex_cursor, posX, posY, sizeX, sizeY, 0.0f, 0.0f, 0.0f, 1.0f, Ccolor);
+	}
 
 	// バックバッファ、フロントバッファ入れ替え
 	Present();
@@ -407,3 +447,53 @@ char* GetDebugStr(void)
 	return g_DebugStr;
 }
 #endif
+
+// 表示するかどうか、フェードインかアウトか(0,1,2)、フェードする場合何フレームかけてフェードするか
+void SetCursorState(bool isUse, int fade_state, int fadetime)
+{
+	//cursor_isUse = isUse;				// マウスカーソルの表示用
+	//cursor_fade_state = fade_state;		// マウスカーソルのフェードイン中がどうか,0:フェード中じゃない,1:フェードイン中,2フェードアウト中
+	//cursor_fade_count = 0;				// マウスカーソルのフェード中の場合のカウント
+	//cursor_fadetime = fadetime;			// フェードする場合これだけかけてフェードする
+
+	return;
+}
+
+void UpdataCursor(void)
+{
+	//// カーソルのアップデート
+	//if (cursor_fade_state == 1)
+	//{
+	//	// フェードイン
+	//	int oneframe = 1.0f / cursor_fadetime;
+	//	cursor_Clarity = oneframe * cursor_fade_count;
+	//	if (cursor_fade_count >= cursor_fadetime)
+	//	{
+	//		// フェード処理を終了する
+	//		cursor_Clarity = 1.0f;
+	//		cursor_fade_state = 0;
+	//	}
+	//	else if (cursor_Clarity >= 1.0f)
+	//		cursor_Clarity = 1.0f;
+
+	//	cursor_fade_count++;
+	//}
+	//if (cursor_fade_state == 2)
+	//{
+	//	// フェードアウト
+	//	int oneframe = 1.0f / cursor_fadetime;
+	//	cursor_Clarity = 1.0f - oneframe * cursor_fade_count;
+	//	if (cursor_fade_count >= cursor_fadetime)
+	//	{
+	//		// フェード処理を終了する
+	//		cursor_Clarity = 0.0f;
+	//		cursor_fade_state = 0;
+	//	}
+	//	else if (cursor_Clarity <= 0.0f)
+	//		cursor_Clarity = 0.0f;
+
+	//	cursor_fade_count++;
+	//}
+
+	return;
+}

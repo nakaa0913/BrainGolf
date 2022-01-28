@@ -284,7 +284,7 @@ void DrawMissionStageSelect()
 		SetEffect(86, D3DXVECTOR2(BGbase_pos1_x, BGbase_pos1_y + interval_y * 1), D3DXVECTOR2(BGbase_pos2_x, BGbase_pos2_y + interval_y * 1), 1,
 			D3DXVECTOR2(537.6f, background_size_y), D3DXVECTOR2(537.6f, background_size_y), 0,
 			0.0f, 1.0f, 0, 999, 0, move_frame,
-			0.0f, 0.0f, 0);
+			0.0f, 0.0f, 0, 0.990f, 0.990f, 0.010f, 0.010f);
 
 	// エフェクトが生成された場所の番号の保存
 	g_Mission.mission_background_EffectArray = Background_EffectArray;
@@ -492,7 +492,7 @@ void DrawMissionResult()
 		SetEffect(86, D3DXVECTOR2(BGbase_pos1_x, BGbase_pos1_y + interval_y * 1), D3DXVECTOR2(BGbase_pos2_x, BGbase_pos2_y + interval_y * 1), 1,
 			D3DXVECTOR2(537.6f, background_size_y), D3DXVECTOR2(537.6f, background_size_y), 0,
 			0.0f, 1.0f, 0, 999, 0, move_frame,
-			0.0f, 0.0f, 0);
+			0.0f, 0.0f, 0, 0.990f, 0.990f, 0.010f, 0.010f);
 
 	// エフェクトが生成された場所の番号の保存
 	g_Mission.mission_background_EffectArray = Background_EffectArray;
@@ -626,7 +626,7 @@ void DrawMissionPause()
 		SetEffect(86, D3DXVECTOR2(BGbase_pos1_x, BGbase_pos1_y + interval_y * 1), D3DXVECTOR2(BGbase_pos2_x, BGbase_pos2_y + interval_y * 1), 0,
 			D3DXVECTOR2(537.6f, background_size_y), D3DXVECTOR2(537.6f, background_size_y), 0,
 			0.0f, 1.0f, 0, 999, 0, move_frame,
-			0.0f, 0.0f, 0);
+			0.0f, 0.0f, 0, 0.990f, 0.990f, 0.010f, 0.010f);
 
 	// エフェクトが生成された場所の番号の保存
 	g_Mission.mission_background_EffectArray = Background_EffectArray;
@@ -765,7 +765,7 @@ void DrawMissionPlacement()
 		SetEffect(86, D3DXVECTOR2(BGbase_pos1_x, BGbase_pos1_y + interval_y * 1), D3DXVECTOR2(BGbase_pos2_x, BGbase_pos2_y + interval_y * 1), 0,
 			D3DXVECTOR2(background_size_x, background_size_y), D3DXVECTOR2(background_size_x, background_size_y), 0,
 			0.0f, 1.0f, 0, 999, 0, move_frame,
-			0.0f, 0.0f, 0);
+			0.0f, 0.0f, 0, 0.990f, 0.990f, 0.010f, 0.010f);
 
 	// エフェクトが生成された場所の番号の保存
 	//g_Mission.mission_background_EffectArray = Background_EffectArray;

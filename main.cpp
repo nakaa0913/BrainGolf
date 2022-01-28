@@ -353,8 +353,8 @@ void Draw(void)
 		float mouse_pos_Y = GetMousePosY();
 
 		D3DXCOLOR Ccolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, cursor_Clarity);
-		float sizeX = 80.0f;
-		float sizeY = 80.0f;
+		float sizeX = 50.0f;
+		float sizeY = 50.0f;
 		float posX = mouse_pos_X;
 		float posY = mouse_pos_Y;
 		DrawSpriteLeftTopColor(g_Tex_cursor, posX, posY, sizeX, sizeY, 0.0f, 0.0f, 1.0f, 1.0f, Ccolor);

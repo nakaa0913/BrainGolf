@@ -603,7 +603,7 @@ void DrawMissionPause()
 	float textGapX = 190.0f * mozisizebairitu;
 
 	BGbase_pos2_x = SCREEN_WIDTH / 2;
-	BGbase_pos2_y = SCREEN_HEIGHT / 2 - 200.0f;
+	BGbase_pos2_y = SCREEN_HEIGHT / 2 - 100.0f;
 
 	BGbase_pos1_x = BGbase_pos2_x;
 	BGbase_pos1_y = BGbase_pos2_y;

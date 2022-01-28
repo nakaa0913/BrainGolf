@@ -148,12 +148,12 @@ void UpdateWorldSelect(void)
 			//-2以外は左右に移動できる
 			if (g_WorldSelect.select_x != -2)
 			{
-				// 右
-				if (Keyboard_IsKeyDown(KK_RIGHT))
-					g_WorldSelect.select_x++;
-				// 左
-				if (Keyboard_IsKeyDown(KK_LEFT))
-					g_WorldSelect.select_x--;
+				//// 右
+				//if (Keyboard_IsKeyDown(KK_RIGHT))
+				//	g_WorldSelect.select_x++;
+				//// 左
+				//if (Keyboard_IsKeyDown(KK_LEFT))
+				//	g_WorldSelect.select_x--;
 			}
 			// 選択しているところが限界を超えないようにする処理
 			if (g_WorldSelect.select_x >= WORLD_SELECT_MAX_X)
@@ -165,35 +165,35 @@ void UpdateWorldSelect(void)
 				g_WorldSelect.select_x = WORLD_SELECT_MAX_X - 1;
 			}
 
-			//タイトルに戻る処理
-			if(g_WorldSelect.select_x == 0)
-			{
-				if (Keyboard_IsKeyDown(KK_DOWN))
-					g_WorldSelect.select_x = -2 ;
-			}
-			if (g_WorldSelect.select_x == -2)
-			{
-				if (Keyboard_IsKeyDown(KK_UP))
-					g_WorldSelect.select_x = 0;
+			////タイトルに戻る処理
+			//if(g_WorldSelect.select_x == 0)
+			//{
+			//	if (Keyboard_IsKeyDown(KK_DOWN))
+			//		g_WorldSelect.select_x = -2 ;
+			//}
+			//if (g_WorldSelect.select_x == -2)
+			//{
+			//	if (Keyboard_IsKeyDown(KK_UP))
+			//		g_WorldSelect.select_x = 0;
 
-				if (Keyboard_IsKeyDown(KK_ENTER))
-				{
-					SetVolume(g_BGMNo, 0.1f);
-					WorldDecision = true;
+			//	if (Keyboard_IsKeyDown(KK_ENTER))
+			//	{
+			//		SetVolume(g_BGMNo, 0.1f);
+			//		WorldDecision = true;
 
-					//STAGE_SELECTへ移行する
-					SceneTransition(SCENE_TITLE);
-				}
+			//		//STAGE_SELECTへ移行する
+			//		SceneTransition(SCENE_TITLE);
+			//	}
 
-				//if(mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
-				//{
-				//	SetVolume(g_BGMNo, 0.1f);
-				//	WorldDecision = true;
+			//	//if(mouseuse && mouse_Lclick && GetFadeState() == FADE_NONE)
+			//	//{
+			//	//	SetVolume(g_BGMNo, 0.1f);
+			//	//	WorldDecision = true;
 
-				//	//STAGE_SELECTへ移行する
-				//	SceneTransition(SCENE_TITLE);
-				//}
-			}
+			//	//	//STAGE_SELECTへ移行する
+			//	//	SceneTransition(SCENE_TITLE);
+			//	//}
+			//}
 
 		}
 

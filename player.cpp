@@ -184,89 +184,89 @@ void UpdatePlayer(void)
 		// 前回の座標の保存
 		g_Player[i].nextpos = g_Player[i].pos;
 
-		//上
-		if (Keyboard_IsKeyDown(KK_W))
-		{
-			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x, g_Player[i].pos.y - 3.0f)) != 1)
-				g_Player[i].nextpos.y -= 3.0f;
+		////上
+		//if (Keyboard_IsKeyDown(KK_W))
+		//{
+		//	if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x, g_Player[i].pos.y - 3.0f)) != 1)
+		//		g_Player[i].nextpos.y -= 3.0f;
 
-			//g_Player[i].direction = 3;
-			//g_CharaUV = 0.75f;
+		//	//g_Player[i].direction = 3;
+		//	//g_CharaUV = 0.75f;
 
-			//歩きアニメーション
-			/*if (g_AnimeWaitFrame > 10)
-			{
-				g_AnimePtn++;
-				if (g_AnimePtn > 2)
-					g_AnimePtn = 0;
+		//	//歩きアニメーション
+		//	/*if (g_AnimeWaitFrame > 10)
+		//	{
+		//		g_AnimePtn++;
+		//		if (g_AnimePtn > 2)
+		//			g_AnimePtn = 0;
 
-				g_AnimeWaitFrame = 0;
-			}
-			g_AnimeWaitFrame++;*/
-		}
+		//		g_AnimeWaitFrame = 0;
+		//	}
+		//	g_AnimeWaitFrame++;*/
+		//}
 
-		//下
-		if (Keyboard_IsKeyDown(KK_S))
-		{
-			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x, g_Player[i].pos.y + 3.0f)) != 1)
-				g_Player[i].nextpos.y += 3.0f;
+		////下
+		//if (Keyboard_IsKeyDown(KK_S))
+		//{
+		//	if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x, g_Player[i].pos.y + 3.0f)) != 1)
+		//		g_Player[i].nextpos.y += 3.0f;
 
-			//g_Player[i].direction = 0;
-			//g_CharaUV = 0.0f;
+		//	//g_Player[i].direction = 0;
+		//	//g_CharaUV = 0.0f;
 
-			//歩きアニメーション
-			/*if (g_AnimeWaitFrame > 10)
-			{
-				g_AnimePtn++;
-				if (g_AnimePtn > 2)
-					g_AnimePtn = 0;
+		//	//歩きアニメーション
+		//	/*if (g_AnimeWaitFrame > 10)
+		//	{
+		//		g_AnimePtn++;
+		//		if (g_AnimePtn > 2)
+		//			g_AnimePtn = 0;
 
-				g_AnimeWaitFrame = 0;
-			}
-			g_AnimeWaitFrame++;*/
-		}
+		//		g_AnimeWaitFrame = 0;
+		//	}
+		//	g_AnimeWaitFrame++;*/
+		//}
 
-		//左
-		if (Keyboard_IsKeyDown(KK_A))
-		{
-			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x - 3.0f, g_Player[i].pos.y)) != 1)
-				g_Player[i].nextpos.x -= 3.0f;
+		////左
+		//if (Keyboard_IsKeyDown(KK_A))
+		//{
+		//	if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x - 3.0f, g_Player[i].pos.y)) != 1)
+		//		g_Player[i].nextpos.x -= 3.0f;
 
-			//g_Player[i].direction = 1;
-			//g_CharaUV = 0.25f;
+		//	//g_Player[i].direction = 1;
+		//	//g_CharaUV = 0.25f;
 
-			//歩きアニメーション
-			/*if (g_AnimeWaitFrame > 10)
-			{
-				g_AnimePtn++;
-				if (g_AnimePtn > 2)
-					g_AnimePtn = 0;
+		//	//歩きアニメーション
+		//	/*if (g_AnimeWaitFrame > 10)
+		//	{
+		//		g_AnimePtn++;
+		//		if (g_AnimePtn > 2)
+		//			g_AnimePtn = 0;
 
-				g_AnimeWaitFrame = 0;
-			}
-			g_AnimeWaitFrame++;*/
-		}
+		//		g_AnimeWaitFrame = 0;
+		//	}
+		//	g_AnimeWaitFrame++;*/
+		//}
 
-		//右
-		if (Keyboard_IsKeyDown(KK_D))
-		{
-			if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x + 3.0f, g_Player[i].pos.y)) != 1)
-				g_Player[i].nextpos.x += 3.0f;
+		////右
+		//if (Keyboard_IsKeyDown(KK_D))
+		//{
+		//	if (GetMapEnter(D3DXVECTOR2(g_Player[i].pos.x + 3.0f, g_Player[i].pos.y)) != 1)
+		//		g_Player[i].nextpos.x += 3.0f;
 
-			//g_Player[i].direction = 2;
-			//g_CharaUV = 0.5f;
+		//	//g_Player[i].direction = 2;
+		//	//g_CharaUV = 0.5f;
 
-			//歩きアニメーション
-			/*if (g_AnimeWaitFrame > 10)
-			{
-				g_AnimePtn++;
-				if (g_AnimePtn > 2)
-					g_AnimePtn = 0;
+		//	//歩きアニメーション
+		//	/*if (g_AnimeWaitFrame > 10)
+		//	{
+		//		g_AnimePtn++;
+		//		if (g_AnimePtn > 2)
+		//			g_AnimePtn = 0;
 
-				g_AnimeWaitFrame = 0;
-			}
-			g_AnimeWaitFrame++;*/
-		}
+		//		g_AnimeWaitFrame = 0;
+		//	}
+		//	g_AnimeWaitFrame++;*/
+		//}
 
 
 
@@ -500,7 +500,7 @@ void UpdatePlayer(void)
 				// クラブを持ち変える処理
 				if (club_ChangeCool <= 0)
 				{
-					if (Keyboard_IsKeyDown(KK_UP))
+					/*if (Keyboard_IsKeyDown(KK_UP))
 					{
 						club_pattern--;
 						club_ChangeCool = CLUB_CHANGECOOL;
@@ -509,7 +509,7 @@ void UpdatePlayer(void)
 					{
 						club_pattern++;
 						club_ChangeCool = CLUB_CHANGECOOL;
-					}
+					}*/
 					if (mouse_Wheel)
 					{
 						club_pattern++;

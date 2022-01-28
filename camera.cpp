@@ -46,29 +46,29 @@ void UpdateCamera(void)
 	bool use_movekey_x = false;
 	bool use_movekey_y = false;
 	// 右に移動
-	if (Keyboard_IsKeyDown(KK_L))
-	{
-		g_Camera.movespeed.x += movespeed_base;
-		use_movekey_x = true;
-	}
-	// 左に移動
-	if (Keyboard_IsKeyDown(KK_J))
-	{
-		g_Camera.movespeed.x -= movespeed_base;
-		use_movekey_x = true;
-	}
-	// 下に移動
-	if (Keyboard_IsKeyDown(KK_K))
-	{
-		g_Camera.movespeed.y += movespeed_base;
-		use_movekey_y = true;
-	}
-	// 上に移動
-	if (Keyboard_IsKeyDown(KK_I))
-	{
-		g_Camera.movespeed.y -= movespeed_base;
-		use_movekey_y = true;
-	}
+	//if (Keyboard_IsKeyDown(KK_L))
+	//{
+	//	g_Camera.movespeed.x += movespeed_base;
+	//	use_movekey_x = true;
+	//}
+	//// 左に移動
+	//if (Keyboard_IsKeyDown(KK_J))
+	//{
+	//	g_Camera.movespeed.x -= movespeed_base;
+	//	use_movekey_x = true;
+	//}
+	//// 下に移動
+	//if (Keyboard_IsKeyDown(KK_K))
+	//{
+	//	g_Camera.movespeed.y += movespeed_base;
+	//	use_movekey_y = true;
+	//}
+	//// 上に移動
+	//if (Keyboard_IsKeyDown(KK_I))
+	//{
+	//	g_Camera.movespeed.y -= movespeed_base;
+	//	use_movekey_y = true;
+	//}
 
 
 
@@ -135,7 +135,7 @@ void UpdateCamera(void)
 	// H ズームアウト
 	float zoomspeed_base = 0.05f;
 	bool use_zoomkey = false;
-	if (Keyboard_IsKeyDown(KK_U))
+	/*if (Keyboard_IsKeyDown(KK_U))
 	{
 		g_Camera.zoomspeed += zoomspeed_base;
 		use_zoomkey = true;
@@ -144,7 +144,7 @@ void UpdateCamera(void)
 	{
 		g_Camera.zoomspeed -= zoomspeed_base;
 		use_zoomkey = true;
-	}
+	}*/
 
 
 	// 何もキーを押していない場合にカメラの移動速度を低下させる処理

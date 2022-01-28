@@ -91,6 +91,12 @@ void UpdatePrediction(void)
 				g_Prediction[i].size *= 1.0f - i * sizebairitu;
 
 				g_Prediction[i].tex = predictionbullet_ao;			// テクスチャの設定、転がる場合全部青
+
+				if (i == 6)
+				{
+					g_Prediction[i].pos.x = 99999;
+					g_Prediction[i].pos.y = 99999;
+				}
 			}
 			if (ClubPattern == 1)		// とぶ場合の予測
 			{
@@ -101,7 +107,7 @@ void UpdatePrediction(void)
 				switch (i)
 				{
 				case 0:
-					g_Prediction[i].pos += g_Prediction[i].vector * 61;
+					g_Prediction[i].pos += g_Prediction[i].vector * 82;
 					g_Prediction[i].size *= 1.0f - i * sizebairitu;
 					break;
 				case 1:		// わんばんa
@@ -122,6 +128,10 @@ void UpdatePrediction(void)
 					break;
 				case 5:		// すりーばん
 					g_Prediction[i].pos += g_Prediction[i].vector * 240;
+					g_Prediction[i].size *= 1.0f - i * sizebairitu;
+					break;
+				case 6:		// 一番手前
+					g_Prediction[i].pos += g_Prediction[i].vector * 41;
 					g_Prediction[i].size *= 1.0f - i * sizebairitu;
 					break;
 				default:

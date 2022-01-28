@@ -2567,6 +2567,10 @@ void UpdateStageSelect2(void)
 		{
 			// タイトルへ戻る中なら BackTitle == true なら
 
+			// マウスの表示をする
+			if (BackTitlecount == 0)
+				SetCursorState(true, 2, 36);
+
 			// 画面が全部真っ暗なった時にいろいろ戻す
 			if (BackTitlecount == BackTitleFadeIn + 36)
 			{

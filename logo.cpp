@@ -41,6 +41,8 @@
 static int	g_TextureNo = 0;	// テクスチャ情報
 static int	g_BGMNo = 0;		// BGM識別子
 
+static int logo_count = 0;
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -53,6 +55,8 @@ void InitLogo(void)
 
 	//255(-1)をループ指定すると無限ループ
 	PlaySound(g_BGMNo, 0);
+
+	logo_count = 0;
 
 	return ;
 }
@@ -79,15 +83,26 @@ void UpdateLogo(void)
 		SceneTransition(SCENE_Prologue);
 	}*/
 
-	if (mouse_Lclick && GetFadeState() == FADE_NONE)
-	{
-		SceneTransition(SCENE_STAGE_SELECT);
-	}
+	//if (mouse_Lclick && GetFadeState() == FADE_NONE)
+	//{
+	//	SceneTransition(SCENE_STAGE_SELECT);
+	//}
 	//
 	/*if (Keyboard_IsKeyDown(KK_G) && GetFadeState() == FADE_NONE)
 	{
 		SceneTransition(SCENE_GAME);
 	}*/
+
+	// 180フレームしたらタイトルが始まる
+	if (logo_count == 180)
+	{
+		if (GetFadeState() == FADE_NONE)
+		{
+			SceneTransition(SCENE_STAGE_SELECT);
+		}
+	}
+
+	logo_count++;
 }
 
 //=============================================================================

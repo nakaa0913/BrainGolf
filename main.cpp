@@ -278,7 +278,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	// マウスの初期化
 	//g_Tex_cursor = LoadTexture("data/TEXTURE/other_effect/cursor.png");
-	g_Tex_cursor = LoadTexture("data/TEXTURE/other_effect/cursor2.png");
+	g_Tex_cursor = LoadTexture("data/TEXTURE/other_effect/cursor.png");
 	//g_Tex_cursor = LoadTexture("data/TEXTURE/other_effect/black.png");
 
 	cursor_isUse = true;	// マウスカーソルの表示用
@@ -360,11 +360,11 @@ void Draw(void)
 
 		//D3DXCOLOR Ccolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, cursor_Clarity);
 		D3DXCOLOR Ccolor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		float sizeX = 120.0f;
-		float sizeY = 120.0f;
+		float sizeX = 80.0f;
+		float sizeY = 80.0f;
 		float posX = mouse_pos_X;
 		float posY = mouse_pos_Y;
-		DrawSpriteLeftTopColor(g_Tex_cursor, posX, posY, sizeX, sizeY, 0.0f, 0.0f, 0.0f, 1.0f, Ccolor);
+		DrawSpriteLeftTopColor(g_Tex_cursor, posX, posY, sizeX, sizeY, 0.0f, 0.0f, 1.0f, 1.0f, Ccolor);
 	}
 
 	// バックバッファ、フロントバッファ入れ替え

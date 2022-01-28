@@ -26,6 +26,7 @@
 #include "gameover.h"
 #include "pause.h"
 #include "gimmick_description.h"
+#include "stageselect.h"
 
 /*------------------------------------------------------------------------------
    定数定義
@@ -44,6 +45,7 @@
    グローバル変数の定義
 ------------------------------------------------------------------------------*/
 static int g_BGMNo = 0;
+
 bool goal = false;
 bool gameover = false;
 
@@ -81,7 +83,8 @@ void InitGame(void)
 
 	InitGimmickDescription();
 
-	g_BGMNo = LoadSound("data/BGM/ユキノイロドリ.wav");
+	g_BGMNo = LoadSound("data/BGM/風に揺られて.wav");
+	
 
 	if (BGMonce)
 	{
@@ -114,7 +117,21 @@ void InitGameForPlacement(void)
 
 	InitGimmickDescription();
 
-	g_BGMNo = LoadSound("data/BGM/ユキノイロドリ.wav");
+	if (GetNowChoiceStageNum() <= 10)
+	{
+		// 平和背景の表示
+		g_BGMNo = LoadSound("data/BGM/風に揺られて.wav");
+	}
+	else if (GetNowChoiceStageNum() <= 15)
+	{
+		// 雪原背景の表示
+		g_BGMNo = LoadSound("data/BGM/ユキノイロドリ.wav");
+	}
+	else if (GetNowChoiceStageNum() <= 20)
+	{
+		// 地獄背景の表示
+		g_BGMNo = LoadSound("data/BGM/煉獄道.wav");
+	}
 
 	SetVolume(g_BGMNo, 0.5f);
 	PlaySound(g_BGMNo, -1);

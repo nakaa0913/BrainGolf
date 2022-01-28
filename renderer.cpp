@@ -255,7 +255,8 @@ HRESULT InitRenderer(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	sd.OutputWindow = hWnd;
 	sd.SampleDesc.Count = 1;
 	sd.SampleDesc.Quality = 0;
-	sd.Windowed = TRUE;							// ここがTRUEがウィンドウモード, FALSE がフルスクリーン
+	//sd.Windowed = TRUE;							// ここがTRUEがウィンドウモード, FALSE がフルスクリーン
+	sd.Windowed = FALSE;							// ここがTRUEがウィンドウモード, FALSE がフルスクリーン
 
 	hr = D3D11CreateDeviceAndSwapChain( NULL,
 										D3D_DRIVER_TYPE_HARDWARE,

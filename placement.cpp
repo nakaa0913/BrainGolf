@@ -388,7 +388,7 @@ void UpdatePlacement(void)
 						else
 						{
 							// 配置できないエリアに配置しようとした
-							g_SENo = LoadSound("data/SE/システム決定音_6.wav");
+							g_SENo = LoadSound("data/SE/lockon000.wav");
 							PlaySound(g_SENo, 0);
 						}
 					}

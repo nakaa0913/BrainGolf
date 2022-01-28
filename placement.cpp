@@ -102,6 +102,8 @@ void InitPlacement(void)
 			D3DXVECTOR2(MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y), D3DXVECTOR2(200.0f, 200.0f), 0,
 			1.0f, 1.0f, 0, 999, 0, 0,
 			0.0f, 0.0f, 0); 
+
+	DrawMissionPlacement();
 }
 
 /*------------------------------------------------------------------------------
